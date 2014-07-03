@@ -1,0 +1,8 @@
+parameters:
+#    khatovar_web.example.class: Khatovar\WebBundle\Example
+
+services:
+    khatovar.twig.khatovar_extension:
+        class: Khatovar\WebBundle\Twig\KhatovarExtension
+        tags:
+            - { name: twig.extension }

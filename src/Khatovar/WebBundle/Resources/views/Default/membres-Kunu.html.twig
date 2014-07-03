@@ -1,0 +1,85 @@
+{% extends 'KhatovarWebBundle:Default:membres-layout.html.twig' %}
+
+{% block member_name %}
+    Kunu, le chaman
+{% endblock %}
+
+{% block member_picture %}
+    {% autoescape false %}
+    {{ 'http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/24/20110824105004-6f8e6dbe.jpg'|popup_picture('photo') }}
+    {% endautoescape %}
+{% endblock %}
+
+{% block member_rank %}
+    moine reconverti en chaman (on fait ce que l’on peut…)
+{% endblock %}
+
+{% block member_citation %}
+    Aïe, pas sur la tête&nbsp;!
+{% endblock %}
+
+{% block member_skill %}
+    pas grand chose, n’arrive même pas à faire peur aux enfants…
+    A défaut, on le case souvent à l’herboristerie (en rapport à son ancien métier) mais surtout
+    pas à la cuisine (en rapport à son nouveau métier)…
+{% endblock %}
+
+{% block member_age %}
+    égal à l’âge des fourrures qu’il porte sur son dos, à vous de compter&nbsp;!
+{% endblock %}
+
+{% block member_size %}
+    3 longueurs de fouines + 4 défenses de sanglier
+{% endblock %}
+
+{% block member_weight %}
+    un demi barbare (et c’est bien ça le problème&nbsp;!)
+{% endblock %}
+
+{% block member_strongness %}
+    aucun&nbsp;! Ah si, fait la vaisselle&nbsp;! C’est pour cela qu’on le garde&nbsp;!
+{% endblock %}
+
+{% block member_weakness %}
+    rate tous ses sorts et tous ses rituels
+{% endblock %}
+
+{% block member_album %}25{% endblock %}
+
+{% block member_story %}
+    <p>
+        Une Compagnie ne peut prétendre à rien sans magie. Aussi la Compagnie Noire s’est-elle vue
+        contrainte à recruter un chaman&nbsp;: le plus méchant magicien du monde magique, évidemment.
+        Contrairement aux autres membres de la Compagnie, le chaman ne l’a pas exactement intégrée de son
+        plein gré. Un jour que Limite a réalisé l’absence répréhensible de la magie maléfique au sein de
+        sa précieuse Compagnie, il a tout simplement organisé un concours parmi ses soldats&nbsp;: celui
+        qui ramènerait le plus puissant des chamans remporterait tout un tas d’avantages en argent et en
+        nature, et peut-être même un peu de sa femme. Comment ça Marie, tu n’es pas d’accord&nbsp;?
+    </p>
+    {% autoescape false %}
+    {{ 'http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/31/20110831130535-5ab559c1.jpg'|popup_picture('floatright') }}
+    {% endautoescape %}
+    <p>
+        La faute à une récompense insuffisante ou à la paresse chronique de la Compagnie, en tout cas les
+        spécimens ramenés au camp n’avaient rien de glorieux, voire rien de magique. Ce qui est un peu
+        ennuyeux pour un prétendu chaman. Bref, Limite dut se charger lui-même du recrutement de son
+        magicien, et il décida tout bonnement d’enlever le prochain chaman qui aurait le malheur de croiser
+        son chemin.
+    </p>
+    <p>
+        Ce fut David, qu’il découvrit tremblant et sanglant à la sortie d’un village. «&nbsp;Je suis tellement
+        puissant que j’effraie les simples villageois&nbsp;» prétexta-t-il. À peine ces mots sortaient-ils de sa
+        bouche que le chaman se retrouvait ligoté et jeté tel un sac à patates sur l’épaule du barbare. Cette
+        entrée en matière dut l’effrayer. En tout cas, il ne se remit jamais tout à fait du manque de
+        délicatesse dont on avait fait preuve à son endroit&nbsp;: un véritable traumatisme pour lui.
+    </p>
+    <p>
+        D’ailleurs, le pauvre chaman n’a jamais récupéré tout à fait… Ses pouvoirs ne sont plus ce qu’ils
+        étaient. Bien souvent il cafouille et s’emmêle dans ses sortilèges. La seule magie qui fonctionne à
+        tous les coups, c’est pour le ramener au camp, quand par «&nbsp;erreur&nbsp;», les soldats de la Compagnie
+        «&nbsp;l’oublient&nbsp;» dans quelque lieu éloigné. Limite commence à soupçonner l’arnaque, mais il est trop
+        fier pour admettre qu’il s’est fait rouler par un magicien tellement médiocre que même les villages
+        les plus pauvres l’avaient rejeté. Puis, le chaman semble s’être attaché au camp et ne veut plus quitter
+        la Compagnie. Il reste donc, bon gré, mal gré.
+    </p>
+{% endblock %}

@@ -1,0 +1,122 @@
+{% extends 'KhatovarWebBundle:Default:membres-layout.html.twig' %}
+
+{% block member_name %}
+    Arnica, la sorcière
+{% endblock %}
+
+{% block member_picture %}
+    {% autoescape false %}
+    {{ 'http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/24/20110824104937-fbd7849f.jpg'|popup_picture('photo') }}
+    {% endautoescape %}
+{% endblock %}
+
+{% block member_rank %}
+    sorcière
+{% endblock %}
+
+{% block member_citation %}
+    De toutes façons, vous avez tort&nbsp;!
+{% endblock %}
+
+{% block member_skill %}
+    herboriste, cuisinière, combattante, chieuse invétérée
+{% endblock %}
+
+{% block member_age %}
+    plus que 10, moins que 30 (pour encore quelques années)
+{% endblock %}
+
+{% block member_size %}
+    plus que mes marmites, moins que l’épée du barbare
+{% endblock %}
+
+{% block member_weight %}
+    armure&nbsp;: 3 kilos, épées&nbsp;: 2.5 kilos, arbalète&nbsp;: 1.5 kilo, pfiou c'est long à calculer&nbsp;!
+{% endblock %}
+
+{% block member_strongness %}
+    trop nombreux pour être énumérés ici
+{% endblock %}
+
+{% block member_weakness %}
+    aucun, mais on peut en discuter à grands coups d'épée
+{% endblock %}
+
+{% block member_album %}24{% endblock %}
+
+{% block member_story %}
+    {% autoescape false %}
+    {{ 'http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/31/20110831122919-f759c996.jpg'|popup_picture('floatleft') }}
+    {% endautoescape %}
+    <p>
+        Depuis son plus jeune âge, Arnica se prenait pour un homme. Native de ces contrées paysannes où
+        seule compte la capacité à tirer la charrue et à faire pousser sa pitance, elle avait, il est
+        vrai, développé une étonnante musculature, qui tantôt lui permettait de battre les hommes du
+        village au bras de fer, tantôt (le plus souvent) lui valait de belles raclées.
+    </p>
+    <p>
+        Arnica avait aussi pris l’habitude de courir pieds nus, grimper aux arbres et nager dans les
+        rivières. Elle refusait toutes les carrières que ses parents lui proposaient&nbsp;:
+        l’agriculture, l’érudition, rien ne trouvait grâce à ses yeux, sinon qu’elle voulait se battre
+        et être la plus forte !
+    </p>
+    {% autoescape false %}
+    {{ 'http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/24/20110824112619-fe94b26a.jpg'|popup_picture('floatright') }}
+    {% endautoescape %}
+    <p>
+        Par une nuit de pleine lune, elle finit par s’enfuir du couvent qui l’hébergeait pour ses
+        études, jeta sa bure dans les orties et rejoignit la première troupe de mercenaires qu’elle
+        put trouver.
+    </p>
+    <p>
+        C’est ainsi que Lech’Goutte et Rognepied, occupés à enchaîner choppe sur choppe et force
+        tranches de pâté à l’écart des autres, virent soudainement apparaître à côté d’eux une jeune
+        femme brune vêtue en tout et pour tout d’une cotte de mailles. « Est-ce que ça protège vraiment
+        des coups ? » leur demanda-t-elle innocemment.
+    </p>
+    <p>
+        Le Barbare, à peine étonné, mais toujours adepte des démonstrations par l’exemple, se dévoua
+        pour lui frapper l’épaule. Et l’envoyer au tapis par la même occasion&nbsp;: « On ne dérange
+        pas des hommes qui festoient ! »
+    </p>
+    {% autoescape false %}
+    {{ asset('bundles/khatovarweb/photos/trombi/cecile.jpg')|popup_picture('floatleft') }}
+    {% endautoescape %}
+    <?php echo popupPicture( 'photos/trombi/cecile.jpg' , 'floatleft' ); ?>
+    <p>
+        Pas calmée pour un sou, Arnica se releva aussitôt, à peine sonnée, pour lui corner aux
+        oreilles&nbsp;: « C’est trop cool ! Je veux apprendre à taper comme toi ! Apprends-moi,
+        apprends-moi, apprends-moi !!! Main-t-nant ! »
+    </p>
+    <p>
+        Le Barbare ne prit que le temps de lui adresser un coup d’œil méprisant. Et sans plus tenir
+        comte d’elle, il se remit à boire.
+    </p>
+    {% autoescape false %}
+    {{ 'http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/31/20110831122926-ca584a29.jpg'|popup_picture('floatright') }}
+    {% endautoescape %}
+    <p>
+        La jeune fille refusa de s’avouer vaincue. Et s’attablant à son tour, elle entreprit de lever
+        le coude au rythme des deux hommes. La soirée fut longue, et elle finit mal, mais Arnica (qui
+        ne portait pas encore ce nom) y gagna sa place dans la Compagnie. Sa relative endurance lui
+        valut même le droit de commencer un entraînement avec le Barbare — et plus si affinités
+        (affinités il y eut, mais plus tard).
+    </p>
+    <p>
+        Ledit entraînement démarra dès le lendemain, avec une session de course à pied (où elle écrasa
+        les deux hommes de sa supériorité) ; puis avec une initiation au maniement de l’épée (dont elle
+        ressortit avec un magnifique coquart et une série de bleus plus ou moins importants).
+    </p>
+    <p>
+        Cette propension (relativement incompréhensible) à être couverte d’hématomes oscillant entre le
+        bleu, le violet et le jaune, lui valut bientôt son surnom officiel&nbsp;: « Arnica ».
+    </p>
+    <p>
+        Et puisqu’il fallut aussi apprendre à (se) soigner — jusqu’ici les hommes de la compagnie n’en
+        avaient pas vu l’intérêt — Arnica devint l’herboriste de la compagnie, avec Blanche, la
+        druidesse. Rapidement spécialisée en emplâtres, onguents et tisanes, elle cherche encore la
+        recette qui fera sa renommée à travers le monde&nbsp;: celle du remède anti-gueule de bois.
+        Jusqu’ici, les différents tests se sont avérés pires que le mal, au point que certains
+        soupçonnent Arnica de vouloir les empoisonner…
+    </p>
+{% endblock %}

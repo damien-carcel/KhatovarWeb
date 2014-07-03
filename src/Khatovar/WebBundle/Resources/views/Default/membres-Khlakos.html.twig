@@ -1,0 +1,87 @@
+{% extends 'KhatovarWebBundle:Default:membres-layout.html.twig' %}
+
+{% block member_name %}
+    Khlakös
+{% endblock %}
+
+{% block member_picture %}
+    {% autoescape false %}
+    {{ asset('bundles/khatovarweb/photos/trombi/suzanne.jpg')|popup_picture('photo') }}
+    {% endautoescape %}
+{% endblock %}
+
+{% block member_rank %}
+    à définir
+{% endblock %}
+
+{% block member_citation %}
+
+{% endblock %}
+
+{% block member_skill %}
+    archère, vannière, aide de camp
+{% endblock %}
+
+{% block member_age %}
+    majeure et vaccinée
+{% endblock %}
+
+{% block member_size %}
+    une dizaine de paniers
+{% endblock %}
+
+{% block member_weight %}
+    mieux vaut trop que pas assez…
+{% endblock %}
+
+{% block member_strongness %}
+
+{% endblock %}
+
+{% block member_weakness %}
+
+{% endblock %}
+
+{% block member_album %}30{% endblock %}
+
+{% block member_story %}
+    {% autoescape false %}
+    {{ 'http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/31/20110831124613-c231e0ce.jpg'|popup_picture('floatleft') }}
+    {% endautoescape %}
+    <p>
+        Khlakös vient d’une île pluvieuse et recouverte de bruyère où sa famille faisait commerce du miel et
+        d’autres produits de la ferme. Ayant connu des temps de disette, Khlakös avait gardé la fâcheuse habitude
+        de manger le grain des bêtes ou de chasser quelques animaux sauvages avec ses armes de prédilection&nbsp;:
+        l’arc et la fronde. En effet, la bravoure n’étant pas sa qualité première elle préférait tuer sa cible
+        (ou l’arrêter, dans le pire des cas) tant qu’elle était loin et éviter l’empoignade.
+    </p>
+    {% autoescape false %}
+    {{ 'http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/31/20110831123103-97c94014.jpg'|popup_picture('floatright') }}
+    {% endautoescape %}
+    <p>
+        Au bout de quelques temps, ses parents découvrirent qui pillait les réserves de grain et Khlakös, devenue
+        trop «&nbsp;pesante&nbsp;» dans les finances de la ferme, fut bannie du fief. Elle partit donc, sur son fier poney,
+        pour un voyage dans les contrées lointaines du continent. Pendant la longue traversée qui l’éloignait de
+        son île, elle comprit rapidement l’utilité du fromage dans la conservation du lait et décida d’en apprendre
+        la confection.
+    </p>
+    {% autoescape false %}
+    {{ 'http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/24/20110824130240-c13b04b5.jpg'|popup_picture('floatleft') }}
+    {% endautoescape %}
+    <p>
+        Au bout de quelques mois, elle débarqua chez des moines caucasiens qui lui enseignèrent la confection du
+        fromage de chèvre. Mais malgré sa motivation elle fut de nouveau chassée (pour une vulgaire histoire de
+        trafic fromager). Découragée, elle alla s’enivrer dans la première taverne venue. Cette nuit-là, elle vacilla
+        jusqu’à aller s’écrouler dans un amas de bric et de broc. Le froid de la nuit la poussa à s’envelopper dans
+        un grand sac (dont l’odeur de céréales lui rappelait vaguement quelque chose). C’est avec une gueule de bois
+        bien brute qu’elle se réveilla secouée par les ballottements du sac. Après moult cris et débattements, le lien
+        finit par s’ouvrir sur un baroudeur puant et barbu&nbsp;: Tête de Bois. Après un premier abord plutôt houleux,
+        Khlakös finit par le «&nbsp;tolérer&nbsp;» et ils prirent la route ensemble.
+    </p>
+    <p>
+        C’est à la fin d’un long périple ponctué de pillages et de nuits enflammées que le duo rencontra le chef de
+        la compagnie franche. Ayant entendu parler de cette troupe de mercenaires recherchée pour de nombreuses
+        exactions, elle décida de l’intégrer en vendant ses talents d’archère. Elle fut acceptée sans trop de difficulté
+        grâce à sa fameuse recette de fromage à l’hypocras.
+    </p>
+{% endblock %}

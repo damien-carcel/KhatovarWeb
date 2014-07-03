@@ -1,0 +1,37 @@
+khatovar_web_homepage:
+    path:       /accueil
+    defaults:   { _controller: KhatovarWebBundle:Default:index }
+
+khatovar_web_camp:
+    path:       /camp/{atelier}
+    defaults:   { _controller: KhatovarWebBundle:Default:camp, atelier: 'introduction' }
+    requirements:
+        atelier: \w*
+
+khatovar_web_fight:
+    path:       /combat/{pratique}
+    defaults:   { _controller: KhatovarWebBundle:Default:fight, pratique: 'introduction' }
+    requirements:
+        pratique: \w*
+
+khatovar_web_schedule:
+    path:       /programmation
+    defaults:   { _controller: KhatovarWebBundle:Default:schedule }
+
+khatovar_web_references:
+    path:       /references/{year}
+    defaults:   { _controller: KhatovarWebBundle:Default:references, year: 0 }
+    requirements:
+        year: \d*
+
+khatovar_web_members:
+    path:       /membres/{name}
+    defaults:   { _controller: KhatovarWebBundle:Default:members, name: 'liste' }
+    requirements:
+        name: \w*
+
+khatovar_web_links:
+    path:       /liens/{contact}
+    defaults:   { _controller: KhatovarWebBundle:Default:links, contact: 'liste' }
+    requirements:
+        contact: \w*

@@ -1,0 +1,19 @@
+khatovar_web:
+    resource: "@KhatovarWebBundle/Resources/config/routing.yml"
+    prefix:   /
+
+carcel_documents:
+    resource: "@CarcelDocumentsBundle/Resources/config/routing.yml"
+    prefix: /documents
+
+carcel_user:
+    resource: '@CarcelUserBundle/Resources/config/routing.yml'
+    prefix: /
+
+# redirecting the root
+root:
+    path: /
+    defaults:
+        _controller: FrameworkBundle:Redirect:urlRedirect
+        path: /accueil
+        permanent: true

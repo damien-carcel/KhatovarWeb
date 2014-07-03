@@ -1,0 +1,76 @@
+{% extends 'KhatovarWebBundle::layout.html.twig' %}
+
+{% block inarticle %}
+    <h2>Entraînement</h2>
+
+    {% autoescape false %}
+    {{ 'http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/09/19/20110919163126-c5372b61.jpg'|popup_picture('floatleft') }}
+    {% endautoescape %}
+    <p>
+        Il existe de nombreux traités de combats médiévaux. Pour ne citer que les plus célèbres&nbsp;:<br />
+        — Le manuscrit de Fiore dei Liberi<br />
+        — Les travaux du maître Johannes Liechtenauer, repris dans les «&nbsp;Fechtbücher&nbsp;» allemands<br />
+        — Les ouvrages de Hans Talhoffer.<br />
+    </p>
+    <p>
+        Tous ces livres correspondent à une étude poussée et un travail de recherche tant par l’écriture que la technique.
+        De nombreux cercles d’escrimeur et associations d’arts martiaux historiques en étudient les rouages, dans un but
+        d’historicité et de véracité. Cette démarche est noble, mais ne correspond pas à ce que nous recherchons.
+    </p>
+    <p>
+        Ne disposant pas du temps et des moyens pour ces études, nous avons préféré utiliser ce que nous savions
+        faire&nbsp;: <b>notre style mélange les techniques médiévales de combat et les arts martiaux asiatiques (Lam Son Vo
+            Dao vietnamien, Judo et l’Aïkido japonais).</b>
+    </p>
+    {% autoescape false %}
+    {{ 'http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/24/20110824114458-85f590fe.jpg'|popup_picture('floatright') }}
+    {% endautoescape %}
+    <p>
+        Le maître d’armes <a href="http://patrouixgracia.pagesperso-orange.fr/escrime_moderne.html" rel="external" title="">Olivier Patrouix-Gracia</a>
+        a rédigé un manuel moderne de technique de combat et d’escrime médiévale.
+        Pour le citer&nbsp;: «&nbsp;<em>Ce livre présente des techniques efficaces, mais aussi des techniques de spectacle.
+            Elles n'ont pas la prétention de délivrer une vérité sur l'art des armes, mais plutôt de proposer une manière
+            d'aborder l'escrime médiévale. Cette méthode, empirique, se veut accessible à tous.</em>&nbsp;»
+    </p>
+    <p>
+        En adaptant les techniques de ce manuel et la connaissance des arts martiaux, nous avons créé notre propre style.
+        L'art martial Lam Son Vo Dao est rapide dans ses déplacements et efficace au niveau des membres supérieurs. Il
+        allie force et souplesse avec de nombreuses attaques feintées et dissimulées. Le système circulaire que l’on
+        retrouve aussi dans l’Aïkido permet d'absorber et de contrôler les attaques afin de répliquer rapidement. Les
+        absorptions et les attaques se font par la maîtrise de l'énergie interne et la transformation des polarités
+        (principe du Yin/Yang).
+    </p>
+    {% autoescape false %}
+    {{ 'http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/24/20110824120127-d09aee70.jpg'|popup_picture('floatleft') }}
+    {% endautoescape %}
+    <p>
+        Dans cet objectif d’efficacité, un long travail est effectué sur le déplacement des combattants et le renforcement
+        des jambes. Travail sur des positions basses, déplacements glissés, coulés, en cercle, à plusieurs contre un, en
+        situation réelle, en force, en souplesse… avant de passer au maniement pur des armes, il faut réussir à mouvoir son
+        corps.
+    </p>
+    <p>
+        Le maniement des armes est quand lui est un mixe de coups d’inspirations variées (manuel historique, films, arts
+        martiaux…). Notre râtelier étant assez éclectique (hache, épée à 1 et 2 mains, sabre, lance, fauchard…) nous ne
+        pouvons nous limiter à la simple épée décrite dans le Talhoffer.
+    </p>
+    <p>
+        <b>Nos spectacles sont adaptés aux morphologies de chacun et aux armes en présence.</b>
+    </p>
+    <p>
+        Nous utilisons la méthode dite «&nbsp;des gammes&nbsp;» du manuel d’Olivier Patrouix-Gracia afin de travailler
+        notre vitesse et notre précision. Tous les coups sont portés, et s’ils ne sont pas parés ils toucheront. Le travail
+        se fait au début lentement, efficacement en souplesse et précision. Plus rapidement ensuite pour arriver à la
+        vitesse et à la force d’un combat réel. Il faut que les partenaires aient confiance les uns dans les autres pour
+        réussir un bon enchaînement et mettre la crédibilité nécessaire. Il faut maîtriser tant son arme que soi-même.
+    </p>
+
+    <div class="container flex-container-always">
+        <div class="navigation" style="text-align: left">
+            <a href="{{ path('khatovar_web_fight', {'pratique': 'technique'}) }}"><img src="{{ asset('bundles/khatovarweb/images/hache_gauche.png') }}" class="photolink" alt="" />
+                Technique</a>
+        </div>
+        <div class="navigation"></div>
+        <div class="navigation" style="text-align: right"></div>
+    </div>
+{% endblock %}

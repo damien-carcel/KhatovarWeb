@@ -1,0 +1,30 @@
+{% extends 'KhatovarWebBundle::layout.html.twig' %}
+
+{% block inarticle %}
+    <h1>Joutes du chateau de Brézé, Brézé (Maine-et-Loire), 7 et 8 juin</h1>
+    <div class="container">
+        <div class="cycle-slideshow" data-cycle-slides="> a"  data-cycle-center-horz=true data-cycle-center-vert=true>
+            {% autoescape false %}
+            {{ asset('bundles/khatovarweb/photos/logonoir.jpg')|popup_picture('slide') }}
+            {% endautoescape %}
+        </div>
+    </div>
+
+    <h1>Fête des Hauts-de-Saint-Aubin, Angers (Maine-et-Loire), 28 juin</h1>
+    <div class="container">
+        <div class="cycle-slideshow" data-cycle-slides="> a"  data-cycle-center-horz=true data-cycle-center-vert=true>
+            {% autoescape false %}
+            {{ asset('bundles/khatovarweb/photos/logonoir.jpg')|popup_picture('slide') }}
+            {% endautoescape %}
+        </div>
+    </div>
+
+    <div class="container flex-container-always">
+        <div class="navigation">
+            <a href="{{ path('khatovar_web_references', {'year': 2013}) }}"><img src="{{ asset('bundles/khatovarweb/images/hache_gauche.png') }}" class="photolink" alt="" /><br />
+                Année précédente</a>
+        </div>
+        <div class="navigation"></div>
+        <div class="navigation"></div>
+    </div>
+{% endblock %}

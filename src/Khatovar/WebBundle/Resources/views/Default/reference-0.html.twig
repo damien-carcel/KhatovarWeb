@@ -1,0 +1,22 @@
+{% extends 'KhatovarWebBundle::layout.html.twig' %}
+
+{% block inarticle %}
+    <p>
+        Vous trouverez ici toutes les fêtes médiévales auxquelles nous avons participé ces dernières années.
+    </p>
+
+    <table width="100%">
+        <tr>
+            <td>
+                <div style="text-align:center; font-weight: bold;">
+                    <a href="{{ path('khatovar_web_references', {'year': 2014}) }}" title="">2014</a>&nbsp;-
+                    <a href="{{ path('khatovar_web_references', {'year': 2013}) }}" title="">2013</a>&nbsp;-
+                    <a href="{{ path('khatovar_web_references', {'year': 2012}) }}" title="">2012</a>&nbsp;-
+                    <a href="{{ path('khatovar_web_references', {'year': 2011}) }}" title="">2011</a>&nbsp;-
+                    <a href="{{ path('khatovar_web_references', {'year': 2010}) }}" title="">2010</a>&nbsp;-
+                    <a href="{{ path('khatovar_web_references', {'year': 2009}) }}" title="">2008-2009</a>
+                </div>
+            </td>
+        </tr>
+    </table>
+{% endblock %}

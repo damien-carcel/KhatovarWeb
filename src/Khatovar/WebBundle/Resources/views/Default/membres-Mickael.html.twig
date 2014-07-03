@@ -1,0 +1,84 @@
+{% extends 'KhatovarWebBundle:Default:membres-layout.html.twig' %}
+
+{% block member_name %}
+    Mickaël, le marchand et sa famille
+{% endblock %}
+
+{% block member_picture %}
+    {% autoescape false %}
+    {{ asset('bundles/khatovarweb/photos/trombi/mickael.jpg')|popup_picture('photo') }}
+    {% endautoescape %}
+{% endblock %}
+
+{% block member_rank %}
+    marchand
+{% endblock %}
+
+{% block member_citation %}
+
+{% endblock %}
+
+{% block member_skill %}
+
+{% endblock %}
+
+{% block member_age %}
+
+{% endblock %}
+
+{% block member_size %}
+
+{% endblock %}
+
+{% block member_weight %}
+
+{% endblock %}
+
+{% block member_strongness %}
+
+{% endblock %}
+
+{% block member_weakness %}
+
+{% endblock %}
+
+{% block member_album %}0{% endblock %}
+
+{% block member_story %}
+    <p>
+        Dans une compagnie comme la Compagnie Noire, il faut être débrouillard. Car les muscles ne suffisent pas
+        toujours à assurer la subsistance du groupe, surtout vu les solides gosiers et estomacs dont la nature a
+        pourvu Limite et Lech’goutte, sans compter quelques autres, sans compter non plus les petites beuveries
+        improvisées, qui ruinent en une seule nuit les réserves d’une année. Autant dire qu’un commerçant, un bon
+        gestionnaire des stocks n’aurait pas été pas du luxe.
+    </p>
+    {% autoescape false %}
+    {{ 'http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/31/20110831123133-49969c3d.jpg'|popup_picture('floatleft') }}
+    {% endautoescape %}
+    <p>
+        Alors quand Mickaël et sa famille exigèrent une audience sur le camp avec Limite, le brave capitaine ne se
+        formalisa pas de cette entorse au protocole (c'est au chef de convoquer). Il était en effet de notoriété
+        publique que Mickaël fournissait le Roi et sa famille, donc sa démarche avait de quoi surprendre ou inquiéter
+        un chef tel que Limite. Lequel ne savait guère à quoi s’attendre… Un contrat ou une menace&nbsp;? Il fut
+        donc on ne peut plus surpris de découvrir toute la famille dudit marchand éplorée et tremblante. Après de
+        houleuses explications (il fallut empêcher le barbare de tuer tout le monde sur place, il craignait une ruse),
+        le marchand un peu piteux dut bien convenir qu’il avait un petit peu, oh, à peine en fait, truandé le Roi.
+        Qui s’en était avisé et n’avait pas vraiment apprécié. Bref, il avait dû fuir un peu précipitamment avec sa
+        famille. En conséquence, il proposait humblement ses services à la noble Compagnie, et la priait de bien
+        vouloir assurer sa protection.
+    </p>
+    {% autoescape false %}
+    {{ 'http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/31/20110831122958-3254002b.jpg'|popup_picture('floatright') }}
+    {% endautoescape %}
+    <p>
+        «&nbsp;Tu as frappé à la bonne porte, manant&nbsp;» déclara Limite avec grandiloquence. «&nbsp;Tu as un mois
+        pour faire tes preuves (nous réapprovisionner en alcools les plus fins pour les coûts les plus bas), sans quoi
+        on te tue ainsi que toute ta famille&nbsp;» rajouta-t-il avec élégance. Le Barbare doutait encore et trouvait
+        plus amusant de torturer les enfants, violer la femme et égorger le marchand. Limite sut le retenir, au plus
+        grand bénéfice de tous. Dès le lendemain, le marchand avait constitué des réserves qui firent saliver même les
+        plus calmes. Et sa femme cuisina un banquet mémorable. Autant dire que le couple est devenu la clef de voûte
+        de la Compagnie. Ils sont aujourd’hui indispensables (leurs enfants un peu moins, mais les parents menacent de
+        partir si on touche un seul cheveu de leur progéniture). Cela suffit à leur assurer la paix et une vie aussi
+        calme et normale que possible au sein de la troupe.
+    </p>
+{% endblock %}

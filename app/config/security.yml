@@ -1,0 +1,40 @@
+security:
+    encoders:
+        FOS\UserBundle\Model\UserInterface: sha512
+
+    role_hierarchy:
+        ROLE_VIEWER:        [ROLE_USER]
+        ROLE_UPLOADER:      [ROLE_VIEWER]
+        ROLE_ADMIN:         [ROLE_UPLOADER]
+        ROLE_SUPER_ADMIN:   [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
+    providers:
+        fos_userbundle:
+            id: fos_user.user_provider.username
+
+    firewalls:
+        dev:
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            pattern: ^/
+            form_login:
+                provider: fos_userbundle
+                csrf_provider: form.csrf_provider
+                always_use_default_target_path: true
+                default_target_path: /documents
+                target_path_parameter: _target_path
+            logout:
+                path:       fos_user_security_logout
+                target: /
+                success_handler: carcel_user.handler.logout_success_handler
+            anonymous: true
+            remember_me:
+                key: %secret%
+
+    access_control:
+        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/documents, role: ROLE_USER }
+        - { path: ^/admin, role: ROLE_SUPER_ADMIN }

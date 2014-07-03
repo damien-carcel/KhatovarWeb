@@ -1,0 +1,63 @@
+{% extends 'KhatovarWebBundle::layout.html.twig' %}
+
+{% block inarticle %}
+    <h1>{% block member_name %}{% endblock %}</h1>
+
+    <div style="text-align:right">
+        <a href="{{ path('khatovar_web_members') }}">Retour</a>
+    </div>
+
+    <div class="container">
+        <div class="photo_exactions">
+            {% block member_picture %}{% endblock %}
+        </div>
+        <div class="exactions">
+            <ul>
+                <li>
+                    <b>Rang dans la compagnie&nbsp;:</b> {% block member_rank %}{% endblock %}
+                </li>
+                <li>
+                    <b>Citation favorite&nbsp;:</b> «&nbsp;{% block member_citation %}{% endblock %}&nbsp;»
+                </li>
+                <li>
+                    <b>Compétences&nbsp;:</b> {% block member_skill %}{% endblock %}
+                </li>
+            </ul>
+
+            <h3>État civil</h3>
+
+            <ul>
+                <li>
+                    <b>Âge&nbsp;:</b> {% block member_age %}{% endblock %}
+                </li>
+                <li>
+                    <b>Taille&nbsp;:</b> {% block member_size %}{% endblock %}
+                </li>
+                <li>
+                    <b>Poids&nbsp;:</b> {% block member_weight %}{% endblock %}
+                </li>
+                <li>
+                    <b>Point fort&nbsp;:</b> {% block member_strongness %}{% endblock %}
+                </li>
+                <li>
+                    <b>Point faible&nbsp;:</b> {% block member_weakness %}{% endblock %}
+                </li>
+            </ul>
+            <div class="container">
+                <a href="http://www.compagniefranchedukhatovar.fr/piwigo/index.php?/category/{% block member_album %}{% endblock %}" rel="external">
+                    <img src="{{ asset('bundles/khatovarweb/images/camera.png') }}" class="photolink" alt="" />
+                    <br />
+                    Album photo
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <h2>Son histoire</h2>
+
+    {% block member_story %}{% endblock %}
+
+    <div style="text-align:right">
+        <a href="{{ path('khatovar_web_members') }}">Retour</a>
+    </div>
+{% endblock %}

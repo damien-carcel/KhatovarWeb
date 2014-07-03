@@ -1,0 +1,73 @@
+{% extends 'KhatovarWebBundle::layout.html.twig' %}
+
+{% block inarticle %}
+    <p>
+        —&nbsp;Ah&nbsp;! Vous voilà enfin, vous&nbsp;! C’est pas trop tôt…&nbsp;<br />
+        —&nbsp;Comment ça&nbsp;?&nbsp;»<br />
+        —&nbsp;Bah, depuis le temps que vous cherchiez une compagnie nombreuse, passionnée, active pour votre animation médiévale… cette fois, ça y est, vous avez trouvé&nbsp;!<br />
+    </p>
+
+    <div class="container">
+        {% autoescape false %}
+            {{ 'http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/24/20110824115459-76703cb4.jpg'|popup_picture('photo') }}
+            {{ 'http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/31/20110831125221-8ded8a10.jpg'|popup_picture('photo') }}
+        {% endautoescape %}
+    </div>
+
+    <h3>Bienvenue chez les Khatovar&nbsp;!&nbsp;</h3>
+
+    <p>
+        Si vous en avez assez des jolis camps entourés de cordages, interdits au public&nbsp;; si vous en avez assez des animateurs passifs, vissés à leur chaise et à leurs gobelets&nbsp;; si vous en avez assez des ateliers vitrines et non-participatifs et des combats en carton-pâte&nbsp;;
+    </p>
+
+    <h2 style="text-align: center">
+        La compagnie franche du Khatovar est faite pour vous&nbsp;!&nbsp;!&nbsp;!
+    </h2>
+
+    <h3>Ce que nous proposons&nbsp;?</h3>
+
+    <p>
+        C’est tout simple, terriblement efficace, succès garanti&nbsp;:
+    </p>
+    <ul>
+        <li>25 mercenaires de tous âges passionnés par le Moyen-Âge !</li>
+        <li>Des animations variées en continu toute la journée !</li>
+        <li>Des rires, des cris et de la bonne humeur !</li>
+        <li>Le tout sur un vaste camp vivant, entièrement ouvert au public ! (allez voir <a href="{{ path('khatovar_web_camp', {'atelier': 'campement'}) }}">notre campement</a>)&nbsp;!</li>
+    </ul>
+
+    <div class="container">
+        {% autoescape false %}
+            {{ asset('bundles/khatovarweb/photos/accueil/panoramique.jpg')|popup_picture('panorama') }}
+        {% endautoescape %}
+    </div>
+
+    <p>
+        <b>Vous pouvez sélectionner trois à quatre ateliers (au choix parmi une liste de huit, voir <a href="{{ path('khatovar_web_camp') }}">nos prestations</a>), dont un spectacle de combat époustouflant, de 30 minutes (voir la <a href="{{ path('khatovar_web_fight') }}">section combat</a>).</b>
+    </p>
+    <p>
+        Pendant toute la durée de votre fête, notre camp sera animé, vivant&nbsp;:
+    </p>
+    <ul>
+        <li>
+            deux animateurs seront présents sur chaque atelier pour assurer des démonstrations interactives et transmettre leur passion et leurs connaissances de l'artisanat,
+        </li>
+        <li>
+            le public pourra participer activement à toutes nos activités et repartir gratuitement avec un petit objet confectionné sur place (bracelet en cuir ou en maille, prénom calligraphié...),
+        </li>
+        <li>
+            les différents membres de la Compagnie vivront sur le camp, ce qui implique évidemment cuisine sur place (un vrai régal pour l'odorat et les papilles des curieux),
+        </li>
+        <li>
+            des échanges constants avec le public, nous venons pour partager notre passion et nous répondrons évidemment à toutes questions&nbsp;!
+        </li>
+    </ul>
+
+    <div class="container">
+        {% autoescape false %}
+            {{ 'http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/24/20110824132430-b226f525.jpg'|popup_picture('photo_small') }}
+            {{ 'http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/31/20110831130417-13c8bfc3.jpg'|popup_picture('photo_small') }}
+            {{ 'http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/24/20110824110846-222032b6.jpg'|popup_picture('photo_small') }}
+        {% endautoescape %}
+    </div>
+{% endblock %}

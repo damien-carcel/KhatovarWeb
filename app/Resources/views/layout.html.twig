@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8">
+
+    <title>{% block title %}{% endblock %}</title>
+
+    <link href="{{ asset('favicon.ico') }}" type="image/x-icon" rel="shortcut icon" />
+
+    <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame -->
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- pour le référencement -->
+    <meta name="description" content="Page web officielle de la compagnie franche du Khatovar" />
+    <meta name="keywords" lang="fr" content="association,compagnie,médiévale,moyen âge,anjou,maine et loire,angers,pays de la loire,fête,marché,animation,cuir,maille,combat,forge,herboristerie" />
+
+    {% block stylesheets %}
+    {% endblock %}
+
+    <!--[if lt IE 9]>
+    {% javascripts 'bundles/carceldocuments/js/respond.min.js'
+                   'bundles/carceldocuments/js/html5shiv.js'
+                   output='js/html5.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <![endif]-->
+
+    {% block javascript %}
+        {% javascripts 'bundles/carceldocuments/js/bootstrap.min.js' output='js/bootstrap.js' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+        {% javascripts 'bundles/carceldocuments/js/jquery-1.11.1.min.js' output='js/jquery.js' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+    {% endblock %}
+
+    <meta name="google-site-verification" content="NkCb17QwxepSCbwhx_9frREBH-0WuT7ahuv0om4RLUY" />
+</head>
+<body>
+
+<div class="{% block container %}{% endblock %}">
+
+    {% block header %}{% endblock %}
+
+    <section class="{% block sectionclass %}{% endblock %}">
+        {% for message in app.session.flashbag.get('notice') %}
+            <div class="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        {% block insection %}{% endblock %}
+    </section>
+
+    {% block footer %}{% endblock %}
+
+</div>
+</body>
+</html>

@@ -1,0 +1,159 @@
+{% extends 'KhatovarWebBundle::layout.html.twig' %}
+
+{% block inarticle %}
+    <p style="text-align: center">
+        <b>Voici les membres de notre compagnie&nbsp;:</b>
+    </p>
+
+    <div class="container">
+        <div class="trombi">
+            <div class="thumbnail"
+                 onmouseover="this.className='thumbnailover';"
+                 onmouseout="this.className='thumbnail';"
+                 onclick="location.href='{{ path('khatovar_web_members', {'name': 'Limite'}) }}';">
+                <img src="http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/31/20110831132312-64c8fc16.jpg" class="trombinoscope" alt="Limite, le Capitaine" /><br />
+                Limite, le Capitaine
+            </div>
+        </div>
+        <div class="trombi">
+            <div class="thumbnail"
+                 onmouseover="this.className='thumbnailover';"
+                 onmouseout="this.className='thumbnail';"
+                 onclick="location.href='{{ path('khatovar_web_members', {'name': 'Lechgoutte'}) }}';">
+                <img src="http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/24/20110824114403-958d9643.jpg" class="trombinoscope" alt="Lech’goutte" /><br />
+                Lech’goutte
+            </div>
+        </div>
+        <div class="trombi">
+            <div class="thumbnail"
+                 onmouseover="this.className='thumbnailover';"
+                 onmouseout="this.className='thumbnail';"
+                 onclick="location.href='{{ path('khatovar_web_members', {'name': 'Rognepied'}) }}';">
+                <img src="http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/24/20110824110713-9388236a.jpg" class="trombinoscope" alt="Rognepied" /><br />
+                Rognepied
+            </div>
+        </div>
+        <div class="trombi">
+            <div class="thumbnail"
+                 onmouseover="this.className='thumbnailover';"
+                 onmouseout="this.className='thumbnail';"
+                 onclick="location.href='{{ path('khatovar_web_members', {'name': 'Goutdefut'}) }}';">
+                <img src="http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/31/20110831125125-bacc29c7.jpg" class="trombinoscope" alt="Goût-de-fût" /><br />
+                Goût-de-fût
+            </div>
+        </div>
+        <div class="trombi">
+            <div class="thumbnail"
+                 onmouseover="this.className='thumbnailover';"
+                 onmouseout="this.className='thumbnail';"
+                 onclick="location.href='{{ path('khatovar_web_members', {'name': 'Arnica'}) }}';">
+                <img src="http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/24/20110824104937-fbd7849f.jpg" class="trombinoscope" alt="Arnica" /><br />
+                Arnica
+            </div>
+        </div>
+        <div class="trombi">
+            <div class="thumbnail"
+                 onmouseover="this.className='thumbnailover';"
+                 onmouseout="this.className='thumbnail';"
+                 onclick="location.href='{{ path('khatovar_web_members', {'name': 'Blanche'}) }}';">
+                <img src="http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/31/20110831122849-0fc0696f.jpg" class="trombinoscope" alt="Blanche" /><br />
+                Blanche
+            </div>
+        </div>
+        <div class="trombi">
+            <div class="thumbnail"
+                 onmouseover="this.className='thumbnailover';"
+                 onmouseout="this.className='thumbnail';"
+                 onclick="location.href='{{ path('khatovar_web_members', {'name': 'Matos'}) }}';">
+                <img src="http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/31/20110831122834-2bafdde4.jpg" class="trombinoscope" alt="Matos" /><br />
+                Matos
+            </div>
+        </div>
+        <div class="trombi">
+            <div class="thumbnail"
+                 onmouseover="this.className='thumbnailover';"
+                 onmouseout="this.className='thumbnail';"
+                 onclick="location.href='{{ path('khatovar_web_members', {'name': 'Contrepoids'}) }}';">
+                <img src="{{ asset('bundles/khatovarweb/photos/trombi/marc-portrait.jpg') }}" class="trombinoscope" alt="Contre-Poids" /><br />
+                Contre-Poids
+            </div>
+        </div>
+        <div class="trombi">
+            <div class="thumbnail"
+                 onmouseover="this.className='thumbnailover';"
+                 onmouseout="this.className='thumbnail';"
+                 onclick="location.href='{{ path('khatovar_web_members', {'name': 'Tetedebois'}) }}';">
+                <img src="http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/24/20110824105052-bf8824fd.jpg" class="trombinoscope" alt="Tête de bois" /><br />
+                Tête de bois
+            </div>
+        </div>
+        <div class="trombi">
+            <div class="thumbnail"
+                 onmouseover="this.className='thumbnailover';"
+                 onmouseout="this.className='thumbnail';"
+                 onclick="location.href='{{ path('khatovar_web_members', {'name': 'Khlakos'}) }}';">
+                <img src="{{ asset('bundles/khatovarweb/photos/trombi/suzanne.jpg') }}" class="trombinoscope" alt="Khlakös" /><br />
+                Khlakös
+            </div>
+        </div>
+        <div class="trombi">
+            <div class="thumbnail"
+                 onmouseover="this.className='thumbnailover';"
+                 onmouseout="this.className='thumbnail';"
+                 onclick="location.href='{{ path('khatovar_web_members', {'name': 'Krakote'}) }}';">
+                <img src="http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/24/20110824114333-7aabc461.jpg" class="trombinoscope" alt="Krakote" /><br />
+                Krakote
+            </div>
+        </div>
+        <div class="trombi">
+            <div class="thumbnail"
+                 onmouseover="this.className='thumbnailover';"
+                 onmouseout="this.className='thumbnail';"
+                 onclick="location.href='{{ path('khatovar_web_members', {'name': 'Volaille'}) }}';">
+                <img src="http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/31/20110831122756-1e133f92.jpg" class="trombinoscope" alt="Pépé Volaille" /><br />
+                Pépé Volaille
+            </div>
+        </div>
+        <div class="trombi">
+            <div class="thumbnail"
+                 onmouseover="this.className='thumbnailover';"
+                 onmouseout="this.className='thumbnail';"
+                 onclick="location.href='{{ path('khatovar_web_members', {'name': 'Mimi'}) }}';">
+                <img src="http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/31/20110831122842-b6e36349.jpg" class="trombinoscope" alt="Mimi" /><br />
+                Mimi
+            </div>
+        </div>
+        <div class="trombi">
+            <div class="thumbnail"
+                 onmouseover="this.className='thumbnailover';"
+                 onmouseout="this.className='thumbnail';"
+                 onclick="location.href='{{ path('khatovar_web_members', {'name': 'Varna'}) }}';">
+                <img src="{{ asset('bundles/khatovarweb/photos/trombi/viviane.jpg') }}" class="trombinoscope" alt="Varna" /><br />
+                Varna
+            </div>
+        </div>
+    </div>
+
+    <p style="text-align: center"><b>Veni, Vidi… mais pas Vici : les anciens</b></p>
+
+    <div class="container">
+        <div class="trombi">
+            <div class="thumbnail"
+                 onmouseover="this.className='thumbnailover';"
+                 onmouseout="this.className='thumbnail';"
+                 onclick="location.href='{{ path('khatovar_web_members', {'name': 'Kunu'}) }}';">
+                <img src="http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/24/20110824105004-6f8e6dbe.jpg" class="trombinoscope" alt="Kunu" /><br />
+                Kunu
+            </div>
+        </div>
+        <div class="trombi">
+            <div class="thumbnail"
+                 onmouseover="this.className='thumbnailover';"
+                 onmouseout="this.className='thumbnail';"
+                 onclick="location.href='{{ path('khatovar_web_members', {'name': 'Mickael'}) }}';">
+                <img src="{{ asset('bundles/khatovarweb/photos/trombi/mickael.jpg') }}" class="trombinoscope" alt="Mickael" /><br />
+                Mickael
+            </div>
+        </div>
+    </div>
+{% endblock %}
