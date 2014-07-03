@@ -1,11 +1,10 @@
-What is KhatovarWeb?
-==================
+# What is KhatovarWeb?
 
+This repository contain the source code for the web site of my medieval association : [“La compagnie franche du Khatovar”]()
 
+#TODO
 
-# INSTALLATION
-
-
+**This is a work in progress. The content is for the moment the one of the old website, mostly static, and will progressively evolve to a real modern PHP application.**
 
 # License
 
