@@ -1,0 +1,115 @@
+{% extends "CarcelDocumentsBundle::layout.html.twig" %}
+
+{% block insection %}
+    <nav class="col-lg-12">
+        {% if currentFolder.id != 0 %}
+            <h2 class="path">
+                {% for folder in previousFolders %}
+                    <a href="{{ path('carcel_documents_homepage', {'folder': folder.id}) }}">
+                        {{ folder.name }}
+                    </a>
+                    →
+                {% endfor %}
+                {{ currentFolder.name }}
+            </h2>
+        {% else %}
+            <h2 class="path">–</h2>
+        {% endif %}
+        <h1>{{ currentFolder.name }}</h1>
+    </nav>
+
+    {% if is_granted('ROLE_UPLOADER') %}
+        <aside class="col-md-2">
+            <div class="btn-group">
+                <a href="{{ path('carcel_documents_add_folder', {'parent': currentFolder.id}) }}"
+                   class="text-center btn btn-default">Nouveau dossier</a>
+            </div>
+            <div class="btn-group">
+                <a href="{{ path('carcel_documents_add_file', {'folder': currentFolder.id}) }}"
+                   class="text-center btn btn-default">Ajouter un fichier</a>
+            </div>
+        </aside>
+    {% endif %}
+    <article class="col-md-{% if is_granted('ROLE_UPLOADER') %}10{% else %}12{% endif %} table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Type</th>
+                    <th>Taille</th>
+                    <th>Dernière modification</th>
+                    {% if is_granted('ROLE_UPLOADER') %}
+                        <th>Actions</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for folder in folders %}
+                <tr>
+                    <td>
+                        <a href="{{ path('carcel_documents_homepage', {'folder': folder.id}) }}">
+                            {{ folder.name }}
+                        </a>
+                    </td>
+                    <td>
+                        Folder
+                    </td>
+                    <td>
+                        {{ folder.files|length + folder.children|length }} éléments
+                    </td>
+                    <td>
+                        {{ folder.modified|date("d/m/Y à H:i") }}
+                    </td>
+                    {% if is_granted('ROLE_UPLOADER') %}
+                        <td>
+                            <a href="{{ path('carcel_documents_rename_folder', {'folder': folder.id}) }}">
+                                Renommer
+                            </a>
+                            -
+                            <a href="{{ path('carcel_documents_move_folder', {'folder': folder.id}) }}">
+                                Déplacer
+                            </a>
+                            -
+                            <a href="{{ path('carcel_documents_remove_folder', {'folder': folder.id}) }}">
+                                Supprimer
+                            </a>
+                        </td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+                {% for file in currentFolder.files %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('carcel_documents_share', {'file': file.id}) }}">{{ file.name }}</a>
+                        </td>
+                        <td>
+                            {{ file.mime }}
+                        </td>
+                        <td>
+                            {{ file.size }}
+                        </td>
+                        <td>
+                            {{ file.modified|date("d/m/Y à H:i") }}
+                        </td>
+
+                        {% if is_granted('ROLE_UPLOADER') %}
+                            <td>
+                                <a href="{{ path('carcel_documents_rename_file', {'file': file.id}) }}">
+                                    Renommer
+                                </a>
+                                -
+                                <a href="{{ path('carcel_documents_move_file', {'file': file.id}) }}">
+                                    Déplacer
+                                </a>
+                                -
+                                <a href="{{ path('carcel_documents_remove_file', {'file': file.id}) }}">
+                                    Supprimer
+                                </a>
+                            </td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </article>
+{% endblock %}

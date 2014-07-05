@@ -1,0 +1,22 @@
+<a href="{{ path('carcel_documents_homepage') }}"
+   class="btn btn-default pull-right">
+    Retour
+</a>
+
+<h1>Profil de l’utilisateur {{ app.user.username }}</h1>
+
+<div class="fos_user_user_show well">
+    <p>
+        {{ 'profile.show.username'|trans({}, 'FOSUserBundle') }}: {{ user.username }}
+    </p>
+
+    <p>
+        {{ 'profile.show.email'|trans({}, 'FOSUserBundle') }}: {{ user.email }}
+    </p>
+    <p>
+        <a href="{{ path('fos_user_profile_edit') }}">Éditer le profil</a>
+    </p>
+    <p>
+        <a href="{{ path('fos_user_change_password') }}">Changer le mot de passe</a>
+    </p>
+</div>

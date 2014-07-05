@@ -3,9 +3,10 @@ security:
         FOS\UserBundle\Model\UserInterface: sha512
 
     role_hierarchy:
+        ROLE_EDITOR:        [ROLE_USER]
         ROLE_VIEWER:        [ROLE_USER]
         ROLE_UPLOADER:      [ROLE_VIEWER]
-        ROLE_ADMIN:         [ROLE_UPLOADER]
+        ROLE_ADMIN:         [ROLE_UPLOADER, ROLE_EDITOR]
         ROLE_SUPER_ADMIN:   [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     providers:

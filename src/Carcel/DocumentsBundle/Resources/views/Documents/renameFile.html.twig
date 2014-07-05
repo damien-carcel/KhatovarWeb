@@ -1,0 +1,14 @@
+{% extends "CarcelDocumentsBundle::layout.html.twig" %}
+
+{% block insection %}
+
+    <a href="{{ path('carcel_documents_homepage', {'folder': previous}) }}"
+       class="btn btn-default pull-right">
+        Retour
+    </a>
+
+    <h2>Renommer un fichier</h2>
+
+    {% include "CarcelDocumentsBundle:Documents:form_name.html.twig" %}
+
+{% endblock %}
