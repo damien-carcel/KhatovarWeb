@@ -30,7 +30,7 @@ use FOS\UserBundle\Entity\User as BaseUser;
  * User.
  *
  * @ORM\Entity
- * @ORM\Table(name="carcel_user_user")
+ * @ORM\Table(name="carcel_user_users")
  */
 class User extends BaseUser
 {
