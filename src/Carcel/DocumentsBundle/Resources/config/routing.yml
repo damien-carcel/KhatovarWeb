@@ -8,13 +8,13 @@ carcel_documents_share:
     pattern: /share/{file}
     defaults: { _controller: CarcelDocumentsBundle:Documents:share }
     requirements:
-        fileId: \d+
+        file: \d+
 
 carcel_documents_add_folder:
     pattern: /addFolder/{parent}
     defaults: { _controller: CarcelDocumentsBundle:Documents:addFolder }
     requirements:
-        folder: \d+
+        parent: \d+
 
 carcel_documents_add_file:
     pattern: /addFile/{folder}

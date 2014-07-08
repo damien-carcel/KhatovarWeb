@@ -23,21 +23,26 @@
 
 namespace Carcel\UserBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-use FOS\UserBundle\Entity\User as BaseUser;
+use Doctrine\ORM\EntityRepository;
 
 /**
- * User.
- *
- * @ORM\Entity(repositoryClass="Carcel\UserBundle\Entity\UserRepository")
- * @ORM\Table(name="carcel_user_users")
+ * UserRepository
  */
-class User extends BaseUser
+class UserRepository extends EntityRepository
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * Retrieve all users but one.
+     *
+     * @param int $id The user we don’t want to be returned.
+     * @return array
      */
-    protected $id;
+    public function getAllBut($id)
+    {
+        $query = $this->createQueryBuilder('u')
+            ->where('u.id != :id')
+            ->setParameter('id', $id)
+            ->getQuery();
+
+        return $query->getResult();
+    }
 }

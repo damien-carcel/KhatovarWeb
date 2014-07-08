@@ -34,23 +34,24 @@
             </div>
         {% endfor %}
     {% endfor %}
-
-    <div class="row">
-        <div class="col-lg-12">
-            {% block fos_user_content %}
-            {% endblock fos_user_content %}
-        </div>
+    <div class="col-lg-12">
+        {% block fos_user_content %}
+        {% endblock fos_user_content %}
     </div>
 {% endblock %}
 
 {% block footer %}
     <footer class="panel-footer text-center">
         <div class="col-lg-12">
-            {{ "now"|date("d/m/Y - H:m") }}
-            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+            {{ 'now'|date('d/m/Y - H:m') }}
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                 |
                 {{ 'layout.logged_in_as'|trans({'%username%': ''}, 'FOSUserBundle') }}<a href="{{ path('fos_user_profile_show') }}">{{ app.user.username }}</a>
                 |
+                {% if is_granted('ROLE_SUPER_ADMIN') %}
+                    <a href="{{ path('carcel_user_admin') }}">Page d’adminitration</a>
+                    |
+                {% endif %}
                 <a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a>
             {% endif %}
         </div>
