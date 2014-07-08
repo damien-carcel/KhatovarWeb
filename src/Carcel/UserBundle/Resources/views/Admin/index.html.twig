@@ -18,8 +18,8 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                {% for user in users %}
+            {% for user in users %}
+                <tr>
                     <td class="col-lg-1">
                         <a href="{{ path('carcel_user_admin_show', {'user': user.id}) }}">{{ user.username }}</a>
                     </td>
@@ -31,8 +31,8 @@
                         |
                         <a href="{{ path('carcel_user_admin_remove', {'user': user.id}) }}">Supprimer l’utilisateur</a>
                     </td>
-                {% endfor %}
-            </tr>
+                </tr>
+            {% endfor %}
             </tbody>
         </table>
     </article>
