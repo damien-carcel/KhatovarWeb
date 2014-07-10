@@ -21,13 +21,13 @@
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
-namespace Khatovar\WebBundle\Twig;
+namespace Khatovar\WebBundle\Services\Twig;
 
 /**
  * Twig extension for KhatovarWebBundle.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
- * @package Khatovar\WebBundle\Twig
+ * @package Khatovar\WebBundle\Services\Twig
  */
 class KhatovarExtension extends \Twig_Extension
 {

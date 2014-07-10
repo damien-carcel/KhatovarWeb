@@ -1,6 +1,6 @@
 # What is KhatovarWeb?
 
-This repository contain the source code for the web site of my medieval association : [“La compagnie franche du Khatovar”]()
+This repository contain the source code for the web site of the medieval association : [“La compagnie franche du Khatovar”](http://www.compagniefranchedukhatovar.fr/)
 
 #TODO
 

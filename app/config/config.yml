@@ -93,3 +93,10 @@ fos_user:
                 address:        resetting@documents.com
                 sender_name:    Documents admin
 
+# TinyMCE configuration
+stfalcon_tinymce:
+    selector: ".tinymce"
+    language: %locale%
+    theme:
+        simple:
+            theme: "modern"

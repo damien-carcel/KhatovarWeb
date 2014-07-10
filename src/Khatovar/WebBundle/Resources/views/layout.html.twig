@@ -49,6 +49,11 @@
         </div>
     </nav>
     <article>
+        {% for message in app.session.flashbag.get('notice') %}
+            <div class="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
         {% block inarticle %}{% endblock %}
     </article>
 {% endblock %}

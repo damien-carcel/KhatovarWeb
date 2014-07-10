@@ -1,0 +1,7 @@
+{% extends 'KhatovarWebBundle::layout.html.twig' %}
+
+{% block inarticle %}
+    {% autoescape false %}
+    {{ content }}
+    {% endautoescape %}
+{% endblock %}

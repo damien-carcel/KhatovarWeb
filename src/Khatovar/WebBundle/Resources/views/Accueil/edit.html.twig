@@ -1,0 +1,9 @@
+{% extends '@KhatovarWeb/layout.html.twig' %}
+
+{% block inarticle %}
+    {{ form_start(form) }}
+    {{ form_row(form.content, {'attr': {'class': 'tinymce'}}) }}
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+    {{ tinymce_init() }}
+{% endblock %}

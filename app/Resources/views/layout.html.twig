@@ -45,12 +45,6 @@
     {% block header %}{% endblock %}
 
     <section class="{% block sectionclass %}{% endblock %}">
-        {% for message in app.session.flashbag.get('notice') %}
-            <div class="alert">
-                {{ message }}
-            </div>
-        {% endfor %}
-
         {% block insection %}{% endblock %}
     </section>
 
