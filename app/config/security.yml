@@ -22,9 +22,7 @@ security:
             form_login:
                 provider: fos_userbundle
                 csrf_provider: form.csrf_provider
-                always_use_default_target_path: true
-                default_target_path: /documents
-                target_path_parameter: _target_path
+                use_referer: true
             logout:
                 path:       fos_user_security_logout
                 target: /

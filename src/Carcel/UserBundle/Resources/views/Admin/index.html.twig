@@ -1,7 +1,13 @@
 {% extends "CarcelUserBundle::layout.html.twig" %}
 
 {% block fos_user_content %}
-    <a href="{{ path('carcel_documents_homepage') }}"
+    <a href="
+    {% if previous is defined %}
+        {{ previous }}
+    {% else %}
+        {{ path('carcel_documents_homepage') }}
+    {% endif %}
+    "
        class="btn btn-default pull-right">
         Retour
     </a>

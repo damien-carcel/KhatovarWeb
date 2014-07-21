@@ -61,13 +61,7 @@ class AdminController extends Controller
      */
     public function showProfileAction(User $user)
     {
-        return $this->render(
-            'CarcelUserBundle:Admin:show.html.twig',
-            array(
-                'user' => $user,
-                'previous'
-            )
-        );
+        return $this->render('CarcelUserBundle:Admin:show.html.twig', array('user' => $user));
     }
 
     /**
