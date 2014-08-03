@@ -189,6 +189,24 @@ article {
     padding-right: 60px;
 }
 
+aside.edit {
+    background: url("../images/scroll_center.png");
+    padding: 10px;
+    width: 250px;
+    height: 500px;
+    position: fixed;
+    left: 20px;
+    top: 30px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 5px #696969;
+}
+
+aside .photo_title {
+    text-align: center;
+    font-weight: bold;
+    font-size: 110%;
+}
+
 article ul {
     list-style: inherit;
 }
@@ -200,6 +218,10 @@ article ul {
 
     section {
         background: none;
+    }
+
+    aside {
+        display: none;
     }
 }
 
@@ -356,15 +378,15 @@ p {
     margin-bottom: 0.5em;
 }
 
-article a {
+article a, footer a {
     text-decoration: none;
     font-weight: bold;
 }
 
-article a:link {color: #AC3333;}
-article a:visited {color: #AC3333;}
-article a:hover {color: #936f00;}
-article a:active {color: #AC3333;}
+article a:link, footer a:link {color: #AC3333;}
+article a:visited, footer a:visited {color: #AC3333;}
+article a:hover, footer a:hover {color: #936f00;}
+article a:active, footer a:active {color: #AC3333;}
 
 *.clickable {
     cursor: pointer;

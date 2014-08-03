@@ -1,6 +1,12 @@
-{% extends '@KhatovarWeb/layout.html.twig' %}
+{% extends 'KhatovarWebBundle::layout.html.twig' %}
 
 {% block inarticle %}
+    <p>
+        <a href="{{ path('khatovar_web_homepage_list') }}">
+            Sélectionner une nouvelle page d’accueil
+        </a>
+    </p>
+
     {{ form_start(form) }}
     {{ form_row(form.content, {'attr': {'class': 'tinymce'}}) }}
     {{ form_rest(form) }}

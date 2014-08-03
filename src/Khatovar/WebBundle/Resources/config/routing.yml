@@ -24,10 +24,6 @@ khatovar_web_homepage_delete:
 
 
 
-khatovar_web_homepage_old:
-    path:       /accueil_old
-    defaults:   { _controller: KhatovarWebBundle:Default:index }
-
 khatovar_web_camp:
     path:       /camp/{atelier}
     defaults:   { _controller: KhatovarWebBundle:Default:camp, atelier: 'introduction' }

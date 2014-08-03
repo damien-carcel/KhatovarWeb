@@ -43,7 +43,7 @@ class AccueilController extends Controller
      */
     public function indexAction()
     {
-        $homepageContent = $this->getDoctrine()->getManager()
+        $homepage = $this->getDoctrine()->getManager()
             ->getRepository('KhatovarWebBundle:Homepage')
             ->findOneBy(array('active' => true));
 
@@ -53,7 +53,11 @@ class AccueilController extends Controller
             'KhatovarWebBundle:Accueil:index.html.twig',
             array(
                 'content' => $translations->imageTranslate(
-                    $homepageContent->getContent()
+                    $homepage->getContent()
+                ),
+                'page_to_edit' => $this->generateUrl(
+                    'khatovar_web_homepage_edit',
+                    array('homepage' => $homepage->getId())
                 )
             )
         );
@@ -128,9 +132,15 @@ class AccueilController extends Controller
         );
     }
 
+    /**
+     * Return a list of all Homepage stored in database, and allow to
+     * activate one of them.
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function listAction()
     {
-        return $this->redirect($this->generateUrl('khatovar_web_homepage'));
+        return $this->render('KhatovarWebBundle:Accueil:list.html.twig');
     }
 
     public function deleteAction($homepage)

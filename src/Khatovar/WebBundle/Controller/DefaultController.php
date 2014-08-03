@@ -34,14 +34,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class DefaultController extends Controller
 {
     /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function indexAction()
-    {
-        return $this->render('KhatovarWebBundle:Default:accueil.html.twig');
-    }
-
-    /**
      * @param int $atelier
      * @return \Symfony\Component\HttpFoundation\Response
      */

@@ -48,6 +48,11 @@
             {% embed 'KhatovarWebBundle:Default:menu.html.twig' %}{% endembed %}
         </div>
     </nav>
+    {% if is_granted('ROLE_EDITOR') %}
+        <aside class="edit">
+            {{ render(controller('KhatovarWebBundle:Photo:index')) }}
+        </aside>
+    {% endif %}
     <article>
         {% for message in app.session.flashbag.get('notice') %}
             <div class="alert">
@@ -67,9 +72,9 @@
                     |
                     <a href="{{ path('carcel_user_admin') }}">Page d’adminitration</a>
                 {% endif %}
-                {% if is_granted('ROLE_EDITOR') %}
+                {% if is_granted('ROLE_EDITOR') and page_to_edit is defined %}
                     |
-                    <a href="{{ path('carcel_user_admin') }}">Édition de la page</a>
+                    <a href="{{ page_to_edit }}">Édition de la page</a>
                 {% endif %}
                 |
                 <a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a>

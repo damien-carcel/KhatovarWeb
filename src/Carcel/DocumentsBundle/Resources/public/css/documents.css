@@ -46,6 +46,9 @@ aside {
 
 .panel-footer {
     background-color: #691900;
+}
+
+.panel-footer, footer a, footer a:active, footer a:hover, footer a:visited {
     color: white;
 }
 

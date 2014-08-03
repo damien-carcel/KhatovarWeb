@@ -21,7 +21,7 @@ class HomepageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('content', 'textarea')
+            ->add('content', 'textarea', array('label' => false))
             ->add('submit', 'submit', array('label' => 'Enregistrer'))
         ;
     }

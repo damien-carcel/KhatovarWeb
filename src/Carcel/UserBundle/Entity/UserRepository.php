@@ -41,6 +41,7 @@ class UserRepository extends EntityRepository
         $query = $this->createQueryBuilder('u')
             ->where('u.id != :id')
             ->setParameter('id', $id)
+            ->orderBy('u.username')
             ->getQuery();
 
         return $query->getResult();
