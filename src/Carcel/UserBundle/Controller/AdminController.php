@@ -76,10 +76,10 @@ class AdminController extends Controller
         $roles = $this->container->getParameter('security.role_hierarchy.roles');
         // And also the actual user's role
         $userRoles = $user->getRoles();
-        $choices = array();
+        $choices['ROLE_USER'] = 'ROLE_USER';
         foreach ($roles as $key => $role) {
-            if ($role[0] != 'ROLE_SUPER_ADMIN') {
-                $choices[$key] = $role[0];
+            if ($key != 'ROLE_SUPER_ADMIN') {
+                $choices[$key] = $key;
             }
             if ($role[0] == $userRoles[0]) {
                 $data = $key;

@@ -3,9 +3,9 @@ security:
         FOS\UserBundle\Model\UserInterface: sha512
 
     role_hierarchy:
-        ROLE_EDITOR:        [ROLE_USER]
         ROLE_VIEWER:        [ROLE_USER]
         ROLE_UPLOADER:      [ROLE_VIEWER]
+        ROLE_EDITOR:        [ROLE_VIEWER]
         ROLE_ADMIN:         [ROLE_UPLOADER, ROLE_EDITOR]
         ROLE_SUPER_ADMIN:   [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
@@ -23,6 +23,7 @@ security:
                 provider: fos_userbundle
                 csrf_provider: form.csrf_provider
                 use_referer: true
+                use_forward: true
             logout:
                 path:       fos_user_security_logout
                 target: /

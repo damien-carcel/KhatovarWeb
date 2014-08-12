@@ -48,7 +48,7 @@
 {% block footer %}
     <footer class="panel-footer text-center">
         <div class="col-lg-12">
-            {{ 'now'|date('d/m/Y - H:m') }}
+            {{ 'now'|date('d/m/Y - H:i') }}
             {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                 |
                 {{ 'layout.logged_in_as'|trans({'%username%': ''}, 'FOSUserBundle') }}<a href="{{ path('fos_user_profile_show') }}">{{ app.user.username }}</a>
