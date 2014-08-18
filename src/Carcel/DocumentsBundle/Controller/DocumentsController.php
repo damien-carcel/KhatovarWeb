@@ -113,7 +113,7 @@ class DocumentsController extends Controller
      *
      * @param Folder $parent The folder inside which we want to create a new one.
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
-     * @Secure(roles="ROLE_UPLOADER")
+     * @Secure(roles="ROLE_ADMIN")
      */
     public function addFolderAction(Folder $parent)
     {
@@ -227,7 +227,7 @@ class DocumentsController extends Controller
      *
      * @param Folder $folder The folder to move.
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
-     * @Secure(roles="ROLE_UPLOADER")
+     * @Secure(roles="ROLE_ADMIN")
      */
     public function moveFolderAction(Folder $folder)
     {
@@ -286,7 +286,7 @@ class DocumentsController extends Controller
      *
      * @param File $file The file to move.
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
-     * @Secure(roles="ROLE_UPLOADER")
+     * @Secure(roles="ROLE_ADMIN")
      */
     public function moveFileAction(File $file)
     {
@@ -345,7 +345,7 @@ class DocumentsController extends Controller
      *
      * @param Folder $folder The Folder instance we want rename.
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
-     * @Secure(roles="ROLE_UPLOADER")
+     * @Secure(roles="ROLE_ADMIN")
      */
     public function renameFolderAction(Folder $folder)
     {
@@ -389,7 +389,7 @@ class DocumentsController extends Controller
      *
      * @param File $file The File instance we want to rename.
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
-     * @Secure(roles="ROLE_UPLOADER")
+     * @Secure(roles="ROLE_ADMIN")
      */
     public function renameFileAction(File $file)
     {
@@ -433,7 +433,7 @@ class DocumentsController extends Controller
      *
      * @param Folder $folder The folder to delete.
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
-     * @Secure(roles="ROLE_UPLOADER")
+     * @Secure(roles="ROLE_ADMIN")
      */
     public function removeFolderAction(Folder $folder)
     {
@@ -471,7 +471,7 @@ class DocumentsController extends Controller
      *
      * @param File $file The file to delete.
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
-     * @Secure(roles="ROLE_UPLOADER")
+     * @Secure(roles="ROLE_ADMIN")
      */
     public function removeFileAction(File $file)
     {

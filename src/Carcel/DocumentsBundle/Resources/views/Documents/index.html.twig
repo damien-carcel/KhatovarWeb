@@ -20,10 +20,12 @@
 
     {% if is_granted('ROLE_UPLOADER') %}
         <aside class="col-md-2">
-            <div class="btn-group">
-                <a href="{{ path('carcel_documents_add_folder', {'parent': currentFolder.id}) }}"
-                   class="text-center btn btn-default">Nouveau dossier</a>
-            </div>
+            {% if is_granted('ROLE_ADMIN') %}
+                <div class="btn-group">
+                    <a href="{{ path('carcel_documents_add_folder', {'parent': currentFolder.id}) }}"
+                       class="text-center btn btn-default">Nouveau dossier</a>
+                </div>
+            {% endif %}
             <div class="btn-group">
                 <a href="{{ path('carcel_documents_add_file', {'folder': currentFolder.id}) }}"
                    class="text-center btn btn-default">Ajouter un fichier</a>
@@ -38,7 +40,7 @@
                     <th>Type</th>
                     <th>Taille</th>
                     <th>Dernière modification</th>
-                    {% if is_granted('ROLE_UPLOADER') %}
+                    {% if is_granted('ROLE_ADMIN') %}
                         <th>Actions</th>
                     {% endif %}
                 </tr>
@@ -60,7 +62,7 @@
                     <td>
                         {{ folder.modified|date("d/m/Y à H:i") }}
                     </td>
-                    {% if is_granted('ROLE_UPLOADER') %}
+                    {% if is_granted('ROLE_ADMIN') %}
                         <td>
                             <a href="{{ path('carcel_documents_rename_folder', {'folder': folder.id}) }}">
                                 Renommer
@@ -92,7 +94,7 @@
                             {{ file.modified|date("d/m/Y à H:i") }}
                         </td>
 
-                        {% if is_granted('ROLE_UPLOADER') %}
+                        {% if is_granted('ROLE_ADMIN') %}
                             <td>
                                 <a href="{{ path('carcel_documents_rename_file', {'file': file.id}) }}">
                                     Renommer

@@ -82,7 +82,7 @@ class AdminController extends Controller
                 $choices[$key] = $key;
             }
             if ($role[0] == $userRoles[0]) {
-                $data = $key;
+                $data = $role[0];
             }
         }
 
