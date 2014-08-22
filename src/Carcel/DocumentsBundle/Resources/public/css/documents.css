@@ -18,9 +18,10 @@ a:active {
     text-decoration:none;
 }
 
-header a, header a:hover, header a:active,
-footer a, footer a:hover, footer a:active {
-    color: #f5f5f5;
+header a, header a:hover, header a:active, header a:visited,
+footer a, footer a:hover, footer a:active, footer a:visited,
+.panel-footer {
+    color: white;
 }
 
 section {
@@ -46,10 +47,6 @@ aside {
 
 .panel-footer {
     background-color: #691900;
-}
-
-.panel-footer, footer a, footer a:active, footer a:hover, footer a:visited {
-    color: white;
 }
 
 .container-fluid {
