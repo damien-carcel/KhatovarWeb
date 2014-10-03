@@ -209,6 +209,7 @@ aside .photo_title {
 
 article ul {
     list-style: inherit;
+    margin-left: 20px;
 }
 
 @media all and (max-width: 990px) {

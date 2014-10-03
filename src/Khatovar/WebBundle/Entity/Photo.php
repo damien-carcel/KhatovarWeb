@@ -3,6 +3,7 @@
 namespace Khatovar\WebBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -10,6 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="khatovar_web_photos")
  * @ORM\Entity(repositoryClass="Khatovar\WebBundle\Entity\PhotoRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Photo
 {
@@ -23,15 +25,8 @@ class Photo
     private $id;
 
     /**
-     * @var string
+     * The alternate text to display.
      *
-     * @ORM\Column(name="name", type="string", length=255)
-     * @Assert\NotBlank()
-     * @Assert\Length(max="255")
-     */
-    private $name;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="alt", type="string", length=255)
@@ -41,15 +36,170 @@ class Photo
     private $alt;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Khatovar\WebBundle\Entity\Homepage", inversedBy="photos")
+     * The CSS class used for resizing.
+     *
+     * @var string
+     *
+     * @ORM\Column(name="class", type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(max="255")
      */
-    private $homepage;
+    private $size;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Khatovar\WebBundle\Entity\Member", inversedBy="photos")
+     * The section of the website the photo is attached to.
+     *
+     * @var array
+     *
+     * @ORM\Column(name="entity", type="array")
      */
-    private $member;
+    private $entity;
 
+    /**
+     * The location of the file on the server.
+     *
+     * @var string
+     *
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    public $path;
+
+    /**
+     * Temporary attribute to remember the file path when deleting it.
+     *
+     * @var string
+     */
+    private $temp;
+
+    /**
+     * @var UploadedFile
+     *
+     * @Assert\File(maxSize="8000000")
+     */
+    private $file;
+
+
+    /**
+     * Get file.
+     *
+     * @return UploadedFile
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    /**
+     * Set file.
+     *
+     * @param UploadedFile $file
+     */
+    public function setFile(UploadedFile $file = null)
+    {
+        $this->file = $file;
+
+        // If there already is a path, it is stored in the $temp
+        // attribute in case of a future deletion
+        if ($this->path) {
+            $this->temp = $this->path;
+            $this->path = null;
+        } else {
+            $this->path = 'initial';
+        }
+    }
+
+    /**
+     * Set the name of the file before uploading it.
+     *
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function preUpload()
+    {
+        if (!is_null($this->file)) {
+            // The photo is named according to the time stamp of the upload.
+            $this->path = 'photo-' . time() . '.'
+                . $this->getFile()->guessExtension();
+        }
+    }
+
+    /**
+     * Upload the file on the server.
+     *
+     * @ORM\PostPersist()
+     * @ORM\PostUpdate()
+     */
+    public function upload()
+    {
+        if (is_null($this->getFile())) {
+            return;
+        }
+
+        $this->getFile()->move($this->getUploadRootDir(), $this->path);
+
+        // check if we have an old image, and then delete it
+        if (isset($this->temp)) {
+            unlink($this->getUploadRootDir().'/'.$this->temp);
+            $this->temp = null;
+        }
+        $this->file = null;
+    }
+
+    /**
+     * @ORM\PostRemove()
+     */
+    public function removeUpload()
+    {
+        $file = $this->getAbsolutePath();
+        if ($file) {
+            unlink($file);
+        }
+    }
+
+    /**
+     * Return the absolute path to the file.
+     *
+     * @return null|string
+     */
+    public function getAbsolutePath()
+    {
+        return is_null($this->path)
+            ? null
+            : $this->getUploadRootDir() . '/' . $this->path;
+    }
+
+    /**
+     * Return a relative path to the file.
+     *
+     * @return null|string
+     */
+    public function getWebPath()
+    {
+        return is_null($this->path)
+            ? null
+            : $this->getUploadDir() . '/' . $this->path;
+    }
+
+    /**
+     * Return the absolute path of the directory containing the file.
+     *
+     * @return string
+     */
+    protected function getUploadRootDir()
+    {
+        return __DIR__ . '/../../../../web/' . $this->getUploadDir();
+    }
+
+    /**
+     * Return the relative path of the directory containing the file.
+     * Useful for linking the file inside html page.
+     *
+     * @return string
+     */
+    protected function getUploadDir()
+    {
+        return 'uploaded/photos';
+    }
 
     /**
      * Get id
@@ -59,29 +209,6 @@ class Photo
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set name
-     *
-     * @param string $name
-     * @return Photo
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
     }
 
     /**
@@ -108,48 +235,71 @@ class Photo
     }
 
     /**
-     * Set homepage
+     * Set size
      *
-     * @param \Khatovar\WebBundle\Entity\Homepage $homepage
+     * @param string $size
      * @return Photo
      */
-    public function setHomepage(\Khatovar\WebBundle\Entity\Homepage $homepage = null)
+    public function setSize($size)
     {
-        $this->homepage = $homepage;
+        $this->size = $size;
 
         return $this;
     }
 
     /**
-     * Get homepage
+     * Get size
      *
-     * @return \Khatovar\WebBundle\Entity\Homepage
+     * @return string
      */
-    public function getHomepage()
+    public function getSize()
     {
-        return $this->homepage;
+        return $this->size;
     }
 
     /**
-     * Set member
+     * Set path
      *
-     * @param \Khatovar\WebBundle\Entity\Member $member
+     * @param string $path
      * @return Photo
      */
-    public function setMember(\Khatovar\WebBundle\Entity\Member $member = null)
+    public function setPath($path)
     {
-        $this->member = $member;
+        $this->path = $path;
 
         return $this;
     }
 
     /**
-     * Get member
+     * Get path
      *
-     * @return \Khatovar\WebBundle\Entity\Member
+     * @return string
      */
-    public function getMember()
+    public function getPath()
     {
-        return $this->member;
+        return $this->path;
+    }
+
+    /**
+     * Set entity
+     *
+     * @param array $entity
+     * @return Photo
+     */
+    public function setEntity($entity)
+    {
+        $this->entity = $entity;
+
+        return $this;
+    }
+
+    /**
+     * Get entity
+     *
+     * @return array
+     */
+    public function getEntity()
+    {
+        return $this->entity;
     }
 }

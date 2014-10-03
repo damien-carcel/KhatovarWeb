@@ -24,6 +24,7 @@
 namespace Carcel\DocumentsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesser;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -250,8 +251,8 @@ class File
      */
     public function getMime()
     {
-        $file = new UploadedFile($this->getPath(), $this->name);
-        return $file->getMimeType();
+        $guesser = MimeTypeGuesser::getInstance();
+        return $guesser->guess($this->getPath());
     }
 
     /**

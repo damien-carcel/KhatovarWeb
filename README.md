@@ -4,7 +4,7 @@ This repository contain the source code for the web site of the medieval associa
 
 #TODO
 
-**This is a work in progress. The content is for the moment the one of the old website, mostly static, and will progressively evolve to a real modern PHP application.**
+**This is a work in progress. The content is mostly the one of the old, static website. It will progressively evolve to a real modern PHP application.**
 
 # License
 

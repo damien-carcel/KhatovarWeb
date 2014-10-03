@@ -137,13 +137,19 @@ class AccueilController extends Controller
      * activate one of them.
      *
      * @return \Symfony\Component\HttpFoundation\Response
+     * @Secure(roles="ROLE_EDITOR")
      */
     public function listAction()
     {
         return $this->render('KhatovarWebBundle:Accueil:list.html.twig');
     }
 
-    public function deleteAction($homepage)
+    /**
+     * Delete a homepage.
+     *
+     * @param Homepage $homepage
+     */
+    public function deleteAction(Homepage $homepage)
     {
         //
     }

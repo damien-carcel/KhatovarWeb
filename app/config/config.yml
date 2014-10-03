@@ -85,12 +85,12 @@ fos_user:
         confirmation:
             enabled:    true
             from_email:
-                address:        registration@documents.com
+                address:        noreply@compagniefranchedukhatovar.fr
                 sender_name:    Documents admin
     resetting:
         email:
             from_email:
-                address:        resetting@documents.com
+                address:        noreply@compagniefranchedukhatovar.fr
                 sender_name:    Documents admin
 
 # TinyMCE configuration

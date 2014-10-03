@@ -34,6 +34,15 @@ class Member
     /**
      * @var string
      *
+     * @ORM\Column(name="portrait", type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(max="255")
+     */
+    private $portrait;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="rank", type="string", length=255)
      * @Assert\Length(max="255")
      */
@@ -112,6 +121,14 @@ class Member
      * @ORM\OneToOne(targetEntity="Carcel\UserBundle\Entity\User")
      */
     private $owner;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="active", type="boolean")
+     * @Assert\Length(max="255")
+     */
+    private $active;
 
 
     /**
@@ -415,5 +432,51 @@ class Member
     public function getOwner()
     {
         return $this->owner;
+    }
+
+    /**
+     * Set portrait
+     *
+     * @param string $portrait
+     * @return Member
+     */
+    public function setPortrait($portrait)
+    {
+        $this->portrait = $portrait;
+
+        return $this;
+    }
+
+    /**
+     * Get portrait
+     *
+     * @return string
+     */
+    public function getPortrait()
+    {
+        return $this->portrait;
+    }
+
+    /**
+     * Set active
+     *
+     * @param bool $active
+     * @return Member
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+
+        return $this;
+    }
+
+    /**
+     * Get active
+     *
+     * @return bool
+     */
+    public function getActive()
+    {
+        return $this->active;
     }
 }

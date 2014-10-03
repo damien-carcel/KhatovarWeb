@@ -48,9 +48,9 @@
             {% embed 'KhatovarWebBundle:Default:menu.html.twig' %}{% endembed %}
         </div>
     </nav>
-    {% if is_granted('ROLE_EDITOR') %}
+    {% if is_granted('ROLE_VIEWER') %}
         <aside class="edit">
-            {{ render(controller('KhatovarWebBundle:Photo:index')) }}
+            {{ render(controller('KhatovarWebBundle:Photo:side')) }}
         </aside>
     {% endif %}
     <article>

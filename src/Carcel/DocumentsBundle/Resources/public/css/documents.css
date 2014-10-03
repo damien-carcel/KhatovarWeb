@@ -2,7 +2,7 @@ header, body {
     background: #691900;
 }
 
-a {
+a, a:visited {
     color: #001723;
     text-decoration: none;
     font-weight: bold;
