@@ -5,7 +5,8 @@
 {% endblock %}
 
 {% block stylesheets %}
-    {% stylesheets 'bundles/khatovarweb/css/normalize.css'
+    {% stylesheets 'bundles/carceldocuments/css/bootstrap.css'
+                   'bundles/carceldocuments/css/bootstrap-theme.css'
                    'bundles/khatovarweb/css/compagnie.css'
                    'bundles/khatovarweb/css/lightbox.css'
                    filter='cssrewrite'
@@ -50,7 +51,7 @@
     </nav>
     {% if is_granted('ROLE_VIEWER') %}
         <aside class="edit">
-            {{ render(controller('KhatovarWebBundle:Photo:side')) }}
+            {{ render(controller('KhatovarWebBundle:Photo:side', { 'entity': get_controller_name() })) }}
         </aside>
     {% endif %}
     <article>

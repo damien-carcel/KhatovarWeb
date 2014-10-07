@@ -1,11 +1,6 @@
 {% extends "KhatovarWebBundle::layout.html.twig" %}
 
 {% block inarticle %}
-    <a href="{{ path('carcel_documents_homepage', {'folder': previous}) }}"
-       class="btn btn-default pull-right">
-        Retour
-    </a>
-
     <h2>Ajouter une photo</h2>
 
     <div class="well">
@@ -13,7 +8,7 @@
         {{ form_errors(form) }}
 
         <div class="form-group">
-            {{ form_row(form.path) }}
+            {{ form_row(form.file) }}
         </div>
 
         {{ form_row(form.submit, { 'attr': {'class': 'btn btn-default'} }) }}

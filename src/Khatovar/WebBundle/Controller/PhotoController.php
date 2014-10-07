@@ -25,6 +25,7 @@ namespace Khatovar\WebBundle\Controller;
 
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Khatovar\WebBundle\Entity\Photo;
+use Khatovar\WebBundle\Form\PhotoType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
@@ -44,19 +45,34 @@ class PhotoController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('KhatovarWebBundle:Photo:index.html.twig');
+        $photos = $this->getDoctrine()->getManager()
+            ->getRepository('KhatovarWebBundle:Photo')
+            ->findAll();
+
+        return $this->render(
+            'KhatovarWebBundle:Photo:index.html.twig',
+            array('photos' => $photos)
+        );
     }
 
     /**
      * Display a list of all photos uploaded for the current page in a
      * small sidebar.
      *
+     * @param string $entity
      * @return \Symfony\Component\HttpFoundation\Response
      * @Secure(roles="ROLE_VIEWER")
      */
-    public function sideAction()
+    public function sideAction($entity)
     {
-        return $this->render('KhatovarWebBundle:Photo:side.html.twig');
+        $photos = $this->getDoctrine()->getManager()
+            ->getRepository('KhatovarWebBundle:Photo')
+            ->findBy(array('entity' => $entity));
+
+        return $this->render(
+            'KhatovarWebBundle:Photo:side.html.twig',
+            array('photos' => $photos)
+        );
     }
 
     /**
@@ -66,8 +82,35 @@ class PhotoController extends Controller
      * @Secure(roles="ROLE_VIEWER")
      */
     public function addAction()
-{
-        return $this->render('KhatovarWebBundle:Photo:add.html.twig');
+    {
+        $photo = new Photo();
+
+        $form = $this->createForm(new PhotoType(), $photo);
+        $form->add('file', 'file', array('label' => false));
+
+        $request = $this->get('request');
+
+        if ($request->getMethod() == 'POST') {
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($photo);
+                $entityManager->flush();
+
+                $this->get('session')->getFlashBag()
+                    ->add('notice', 'Photo ajoutée');
+
+                return $this->redirect(
+                    $this->generateUrl('khatovar_web_photos')
+                );
+            }
+        }
+
+        return $this->render(
+            'KhatovarWebBundle:Photo:add.html.twig',
+            array('form' => $form->createView())
+        );
     }
 
     /**

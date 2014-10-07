@@ -1,1 +1,14 @@
-<div class="photo_title">Photos diponibles</div>
+<div class="photo_title">Photos diponibles pour cette page</div>
+
+<div>
+    {% for photo in photos %}
+        <img src="{{ photo.getWebPath() }}" class="" alt="{{ photo.alt }}" />
+    {% endfor %}
+</div>
+
+<a href="{{ path('khatovar_web_photos_add') }}" class="btn btn-default center-block">
+    Ajouter
+</a>
+<a href="{{ path('khatovar_web_photos') }}" class="center-block text-center">
+    Éditer la liste complète
+</a>

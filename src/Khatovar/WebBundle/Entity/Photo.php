@@ -51,6 +51,7 @@ class Photo
      *
      * @var array
      *
+     * @Assert\NotBlank()
      * @ORM\Column(name="entity", type="array")
      */
     private $entity;
@@ -60,7 +61,7 @@ class Photo
      *
      * @var string
      *
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(name="path", type="string", length=255, nullable=true)
      */
     public $path;
 
@@ -103,8 +104,6 @@ class Photo
         if ($this->path) {
             $this->temp = $this->path;
             $this->path = null;
-        } else {
-            $this->path = 'initial';
         }
     }
 
@@ -131,11 +130,11 @@ class Photo
      */
     public function upload()
     {
-        if (is_null($this->getFile())) {
+        if (is_null($this->file)) {
             return;
         }
 
-        $this->getFile()->move($this->getUploadRootDir(), $this->path);
+        $this->file->move($this->getUploadRootDir(), $this->path);
 
         // check if we have an old image, and then delete it
         if (isset($this->temp)) {
@@ -177,7 +176,7 @@ class Photo
     {
         return is_null($this->path)
             ? null
-            : $this->getUploadDir() . '/' . $this->path;
+            : '/' . $this->getUploadDir() . '/' . $this->path;
     }
 
     /**
@@ -187,7 +186,7 @@ class Photo
      */
     protected function getUploadRootDir()
     {
-        return __DIR__ . '/../../../../web/' . $this->getUploadDir();
+        return __DIR__ . '/../../../../www/' . $this->getUploadDir();
     }
 
     /**

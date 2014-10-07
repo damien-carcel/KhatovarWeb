@@ -9,3 +9,10 @@ services:
 
     khatovar.code.translation:
         class: Khatovar\WebBundle\Services\Translation\KhatovarTranslation
+
+    khatovar.twig.controller_name_extension:
+        class: Khatovar\WebBundle\Services\Twig\ControllerNameExtension
+        calls:
+            - [setRequest, ["@?request="]]
+        tags:
+            - { name: twig.extension }

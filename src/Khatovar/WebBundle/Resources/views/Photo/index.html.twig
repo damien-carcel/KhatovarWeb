@@ -1,7 +1,14 @@
 {% extends 'KhatovarWebBundle::layout.html.twig' %}
 
 {% block inarticle %}
-    <p>
-        Ici la liste des photos et de quoi les gérer. À venir.
-    </p>
+    <h2>Cliquez sur la photo que vous souhaitez éditer</h2>
+
+    {% for photo in photos %}
+        <a href="{{ path('khatovar_web_photos_edit', {'photo': photo.id}) }}">
+            <img src="{{ photo.getWebPath() }}" class="" alt="{{ photo.alt }}" />
+        </a>
+        <a href="{{ path('khatovar_web_photos_delete', {'photo': photo.id}) }}">
+            Supprimer
+        </a>
+    {% endfor %}
 {% endblock %}
