@@ -22,8 +22,8 @@ class PhotoType extends AbstractType
     {
         $builder
             ->add('alt', 'text', array('label' => 'Nom de substitution : '))
-            ->add('size', 'choice', array('label' => 'Taille de la photo : '))
-            ->add('entity', 'choice', array('label' => 'Rattacher la photo à : '))
+            ->add('size', 'text', array('label' => 'Taille de la photo : '))
+            ->add('entity', 'text', array('label' => 'Rattacher la photo à : '))
             ->add('submit', 'submit', array('label' => 'Envoyer'))
         ;
     }

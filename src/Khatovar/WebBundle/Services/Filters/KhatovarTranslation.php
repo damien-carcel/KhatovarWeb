@@ -21,10 +21,10 @@
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
-namespace Khatovar\WebBundle\Services\Translation;
+namespace Khatovar\WebBundle\Services\Filters;
 
 /**
- * Perform some transformations on twig code before display or saving.
+ * Perform some transformations on html code before display or saving.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
  * @package Khatovar\WebBundle\Services\Translation

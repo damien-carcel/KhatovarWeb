@@ -91,7 +91,7 @@ class Photo
     }
 
     /**
-     * Set file.
+     * Set the file.
      *
      * @param UploadedFile $file
      */
@@ -145,6 +145,8 @@ class Photo
     }
 
     /**
+     * Remove the file from the server.
+     *
      * @ORM\PostRemove()
      */
     public function removeUpload()

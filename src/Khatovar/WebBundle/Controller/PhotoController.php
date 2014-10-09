@@ -37,6 +37,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class PhotoController extends Controller
 {
     /**
+     * Maximal height accepted for photo.
+     */
+    const HEIGHT = 720;
+
+    /**
      * Return the list of all photos uploaded for the website and
      * display admin utilities to manage them.
      *
@@ -97,6 +102,10 @@ class PhotoController extends Controller
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($photo);
                 $entityManager->flush();
+
+                // We resize the uploaded photo according to the HEIGHT constant
+                $resize = $this->get('khatovar.filter.resize');
+                $resize->imageResize($photo->getAbsolutePath(), self::HEIGHT);
 
                 $this->get('session')->getFlashBag()
                     ->add('notice', 'Photo ajoutée');

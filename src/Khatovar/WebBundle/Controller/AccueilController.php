@@ -47,7 +47,7 @@ class AccueilController extends Controller
             ->getRepository('KhatovarWebBundle:Homepage')
             ->findOneBy(array('active' => true));
 
-        $translations = $this->get('khatovar.code.translation');
+        $translations = $this->get('khatovar.filters.translation');
 
         return $this->render(
             'KhatovarWebBundle:Accueil:index.html.twig',

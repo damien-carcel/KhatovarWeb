@@ -7,12 +7,15 @@ services:
         tags:
             - { name: twig.extension }
 
-    khatovar.code.translation:
-        class: Khatovar\WebBundle\Services\Translation\KhatovarTranslation
-
     khatovar.twig.controller_name_extension:
         class: Khatovar\WebBundle\Services\Twig\ControllerNameExtension
         calls:
             - [setRequest, ["@?request="]]
         tags:
             - { name: twig.extension }
+
+    khatovar.filters.translation:
+        class: Khatovar\WebBundle\Services\Filters\KhatovarTranslation
+
+    khatovar.filter.resize:
+        class: Khatovar\WebBundle\Services\Filters\KhatovarImageResize
