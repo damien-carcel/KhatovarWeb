@@ -75,7 +75,7 @@ class Photo
     /**
      * @var UploadedFile
      *
-     * @Assert\File(maxSize="8000000")
+     * @Assert\File(maxSize="8000000", mimeTypes={"image/jpeg"})
      */
     private $file;
 

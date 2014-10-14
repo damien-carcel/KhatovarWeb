@@ -4,10 +4,10 @@
     <h1>La forge</h1>
 
     {% autoescape false %}
-    {{ 'http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/24/20110824111813-20d3e81a.jpg'|popup_picture('floatleft') }}
+    {{ 'http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/24/20110824111813-20d3e81a.jpg'|popup_picture('float floatleft') }}
     {% endautoescape %}
     {% autoescape false %}
-    {{ 'http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/09/02/20110902113315-698a2b2f.jpg'|popup_picture('floatright') }}
+    {{ 'http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/09/02/20110902113315-698a2b2f.jpg'|popup_picture('float floatright') }}
     {% endautoescape %}
     <p>
         La compagnie dispose d’une forge médiévale conçue et fabriquée par nos soins… Elle comprend
@@ -32,15 +32,15 @@
     </p>
 
     <div class="container flex-container-always">
-        <div class="navigation" style="text-align: left">
+        <div class="navigation nav-left">
             <a href="{{ path('khatovar_web_camp', {'atelier': 'campement'}) }}"><img src="{{ asset('bundles/khatovarweb/images/hache_gauche.png') }}" class="photolink" alt="" /><br />
                 Le campement</a>
         </div>
-        <div class="navigation">
+        <div class="navigation nav-center">
             <a href="http://www.compagniefranchedukhatovar.fr/piwigo/index.php?/category/10" rel="external"><img src="{{ asset('bundles/khatovarweb/images/camera.png') }}" class="photolink" alt="" /><br />
                 Album photo</a>
         </div>
-        <div class="navigation" style="text-align: right">
+        <div class="navigation nav-right">
             <a href="{{ path('khatovar_web_camp', {'atelier': 'cuir'}) }}"><img src="{{ asset('bundles/khatovarweb/images/hache_droite.png') }}" class="photolink" alt="" /><br />
                 L'atelier cuir</a>
         </div>

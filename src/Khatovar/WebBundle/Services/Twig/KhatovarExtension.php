@@ -62,11 +62,11 @@ class KhatovarExtension extends \Twig_Extension
         $link = '<a href="' . $path
             . '" data-lightbox="Photos Khatovar" title="Copyright &copy; '
             . date('Y') . ' association La Compagnie franche du Khatovar"><img class="'
-            . $class . '" onmouseover="this.className=\''
-            . $class . '_over\'" onmouseout="this.className=\'' . $class
-            . '\'" src="' . $path . '" alt="" /></a>';
+            . $class . ' photo_rest" onmouseover="this.className=\''
+            . $class . ' photo_over\'" onmouseout="this.className=\'' . $class
+            . ' photo_rest\'" src="' . $path . '" alt="" /></a>';
 
-        return ($link);
+        return $link;
     }
 
     /**

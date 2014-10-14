@@ -4,7 +4,7 @@
     <h2>Technique</h2>
 
     {% autoescape false %}
-    {{ 'http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/24/20110824113929-1bb02797.jpg'|popup_picture('floatright') }}
+    {{ 'http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/24/20110824113929-1bb02797.jpg'|popup_picture('float floatright') }}
     {% endautoescape %}
     <p>
         Notre compagnie de mercenaire ne comportait à ses débuts que quatre combattants. Chacun avec son arme respective
@@ -21,7 +21,7 @@
         «&nbsp;deux contre un&nbsp;».
     </p>
     {% autoescape false %}
-    {{ 'http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/31/20110831133230-5a4db130.jpg'|popup_picture('floatleft') }}
+    {{ 'http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/31/20110831133230-5a4db130.jpg'|popup_picture('float floatleft') }}
     {% endautoescape %}
     <p>
         Nous commençons à intégrer des guerrières dans nos scénarios. La différence de physique étant souvent en défaveur
@@ -38,7 +38,7 @@
         se comporte en situation «&nbsp;réelle&nbsp;» ou comment bien réaliser tel ou tel mouvement.
     </p>
     {% autoescape false %}
-    {{ 'http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/24/20110824114048-c6289da4.jpg'|popup_picture('floatright') }}
+    {{ 'http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/24/20110824114048-c6289da4.jpg'|popup_picture('float floatright') }}
     {% endautoescape %}
     <p>
         Puis, améliorant les coups, nous insérons dans l’enchaînement du jeu d’acteur, une histoire et une scénarisation.
@@ -52,7 +52,7 @@
         mission.&nbsp; <b>À l’heure actuelle, notre troupe peut présenter une demi-heure de combat scénarisé</b>.
     </p>
     {% autoescape false %}
-    {{ 'http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/24/20110824120113-de315b5d.jpg'|popup_picture('floatleft') }}
+    {{ 'http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/24/20110824120113-de315b5d.jpg'|popup_picture('float floatleft') }}
     {% endautoescape %}
     <p>
         Nous travaillons aussi le combat libre afin de ne pas perdre l’instinct qui fait le combattant. Les attitudes, les
@@ -76,13 +76,13 @@
     </p>
 
     <div class="container flex-container-always">
-        <div class="navigation" style="text-align: left">
+        <div class="navigation nav-left">
             <a href="{{ path('khatovar_web_fight', {'pratique': 'echauffement'}) }}"><img src="{{ asset('bundles/khatovarweb/images/hache_gauche.png') }}" class="photolink" alt="" />
                 <br />
                 Échauffement</a>
         </div>
-        <div class="navigation"></div>
-        <div class="navigation" style="text-align: right">
+        <div class="navigation nav-center"></div>
+        <div class="navigation nav-right">
             <a href="{{ path('khatovar_web_fight', {'pratique': 'entrainement'}) }}"><img src="{{ asset('bundles/khatovarweb/images/hache_droite.png') }}" class="photolink" alt="" /><br />
                 Entraînement</a>
         </div>

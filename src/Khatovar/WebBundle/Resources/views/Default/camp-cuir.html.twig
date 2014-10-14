@@ -4,7 +4,7 @@
     <h1>L’atelier Cuir</h1>
 
     {% autoescape false %}
-    {{ 'http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/31/20110831122009-ce3badf1.jpg'|popup_picture('floatleft') }}
+    {{ 'http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/31/20110831122009-ce3badf1.jpg'|popup_picture('float floatleft') }}
     {% endautoescape %}
     <p>
         Le camp dispose d’un atelier cuir, se trouvant sous une tente Viking, comprenant le matériel
@@ -12,7 +12,7 @@
         conditions. L’atelier est animé par 2 personnes en permanence.
     </p>
     {% autoescape false %}
-    {{ 'http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/31/20110831122022-25e94b65.jpg'|popup_picture('floatright') }}
+    {{ 'http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/31/20110831122022-25e94b65.jpg'|popup_picture('float floatright') }}
     {% endautoescape %}
     <p>
         Le public est invité à s’asseoir et à confectionner des objets en cuir. Selon l’âge
@@ -29,15 +29,15 @@
     </p>
 
     <div class="container flex-container-always">
-        <div class="navigation" style="text-align: left">
+        <div class="navigation nav-left">
             <a href="{{ path('khatovar_web_camp', {'atelier': 'forge'}) }}"><img src="{{ asset('bundles/khatovarweb/images/hache_gauche.png') }}" class="photolink" alt="" /><br />
                 La forge</a>
         </div>
-        <div class="navigation">
+        <div class="navigation nav-center">
             <a href="http://www.compagniefranchedukhatovar.fr/piwigo/index.php?/category/14" rel="external"><img src="{{ asset('bundles/khatovarweb/images/camera.png') }}" class="photolink" alt="" /><br />
                 Album photo</a>
         </div>
-        <div class="navigation" style="text-align: right">
+        <div class="navigation nav-right">
             <a href="{{ path('khatovar_web_camp', {'atelier': 'maille'}) }}"><img src="{{ asset('bundles/khatovarweb/images/hache_droite.png') }}" class="photolink" alt="" /><br />
                 L'atelier maille</a>
         </div>

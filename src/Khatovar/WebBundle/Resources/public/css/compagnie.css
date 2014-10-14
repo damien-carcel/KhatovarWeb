@@ -44,19 +44,17 @@ body {
     text-align: justify;
 }
 
-@media all and (max-width: 990px) {
-    body {
-        margin: 10px;
-        background: url("../images/scroll_center.png");
-    }
-}
-
 .page_block {
     margin: auto;
     width: 950px;
 }
 
 @media all and (max-width: 990px) {
+    body {
+        margin: 10px;
+        background: url("../images/scroll_center.png");
+    }
+
     .page_block {
         width: auto;
         min-width: 320px;
@@ -70,21 +68,8 @@ header {
     height: 168px;
 }
 
-@media all and (max-width: 990px) {
-    header {
-        background: none;
-        height: auto;
-    }
-}
-
 #main_title {
     display: none;
-}
-
-@media all and (max-width: 990px) {
-    #main_title {
-        display: inline-block;
-    }
 }
 
 header h1 {
@@ -101,6 +86,17 @@ header h1 {
 
 #logo {
     width: 100px;
+}
+
+@media all and (max-width: 990px) {
+    header {
+        background: none;
+        height: auto;
+    }
+
+    #main_title {
+        display: inline-block;
+    }
 }
 
 /* NAVIGATION */
@@ -201,7 +197,7 @@ aside.edit {
     box-shadow: 5px 5px 5px #696969;
 }
 
-aside .photo_title {
+aside.photo_title {
     text-align: center;
     font-weight: bold;
     font-size: 110%;
@@ -223,129 +219,6 @@ article ul {
 
     aside {
         display: none;
-    }
-}
-
-.container {
-    text-align: center;
-    vertical-align: middle;
-    width: 100%;
-}
-
-.flex-container {
-    display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
-    display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
-    display: -ms-flexbox;      /* TWEENER - IE 10 */
-    display: -webkit-flex;     /* NEW - Chrome */
-    display: flex;
-    align-items: center;
-}
-
-.flex-container-always {
-    display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
-    display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
-    display: -ms-flexbox;      /* TWEENER - IE 10 */
-    display: -webkit-flex;     /* NEW - Chrome */
-    display: flex;
-    align-items: center;
-}
-
-.navigation {
-    -webkit-box-flex: 1;      /* OLD - iOS 6-, Safari 3.1-6 */
-    -moz-box-flex: 1;         /* OLD - Firefox 19- */
-    width: 33%;               /* For old syntax, otherwise collapses. */
-    -webkit-flex: 1;          /* Chrome */
-    -ms-flex: 1;              /* IE 10 */
-    flex: 1;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */
-    display: inline-block;
-}
-
-.programmation {
-    display: inline-block;
-    -webkit-box-flex: 1;
-    -moz-box-flex: 1;
-    width: 40%;
-    -webkit-flex: 1;
-    -ms-flex: 1;
-    flex: 1;
-    margin-left: 5px;
-    margin-right: 5px;
-}
-
-.photo_exactions {
-    display: inline-block;
-    vertical-align: middle;
-    text-align: center;
-}
-
-.exactions {
-    display: inline-block;
-    text-align: justify;
-    vertical-align: middle;
-    -webkit-box-flex: 1;
-    -moz-box-flex: 1;
-    width: 60%;
-    -webkit-flex: 1;
-    -ms-flex: 1;
-    flex: 1;
-}
-
-.note_exaction {
-    display: inline-block;
-    text-align: justify;
-    vertical-align: middle;
-    -webkit-box-flex: 1;
-    -moz-box-flex: 1;
-    width: 80%;
-    -webkit-flex: 1;
-    -ms-flex: 1;
-    flex: 1;
-}
-.photo_link {
-    position: relative;
-    top: 150px;
-    left: 300px;
-}
-
-@media all and (max-width: 990px) {
-    .flex-container {
-        display: inherit;
-    }
-
-    .programmation {
-        display: inherit;
-        margin: 0;
-        width: 100%;
-    }
-
-    .photo_exactions {
-        display: inherit;
-        margin-top: 10px;
-        margin-bottom: 10px;
-    }
-
-    .exactions {
-        display: inherit;
-        text-align: center;
-        margin-top: 10px;
-        margin-bottom: 10px;
-        width: 100%;
-    }
-
-    .note_exaction {
-        display: inherit;
-        text-align: center;
-        margin-top: 10px;
-        margin-bottom: 10px;
-        width: 100%;
-    }
-
-    .photo_link {
-        position: inherit;
-    }
-
-    .container {
-        position: inherit;
     }
 }
 
@@ -389,13 +262,111 @@ article a:visited, footer a:visited {color: #AC3333;}
 article a:hover, footer a:hover {color: #936f00;}
 article a:active, footer a:active {color: #AC3333;}
 
-*.clickable {
-    cursor: pointer;
+/* ARTICLES LAYOUT */
+
+.container {
+    text-align: center;
+    vertical-align: middle;
+    width: 100%;
 }
 
 .link_list {
     padding: 20px 0 20px 0;
     text-align: center;
+}
+
+.flex-container, .flex-container-always {
+    display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
+    display: -ms-flexbox;      /* TWEENER - IE 10 */
+    display: -webkit-flex;     /* NEW - Chrome */
+    display: flex;
+    align-items: center;
+}
+
+.navigation, .programmation, .exactions, .note_exaction {
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-box-flex: 1;
+    -moz-box-flex: 1;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+}
+
+.navigation {
+    width: 33%;
+}
+
+.nav-left {
+    text-align: left;
+}
+
+.nav-center {
+    text-align: center;
+}
+
+.nav-right {
+    text-align: right;
+}
+
+.programmation {
+    text-align: justify;
+    width: 40%;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.exactions {
+    text-align: justify;
+    width: 60%;
+}
+
+.note_exaction {
+    text-align: justify;
+    width: 80%;
+}
+
+.photo_exactions {
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.photo_link {
+    position: relative;
+    top: 150px;
+    left: 300px;
+}
+
+@media all and (max-width: 990px) {
+    .flex-container, .programmation, .photo_exactions, .exactions, .note_exaction {
+        display: inherit;
+    }
+
+    .programmation {
+        margin: 0;
+        width: 100%;
+    }
+
+    .photo_exactions, .exactions {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .note_exaction, .exactions {
+        text-align: center;
+        width: 100%;
+    }
+
+    .note_exaction {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .photo_link, .container {
+        position: inherit;
+    }
 }
 
 /* FOOTER */
@@ -422,6 +393,10 @@ footer {
 
 /* PICTURES */
 
+*.clickable {
+    cursor: pointer;
+}
+
 img {
     border: 0;
     width: 100%;
@@ -431,149 +406,60 @@ article img {
     margin: 10px;
 }
 
-@media all and (max-width: 990px) {
-    img {
-        width: 100%;
-    }
-}
-
 .photolink {
     width: 50px;
 }
 
-.photo {
+.photo_rest {
     border: 2px #777 solid;
-    text-align: center;
-    padding: 2px;
-    max-width: 250px;
-    margin-right: 20px;
-    margin-left: 20px;
 }
 
 .photo_over {
+    border: 2px #AC3333 solid;
+}
+
+.photo, .slide, .photo_small, .panorama {
     text-align: center;
-    border: 2px #F00 solid;
     padding: 2px;
-    max-width: 250px;
     margin-right: 20px;
     margin-left: 20px;
+}
+
+.photo {
+    max-width: 250px;
 }
 
 .slide {
-    border: 2px #777 solid;
-    padding: 2px;
     width: auto;
     max-width: 450px;
     max-height: 300px;
-    margin-right: 20px;
-    margin-left: 20px;
-}
-
-.slide_over {
-    border: 2px #F00 solid;
-    padding: 2px;
-    width: auto;
-    max-width: 450px;
-    max-height: 300px;
-    margin-right: 20px;
-    margin-left: 20px;
-}
-
-@media all and (max-width: 990px) {
-    .slide {
-        max-width: 360px;
-        max-height: 240px;
-    }
-
-    .slide_over {
-        max-width: 360px;
-        max-height: 240px;
-    }
 }
 
 .photo_small {
-    border: 2px #777 solid;
-    text-align: center;
-    padding: 2px;
     max-width: 200px;
-    margin-right: 20px;
-    margin-left: 20px;
-}
-
-.photo_small_over {
-    text-align: center;
-    border: 2px #F00 solid;
-    padding: 2px;
-    max-width: 200px;
-    margin-right: 20px;
-    margin-left: 20px;
 }
 
 .panorama {
-    border: 2px #777 solid;
-    text-align: center;
-    padding: 2px;
     max-width: 700px;
 }
 
-.panorama_over {
+.float {
+    margin-right: 10px;
+    margin-left: 10px;
+    width: inherit;
+    max-width: 220px;
+    max-height: 220px;
     text-align: center;
-    border: 2px #F00 solid;
     padding: 2px;
-    max-width: 700px;
 }
-
-/* FLOATING */
 
 .floatright {
     float: right;
-    margin-right: 10px;
-    margin-left: 10px;
-    width: inherit;
-    max-width: 220px;
-    max-height: 220px;
-    border: 2px #777 solid;
-    text-align: center;
-    padding: 2px;
-}
-
-.floatright_over {
-    float: right;
-    margin-right: 10px;
-    margin-left: 10px;
-    width: inherit;
-    max-width: 220px;
-    max-height: 220px;
-    border: 2px #F00 solid;
-    text-align: center;
-    padding: 2px;
 }
 
 .floatleft {
     float: left;
-    margin-right: 10px;
-    margin-left: 10px;
-    width: inherit;
-    max-width: 220px;
-    max-height: 220px;
-    border: 2px #777 solid;
-    text-align: center;
-    padding: 2px;
 }
-
-.floatleft_over {
-    float: left;
-    margin-right: 10px;
-    margin-left: 10px;
-    width: inherit;
-    max-width: 220px;
-    max-height: 220px;
-    border: 2px #F00 solid;
-    text-align: center;
-    padding: 2px;
-}
-
-/* PORTRAITS */
 
 .trombi {
     display: inline-block;
@@ -588,55 +474,33 @@ article img {
 .thumbnail
 {
     margin: 20px;
-    width: 100px;
     padding: 5px;
-    border: 2px #777 solid;
     cursor:auto;
     text-align: center;
 }
 
-.thumbnailover
-{
-    margin: 20px;
+.portrait {
     width: 100px;
-    padding: 5px;
-    border: 2px #F00 solid;
-    cursor:pointer;
-    text-align: center;
 }
 
-.thumbnail_pays
-{
-    margin: 20px;
+.landscape {
     width: 150px;
-    padding: 5px;
-    border: 2px #777 solid;
-    cursor:auto;
-    text-align: center;
-}
-
-.thumbnailover_pays
-{
-    margin: 20px;
-    width: 150px;
-    padding: 5px;
-    border: 2px #F00 solid;
-    cursor:pointer;
-    text-align: center;
 }
 
 .carte {
-    border: 2px #777 solid;
     text-align: center;
     padding: 2px;
     cursor:auto;
     max-width: 750px;
 }
 
-.carte_over {
-    border: 2px #F00 solid;
-    text-align: center;
-    padding: 2px;
-    cursor:pointer;
-    max-width: 750px;
+@media all and (max-width: 990px) {
+    img {
+        width: 100%;
+    }
+
+    .slide {
+        max-width: 360px;
+        max-height: 240px;
+    }
 }

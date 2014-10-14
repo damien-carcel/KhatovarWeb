@@ -4,10 +4,10 @@
     <h1>La calligraphie</h1>
 
     {% autoescape false %}
-    {{ asset('bundles/khatovarweb/photos/calligraphie/calligraphie-1.jpg')|popup_picture('floatleft') }}
+    {{ asset('bundles/khatovarweb/photos/calligraphie/calligraphie-1.jpg')|popup_picture('float floatleft') }}
     {% endautoescape %}
     {% autoescape false %}
-    {{ asset('bundles/khatovarweb/photos/calligraphie/calligraphie-2.jpg')|popup_picture('floatright') }}
+    {{ asset('bundles/khatovarweb/photos/calligraphie/calligraphie-2.jpg')|popup_picture('float floatright') }}
     {% endautoescape %}
     <p>
         Une tente viking vous accueille, ornée de quelques exemples d’écritures et
@@ -28,17 +28,17 @@
     </p>
 
     <div class="container flex-container-always">
-        <div class="navigation" style="text-align: left">
+        <div class="navigation nav-left">
             <a href="{{ path('khatovar_web_camp', {'atelier': 'tissage'}) }}"><img src="{{ asset('bundles/khatovarweb/images/hache_gauche.png') }}" class="photolink" alt="" /><br />
                 Le tissage</a>
         </div>
-        <div class="navigation">
+        <div class="navigation nav-center">
             <!--
             <a href="http://www.compagniefranchedukhatovar.fr/piwigo/index.php?/category/15" rel="external"><img src="{{ asset('bundles/khatovarweb/images/camera.png') }}" class="photolink" alt="" /><br />
                 Album photo</a>
                 -->
         </div>
-        <div class="navigation" style="text-align: right">
+        <div class="navigation nav-right">
 
         </div>
     </div>

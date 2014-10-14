@@ -4,7 +4,7 @@
     <h1>Le combat</h1>
 
     {% autoescape false %}
-    {{ 'http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/24/20110824131122-9d26b566.jpg'|popup_picture('floatright') }}
+    {{ 'http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/24/20110824131122-9d26b566.jpg'|popup_picture('float floatright') }}
     {% endautoescape %}
     <p>
         —&nbsp;Bonjour, pourriez-vous m’indiquer la zone d’entraînement, s’il vous plaît&nbsp;?<br />
@@ -14,7 +14,7 @@
         —&nbsp;Merci bien, m’sieur.
     </p>
     {% autoescape false %}
-    {{ 'http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/24/20110824113943-500c87af.jpg'|popup_picture('floatleft') }}
+    {{ 'http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/24/20110824113943-500c87af.jpg'|popup_picture('float floatleft') }}
     {% endautoescape %}
     <p>
         Vous l’aurez compris, ici on va parler de ce qui fait qu’une compagnie médiévale se transforme en compagnie
@@ -42,15 +42,15 @@
     </div>
 
     <div class="container flex-container-always">
-        <div class="navigation" style="text-align: left">
+        <div class="navigation nav-left">
             <a href="{{ path('khatovar_web_camp') }}"><img src="{{ asset('bundles/khatovarweb/images/hache_gauche.png') }}" class="photolink" alt="" /><br />
                 Retour à l’introduction</a>
         </div>
-        <div class="navigation">
+        <div class="navigation nav-center">
             <a href="http://www.compagniefranchedukhatovar.fr/piwigo/index.php?/category/33" rel="external"><img src="{{ asset('bundles/khatovarweb/images/camera.png') }}" class="photolink" alt="" /><br />
                 Album photo</a>
         </div>
-        <div class="navigation" style="text-align: right">
+        <div class="navigation nav-right">
             <a href="{{ path('khatovar_web_camp', {'atelier': 'campement'}) }}"><img src="{{ asset('bundles/khatovarweb/images/hache_droite.png') }}" class="photolink" alt="" /><br />
                 Le campement</a>
         </div>

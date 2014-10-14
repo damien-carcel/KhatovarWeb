@@ -4,7 +4,7 @@
     <h1>Le campement</h1>
 
     {% autoescape false %}
-    {{ 'http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/24/20110824114318-c5ba5e43.jpg'|popup_picture('floatleft') }}
+    {{ 'http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/24/20110824114318-c5ba5e43.jpg'|popup_picture('float floatleft') }}
     {% endautoescape %}
     <p>
         La compagnie a construit un camp médiéval apportant un cachet incontournable à ses animations…
@@ -20,7 +20,7 @@
         cuisinières livrent quelques recettes et conseils aux plus gourmands&nbsp;!
     </p>
     {% autoescape false %}
-    {{ 'http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/09/19/20110919164022-86bbbb8b.jpg'|popup_picture('floatright') }}
+    {{ 'http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/09/19/20110919164022-86bbbb8b.jpg'|popup_picture('float floatright') }}
     {% endautoescape %}
     <p>
         La compagnie possède aussi tout un mobilier (râtelier d’armes, mannequin, coffres) et un équipement
@@ -36,16 +36,16 @@
     </p>
 
     <div class="container flex-container-always">
-        <div class="navigation" style="text-align: left">
+        <div class="navigation nav-left">
             <a href="{{ path('khatovar_web_fight') }}"><img src="{{ asset('bundles/khatovarweb/images/hache_gauche.png') }}" class="photolink" alt="" />
                 <br />
                 Le combat</a>
         </div>
-        <div class="navigation">
+        <div class="navigation nav-center">
             <a href="http://www.compagniefranchedukhatovar.fr/piwigo/index.php?/category/12" rel="external"><img src="{{ asset('bundles/khatovarweb/images/camera.png') }}" class="photolink" alt="" /><br />
                 Album photo</a>
         </div>
-        <div class="navigation" style="text-align: right">
+        <div class="navigation nav-right">
             <a href="{{ path('khatovar_web_camp', {'atelier': 'forge'}) }}"><img src="{{ asset('bundles/khatovarweb/images/hache_droite.png') }}" class="photolink" alt="" /><br />
                 La forge</a>
         </div>

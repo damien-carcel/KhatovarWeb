@@ -4,7 +4,7 @@
     <h2>Échauffement</h2>
 
     {% autoescape false %}
-    {{ 'http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/31/20110831133028-00fccdad.jpg'|popup_picture('floatright') }}
+    {{ 'http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/31/20110831133028-00fccdad.jpg'|popup_picture('float floatright') }}
     {% endautoescape %}
     <p>
         Les armes médiévales ne sont pas aussi lourdes qu’on le croit généralement (entre 1&nbsp;kg et 1,5&nbsp;kg pour une épée)
@@ -13,7 +13,7 @@
         de formations. La plupart des gens du XXIe siècle ne sont pas habitués à ce genre d’exercice.
     </p>
     {% autoescape false %}
-    {{ asset('bundles/khatovarweb/photos/combat/echauffement.jpg')|popup_picture('floatleft') }}
+    {{ asset('bundles/khatovarweb/photos/combat/echauffement.jpg')|popup_picture('float floatleft') }}
     {% endautoescape %}
     <p>
         Basées sur les connaissances en préparation physique et sur la pratique de la musculation, toutes nos séances d’entraînement
@@ -38,12 +38,12 @@
     </p>
 
     <div class="container flex-container-always">
-        <div class="navigation" style="text-align: left">
+        <div class="navigation nav-left">
             <a href="{{ path('khatovar_web_fight') }}"><img src="{{ asset('bundles/khatovarweb/images/hache_gauche.png') }}" class="photolink" alt="" /><br />
                 Retour au combat</a>
         </div>
-        <div class="navigation"></div>
-        <div class="navigation" style="text-align: right">
+        <div class="navigation nav-center"></div>
+        <div class="navigation nav-right">
             <a href="{{ path('khatovar_web_fight', {'pratique': 'technique'}) }}"><img src="{{ asset('bundles/khatovarweb/images/hache_droite.png') }}" class="photolink" alt="" /><br />
                 Technique</a>
         </div>

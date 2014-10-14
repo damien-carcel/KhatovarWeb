@@ -4,7 +4,7 @@
     <h2>Entraînement</h2>
 
     {% autoescape false %}
-    {{ 'http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/09/19/20110919163126-c5372b61.jpg'|popup_picture('floatleft') }}
+    {{ 'http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/09/19/20110919163126-c5372b61.jpg'|popup_picture('float floatleft') }}
     {% endautoescape %}
     <p>
         Il existe de nombreux traités de combats médiévaux. Pour ne citer que les plus célèbres&nbsp;:<br />
@@ -23,7 +23,7 @@
             Dao vietnamien, Judo et l’Aïkido japonais).</b>
     </p>
     {% autoescape false %}
-    {{ 'http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/24/20110824114458-85f590fe.jpg'|popup_picture('floatright') }}
+    {{ 'http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/24/20110824114458-85f590fe.jpg'|popup_picture('float floatright') }}
     {% endautoescape %}
     <p>
         Le maître d’armes <a href="http://patrouixgracia.pagesperso-orange.fr/escrime_moderne.html" rel="external" title="">Olivier Patrouix-Gracia</a>
@@ -41,7 +41,7 @@
         (principe du Yin/Yang).
     </p>
     {% autoescape false %}
-    {{ 'http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/24/20110824120127-d09aee70.jpg'|popup_picture('floatleft') }}
+    {{ 'http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/24/20110824120127-d09aee70.jpg'|popup_picture('float floatleft') }}
     {% endautoescape %}
     <p>
         Dans cet objectif d’efficacité, un long travail est effectué sur le déplacement des combattants et le renforcement
@@ -66,11 +66,11 @@
     </p>
 
     <div class="container flex-container-always">
-        <div class="navigation" style="text-align: left">
+        <div class="navigation nav-left">
             <a href="{{ path('khatovar_web_fight', {'pratique': 'technique'}) }}"><img src="{{ asset('bundles/khatovarweb/images/hache_gauche.png') }}" class="photolink" alt="" />
                 Technique</a>
         </div>
-        <div class="navigation"></div>
-        <div class="navigation" style="text-align: right"></div>
+        <div class="navigation nav-center"></div>
+        <div class="navigation nav-right"></div>
     </div>
 {% endblock %}

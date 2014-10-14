@@ -40,7 +40,6 @@ class KhatovarImageResize
      */
     public function imageResize($image, $new_height)
     {
-        // TODO: detect jpeg or not
         // We first find the dimensions of the photo and its ratio
         $original = imagecreatefromjpeg($image);
         list($width, $height) = getimagesize($image);

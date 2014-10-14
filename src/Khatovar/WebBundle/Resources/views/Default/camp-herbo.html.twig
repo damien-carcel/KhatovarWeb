@@ -4,10 +4,10 @@
     <h1>L’herboristerie et la cuisine</h1>
 
     {% autoescape false %}
-    {{ 'http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/24/20110824114026-576eb066.jpg'|popup_picture('floatleft') }}
+    {{ 'http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/24/20110824114026-576eb066.jpg'|popup_picture('float floatleft') }}
     {% endautoescape %}
     {% autoescape false %}
-    {{ 'http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/24/20110824110441-bf7c2a91.jpg'|popup_picture('floatright') }}
+    {{ 'http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/24/20110824110441-bf7c2a91.jpg'|popup_picture('float floatright') }}
     {% endautoescape %}
     <p>
         Que serait un camp médiéval sans un chaudron fumant au-dessus d’un bon feu de bois&nbsp;?
@@ -27,17 +27,17 @@
     </p>
 
     <div class="container flex-container-always">
-        <div class="navigation" style="text-align: left">
+        <div class="navigation nav-left">
             <a href="{{ path('khatovar_web_camp', {'atelier': 'armes'}) }}"><img src="{{ asset('bundles/khatovarweb/images/hache_gauche.png') }}" class="photolink" alt="" /> <br />
                 L’atelier armes et armures</a>
         </div>
-        <div class="navigation">
+        <div class="navigation nav-center">
             <!--
             <a href="http://www.compagniefranchedukhatovar.fr/piwigo/index.php?/category/12" rel="external"><img src="{{ asset('bundles/khatovarweb/images/camera.png') }}" class="photolink" alt="" /><br />
                 Album photo</a>
                 -->
         </div>
-        <div class="navigation" style="text-align: right">
+        <div class="navigation nav-right">
             <a href="{{ path('khatovar_web_camp', {'atelier': 'tissage'}) }}"><img src="{{ asset('bundles/khatovarweb/images/hache_droite.png') }}" class="photolink" alt="" /><br />
                 Le tissage</a>
         </div>

@@ -5,7 +5,7 @@
 
     {% for photo in photos %}
         <a href="{{ path('khatovar_web_photos_edit', {'photo': photo.id}) }}">
-            <img src="{{ photo.getWebPath() }}" class="" alt="{{ photo.alt }}" />
+            <img src="{{ photo.getWebPath() }}" class="thumbnail" alt="{{ photo.alt }}" />
         </a>
         <a href="{{ path('khatovar_web_photos_delete', {'photo': photo.id}) }}">
             Supprimer
