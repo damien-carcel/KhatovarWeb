@@ -24,8 +24,6 @@
     </header>
 {% endblock %}
 
-{% block sectionclass %}row{% endblock %}
-
 {% block insection %}
     {% for message in app.session.flashbag.get('notice') %}
         <div class="alert">
