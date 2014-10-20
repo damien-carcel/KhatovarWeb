@@ -1,14 +1,22 @@
-<div class="photo_title">Photos diponibles pour cette page</div>
+<div class="trombi">
+    <div class="photo_title">Photos diponibles pour cette page</div>
 
-<div>
-    {% for photo in photos %}
-        <img src="{{ photo.getWebPath() }}" class="thumbnail" alt="{{ photo.alt }}" />
-    {% endfor %}
+    <div class="scrolling">
+        {% for photo in photos %}
+            <div class="photo_admin">
+                {{ photo.getWebPath()|thumbnail('landscape', photo.alt) }}
+                <br />
+                Photo n° {{ photo.id }}
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="button-group">
+        <a href="{{ path('khatovar_web_photos_add') }}" class="btn btn-default">
+            Ajouter une photo
+        </a>
+        <a href="{{ path('khatovar_web_photos') }}" class="btn btn-default">
+            Éditer la liste complète
+        </a>
+    </div>
 </div>
-
-<a href="{{ path('khatovar_web_photos_add') }}" class="btn btn-default center-block">
-    Ajouter
-</a>
-<a href="{{ path('khatovar_web_photos') }}" class="center-block text-center">
-    Éditer la liste complète
-</a>

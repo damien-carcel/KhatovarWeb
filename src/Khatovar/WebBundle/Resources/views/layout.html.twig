@@ -42,7 +42,7 @@
         </div>
     </nav>
     {% if is_granted('ROLE_VIEWER') %}
-        <aside class="edit">
+        <aside>
             {{ render(controller('KhatovarWebBundle:Photo:side', { 'entity': get_controller_name() })) }}
         </aside>
     {% endif %}

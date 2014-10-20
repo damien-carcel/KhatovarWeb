@@ -1,14 +1,21 @@
 {% extends 'KhatovarWebBundle::layout.html.twig' %}
 
 {% block inarticle %}
-    <h2>Cliquez sur la photo que vous souhaitez éditer</h2>
+    <h2>Liste des photos</h2>
 
-    {% for photo in photos %}
-        <a href="{{ path('khatovar_web_photos_edit', {'photo': photo.id}) }}">
-            <img src="{{ photo.getWebPath() }}" class="thumbnail" alt="{{ photo.alt }}" />
-        </a>
-        <a href="{{ path('khatovar_web_photos_delete', {'photo': photo.id}) }}">
-            Supprimer
-        </a>
-    {% endfor %}
+    <div class="container">
+        {% for photo in photos %}
+            <div class="trombi photo_admin">
+                {{ photo.getWebPath()|thumbnail('landscape', photo.alt) }}
+                <br />
+                <a href="{{ path('khatovar_web_photos_edit', {'photo': photo.id}) }}">
+                    Éditer
+                </a>
+                |
+                <a href="{{ path('khatovar_web_photos_delete', {'photo': photo.id}) }}">
+                    Supprimer
+                </a>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}

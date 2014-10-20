@@ -40,7 +40,7 @@ body {
     margin-top: 20px;
     font-family: kingthings_light, "Bitstream Vera Sans","Lucida Grande", sans-serif;
     background: url("../images/boisclair.jpg");
-    font-size: 100%;
+    font-size: 1em;
     text-align: justify;
 }
 
@@ -103,7 +103,8 @@ header h1 {
 
 nav {
     background: url("../images/nav.png");
-    height: 70px;
+    height: 58px;
+    padding-top: 12px;
 }
 
 nav a.button {
@@ -126,7 +127,9 @@ nav a:hover {
 nav ul {
     display: inline-block;
     list-style: none;
-    padding-top: 8px;
+    padding: 0;
+    margin: 0;
+    vertical-align: middle;
 }
 
 nav li {
@@ -136,11 +139,11 @@ nav li {
 nav li ul {
     position: absolute;
     display: none;
+    padding-top: 5px;
 }
 
 nav li ul li {
     position: relative;
-    top: 5px;
     float: none;
     text-align: left;
     padding-left: 1px;
@@ -185,22 +188,28 @@ article {
     padding-right: 60px;
 }
 
-aside.edit {
+aside {
     background: url("../images/scroll_center.png");
     padding: 10px;
     width: 250px;
-    height: 500px;
+    height: 800px;
     position: fixed;
     left: 20px;
-    top: 30px;
+    top: 20px;
     border-radius: 10px;
     box-shadow: 5px 5px 5px #696969;
 }
 
-aside.photo_title {
+aside .scrolling {
+    height: 650px;
+    overflow: auto;
+}
+
+aside .photo_title {
     text-align: center;
     font-weight: bold;
     font-size: 110%;
+    padding: 10px;
 }
 
 article ul {
@@ -252,15 +261,15 @@ p {
     margin-bottom: 0.5em;
 }
 
-article a, footer a {
+article a, footer a, aside a {
     text-decoration: none;
     font-weight: bold;
 }
 
-article a:link, footer a:link {color: #AC3333;}
-article a:visited, footer a:visited {color: #AC3333;}
-article a:hover, footer a:hover {color: #936f00;}
-article a:active, footer a:active {color: #AC3333;}
+article a:link, footer a:link, aside a:link {color: #AC3333;}
+article a:visited, footer a:visited, aside a:visited {color: #AC3333;}
+article a:hover, footer a:hover, aside a:hover {color: #936f00;}
+article a:active, footer a:active, aside a:active {color: #AC3333;}
 
 /* ARTICLES LAYOUT */
 
@@ -471,12 +480,15 @@ article img {
     margin: 0;
 }
 
-.thumbnail
+.thumbnail, .thumbnail_link
 {
-    margin: 20px;
     padding: 5px;
     cursor:auto;
     text-align: center;
+}
+
+.thumbnail_link {
+    margin: 20px;
 }
 
 .portrait {
@@ -494,6 +506,11 @@ article img {
     max-width: 750px;
 }
 
+.photo_admin {
+    text-align: center;
+    margin: 15px 5px 15px 5px;
+}
+
 @media all and (max-width: 990px) {
     img {
         width: 100%;
@@ -503,4 +520,166 @@ article img {
         max-width: 360px;
         max-height: 240px;
     }
+}
+
+/* FORMS */
+
+.form-group {
+    display: table;
+    content: " ";
+    margin: 15px 0 15px;
+    vertical-align: middle;
+}
+
+.form-element {
+    display: table;
+}
+
+.form-background {
+    min-height: 20px;
+    padding: 10px;
+    margin-bottom: 20px;
+    background: #f5f1dc repeat-x linear-gradient(to bottom, #e8e4cf 0%, #f5f1dc 100%);
+    border: 1px solid #cdc9b4;
+    border-radius: 4px;
+    box-shadow: inset 0 2px 2px rgba(0, 0, 0, 0.06);
+}
+
+/* BUTTONS */
+/* Mostly from Bootstrap 3.2 */
+
+.btn {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 1em;
+    font-weight: normal;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    text-decoration: none;
+}
+.btn:focus,
+.btn:active:focus,
+.btn.active:focus {
+    outline: thin dotted;
+    outline: 5px auto -webkit-focus-ring-color;
+    outline-offset: -2px;
+}
+.btn:hover,
+.btn:focus {
+    color: #333;
+    text-decoration: none;
+}
+.btn:active,
+.btn.active {
+    background-image: none;
+    outline: 0;
+    -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+          box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+    -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+          box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+    background-image: none;
+}
+.btn.disabled,
+.btn[disabled],
+fieldset[disabled] .btn {
+    pointer-events: none;
+    cursor: not-allowed;
+    filter: alpha(opacity=65);
+    -webkit-box-shadow: none;
+          box-shadow: none;
+    opacity: .65;
+}
+.btn-default {
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, .2);
+    -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .15), 0 1px 1px rgba(0, 0, 0, .075);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .15), 0 1px 1px rgba(0, 0, 0, .075);
+    text-shadow: 0 1px 0 #fff;
+    background-image: -webkit-linear-gradient(top, #fff 0%, #e0e0e0 100%);
+    background-image:      -o-linear-gradient(top, #fff 0%, #e0e0e0 100%);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#e0e0e0));
+    background-image:         linear-gradient(to bottom, #fff 0%, #e0e0e0 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe0e0e0', GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+    background-repeat: repeat-x;
+    border-color: #dbdbdb;
+    border-color: #ccc;
+}
+.btn-default:hover,
+.btn-default:focus,
+.btn-default:active,
+.btn-default.active,
+.open > .dropdown-toggle.btn-default {
+    color: #333;
+    background-color: #e6e6e6;
+    border-color: #adadad;
+}
+.btn-default:active,
+.btn-default.active,
+.open > .dropdown-toggle.btn-default {
+    background-image: none;
+}
+.btn-default.disabled,
+.btn-default[disabled],
+fieldset[disabled] .btn-default,
+.btn-default.disabled:hover,
+.btn-default[disabled]:hover,
+fieldset[disabled] .btn-default:hover,
+.btn-default.disabled:focus,
+.btn-default[disabled]:focus,
+fieldset[disabled] .btn-default:focus,
+.btn-default.disabled:active,
+.btn-default[disabled]:active,
+fieldset[disabled] .btn-default:active,
+.btn-default.disabled.active,
+.btn-default[disabled].active,
+fieldset[disabled] .btn-default.active {
+    background-color: #fff;
+    border-color: #ccc;
+}
+.btn-default .badge {
+    color: #fff;
+    background-color: #333;
+}
+.btn-default:hover,
+.btn-default:focus {
+    background-color: #e0e0e0;
+    background-position: 0 -15px;
+}
+.btn-default:active,
+.btn-default.active {
+    background-color: #e0e0e0;
+    border-color: #dbdbdb;
+}
+.btn-default:disabled,
+.btn-default[disabled] {
+    background-color: #e0e0e0;
+    background-image: none;
+}
+
+.button-group {
+    margin: 10px;
+    text-align: center;
+}
+
+aside .btn {
+    margin: 5px 0 5px;
+    width: 80%;
+}
+
+a:link.btn, a:visited.btn, a:hover.btn, a:active.btn {
+    color: #333;
 }

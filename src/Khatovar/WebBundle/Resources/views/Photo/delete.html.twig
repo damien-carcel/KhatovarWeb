@@ -1,0 +1,26 @@
+{% extends "KhatovarWebBundle::layout.html.twig" %}
+
+{% block inarticle %}
+    <h2>Suppression d’une photo</h2>
+
+    <p>Êtes-vous certain de vouloir supprimer la photo « {{ photo.alt }} » ci-contre ?</p>
+
+    <div class="form-background">
+        <div class="photo_admin">
+            {{ photo.getWebPath()|thumbnail('landscape', photo.alt) }}
+        </div>
+
+        <form action="{{ path('khatovar_web_photos_delete', {'photo': photo.id}) }}"
+              method="post"
+              class="button-group"
+              id="form">
+
+            <input type="submit" value="Supprimer" class="btn btn-default" />
+            <a href="{{ path('khatovar_web_photos') }}" class="btn btn-default">
+                Annuler
+            </a>
+
+            {{ form_rest(form) }}
+        </form>
+    </div>
+{% endblock %}

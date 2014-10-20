@@ -1,0 +1,28 @@
+{% extends "KhatovarWebBundle::layout.html.twig" %}
+
+{% block inarticle %}
+    <h2>Modifier les informations de la photo</h2>
+
+    <div class="photo_admin float floatright">
+        {{ photo.getWebPath()|thumbnail('landscape', photo.alt) }}
+    </div>
+
+    <div class="form-background">
+        {{ form_start(form) }}
+        {{ form_errors(form) }}
+
+        <div class="form-group">
+            {{ form_row(form.alt, { 'attr': {'class': 'form-element'} }) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(form.size, { 'attr': {'class': 'form-element'} }) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(form.entity, { 'attr': {'class': 'form-element'} }) }}
+        </div>
+
+        {{ form_row(form.submit, { 'attr': {'class': 'btn btn-default'} }) }}
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

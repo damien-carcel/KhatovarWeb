@@ -131,7 +131,31 @@ class PhotoController extends Controller
      */
     public function editAction(Photo $photo)
     {
-        return $this->render('KhatovarWebBundle:Photo:edit.html.twig');
+        $form = $this->createForm(new PhotoType(), $photo);
+
+        $request = $this->get('request');
+
+        if ($request->getMethod() == 'POST') {
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($photo);
+                $entityManager->flush();
+
+                $this->get('session')->getFlashBag()
+                    ->add('notice', 'Photo modifiée');
+
+                return $this->redirect(
+                    $this->generateUrl('khatovar_web_photos')
+                );
+            }
+        }
+
+        return $this->render(
+            'KhatovarWebBundle:Photo:edit.html.twig',
+            array('photo' => $photo, 'form' => $form->createView())
+        );
     }
 
     /**
@@ -143,6 +167,30 @@ class PhotoController extends Controller
      */
     public function deleteAction(Photo $photo)
     {
-        return $this->render('KhatovarWebBundle:Photo:delete.html.twig');
+        // As it is only to delete the photo, we just need an empty form
+        $form = $this->createFormBuilder()->getForm();
+        $request = $this->get('request');
+
+        if ($request->getMethod() == 'POST') {
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->remove($photo);
+                $entityManager->flush();
+
+                $this->get('session')->getFlashBag()
+                    ->add('notice', 'Photo supprimée');
+
+                return $this->redirect(
+                    $this->generateUrl('khatovar_web_photos')
+                );
+            }
+        }
+
+        return $this->render(
+            'KhatovarWebBundle:Photo:delete.html.twig',
+            array('photo' => $photo, 'form' => $form->createView())
+        );
     }
 }

@@ -41,11 +41,23 @@ class KhatovarExtension extends \Twig_Extension
         return array(
             new \Twig_SimpleFilter(
                 'popup_picture',
-                array($this, 'popupPicture')
+                array($this, 'popupPicture'),
+                array('is_safe' => array('html'))
             ),
             new \Twig_SimpleFilter(
                 'link_picture',
-                array($this, 'linkPicture')
+                array($this, 'linkPicture'),
+                array('is_safe' => array('html'))
+            ),
+            new \Twig_SimpleFilter(
+                'link_picture',
+                array($this, 'linkPicture'),
+                array('is_safe' => array('html'))
+            ),
+            new \Twig_SimpleFilter(
+                'thumbnail',
+                array($this, 'thumbnail'),
+                array('is_safe' => array('html'))
             )
         );
     }
@@ -55,16 +67,17 @@ class KhatovarExtension extends \Twig_Extension
      *
      * @param string $path The path to the picture.
      * @param string $class The stylesheet class to use.
+     * @param string $alt The alternative name of the picture.
      * @return string
      */
-    public function popupPicture($path, $class = '')
+    public function popupPicture($path, $class = '', $alt = '')
     {
         $link = '<a href="' . $path
             . '" data-lightbox="Photos Khatovar" title="Copyright &copy; '
             . date('Y') . ' association La Compagnie franche du Khatovar"><img class="'
             . $class . ' photo_rest" onmouseover="this.className=\''
             . $class . ' photo_over\'" onmouseout="this.className=\'' . $class
-            . ' photo_rest\'" src="' . $path . '" alt="" /></a>';
+            . ' photo_rest\'" src="' . $path . '" alt="' . $alt . '" /></a>';
 
         return $link;
     }
@@ -81,6 +94,45 @@ class KhatovarExtension extends \Twig_Extension
         $link = '<a href="' . $path . '" data-lightbox="' . $path
             . '" title="Copyright &copy; ' . date('Y')
             . ' association La Compagnie franche du Khatovar">' . $text . '</a>';
+
+        return $link;
+    }
+
+    /**
+     * .
+     *
+     * @param string $path
+     * @param string $class
+     * @param string $alt
+     * @return string
+     */
+    public function thumbnail($path, $class, $alt = '')
+    {
+        $link = '<img src="' . $path . '" class="thumbnail ' . $class .' photo_rest" alt="' . $alt . '" />';
+
+        return $link;
+    }
+
+    /**
+     * Make an hyperlink from a thumbnail.
+     *
+     * @param string $destination The hyperlink
+     * @param string $path The path of the picture for the thumbnail
+     * @param string $class The class to apply to the thumbnail:
+     *                      "portrait" or "landscape"
+     * @param string $alt The alternative text for the thumbnail
+     * @param string $text An optionnal text to display under the
+     *                     thumbnail
+     * @return string
+     */
+    public function thumbnailLink($path, $destination, $class, $alt = '', $text = '')
+    {
+        $link = '<div class="thumbnail_link ' . $class . ' photo_rest"
+            onmouseover="this.className=\'thumbnail_link ' . $class . ' photo_over\';"
+            onmouseout="this.className=\'thumbnail_link ' . $class . ' photo_rest\';"
+            onclick="location.href=\'' . $destination . '\';">
+            <img src="' . $path . '" class="trombinoscope" alt="' . $alt . '" /><br />'
+            . $text . '</div>';
 
         return $link;
     }

@@ -9,7 +9,7 @@
 
     <h2>Supprimer un Dossier</h2>
 
-    <p>Êtes-vous certain de vouloir supprimer le dossier « {{ folder.name }} »</p>
+    <p>Êtes-vous certain de vouloir supprimer le dossier « {{ folder.name }} » ?</p>
 
     <div class="well">
         <form action="{{ path('carcel_documents_remove_folder', {'folder': folder.id}) }}" method="post">
