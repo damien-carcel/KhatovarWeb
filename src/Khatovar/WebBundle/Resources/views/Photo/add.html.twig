@@ -11,18 +11,8 @@
             {{ form_row(form.file) }}
         </div>
 
-        <div class="form-group">
-            {{ form_row(form.alt, { 'attr': {'class': 'form-element'} }) }}
-        </div>
-        <div class="form-group">
-            {{ form_row(form.size, { 'attr': {'class': 'form-element'} }) }}
-        </div>
-        <div class="form-group">
-            {{ form_row(form.entity, { 'attr': {'class': 'form-element'} }) }}
-        </div>
+        {% embed '@KhatovarWeb/Photo/upload.html.twig' %}{% endembed %}
 
-        {{ form_row(form.submit, { 'attr': {'class': 'btn btn-default'} }) }}
-        {{ form_rest(form) }}
         {{ form_end(form) }}
     </div>
 {% endblock %}

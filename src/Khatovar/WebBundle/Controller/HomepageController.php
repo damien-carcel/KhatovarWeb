@@ -29,12 +29,12 @@ use Khatovar\WebBundle\Form\HomepageType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
- * Class AccueilController
+ * Class HomepageController
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
  * @package Khatovar\WebBundle\Controller
  */
-class AccueilController extends Controller
+class HomepageController extends Controller
 {
     /**
      * Display the homepage.

@@ -1,24 +1,24 @@
 khatovar_web_homepage:
     path:       /accueil
-    defaults:   { _controller: KhatovarWebBundle:Accueil:index }
+    defaults:   { _controller: KhatovarWebBundle:Homepage:index }
 
 khatovar_web_homepage_create:
     path:       /accueil/create
-    defaults:   { _controller: KhatovarWebBundle:Accueil:create }
+    defaults:   { _controller: KhatovarWebBundle:Homepage:create }
 
 khatovar_web_homepage_edit:
     path:       /accueil/edit/{homepage}
-    defaults:   { _controller: KhatovarWebBundle:Accueil:edit }
+    defaults:   { _controller: KhatovarWebBundle:Homepage:edit }
     requirements:
         homepage: \d+
 
 khatovar_web_homepage_list:
     path:       /accueil/list
-    defaults:   { _controller: KhatovarWebBundle:Accueil:list }
+    defaults:   { _controller: KhatovarWebBundle:Homepage:list }
 
 khatovar_web_homepage_delete:
     path:       /accueil/delete/{homepage}
-    defaults:   { _controller: KhatovarWebBundle:Accueil:delete }
+    defaults:   { _controller: KhatovarWebBundle:Homepage:delete }
     requirements:
         homepage: \d+
 

@@ -89,9 +89,7 @@ class PhotoController extends Controller
     public function addAction()
     {
         $photo = new Photo();
-
         $form = $this->createForm(new PhotoType(), $photo);
-        $form->add('file', 'file', array('label' => false));
 
         $request = $this->get('request');
 
@@ -111,19 +109,25 @@ class PhotoController extends Controller
                     ->add('notice', 'Photo ajoutée');
 
                 return $this->redirect(
-                    $this->generateUrl('khatovar_web_photos')
+                    $this->generateUrl(
+                        'khatovar_web_photos_edit',
+                        array('photo'=> $photo->getId())
+                    )
                 );
             }
         }
 
         return $this->render(
             'KhatovarWebBundle:Photo:add.html.twig',
-            array('form' => $form->createView())
+            array(
+                'form' => $form->createView(),
+                'photo' => $photo
+            )
         );
     }
 
     /**
-     * Edit a photo informations.
+     * Edit a photo information.
      *
      * @param Photo $photo
      * @return \Symfony\Component\HttpFoundation\Response
@@ -132,6 +136,7 @@ class PhotoController extends Controller
     public function editAction(Photo $photo)
     {
         $form = $this->createForm(new PhotoType(), $photo);
+        $entity = $photo->getEntity();
 
         $request = $this->get('request');
 
@@ -143,8 +148,20 @@ class PhotoController extends Controller
                 $entityManager->persist($photo);
                 $entityManager->flush();
 
-                $this->get('session')->getFlashBag()
-                    ->add('notice', 'Photo modifiée');
+                // We check if the entity was changed, because if it
+                // was, then the other attributes (class or entry) may
+                // have to be changed too.
+                if ($photo->getEntity() != $entity) {
+                    return $this->redirect(
+                        $this->generateUrl(
+                            'khatovar_web_photos_edit',
+                            array('photo'=> $photo->getId())
+                        )
+                    );
+                } else {
+                    $this->get('session')->getFlashBag()
+                        ->add('notice', 'Photo modifiée');
+                }
 
                 return $this->redirect(
                     $this->generateUrl('khatovar_web_photos')
