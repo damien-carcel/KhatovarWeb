@@ -23,7 +23,6 @@ class AppKernel extends Kernel
             new JMS\DiExtraBundle\JMSDiExtraBundle($this),
             new FOS\UserBundle\FOSUserBundle(),
             new Khatovar\WebBundle\KhatovarWebBundle(),
-            new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

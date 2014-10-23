@@ -47,14 +47,12 @@ class HomepageController extends Controller
             ->getRepository('KhatovarWebBundle:Homepage')
             ->findOneBy(array('active' => true));
 
-        $translations = $this->get('khatovar.filters.translation');
+        //$translations = $this->get('khatovar.filters.translation');
 
         return $this->render(
             'KhatovarWebBundle:Accueil:index.html.twig',
             array(
-                'content' => $translations->imageTranslate(
-                    $homepage->getContent()
-                ),
+                'content' => $homepage->getContent(),
                 'page_to_edit' => $this->generateUrl(
                     'khatovar_web_homepage_edit',
                     array('homepage' => $homepage->getId())

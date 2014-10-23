@@ -411,6 +411,10 @@ img {
     width: 100%;
 }
 
+aside img {
+    width: 150px;
+}
+
 article img {
     margin: 10px;
 }
@@ -470,10 +474,13 @@ article img {
     float: left;
 }
 
-.trombi {
-    display: inline-block;
+.trombi .aside-photo {
     text-align: center;
     vertical-align: middle;
+}
+
+.trombi {
+    display: inline-block;
 }
 
 .trombinoscope {
@@ -507,7 +514,6 @@ article img {
 }
 
 .photo_admin {
-    text-align: center;
     margin: 15px 5px 15px 5px;
 }
 

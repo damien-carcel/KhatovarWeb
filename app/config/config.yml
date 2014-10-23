@@ -92,11 +92,3 @@ fos_user:
             from_email:
                 address:        noreply@compagniefranchedukhatovar.fr
                 sender_name:    Documents admin
-
-# IvoryCKEditorBundle configuration
-ivory_ck_editor:
-    configs:
-        basic_config:
-            toolbar: standard
-            uiColor: "#f5f1dc"
-            #filebrowserUploadRoute: "my_route"

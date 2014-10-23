@@ -1,14 +1,31 @@
-<div class="trombi">
+<div class="aside-photo">
     <div class="photo_title">Photos diponibles pour cette page</div>
 
     <div class="scrolling">
+        <div class="container">
         {% for photo in photos %}
-            <div class="photo_admin">
-                {{ photo.getWebPath()|thumbnail('landscape', photo.alt) }}
-                <br />
-                Photo n° {{ photo.id }}
-            </div>
+                {% if photo.entity == 'homepage' %}
+                    <div class="photo_admin">
+                        {% if photo.class == 'photo_small' %}
+                            {% set format = 'Petit format' %}
+                        {% elseif photo.class == 'photo' %}
+                            {%  set format = 'Format normal' %}
+                        {% elseif photo.class == 'panorama' %}
+                            {%  set format = 'Format panoramique' %}
+                        {% endif %}
+                        {{ photo.getWebPath()|popup_picture(photo.class, photo.alt) }}
+                        <br />
+                        {{ format }}
+                    </div>
+                {% else %}
+                    <div class="photo_admin">
+                        {{ photo.getWebPath()|thumbnail('landscape', photo.alt) }}
+                        <br />
+                        Photo n° {{ photo.id }}
+                    </div>
+                {% endif %}
         {% endfor %}
+        </div>
     </div>
 
     <div class="button-group">
