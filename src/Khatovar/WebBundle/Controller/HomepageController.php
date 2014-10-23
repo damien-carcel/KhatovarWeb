@@ -25,6 +25,7 @@ namespace Khatovar\WebBundle\Controller;
 
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Khatovar\WebBundle\Entity\Homepage;
+use Khatovar\WebBundle\Form\HomepageListType;
 use Khatovar\WebBundle\Form\HomepageType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -47,15 +48,20 @@ class HomepageController extends Controller
             ->getRepository('KhatovarWebBundle:Homepage')
             ->findOneBy(array('active' => true));
 
-        //$translations = $this->get('khatovar.filters.translation');
+        $translations = $this->get('khatovar.filters.translation');
 
         return $this->render(
             'KhatovarWebBundle:Accueil:index.html.twig',
             array(
-                'content' => $homepage->getContent(),
+                'content' => $translations->imageTranslate(
+                    $homepage->getContent()
+                ),
                 'page_to_edit' => $this->generateUrl(
                     'khatovar_web_homepage_edit',
                     array('homepage' => $homepage->getId())
+                ),
+                'page_to_create' => $this->generateUrl(
+                    'khatovar_web_homepage_create'
                 )
             )
         );
@@ -86,7 +92,9 @@ class HomepageController extends Controller
                 $this->get('session')->getFlashBag()
                     ->add('notice', 'Page d’accueil enregistrée');
 
-                return $this->redirect($this->generateUrl('khatovar_web_homepage_list'));
+                return $this->redirect(
+                    $this->generateUrl('khatovar_web_homepage_list')
+                );
             }
         }
 
@@ -120,7 +128,9 @@ class HomepageController extends Controller
                 $this->get('session')->getFlashBag()
                     ->add('notice', 'Page d’accueil modifiée');
 
-                return $this->redirect($this->generateUrl('khatovar_web_homepage_list'));
+                return $this->redirect(
+                    $this->generateUrl('khatovar_web_homepage_list')
+                );
             }
         }
 
@@ -139,16 +149,91 @@ class HomepageController extends Controller
      */
     public function listAction()
     {
-        return $this->render('KhatovarWebBundle:Accueil:list.html.twig');
+        $entityManager = $this->getDoctrine()->getManager();
+        $repository = $entityManager->getRepository('KhatovarWebBundle:Homepage');
+
+        $old_homepage = $repository->findOneBy(array('active' => true));
+
+        $form = $this->createFormBuilder()
+            ->add('active', 'entity', array(
+                    'class' => 'Khatovar\WebBundle\Entity\Homepage',
+                    'label' => false,
+                    'property' => 'name',
+                    'preferred_choices' => array($old_homepage)
+                ))
+            ->add('submit', 'submit', array('label' => 'Activer'))
+            ->getForm();
+
+        $request = $this->get('request');
+
+        if ($request->getMethod() == 'POST') {
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                $new_homepage = $repository
+                    ->find($form->get('active')->getData());
+
+                if ($old_homepage->getId() != $new_homepage->getId()) {
+                    // Todo: Understand why I have to use these two lines
+                    $old_homepage->setActive(false);
+                    $new_homepage->setActive(true);
+
+                    $entityManager->persist($old_homepage);
+                    $entityManager->persist($new_homepage);
+                    $entityManager->flush();
+
+                    $this->get('session')->getFlashBag()
+                        ->add('notice', 'Page d’accueil activée');
+                }
+
+                return $this->redirect(
+                    $this->generateUrl('khatovar_web_homepage_list')
+                );
+            }
+        }
+
+        // We get all the homepage in case we want to edit another one
+        // that the active one.
+        $list = $repository->findAll();
+
+        return $this->render(
+            'KhatovarWebBundle:Accueil:list.html.twig',
+            array('homepage_list' => $list, 'form' => $form->createView())
+        );
     }
 
     /**
      * Delete a homepage.
      *
      * @param Homepage $homepage
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function deleteAction(Homepage $homepage)
     {
-        //
+        // As it is only to delete the photo, we just need an empty form
+        $form = $this->createFormBuilder()->getForm();
+        $request = $this->get('request');
+
+        if ($request->getMethod() == 'POST') {
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->remove($homepage);
+                $entityManager->flush();
+
+                $this->get('session')->getFlashBag()
+                    ->add('notice', 'Page d’accueil supprimée');
+
+                return $this->redirect(
+                    $this->generateUrl('khatovar_web_homepage_list')
+                );
+            }
+        }
+
+        return $this->render(
+            'KhatovarWebBundle:Accueil:delete.html.twig',
+            array('homepage' => $homepage, 'form' => $form->createView())
+        );
     }
 }

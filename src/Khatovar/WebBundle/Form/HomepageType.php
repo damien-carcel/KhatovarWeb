@@ -40,7 +40,8 @@ class HomepageType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('content', 'ckeditor', array(
+        $builder->add('name', 'text', array('label' => 'Nom :'))
+            ->add('content', 'ckeditor', array(
                 'label' => false,
                 'config_name' => 'basic_config'
             ))

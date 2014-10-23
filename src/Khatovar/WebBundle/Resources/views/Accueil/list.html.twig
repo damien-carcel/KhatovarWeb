@@ -2,7 +2,38 @@
 
 {% block inarticle %}
     <p>
-        Pages d’accueil disponibles :
+        <a href="{{ path('khatovar_web_homepage_create') }}">
+            Créer une nouvelle page d’accueil
+        </a>
+    </p>
+    <p>
+        Veuillez sélectionner la page d’accueil à utiliser :
     </p>
 
+    {{ form_start(form) }}
+    <div class="form-group">
+        {{ form_row(form.active, { 'attr': {'class': 'form-element'} }) }}
+    </div>
+    {{ form_row(form.submit, { 'attr': {'class': 'btn btn-default'} }) }}
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+
+    <p>
+        Liste des pages d’accueil disponibles :
+    </p>
+    {% for homepage in homepage_list %}
+        <ul>
+            <li>
+                {{ homepage.name }}
+                —
+                <a href="{{ path('khatovar_web_homepage_edit', { 'homepage': homepage.id }) }}">
+                    Éditer
+                </a>
+                |
+                <a href="{{ path('khatovar_web_homepage_delete', { 'homepage': homepage.id }) }}">
+                    Supprimer
+                </a>
+            </li>
+        </ul>
+    {% endfor %}
 {% endblock %}

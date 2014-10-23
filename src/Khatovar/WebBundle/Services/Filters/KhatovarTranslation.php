@@ -52,4 +52,17 @@ class KhatovarTranslation
     {
         return $text;
     }
+
+    /**
+     * Replace line breaks by paragraph
+     *
+     * @param string $text The text to transform.
+     * @return string
+     */
+    public function paragraphTranslate($text)
+    {
+        $text = '<p>' . $text . '</p>';
+
+        return $text;
+    }
 }

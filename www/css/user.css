@@ -263,8 +263,8 @@ th {
 @font-face {
   font-family: 'Glyphicons Halflings';
 
-  src: url('../bundles/carceldocuments/fonts/glyphicons-halflings-regular.eot');
-  src: url('../bundles/carceldocuments/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../bundles/carceldocuments/fonts/glyphicons-halflings-regular.woff') format('woff'), url('../bundles/carceldocuments/fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../bundles/carceldocuments/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+  src: url('../../bundles/carceldocuments/fonts/glyphicons-halflings-regular.eot');
+  src: url('../../bundles/carceldocuments/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../../bundles/carceldocuments/fonts/glyphicons-halflings-regular.woff') format('woff'), url('../../bundles/carceldocuments/fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../../bundles/carceldocuments/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
 }
 .glyphicon {
   position: relative;

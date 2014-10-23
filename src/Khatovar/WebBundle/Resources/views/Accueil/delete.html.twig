@@ -1,0 +1,22 @@
+{% extends "KhatovarWebBundle::layout.html.twig" %}
+
+{% block inarticle %}
+    <h2>Suppression d’une page d’accueil</h2>
+
+    <p>Êtes-vous certain de vouloir supprimer la page d’accueil « {{ homepage.name }} » ?</p>
+
+    <div class="form-background">
+        <form action="{{ path('khatovar_web_homepage_delete', {'homepage': homepage.id}) }}"
+              method="post"
+              class="button-group"
+              id="form">
+
+            <input type="submit" value="Supprimer" class="btn btn-default" />
+            <a href="{{ path('khatovar_web_homepage_list') }}" class="btn btn-default">
+                Annuler
+            </a>
+
+            {{ form_rest(form) }}
+        </form>
+    </div>
+{% endblock %}

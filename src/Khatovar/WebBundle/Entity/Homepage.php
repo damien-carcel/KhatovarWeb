@@ -44,7 +44,10 @@ class Homepage
     private $id;
 
     /**
-     * @var integer
+     * @var string
+     *
+     * @ORM\Column(name="name", type="text")
+     * @Assert\NotBlank()
      */
     private $name;
 
@@ -86,16 +89,6 @@ class Homepage
      * @return integer
      */
     public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Get the ID as the name of the homepage.
-     *
-     * @return integer
-     */
-    public function getname()
     {
         return $this->id;
     }
@@ -185,5 +178,28 @@ class Homepage
     public function getPhotos()
     {
         return $this->photos;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return Homepage
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 }
