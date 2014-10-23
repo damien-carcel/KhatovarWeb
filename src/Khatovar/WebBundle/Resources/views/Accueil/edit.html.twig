@@ -8,9 +8,10 @@
     </p>
 
     {{ form_start(form) }}
-    {{ form_row(form.content, {'attr': {'class': 'tinymce'}}) }}
-    {{ form_row(form.submit, { 'attr': {'class': 'btn btn-default'} }) }}
+    {{ form_row(form.content) }}
+    <div class="button-group">
+        {{ form_row(form.submit, { 'attr': {'class': 'btn btn-default'} }) }}
+    </div>
     {{ form_rest(form) }}
     {{ form_end(form) }}
-    {{ tinymce_init() }}
 {% endblock %}

@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "db0379f3e0e94952f073a58d0b73a6e7",
+    "hash": "29eb7b1cdc8fcce960e503ebb857922e",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -612,6 +612,113 @@
                 "orm"
             ],
             "time": "2014-10-06 13:22:50"
+        },
+        {
+            "name": "egeloen/ckeditor-bundle",
+            "version": "2.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/egeloen/IvoryCKEditorBundle.git",
+                "reference": "a3f595101e571788af94aded9417a90ccbf66496"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/egeloen/IvoryCKEditorBundle/zipball/a3f595101e571788af94aded9417a90ccbf66496",
+                "reference": "a3f595101e571788af94aded9417a90ccbf66496",
+                "shasum": ""
+            },
+            "require": {
+                "egeloen/json-builder": "~1.0.0",
+                "php": ">=5.3.3",
+                "symfony/form": "~2.2",
+                "symfony/framework-bundle": "~2.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0",
+                "satooshi/php-coveralls": "~0.6",
+                "twig/twig": "~1.12"
+            },
+            "suggest": {
+                "twig/twig": "Allows to use twig templates"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.5-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Ivory\\CKEditorBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Eric GELOEN",
+                    "email": "geloen.eric@gmail.com"
+                }
+            ],
+            "description": "Provides a CKEditor integration for your Symfony2 Project.",
+            "keywords": [
+                "CKEditor"
+            ],
+            "time": "2014-08-29 16:31:01"
+        },
+        {
+            "name": "egeloen/json-builder",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/egeloen/ivory-json-builder.git",
+                "reference": "0395f06db7bbb3c240667ab5f3152151051fb567"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/egeloen/ivory-json-builder/zipball/0395f06db7bbb3c240667ab5f3152151051fb567",
+                "reference": "0395f06db7bbb3c240667ab5f3152151051fb567",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": ">=5.3.0",
+                "symfony/property-access": "~2.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0",
+                "satooshi/php-coveralls": "~0.6"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Ivory\\JsonBuilder\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Eric GELOEN",
+                    "email": "geloen.eric@gmail.com"
+                }
+            ],
+            "description": "JSON builder with escaping control for PHP 5.3+",
+            "keywords": [
+                "Escape",
+                "builder",
+                "json"
+            ],
+            "time": "2014-08-12 00:30:56"
         },
         {
             "name": "friendsofsymfony/user-bundle",
@@ -1482,64 +1589,6 @@
             "time": "2014-07-19 10:52:35"
         },
         {
-            "name": "stfalcon/tinymce-bundle",
-            "version": "dev-master",
-            "target-dir": "Stfalcon/Bundle/TinymceBundle",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/stfalcon/TinymceBundle.git",
-                "reference": "758c19947b04d93d9d79e0ae8432beaccc0097f2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/stfalcon/TinymceBundle/zipball/758c19947b04d93d9d79e0ae8432beaccc0097f2",
-                "reference": "758c19947b04d93d9d79e0ae8432beaccc0097f2",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0",
-                "symfony/symfony": ">=2.1"
-            },
-            "type": "symfony-bundle",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "0.3.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Stfalcon\\Bundle\\TinymceBundle": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Stepan Tanasiychuk",
-                    "email": "ceo@stfalcon.com",
-                    "homepage": "http://blog.stfalcon.com"
-                },
-                {
-                    "name": "Igor Negrutsa",
-                    "email": "progi2007@gmail.com",
-                    "homepage": "http://igor-negrutsa.info"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://github.com/stfalcon/TinymceBundle/contributors"
-                }
-            ],
-            "description": "This Bundle integrates TinyMCE WYSIWYG editor into a Symfony2 project.",
-            "keywords": [
-                "editor",
-                "tinymce",
-                "wysiwyg"
-            ],
-            "time": "2014-09-15 12:37:07"
-        },
-        {
             "name": "swiftmailer/swiftmailer",
             "version": "v5.3.0",
             "source": {
@@ -2146,8 +2195,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "jms/security-extra-bundle": 20,
-        "winzou/console-bundle": 20,
-        "stfalcon/tinymce-bundle": 20
+        "winzou/console-bundle": 20
     },
     "prefer-stable": false,
     "platform": {
