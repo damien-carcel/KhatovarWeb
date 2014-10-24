@@ -29,7 +29,9 @@ use Khatovar\WebBundle\Form\PhotoType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
- * Photo controller.
+ * Photo controller. Only an user with "ROLE_EDITOR as a minimum
+ * security clearance can see and manipulate photos for all the web
+ * site sections. Regular users can only see their own members photos.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
  * @package Khatovar\WebBundle\Controller
@@ -45,18 +47,46 @@ class PhotoController extends Controller
      * Return the list of all photos uploaded for the website and
      * display admin utilities to manage them.
      *
-     * @Secure(roles="ROLE_EDITOR")
      * @return \Symfony\Component\HttpFoundation\Response
+     * @Secure(roles="ROLE_VIEWER")
      */
     public function indexAction()
     {
-        $photos = $this->getDoctrine()->getManager()
-            ->getRepository('KhatovarWebBundle:Photo')
-            ->findAll();
+        $currentUser = $this->container->get('security.context')
+            ->getToken()->getUser();
+        $entityManager = $this->getDoctrine()->getManager();
+
+        if ($currentUser->hasRole('ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_EDITOR')) {
+            $photos = $entityManager->getRepository('KhatovarWebBundle:Photo')
+                ->findAll();
+        } else {
+            $entry = $entityManager->getRepository('KhatovarWebBundle:Member')
+                ->findOneByOwner($currentUser->getId());
+            $photos = $entityManager->getRepository('KhatovarWebBundle:Photo')
+                ->findBy(
+                    array(
+                        'entity' => 'member',
+                        'entry' => $entry
+                    ),
+                    array(
+                        'entity' => 'ASC',
+                        'entry' => 'ASC'
+                    )
+                );
+        }
+
+        // TODO: Find a way to get the entities list automatically
+        $entityList = array(
+            'homepage' => 'Pages d’accueil',
+            'member' => 'Membres'
+        );
 
         return $this->render(
             'KhatovarWebBundle:Photo:index.html.twig',
-            array('photos' => $photos)
+            array(
+                'photos' => $photos,
+                'entity_list' => $entityList
+            )
         );
     }
 
@@ -70,9 +100,22 @@ class PhotoController extends Controller
      */
     public function sideAction($entity)
     {
-        $photos = $this->getDoctrine()->getManager()
-            ->getRepository('KhatovarWebBundle:Photo')
-            ->findBy(array('entity' => $entity));
+        $currentUser = $this->container->get('security.context')
+            ->getToken()->getUser();
+        $entityManager = $this->getDoctrine()->getManager();
+
+        if ($currentUser->hasRole('ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_EDITOR')) {
+            $photos = $entityManager->getRepository('KhatovarWebBundle:Photo')
+                ->findBy(array('entity' => $entity));
+        } else {
+            $entry = $entityManager->getRepository('KhatovarWebBundle:Member')
+                ->findOneByOwner($currentUser->getId());
+            $photos = $entityManager->getRepository('KhatovarWebBundle:Photo')
+                ->findBy(array(
+                        'entity' => $entity,
+                        'entry' => $entry
+                    ));
+        }
 
         return $this->render(
             'KhatovarWebBundle:Photo:side.html.twig',
@@ -90,6 +133,22 @@ class PhotoController extends Controller
     {
         $photo = new Photo();
         $form = $this->createForm(new PhotoType(), $photo);
+
+        $currentUser = $this->container->get('security.context')
+            ->getToken()->getUser();
+        $entry = $this->getDoctrine()->getManager()
+            ->getRepository('KhatovarWebBundle:Member')
+            ->findOneByOwner($currentUser->getId());
+
+        if (!$currentUser->hasRole('ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_EDITOR')) {
+            $form->remove('entity')->remove('entry');
+            $form->add('entity', 'hidden', array(
+                    'data' => 'member'
+                ))
+                ->add('entry', 'hidden', array(
+                        'data' => $entry
+                    ));
+        }
 
         $request = $this->get('request');
 
@@ -131,12 +190,28 @@ class PhotoController extends Controller
      *
      * @param Photo $photo
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Secure(roles="ROLE_EDITOR")
+     * @Secure(roles="ROLE_VIEWER")
      */
     public function editAction(Photo $photo)
     {
         $form = $this->createForm(new PhotoType(), $photo);
         $entity = $photo->getEntity();
+
+        $currentUser = $this->container->get('security.context')
+            ->getToken()->getUser();
+        $entry = $this->getDoctrine()->getManager()
+            ->getRepository('KhatovarWebBundle:Member')
+            ->findOneByOwner($currentUser->getId());
+
+        if (!$currentUser->hasRole('ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_EDITOR')) {
+            $form->remove('entity')->remove('entry');
+            $form->add('entity', 'hidden', array(
+                    'data' => 'member'
+                ))
+                ->add('entry', 'hidden', array(
+                        'data' => $entry
+                    ));
+        }
 
         $request = $this->get('request');
 
@@ -171,7 +246,11 @@ class PhotoController extends Controller
 
         return $this->render(
             'KhatovarWebBundle:Photo:edit.html.twig',
-            array('photo' => $photo, 'form' => $form->createView())
+            array(
+                'photo' => $photo,
+                'form' => $form->createView(),
+                'owner' => $entry
+            )
         );
     }
 
@@ -180,13 +259,19 @@ class PhotoController extends Controller
      *
      * @param Photo $photo
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Secure(roles="ROLE_EDITOR")
+     * @Secure(roles="ROLE_VIEWER")
      */
     public function deleteAction(Photo $photo)
     {
         // As it is only to delete the photo, we just need an empty form
         $form = $this->createFormBuilder()->getForm();
         $request = $this->get('request');
+
+        $currentUser = $this->container->get('security.context')
+            ->getToken()->getUser();
+        $entry = $this->getDoctrine()->getManager()
+            ->getRepository('KhatovarWebBundle:Member')
+            ->findOneByOwner($currentUser->getId());
 
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
@@ -207,7 +292,11 @@ class PhotoController extends Controller
 
         return $this->render(
             'KhatovarWebBundle:Photo:delete.html.twig',
-            array('photo' => $photo, 'form' => $form->createView())
+            array(
+                'photo' => $photo,
+                'form' => $form->createView(),
+                'owner' => $entry
+            )
         );
     }
 }

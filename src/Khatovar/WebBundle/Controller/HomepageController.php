@@ -200,6 +200,7 @@ class HomepageController extends Controller
      *
      * @param Homepage $homepage
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @Secure(roles="ROLE_EDITOR")
      */
     public function deleteAction(Homepage $homepage)
     {

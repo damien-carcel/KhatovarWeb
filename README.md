@@ -4,7 +4,10 @@ This repository contain the source code for the web site of the medieval associa
 
 #TODO
 
-**This is a work in progress. The content is mostly the one of the old, static website. It will progressively evolve to a real modern PHP application.**
+* Documentation for the admin part of the site.
+* Member, appearance, contacts and future show pages
+* RSS feeds
+* Connection to the facebook page for automatic posts when adding a new show
 
 # License
 

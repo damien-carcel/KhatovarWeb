@@ -1,21 +1,28 @@
 {% extends 'KhatovarWebBundle::layout.html.twig' %}
 
 {% block inarticle %}
-    <h2>Liste des photos</h2>
+    <h1>Liste des photos</h1>
 
-    <div class="container">
-        {% for photo in photos %}
-            <div class="trombi photo_admin">
-                {{ photo.getWebPath()|thumbnail('landscape', photo.alt) }}
-                <br />
-                <a href="{{ path('khatovar_web_photos_edit', {'photo': photo.id}) }}">
-                    Éditer
-                </a>
-                |
-                <a href="{{ path('khatovar_web_photos_delete', {'photo': photo.id}) }}">
-                    Supprimer
-                </a>
-            </div>
-        {% endfor %}
-    </div>
+    {% for key, entity in entity_list %}
+        <h2>{{ entity }}</h2>
+        <div class="container">
+            {% for photo in photos %}
+                {% if photo.entity == key %}
+                    <div class="trombi photo_admin">
+                        {{ photo.getWebPath()|thumbnail('landscape', photo.alt) }}
+                        <br />
+                        <a href="{{ path('khatovar_web_photos_edit', {'photo': photo.id}) }}">
+                            Éditer
+                        </a>
+                        |
+                        <a href="{{ path('khatovar_web_photos_delete', {'photo': photo.id}) }}">
+                            Supprimer
+                        </a>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endfor %}
 {% endblock %}
+
+{# TODO: Made h3 sections for every entries in each entity #}
