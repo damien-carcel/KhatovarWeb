@@ -64,16 +64,6 @@
                     |
                     <a href="{{ path('carcel_user_admin') }}">Page d’adminitration</a>
                 {% endif %}
-                {% if is_granted('ROLE_EDITOR') %}
-                    {% if page_to_create is defined %}
-                        |
-                        <a href="{{ page_to_create }}">Créer une nouvelle page</a>
-                    {% endif %}
-                    {% if page_to_edit is defined %}
-                        |
-                        <a href="{{ page_to_edit }}">Édition de la page</a>
-                    {% endif %}
-                {% endif %}
                 |
                 <a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a>
             {% else %}

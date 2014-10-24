@@ -55,13 +55,7 @@ class HomepageController extends Controller
                 'content' => $translations->imageTranslate(
                     $homepage->getContent()
                 ),
-                'page_to_edit' => $this->generateUrl(
-                    'khatovar_web_homepage_edit',
-                    array('homepage' => $homepage->getId())
-                ),
-                'page_to_create' => $this->generateUrl(
-                    'khatovar_web_homepage_create'
-                )
+                'page_id' => $homepage->getId()
             )
         );
     }

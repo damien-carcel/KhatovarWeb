@@ -1,6 +1,14 @@
 {% extends 'KhatovarWebBundle::layout.html.twig' %}
 
 {% block inarticle %}
+    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and is_granted('ROLE_EDITOR') %}
+        <a href="{{ path('khatovar_web_homepage_list') }}">Liste des pages d’accueil disponibles</a>
+        |
+        <a href="{{ path('khatovar_web_homepage_create') }}">Créer une nouvelle page</a>
+        |
+        <a href="{{ path('khatovar_web_homepage_edit', {'homepage': page_id}) }}">Édition de la page</a>
+        <hr />
+    {% endif %}
     {% autoescape false %}
     {{ content }}
     {% endautoescape %}
