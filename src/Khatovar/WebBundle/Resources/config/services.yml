@@ -16,6 +16,7 @@ services:
 
     khatovar.filters.translation:
         class: Khatovar\WebBundle\Services\Filters\KhatovarTranslation
+        arguments: [ "@doctrine.orm.entity_manager" ]
 
     khatovar.filter.resize:
         class: Khatovar\WebBundle\Services\Filters\KhatovarImageResize

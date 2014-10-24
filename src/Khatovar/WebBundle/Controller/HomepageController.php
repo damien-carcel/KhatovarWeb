@@ -25,7 +25,6 @@ namespace Khatovar\WebBundle\Controller;
 
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Khatovar\WebBundle\Entity\Homepage;
-use Khatovar\WebBundle\Form\HomepageListType;
 use Khatovar\WebBundle\Form\HomepageType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 

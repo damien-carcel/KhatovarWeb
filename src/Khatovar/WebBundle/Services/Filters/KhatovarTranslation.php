@@ -23,6 +23,8 @@
 
 namespace Khatovar\WebBundle\Services\Filters;
 
+use Doctrine\ORM\EntityManager;
+
 /**
  * Perform some transformations on html code before display or saving.
  *
@@ -32,14 +34,68 @@ namespace Khatovar\WebBundle\Services\Filters;
 class KhatovarTranslation
 {
     /**
-     * Look for special tags and transform it in twig syntaxe.
+     * @var EntityManager
+     */
+    protected $em;
+
+    /**
+     * @param EntityManager $entityManager
+     */
+    public function __construct(EntityManager $entityManager)
+    {
+        $this->em = $entityManager;
+    }
+
+    /**
+     * Look for special photo insertion tags and transform it in html syntaxe.
      *
      * @param string $text The text to transform.
      * @return string
      */
     public function imageTranslate($text)
     {
-        return $text;
+        // If the photo is inserted inside a paragraph instead of an empty div
+        $text = str_replace('<p>[', '<div>[', $text);
+        $text = str_replace(']</p>', ']</div>', $text);
+
+        // Add the container class to the div
+        $text = str_replace('<div>[', '<div class="container">', $text);
+        $text = str_replace(']</div>', '</div>', $text);
+        $text = str_replace('][', '', $text);
+
+        // And finally create the html code. First we get all the photo
+        // codes inserted in the text.
+        preg_match_all('/(\w+\-\d+\.jpeg)/', $text, $matches);
+        $paths = $matches[0];
+
+        // Then retrieve the corresponding objects and use them to
+        // generate the html code.
+        $repository = $this->em->getRepository('KhatovarWebBundle:Photo');
+        $photos = array();
+
+        foreach ($paths as $path) {
+            $photo = $repository->findOneByPath($path);
+            if ($photo) {
+                $photos[] = '<a href="/uploaded/photos/'
+                    . $photo->getPath()
+                    . '" data-lightbox="Photos Khatovar" title="Copyright &copy; '
+                    . date('Y')
+                    . ' association La Compagnie franche du Khatovar"><img class="'
+                    . $photo->getClass()
+                    . ' photo_rest" onmouseover="this.className=\''
+                    . $photo->getClass()
+                    . ' photo_over\'" onmouseout="this.className=\''
+                    . $photo->getClass()
+                    . ' photo_rest\'" src="/uploaded/photos/'
+                    . $photo->getPath()
+                    . '" alt="' . $photo->getAlt()
+                    . '" /></a>';
+            } else {
+                $photos[] = 'Cette photo n’existe pas';
+            }
+        }
+
+        return str_replace($paths, $photos, $text);
     }
 
     /**

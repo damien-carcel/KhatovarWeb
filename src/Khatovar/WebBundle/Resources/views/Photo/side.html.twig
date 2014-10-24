@@ -4,26 +4,34 @@
     <div class="scrolling">
         <div class="container">
         {% for photo in photos %}
+            <div class="photo_admin">
+                {{ photo.getWebPath()|thumbnail('landscape', photo.alt) }}
+                <br />
                 {% if photo.entity == 'homepage' %}
-                    <div class="photo_admin">
-                        {% if photo.class == 'photo_small' %}
-                            {% set format = 'Petit format' %}
-                        {% elseif photo.class == 'photo' %}
-                            {%  set format = 'Format normal' %}
-                        {% elseif photo.class == 'panorama' %}
-                            {%  set format = 'Format panoramique' %}
-                        {% endif %}
-                        {{ photo.getWebPath()|popup_picture(photo.class, photo.alt) }}
-                        <br />
-                        {{ format }}
-                    </div>
+                    {# Get the photo class to display it #}
+                    {% if photo.class == 'photo_small' %}
+                        {% set format = 'Petit format' %}
+                    {% elseif photo.class == 'photo' %}
+                        {%  set format = 'Format normal' %}
+                    {% elseif photo.class == 'panorama' %}
+                        {%  set format = 'Panoramique' %}
+                    {% endif %}
+                    <p>
+                        Format : {{ format }}
+                        |
+                        <a href="{{ path('khatovar_web_photos_edit', {'photo': photo.id}) }}">
+                            changer
+                        </a>
+                    </p>
+                    <form>
+                        <label for="code">Code : </label>
+                        <input name="code" id="code" value="[{{ photo.path }}]" />
+                    </form>
+                    <hr />
                 {% else %}
-                    <div class="photo_admin">
-                        {{ photo.getWebPath()|thumbnail('landscape', photo.alt) }}
-                        <br />
-                        Photo n° {{ photo.id }}
-                    </div>
+                    Photo n° {{ photo.id }}
                 {% endif %}
+            </div>
         {% endfor %}
         </div>
     </div>
