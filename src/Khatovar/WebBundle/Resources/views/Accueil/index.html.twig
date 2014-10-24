@@ -5,8 +5,10 @@
         <a href="{{ path('khatovar_web_homepage_list') }}">Liste des pages d’accueil disponibles</a>
         |
         <a href="{{ path('khatovar_web_homepage_create') }}">Créer une nouvelle page</a>
-        |
-        <a href="{{ path('khatovar_web_homepage_edit', {'homepage': page_id}) }}">Éditer la page</a>
+        {% if page_id %}
+            |
+            <a href="{{ path('khatovar_web_homepage_edit', {'homepage': page_id}) }}">Éditer la page</a>
+        {% endif %}
         <hr />
     {% endif %}
     {% autoescape false %}

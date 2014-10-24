@@ -43,19 +43,26 @@ class HomepageController extends Controller
      */
     public function indexAction()
     {
+        // TODO: Add the possibility to have no (active) homepage
         $homepage = $this->getDoctrine()->getManager()
             ->getRepository('KhatovarWebBundle:Homepage')
             ->findOneBy(array('active' => true));
 
         $translations = $this->get('khatovar.filters.translation');
 
+        if ($homepage) {
+            $content = $translations->imageTranslate($homepage->getContent());
+            $pageId = $homepage->getId();
+        } else {
+            $content = '';
+            $pageId = null;
+        }
+
         return $this->render(
             'KhatovarWebBundle:Accueil:index.html.twig',
             array(
-                'content' => $translations->imageTranslate(
-                    $homepage->getContent()
-                ),
-                'page_id' => $homepage->getId()
+                'content' => $content,
+                'page_id' => $pageId
             )
         );
     }
@@ -145,14 +152,17 @@ class HomepageController extends Controller
         $entityManager = $this->getDoctrine()->getManager();
         $repository = $entityManager->getRepository('KhatovarWebBundle:Homepage');
 
-        $old_homepage = $repository->findOneBy(array('active' => true));
+        $oldHomepage = $repository->findOneBy(array('active' => true));
 
+        if (!$oldHomepage) {
+            $oldHomepage = new Homepage();
+        }
         $form = $this->createFormBuilder()
             ->add('active', 'entity', array(
                     'class' => 'Khatovar\WebBundle\Entity\Homepage',
                     'label' => false,
                     'property' => 'name',
-                    'preferred_choices' => array($old_homepage)
+                    'preferred_choices' => array($oldHomepage)
                 ))
             ->add('submit', 'submit', array('label' => 'Activer'))
             ->getForm();
@@ -166,12 +176,14 @@ class HomepageController extends Controller
                 $new_homepage = $repository
                     ->find($form->get('active')->getData());
 
-                if ($old_homepage->getId() != $new_homepage->getId()) {
-                    // Todo: Understand why I have to use these two lines
-                    $old_homepage->setActive(false);
-                    $new_homepage->setActive(true);
+                // Todo: Understand why I have to manually setActive
+                if ($oldHomepage->getId() != $new_homepage->getId()) {
+                    if ($oldHomepage->getId()) {
+                        $oldHomepage->setActive(false);
+                        $entityManager->persist($oldHomepage);
+                    }
 
-                    $entityManager->persist($old_homepage);
+                    $new_homepage->setActive(true);
                     $entityManager->persist($new_homepage);
                     $entityManager->flush();
 
