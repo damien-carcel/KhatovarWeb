@@ -141,6 +141,18 @@ class PhotoController extends Controller
             ->findOneByOwner($currentUser->getId());
 
         if (!$currentUser->hasRole('ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_EDITOR')) {
+            // If the user doesn't have a member's page, then he have no
+            // reason to add photos
+            if (!$entry) {
+                return $this->render(
+                    'KhatovarWebBundle:Photo:add.html.twig',
+                    array(
+                        'not_a_member' => 1
+                    )
+                );
+            }
+            // If he has one, then he can upload, but only for its own
+            // member's page.
             $form->remove('entity')->remove('entry');
             $form->add('entity', 'hidden', array(
                     'data' => 'member'
@@ -204,6 +216,18 @@ class PhotoController extends Controller
             ->findOneByOwner($currentUser->getId());
 
         if (!$currentUser->hasRole('ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_EDITOR')) {
+            // If the user doesn't have a member's page, then he have no
+            // reason to edit photos
+            if (!$entry) {
+                return $this->render(
+                    'KhatovarWebBundle:Photo:add.html.twig',
+                    array(
+                        'not_a_member' => 1
+                    )
+                );
+            }
+            // If he has one, then he can edit, but only for its own
+            // member's page.
             $form->remove('entity')->remove('entry');
             $form->add('entity', 'hidden', array(
                     'data' => 'member'
@@ -272,6 +296,17 @@ class PhotoController extends Controller
         $entry = $this->getDoctrine()->getManager()
             ->getRepository('KhatovarWebBundle:Member')
             ->findOneByOwner($currentUser->getId());
+
+        if (!$currentUser->hasRole('ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_EDITOR') and !$entry) {
+            // If the user doesn't have a member's page, then he have no
+            // reason to delete photos
+            return $this->render(
+                'KhatovarWebBundle:Photo:add.html.twig',
+                array(
+                    'not_a_member' => 1
+                )
+            );
+        }
 
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
