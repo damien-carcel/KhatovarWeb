@@ -22,6 +22,8 @@ khatovar_web_homepage_delete:
     requirements:
         homepage: \d+
 
+
+
 khatovar_web_photos:
     path:       /photos
     defaults:   { _controller: KhatovarWebBundle:Photo:index }
