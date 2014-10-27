@@ -39,7 +39,7 @@ body {
     margin-bottom: 20px;
     margin-top: 20px;
     font-family: kingthings_light, "Bitstream Vera Sans","Lucida Grande", sans-serif;
-    background: url("../images/boisclair.jpg");
+    background: url("../images/boisclair.jpg") transparent;
     font-size: 1em;
     text-align: justify;
 }
@@ -52,7 +52,7 @@ body {
 @media all and (max-width: 990px) {
     body {
         margin: 10px;
-        background: url("../images/scroll_center.png");
+        background: url("../images/scroll_center.png") transparent;
     }
 
     .page_block {
@@ -64,7 +64,7 @@ body {
 /* HEADER */
 
 header {
-    background: url("../images/header.png");
+    background: url("../images/header.png") transparent;
     height: 168px;
 }
 
@@ -102,7 +102,7 @@ header h1 {
 /* NAVIGATION */
 
 nav {
-    background: url("../images/nav.png");
+    background: url("../images/nav.png") transparent;
     height: 58px;
     padding-top: 12px;
 }
@@ -148,7 +148,7 @@ nav li ul li {
     text-align: left;
     padding-left: 1px;
     padding-right: 1px;
-    background: url("../images/menu.png");
+    background: url("../images/menu.png") transparent;
     border-bottom: 1px solid white;
     z-index: 11000;
 }
@@ -180,7 +180,7 @@ nav li:hover ul, nav li.sfhover ul {
 
 section {
     padding-bottom: 20px;
-    background: url("../images/scroll.png");
+    background: url("../images/scroll.png") transparent;
 }
 
 article {
@@ -189,19 +189,60 @@ article {
 }
 
 aside {
-    background: url("../images/scroll_center.png");
-    padding: 10px;
+    background: url("../images/scroll_center.png") transparent;
     width: 250px;
-    height: 800px;
     position: fixed;
     left: 20px;
     top: 20px;
+    bottom: 20px;
     border-radius: 10px;
     box-shadow: 5px 5px 5px #696969;
+    z-index: 2;
+    -webkit-transform:translateX(-268px);
+    -ms-transform:translateX(-268px);
+    transform:translateX(-268px);
+    transition-duration: 0.5s;
+}
+
+aside.visible {
+    -webkit-transform:translateX(0%);
+    -ms-transform:translateX(0%);
+    transform:translateX(0%);
+}
+
+.aside-link {
+    transition: opacity 0.25s ease-out 0s;
+    padding: 0;
+    border: medium none;
+    outline: 0 none;
+    cursor: pointer;
+    opacity: 1;
+}
+
+.aside-open {
+    position: fixed;
+    top: 30px;
+    left: 30px;
+    width: 31px;
+    height: 27px;
+    z-index: 1;
+    background: url("../images/aside-open.png") transparent;
+}
+
+.aside-close {
+    position: relative;
+    top: 3px;
+    left: 3px;
+    width: 18px;
+    height: 18px;
+    background: url("../images/aside-close.gif") transparent;
 }
 
 aside .scrolling {
-    height: 650px;
+    position: absolute;
+    bottom: 120px;
+    top: 65px;
+    width: 99%;
     overflow: auto;
 }
 
@@ -227,6 +268,10 @@ article ul {
     }
 
     aside {
+        display: none;
+    }
+
+    .aside-link {
         display: none;
     }
 }
@@ -692,6 +737,11 @@ fieldset[disabled] .btn-default.active {
 .button-group {
     margin: 10px;
     text-align: center;
+}
+
+aside .button-group {
+    position: absolute;
+    bottom: 0;
 }
 
 aside .btn {

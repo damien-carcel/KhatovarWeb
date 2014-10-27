@@ -42,7 +42,9 @@
         </div>
     </nav>
     {% if is_granted('ROLE_VIEWER') %}
-        <aside>
+        <button id="aside-open" class="aside-link aside-open" title="Afficher le panneau photo">
+        </button>
+        <aside id="aside">
             {{ render(controller('KhatovarWebBundle:Photo:side', { 'entity': get_controller_name() })) }}
         </aside>
     {% endif %}
@@ -71,4 +73,12 @@
             {% endif %}
         </div>
     </footer>
+    <script type="text/javascript">
+        $("#aside-open").click(function() {
+            $("aside").addClass("visible");
+        });
+        $("#aside-close").click(function() {
+            $("aside").removeClass("visible");
+        });
+    </script>
 {% endblock %}

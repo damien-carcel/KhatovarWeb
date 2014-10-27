@@ -12,6 +12,12 @@
         <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
     {% endstylesheets %}
 {% endblock %}
+{% block javascript %}
+    {{ parent() }}
+    {% javascripts 'bundles/carceldocuments/js/bootstrap.min.js' output='js/bootstrap.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
 
 {% block container %}container-fluid{% endblock %}
 

@@ -1,3 +1,4 @@
+<button id="aside-close" class="aside-link aside-close" title="Fermer le panneau photo"></button>
 <div class="aside-photo">
     <div class="photo_title">Photos diponibles pour cette page</div>
 
@@ -35,13 +36,13 @@
         {% endfor %}
         </div>
     </div>
+</div>
 
-    <div class="button-group">
-        <a href="{{ path('khatovar_web_photos_add') }}" class="btn btn-default">
-            Ajouter une photo
-        </a>
-        <a href="{{ path('khatovar_web_photos') }}" class="btn btn-default">
-            Éditer la liste complète
-        </a>
-    </div>
+<div class="button-group">
+    <a href="{{ path('khatovar_web_photos_add') }}" class="btn btn-default">
+        Ajouter une photo
+    </a>
+    <a href="{{ path('khatovar_web_photos') }}" class="btn btn-default">
+        Éditer la liste complète
+    </a>
 </div>
