@@ -20,3 +20,7 @@ services:
 
     khatovar.filter.resize:
         class: Khatovar\WebBundle\Services\Filters\KhatovarImageResize
+
+    khatovar.filters.array:
+        class: Khatovar\WebBundle\Services\Filters\KhatovarReturnArray
+        arguments: [ "@doctrine.orm.entity_manager" ]

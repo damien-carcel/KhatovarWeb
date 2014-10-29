@@ -75,15 +75,14 @@ class PhotoController extends Controller
         }
 
         // TODO: Find a way to get the entities list automatically
+        $filter = $this->get('khatovar.filters.array');
         $entityList = array(
             'homepage' => array(
                 'name' => 'Pages d’accueil'
             ),
             'member' => array(
                 'name' => 'Membres',
-                'list' => $entityManager
-                    ->getRepository('KhatovarWebBundle:Member')
-                    ->getAllWithIdAsKey()
+                'list' => $filter->returnArray('member')
             )
         );
 
@@ -100,7 +99,8 @@ class PhotoController extends Controller
      * Display a list of all photos uploaded for the current page in a
      * small sidebar.
      *
-     * @param string $entity
+     * @param string $entity Display only the photos attached to this
+     * entity.
      * @return \Symfony\Component\HttpFoundation\Response
      * @Secure(roles="ROLE_VIEWER")
      */
@@ -206,7 +206,7 @@ class PhotoController extends Controller
     /**
      * Edit a photo information.
      *
-     * @param Photo $photo
+     * @param Photo $photo The photo to edit.
      * @return \Symfony\Component\HttpFoundation\Response
      * @Secure(roles="ROLE_VIEWER")
      */
@@ -287,7 +287,7 @@ class PhotoController extends Controller
     /**
      * Remove a photo from the collection.
      *
-     * @param Photo $photo
+     * @param Photo $photo The photo to delete.
      * @return \Symfony\Component\HttpFoundation\Response
      * @Secure(roles="ROLE_VIEWER")
      */

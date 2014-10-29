@@ -33,19 +33,4 @@ use Doctrine\ORM\EntityRepository;
  */
 class MemberRepository extends EntityRepository
 {
-    /**
-     * @return array
-     */
-    public function getAllWithIdAsKey()
-    {
-        $members = $this->createQueryBuilder('m')
-            ->getQuery()->getResult();
-
-        $result = array();
-        foreach ($members as $member) {
-            $result[$member->getId()] = $member->getName();
-        }
-
-        return $result;
-    }
 }
