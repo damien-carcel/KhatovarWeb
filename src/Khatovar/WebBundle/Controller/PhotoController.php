@@ -56,9 +56,12 @@ class PhotoController extends Controller
             ->getToken()->getUser();
         $entityManager = $this->getDoctrine()->getManager();
 
+        // If an editor or more powerfull user is connected, we return
+        // all photos, but is it is a regular user, we only return its
+        // own photos, as he cannot edit/delete others.
         if ($currentUser->hasRole('ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_EDITOR')) {
             $photos = $entityManager->getRepository('KhatovarWebBundle:Photo')
-                ->findAll();
+                ->getAllOrdered();
         } else {
             $entry = $entityManager->getRepository('KhatovarWebBundle:Member')
                 ->findOneByOwner($currentUser->getId());
@@ -67,18 +70,21 @@ class PhotoController extends Controller
                     array(
                         'entity' => 'member',
                         'entry' => $entry
-                    ),
-                    array(
-                        'entity' => 'ASC',
-                        'entry' => 'ASC'
                     )
                 );
         }
 
         // TODO: Find a way to get the entities list automatically
         $entityList = array(
-            'homepage' => 'Pages d’accueil',
-            'member' => 'Membres'
+            'homepage' => array(
+                'name' => 'Pages d’accueil'
+            ),
+            'member' => array(
+                'name' => 'Membres',
+                'list' => $entityManager
+                    ->getRepository('KhatovarWebBundle:Member')
+                    ->getAllWithIdAsKey()
+            )
         );
 
         return $this->render(

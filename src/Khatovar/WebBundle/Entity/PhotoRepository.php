@@ -33,4 +33,16 @@ use Doctrine\ORM\EntityRepository;
  */
 class PhotoRepository extends EntityRepository
 {
+    /**
+     * @return array
+     */
+    public function getAllOrdered()
+    {
+        $query = $this->createQueryBuilder('p')
+            ->addOrderBy('p.entity')
+            ->addOrderBy('p.entry')
+            ->getQuery();
+
+        return $query->getResult();
+    }
 }

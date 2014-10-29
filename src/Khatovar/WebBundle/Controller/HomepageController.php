@@ -43,7 +43,6 @@ class HomepageController extends Controller
      */
     public function indexAction()
     {
-        // TODO: Add the possibility to have no (active) homepage
         $homepage = $this->getDoctrine()->getManager()
             ->getRepository('KhatovarWebBundle:Homepage')
             ->findOneBy(array('active' => true));

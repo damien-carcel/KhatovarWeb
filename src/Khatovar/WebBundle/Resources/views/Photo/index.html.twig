@@ -3,11 +3,21 @@
 {% block inarticle %}
     <h1>Liste des photos</h1>
 
+    {% set entry = '' %}
+
     {% for key, entity in entity_list %}
-        <h2>{{ entity }}</h2>
+        <h2>{{ entity.name }}</h2>
         <div class="container">
             {% for photo in photos %}
                 {% if photo.entity == key %}
+                    {# Define photo.entry as third level title only if photo.entry is filled #}
+                    {% set old_entry = entry %}
+                    {% set entry = photo.entry %}
+                    {% if entry != old_entry and key != 'homepage' %}
+                        {# entry is only an ID, we display the corresponding name #}
+                        <h3>{{ entity.list[entry]|capitalize }}</h3>
+                    {% endif %}
+
                     <div class="trombi photo_admin">
                         {{ photo.getWebPath()|thumbnail('landscape', photo.alt) }}
                         <br />
@@ -24,5 +34,3 @@
         </div>
     {% endfor %}
 {% endblock %}
-
-{# TODO: Made h3 sections for every entries in each entity #}
