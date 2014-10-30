@@ -28,12 +28,12 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- * Class HomepageType
+ * Class MemberType
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
  * @package Khatovar\WebBundle\Form
  */
-class HomepageType extends AbstractType
+class MemberType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -41,12 +41,21 @@ class HomepageType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', 'text', array('label' => 'Nom :'))
-            ->add('content', 'ckeditor', array(
-                'label' => false,
-                'config_name' => 'basic_config'
-            ))
-            ->add('submit', 'submit', array('label' => 'Enregistrer'))
+        $builder
+            ->add('name')
+            ->add('simplename')
+            ->add('rank')
+            ->add('quote')
+            ->add('skill')
+            ->add('age')
+            ->add('size')
+            ->add('weight')
+            ->add('strength')
+            ->add('weakness')
+            ->add('story')
+            ->add('active')
+            ->add('portrait')
+            ->add('owner')
         ;
     }
 
@@ -56,7 +65,7 @@ class HomepageType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Khatovar\WebBundle\Entity\Homepage'
+            'data_class' => 'Khatovar\WebBundle\Entity\Member'
         ));
     }
 
@@ -65,6 +74,6 @@ class HomepageType extends AbstractType
      */
     public function getName()
     {
-        return 'khatovar_webbundle_homepagetype';
+        return 'khatovar_webbundle_member';
     }
 }

@@ -66,11 +66,6 @@ class Homepage
      */
     private $active;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Khatovar\WebBundle\Entity\Photo", mappedBy="homepage")
-     */
-    private $photos;
-
 
     /**
      * Allow to save only the ID the entity in database as a string
@@ -196,7 +191,7 @@ class Homepage
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {

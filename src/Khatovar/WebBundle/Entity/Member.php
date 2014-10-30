@@ -55,9 +55,15 @@ class Member
     /**
      * @var string
      *
-     * @ORM\Column(name="portrait", type="string", length=255)
+     * @ORM\Column(name="shortname", type="string", length=255)
      * @Assert\NotBlank()
      * @Assert\Length(max="255")
+     */
+    private $simplename;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Khatovar\WebBundle\Entity\Photo")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $portrait;
 
@@ -132,11 +138,6 @@ class Member
      * @Assert\NotBlank()
      */
     private $story;
-
-    /**
-     * @ORM\OneToMany(targetEntity="Khatovar\WebBundle\Entity\Photo", mappedBy="member")
-     */
-    private $photos;
 
     /**
      * @ORM\OneToOne(targetEntity="Carcel\UserBundle\Entity\User")
@@ -510,5 +511,28 @@ class Member
     public function getActive()
     {
         return $this->active;
+    }
+
+    /**
+     * Set simplename
+     *
+     * @param string $simplename
+     * @return Member
+     */
+    public function setSimplename($simplename)
+    {
+        $this->simplename = $simplename;
+
+        return $this;
+    }
+
+    /**
+     * Get simplename
+     *
+     * @return string 
+     */
+    public function getSimplename()
+    {
+        return $this->simplename;
     }
 }
