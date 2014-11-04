@@ -316,6 +316,10 @@ p {
     margin-bottom: 0.5em;
 }
 
+hr {
+    color: #AC3333;
+}
+
 article a, footer a, aside a {
     text-decoration: none;
     font-weight: bold;

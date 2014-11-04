@@ -15,6 +15,7 @@
                     {% set entry = photo.entry %}
                     {% if entry != old_entry and key != 'homepage' %}
                         {# entry is only an ID, we display the corresponding name #}
+                        {# TODO: make the orphan photos clearly visible in the list #}
                         <h3>{{ entity.list[entry] is defined ? entity.list[entry]|capitalize : 'Photos orphelines' }}</h3>
                     {% endif %}
 

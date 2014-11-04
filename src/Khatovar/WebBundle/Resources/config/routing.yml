@@ -51,25 +51,21 @@ khatovar_web_members:
     defaults:   { _controller: KhatovarWebBundle:Member:index }
 
 khatovar_web_members_view:
-    path:       /membres/{simplename}
+    path:       /membres/membre/{slug}
     defaults:   { _controller: KhatovarWebBundle:Member:view }
-    requirements:
-        simplename: \w*
 
 khatovar_web_members_add:
-    path:       /membres/{member}
+    path:       /membres/add
     defaults:   { _controller: KhatovarWebBundle:Member:add }
-    requirements:
-        member: \d+
 
 khatovar_web_members_edit:
-    path:       /membres/{member}
+    path:       /membres/edit/{member}
     defaults:   { _controller: KhatovarWebBundle:Member:edit }
     requirements:
         member: \d+
 
 khatovar_web_members_remove:
-    path:       /membres/{member}
+    path:       /membres/remove/{member}
     defaults:   { _controller: KhatovarWebBundle:Member:remove }
     requirements:
         member: \d+

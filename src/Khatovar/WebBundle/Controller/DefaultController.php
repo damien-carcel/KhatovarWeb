@@ -77,17 +77,6 @@ class DefaultController extends Controller
     }
 
     /**
-     * @param string $name
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function membersAction($name)
-    {
-        return $this->render(
-            'KhatovarWebBundle:Default:membres-' . $name . '.html.twig'
-        );
-    }
-
-    /**
      * @param string $contact
      * @return \Symfony\Component\HttpFoundation\Response
      */

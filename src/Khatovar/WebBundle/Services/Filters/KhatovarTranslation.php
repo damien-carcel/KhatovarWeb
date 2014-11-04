@@ -47,7 +47,7 @@ class KhatovarTranslation
     }
 
     /**
-     * Look for special photo insertion tags and transform it in html syntaxe.
+     * Look for special photo insertion tags and transform it in html syntax.
      *
      * @param string $text The text to transform.
      * @return string
@@ -96,29 +96,5 @@ class KhatovarTranslation
         }
 
         return str_replace($paths, $photos, $text);
-    }
-
-    /**
-     * Replace certain spaces with non-breaking spaces.
-     *
-     * @param string $text The text to transform.
-     * @return string
-     */
-    public function specialSpacesTranslate($text)
-    {
-        return $text;
-    }
-
-    /**
-     * Replace line breaks by paragraph
-     *
-     * @param string $text The text to transform.
-     * @return string
-     */
-    public function paragraphTranslate($text)
-    {
-        $text = '<p>' . $text . '</p>';
-
-        return $text;
     }
 }

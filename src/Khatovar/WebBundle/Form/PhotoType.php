@@ -92,7 +92,8 @@ class PhotoType extends AbstractType
                         ->add('entry', 'entity', array(
                             'class' => 'KhatovarWebBundle:' . ucfirst($entity),
                             'property' => 'name',
-                            'required' => true
+                            'required' => true,
+                            'label' => 'Choix :'
                         ));
                 }
             }

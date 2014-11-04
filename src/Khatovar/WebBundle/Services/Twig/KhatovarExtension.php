@@ -58,6 +58,11 @@ class KhatovarExtension extends \Twig_Extension
                 'thumbnail',
                 array($this, 'thumbnail'),
                 array('is_safe' => array('html'))
+            ),
+            new \Twig_SimpleFilter(
+                'add_paragraph',
+                array($this, 'addParagraph'),
+                array('is_safe' => array('html'))
             )
         );
     }
@@ -135,6 +140,20 @@ class KhatovarExtension extends \Twig_Extension
             . $text . '</div>';
 
         return $link;
+    }
+
+    /**
+     * Replace line breaks by paragraph
+     *
+     * @param string $text The text to transform.
+     * @return string
+     */
+    public function addParagraph($text)
+    {
+        $text = '<p>' . $text . '</p>';
+        $text = str_replace("\n", "</p><p>", $text);
+
+        return $text;
     }
 
     /**

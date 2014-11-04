@@ -1,5 +1,51 @@
 {% extends 'KhatovarWebBundle::layout.html.twig' %}
 
 {% block inarticle %}
-    Nothing for the moment.
+    {{ form_start(form) }}
+    <div class="form-group form-textarea">
+        {{ form_row(form.name, { 'attr': {'class': 'form-element'} }) }}
+    </div>
+    <div class="form-group form-textarea">
+        {{ form_row(form.rank, { 'attr': {'class': 'form-element'} }) }}
+    </div>
+    <div class="form-group form-textarea">
+        {{ form_row(form.quote, { 'attr': {'class': 'form-element'} }) }}
+    </div>
+    <div class="form-group form-textarea">
+        {{ form_row(form.skill, { 'attr': {'class': 'form-element'} }) }}
+    </div>
+    <div class="form-group form-textarea">
+        {{ form_row(form.age, { 'attr': {'class': 'form-element'} }) }}
+    </div>
+    <div class="form-group form-textarea">
+        {{ form_row(form.size, { 'attr': {'class': 'form-element'} }) }}
+    </div>
+    <div class="form-group form-textarea">
+        {{ form_row(form.weight, { 'attr': {'class': 'form-element'} }) }}
+    </div>
+    <div class="form-group form-textarea">
+        {{ form_row(form.strength, { 'attr': {'class': 'form-element'} }) }}
+    </div>
+    <div class="form-group form-textarea">
+        {{ form_row(form.weakness, { 'attr': {'class': 'form-element'} }) }}
+    </div>
+    <div class="form-group form-textarea">
+        {{ form_row(form.story, { 'attr': {'class': 'form-element'} }) }}
+    </div>
+    <div class="form-group form-textarea">
+        {{ form_row(form.active, { 'attr': {'class': 'form-element'} }) }}
+    </div>
+    {% if photos is defined and photos is not empty %}
+        <div class="form-group form-textarea">
+            {{ form_row(form.portrait, { 'attr': {'class': 'form-element'} }) }}
+        </div>
+    {% endif %}
+    {% if is_granted('ROLE_EDITOR') %}
+        <div class="form-group form-textarea">
+            {{ form_row(form.owner, { 'attr': {'class': 'form-element'} }) }}
+        </div>
+    {% endif %}
+    {{ form_row(form.submit, { 'attr': {'class': 'btn btn-default'} }) }}
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
 {% endblock %}

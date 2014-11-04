@@ -1,5 +1,70 @@
 {% extends 'KhatovarWebBundle::layout.html.twig' %}
 
 {% block inarticle %}
-    Nothing for the moment.
+    {% if is_granted('ROLE_EDITOR') or member.owner.id == currentUser %}
+        <a href="{{ path('khatovar_web_members_edit', {'member': member.id}) }}">Éditer la page</a>
+        <hr />
+    {% endif %}
+
+    <h1>{{ member.name }}</h1>
+
+    <div style="text-align:right">
+        <a href="{{ path('khatovar_web_members') }}">Retour</a>
+    </div>
+
+    <div class="container">
+        <div class="photo_exactions">
+            {% autoescape false %}
+            {{ member.portrait ? member.portrait.getWebPath()|popup_picture('photo') : 'Pas encore de photo' }}
+            {% endautoescape %}
+        </div>
+        <div class="exactions">
+            <ul>
+                <li>
+                    <b>Rang dans la compagnie&nbsp;:</b> {{ member.rank }}
+                </li>
+                <li>
+                    <b>Citation favorite&nbsp;:</b> «&nbsp;{{ member.quote }}&nbsp;»
+                </li>
+                <li>
+                    <b>Compétences&nbsp;:</b> {{ member.skill }}
+                </li>
+            </ul>
+
+            <h3>État civil</h3>
+
+            <ul>
+                <li>
+                    <b>Âge&nbsp;:</b> {{ member.age }}
+                </li>
+                <li>
+                    <b>Taille&nbsp;:</b> {{ member.size }}
+                </li>
+                <li>
+                    <b>Poids&nbsp;:</b> {{ member.weight }}
+                </li>
+                <li>
+                    <b>Point fort&nbsp;:</b> {{ member.strength }}
+                </li>
+                <li>
+                    <b>Point faible&nbsp;:</b> {{ member.weakness }}
+                </li>
+            </ul>
+            <div class="container">
+                <a href="http://www.compagniefranchedukhatovar.fr/piwigo/index.php?/category/0" rel="external">
+                    <img src="{{ asset('bundles/khatovarweb/images/camera.png') }}" class="photolink" alt="" />
+                    <br />
+                    Album photo
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <h2>Son histoire</h2>
+
+    {{ member.story|add_paragraph() }}
+
+    <div style="text-align:right">
+        <a href="{{ path('khatovar_web_members') }}">Retour</a>
+    </div>
 {% endblock %}

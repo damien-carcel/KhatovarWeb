@@ -64,7 +64,7 @@ class PhotoController extends Controller
                 ->getAllOrdered();
         } else {
             $entry = $entityManager->getRepository('KhatovarWebBundle:Member')
-                ->findOneByOwner($currentUser->getId());
+                ->findOneBy(array('owner' => $currentUser->getId()));
             $photos = $entityManager->getRepository('KhatovarWebBundle:Photo')
                 ->findBy(
                     array(
@@ -115,7 +115,7 @@ class PhotoController extends Controller
                 ->findBy(array('entity' => $entity));
         } else {
             $entry = $entityManager->getRepository('KhatovarWebBundle:Member')
-                ->findOneByOwner($currentUser->getId());
+                ->findOneBy(array('owner' => $currentUser->getId()));
             $photos = $entityManager->getRepository('KhatovarWebBundle:Photo')
                 ->findBy(array(
                         'entity' => $entity,
@@ -144,7 +144,7 @@ class PhotoController extends Controller
             ->getToken()->getUser();
         $entry = $this->getDoctrine()->getManager()
             ->getRepository('KhatovarWebBundle:Member')
-            ->findOneByOwner($currentUser->getId());
+            ->findOneBy(array('owner' => $currentUser->getId()));
 
         if (!$currentUser->hasRole('ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_EDITOR')) {
             // If the user doesn't have a member's page, then he have no
@@ -219,7 +219,7 @@ class PhotoController extends Controller
             ->getToken()->getUser();
         $entry = $this->getDoctrine()->getManager()
             ->getRepository('KhatovarWebBundle:Member')
-            ->findOneByOwner($currentUser->getId());
+            ->findOneBy(array('owner' => $currentUser->getId()));
 
         if (!$currentUser->hasRole('ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_EDITOR')) {
             // If the user doesn't have a member's page, then he have no
@@ -301,7 +301,7 @@ class PhotoController extends Controller
             ->getToken()->getUser();
         $entry = $this->getDoctrine()->getManager()
             ->getRepository('KhatovarWebBundle:Member')
-            ->findOneByOwner($currentUser->getId());
+            ->findOneBy(array('owner' => $currentUser->getId()));
 
         if (!$currentUser->hasRole('ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_EDITOR') and !$entry) {
             // If the user doesn't have a member's page, then he have no

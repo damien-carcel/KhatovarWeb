@@ -24,6 +24,8 @@
 namespace Khatovar\WebBundle\Controller;
 
 use JMS\SecurityExtraBundle\Annotation\Secure;
+use Khatovar\WebBundle\Entity\Member;
+use Khatovar\WebBundle\Form\MemberType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
@@ -35,47 +37,175 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class MemberController extends Controller
 {
     /**
+     * Return the list of all members, both active or not.
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction()
     {
-        return $this->render('KhatovarWebBundle:Member:index.html.twig');
+        $entityManager = $this->getDoctrine()
+            ->getRepository('KhatovarWebBundle:Member');
+
+        $activeMembers = $entityManager->findBy(array('active' => true));
+        $pastMembers = $entityManager->findBy(array('active' => false));
+
+        return $this->render(
+            'KhatovarWebBundle:Member:index.html.twig',
+            array(
+                'activeMembers' => $activeMembers,
+                'pastMembers' => $pastMembers
+            )
+        );
     }
 
     /**
+     * Return info about a member.
+     *
+     * @param string $slug
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function viewAction()
+    public function viewAction($slug)
     {
-        return $this->render('KhatovarWebBundle:Member:view.html.twig');
+        // Sent current user ID to the view for a possible page edition
+        $currentUser = $this->container->get('security.context')
+            ->getToken()->getUser();
+
+        $member = $this->getDoctrine()
+            ->getRepository('KhatovarWebBundle:Member')
+            ->findOneBy(array('slug' => $slug));
+
+        return $this->render(
+            'KhatovarWebBundle:Member:view.html.twig',
+            array('member' => $member, 'currentUser' => $currentUser->getId())
+        );
     }
 
     /**
+     * Add a new member's page.
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      * @Secure(roles="ROLE_EDITOR")
      */
     public function addAction()
     {
-        // TODO: make sure one cannot create a new member with the same name than an other one
+        $member = new Member();
 
-        return $this->render('KhatovarWebBundle:Member:add.html.twig');
+        $form = $this->createForm(new MemberType(), $member);
+
+        $request = $this->get('request');
+
+        if ($request->getMethod() == 'POST') {
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($member);
+                $entityManager->flush();
+
+                $this->get('session')->getFlashBag()
+                    ->add(
+                        'notice',
+                        'La page du membre ' . $member->getName()
+                        . ' a bien été créée. Vous pouvez maintenant ajouter'
+                        . ' des photos et choisir une photo de profil.'
+                    );
+
+                return $this->redirect(
+                    $this->generateUrl('khatovar_web_members')
+                );
+            }
+        }
+
+        return $this->render(
+            'KhatovarWebBundle:Member:edit.html.twig',
+            array('form' => $form->createView())
+        );
     }
 
     /**
+     * Edit a member information.
+     *
+     * @param Member $member
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Secure(roles="ROLE_EDITOR")
+     * @Secure(roles="ROLE_VIEWER")
      */
-    public function editAction()
+    public function editAction(Member $member)
     {
-        return $this->render('KhatovarWebBundle:Member:edit.html.twig');
+        $form = $this->createForm(new MemberType(), $member);
+
+        // TODO: Add a preferred choice for entity fields
+
+        // TODO: make a custom list of member's photos, and display in the side bar the same ones
+        $form->add('portrait', 'entity', array(
+                'label' => 'Photo de profil :',
+                'class' => 'Khatovar\WebBundle\Entity\Photo',
+                'property' => 'id'
+            ));
+
+        // TODO: Check for user to be an editor or a simple member and owner of the page
+        $photos = 'test';
+
+        $request = $this->get('request');
+
+        if ($request->getMethod() == 'POST') {
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($member);
+                $entityManager->flush();
+
+                $this->get('session')->getFlashBag()
+                    ->add('notice', 'Page mise à jour.');
+
+                return $this->redirect(
+                    $this->generateUrl(
+                        'khatovar_web_members_view',
+                        array('slug' => $member->getSlug())
+                    )
+                );
+            }
+        }
+
+        return $this->render(
+            'KhatovarWebBundle:Member:edit.html.twig',
+            array('form' => $form->createView(), 'photos' => $photos)
+        );
     }
 
     /**
+     * Delete a member's page.
+     *
+     * @param Member $member
      * @return \Symfony\Component\HttpFoundation\Response
      * @Secure(roles="ROLE_EDITOR")
      */
-    public function removeAction()
+    public function removeAction(Member $member)
     {
-        return $this->render('KhatovarWebBundle:Member:remove.html.twig');
+        // As it is only to delete the photo, we just need an empty form
+        $form = $this->createFormBuilder()->getForm();
+        $request = $this->get('request');
+
+        if ($request->getMethod() == 'POST') {
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->remove($member);
+                $entityManager->flush();
+
+                $this->get('session')->getFlashBag()
+                    ->add('notice', 'Page de membre supprimée');
+
+                return $this->redirect(
+                    $this->generateUrl('khatovar_web_members')
+                );
+            }
+        }
+
+        return $this->render(
+            'KhatovarWebBundle:Member:remove.html.twig',
+            array('member' => $member, 'form' => $form->createView())
+        );
     }
 }

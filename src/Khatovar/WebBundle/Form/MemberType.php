@@ -23,6 +23,7 @@
 
 namespace Khatovar\WebBundle\Form;
 
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -42,20 +43,28 @@ class MemberType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('simplename')
-            ->add('rank')
-            ->add('quote')
-            ->add('skill')
-            ->add('age')
-            ->add('size')
-            ->add('weight')
-            ->add('strength')
-            ->add('weakness')
-            ->add('story')
-            ->add('active')
-            ->add('portrait')
-            ->add('owner')
+            ->add('name', 'text', array('label' => 'Nom :'))
+            ->add('rank', 'text', array('label' => 'Rang :'))
+            ->add('quote', 'text', array('label' => 'Citation :'))
+            ->add('skill', 'text', array('label' => 'Compétences :'))
+            ->add('age', 'text', array('label' => 'Âge :'))
+            ->add('size', 'text', array('label' => 'Taille :'))
+            ->add('weight', 'text', array('label' => 'Poids :'))
+            ->add('strength', 'text', array('label' => 'Point fort :'))
+            ->add('weakness', 'text', array('label' => 'Point faible :'))
+            ->add('story', 'textarea', array('label' => 'Histoire personnelle :'))
+            ->add('active', 'checkbox', array('label' => 'Membre actif :', 'required' => false))
+            ->add('owner', 'entity', array(
+                    'label' => 'Utilisateur lié :',
+                    'class' => 'Carcel\UserBundle\Entity\User',
+                    'property' => 'username',
+                    'required' => false,
+                    'query_builder' => function (EntityRepository $er) {
+                        return $er->createQueryBuilder('o')
+                            ->orderBy('o.username');
+                    }
+                ))
+            ->add('submit', 'submit', array('label' => 'Sauvegarder'))
         ;
     }
 

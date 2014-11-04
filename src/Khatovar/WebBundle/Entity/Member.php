@@ -23,6 +23,7 @@
 
 namespace Khatovar\WebBundle\Entity;
 
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -46,24 +47,21 @@ class Member
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=255, unique=true)
      * @Assert\NotBlank()
      * @Assert\Length(max="255")
      */
     private $name;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="shortname", type="string", length=255)
-     * @Assert\NotBlank()
-     * @Assert\Length(max="255")
+     * @Gedmo\Slug(fields={"name"})
+     * @ORM\Column(length=128, unique=true)
      */
-    private $simplename;
+    private $slug;
 
     /**
      * @ORM\OneToOne(targetEntity="Khatovar\WebBundle\Entity\Photo")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $portrait;
 
@@ -141,13 +139,14 @@ class Member
 
     /**
      * @ORM\OneToOne(targetEntity="Carcel\UserBundle\Entity\User")
+     * @ORM\Column(nullable=true)
      */
     private $owner;
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="active", type="boolean")
+     * @ORM\Column(name="active", type="boolean", nullable=true)
      * @Assert\Length(max="255")
      */
     private $active;
@@ -514,25 +513,25 @@ class Member
     }
 
     /**
-     * Set simplename
+     * Set slug
      *
-     * @param string $simplename
+     * @param string $slug
      * @return Member
      */
-    public function setSimplename($simplename)
+    public function setSlug($slug)
     {
-        $this->simplename = $simplename;
+        $this->slug = $slug;
 
         return $this;
     }
 
     /**
-     * Get simplename
+     * Get slug
      *
-     * @return string 
+     * @return string
      */
-    public function getSimplename()
+    public function getSlug()
     {
-        return $this->simplename;
+        return $this->slug;
     }
 }
