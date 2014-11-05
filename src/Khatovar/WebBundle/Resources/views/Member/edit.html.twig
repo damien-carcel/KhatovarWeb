@@ -42,7 +42,7 @@
         <div class="form-group form-textarea">
             {{ form_row(form.active, { 'attr': {'class': 'form-element'} }) }}
         </div>
-        {% if photos is defined and photos is not empty %}
+        {% if edit is defined %}
             <div class="form-group form-textarea">
                 {{ form_row(form.portrait, { 'attr': {'class': 'form-element'} }) }}
             </div>

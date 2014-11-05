@@ -110,17 +110,36 @@ class PhotoController extends Controller
             ->getToken()->getUser();
         $entityManager = $this->getDoctrine()->getManager();
 
+        // If current user is an editor, then he can access photos of all pages
         if ($currentUser->hasRole('ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_EDITOR')) {
-            $photos = $entityManager->getRepository('KhatovarWebBundle:Photo')
-                ->findBy(array('entity' => $entity));
-        } else {
+            // We get all photos if we are on the homepage
+            if ($entity == 'homepage') {
+                $photos = $entityManager->getRepository('KhatovarWebBundle:Photo')
+                    ->findBy(array('entity' => $entity));
+            // or only photos linked if we are on an other page
+            } else {
+                // TODO: find how to retrieve current object displayed
+                $entry = $entityManager->getRepository('KhatovarWebBundle:' . ucfirst($entity))
+                    ->findOneBy(array('owner' => $currentUser));
+                $photos = $entityManager->getRepository('KhatovarWebBundle:Photo')
+                    ->findBy(array(
+                            'entity' => $entity,
+                            'entry' => $entry
+                        ));
+            }
+        // But if current user is a regular one, he can only access his own
+        // photos, and only when viewing/editing its own member’s page
+        } elseif (true) {
             $entry = $entityManager->getRepository('KhatovarWebBundle:Member')
-                ->findOneBy(array('owner' => $currentUser->getId()));
+                ->findOneBy(array('owner' => $currentUser));
             $photos = $entityManager->getRepository('KhatovarWebBundle:Photo')
                 ->findBy(array(
                         'entity' => $entity,
                         'entry' => $entry
                     ));
+        // For other pages, regular users shouldn't access any photos.
+        } else {
+            $photos = '';
         }
 
         return $this->render(

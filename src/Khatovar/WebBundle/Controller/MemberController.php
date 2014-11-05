@@ -23,6 +23,7 @@
 
 namespace Khatovar\WebBundle\Controller;
 
+use Doctrine\ORM\EntityRepository;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Khatovar\WebBundle\Entity\Member;
 use Khatovar\WebBundle\Form\MemberType;
@@ -136,22 +137,27 @@ class MemberController extends Controller
         $form->add('portrait', 'entity', array(
                 'label' => 'Photo de profil :',
                 'class' => 'Khatovar\WebBundle\Entity\Photo',
-                'property' => 'id'
+                'property' => 'id',
+                'query_builder' => function (EntityRepository $er) use ($member) {
+                    return $er->createQueryBuilder('p')
+                        ->where('p.entry = ?1')
+                        ->setParameter(1, $member->getId());
+                }
             ));
 
         $currentUser = $this->container->get('security.context')
             ->getToken()->getUser();
-        if ($currentUser != $member->getOwner()) {
-            return $this->render(
-                'KhatovarWebBundle:Member:edit.html.twig',
-                array(
-                    'not_a_member' => 1
-                )
-            );
+        if (!$currentUser->hasRole('ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_EDITOR')) {
+            $form->remove('owner');
+            if ($currentUser != $member->getOwner()) {
+                return $this->render(
+                    'KhatovarWebBundle:Member:edit.html.twig',
+                    array(
+                        'not_a_member' => 1
+                    )
+                );
+            }
         }
-
-        // TODO: make a custom list of member's photos, and display in the side bar the same ones
-        $photos = 'test';
 
         $request = $this->get('request');
 
@@ -177,7 +183,7 @@ class MemberController extends Controller
 
         return $this->render(
             'KhatovarWebBundle:Member:edit.html.twig',
-            array('form' => $form->createView(), 'photos' => $photos)
+            array('form' => $form->createView(), 'edit' => 'is_defined')
         );
     }
 
