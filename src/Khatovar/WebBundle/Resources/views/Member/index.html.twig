@@ -20,9 +20,11 @@
                     <img src="{{ member.portrait ? member.portrait.getWebPath() : '' }}" class="trombinoscope" alt="{{ member.name }}" /><br />
                     {{ member.name }}
                 </div>
-                <a href="{{ path('khatovar_web_members_edit', {'member': member.id}) }}">Éditer</a>
-                |
-                <a href="{{ path('khatovar_web_members_remove', {'member': member.id}) }}">Supprimer</a>
+                {% if is_granted('ROLE_EDITOR') %}
+                    <a href="{{ path('khatovar_web_members_edit', {'member': member.id}) }}">Éditer</a>
+                    |
+                    <a href="{{ path('khatovar_web_members_remove', {'member': member.id}) }}">Supprimer</a>
+                {% endif %}
             </div>
         {% endfor %}
     </div>
@@ -41,9 +43,11 @@
                     <img src="{{ member.portrait ? member.portrait.getWebPath() : '' }}" class="trombinoscope" alt="{{ member.name }}" /><br />
                     {{ member.name }}
                 </div>
-                <a href="{{ path('khatovar_web_members_edit', {'member': member.id}) }}">Éditer</a>
-                |
-                <a href="{{ path('khatovar_web_members_remove', {'member': member.id}) }}">Supprimer</a>
+                {% if is_granted('ROLE_EDITOR') %}
+                    <a href="{{ path('khatovar_web_members_edit', {'member': member.id}) }}">Éditer</a>
+                    |
+                    <a href="{{ path('khatovar_web_members_remove', {'member': member.id}) }}">Supprimer</a>
+                {% endif %}
             </div>
         {% endfor %}
     </div>

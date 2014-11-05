@@ -891,7 +891,7 @@ article img {
 .thumbnail, .thumbnail_link
 {
     padding: 5px;
-    cursor:auto;
+    cursor: pointer;
     text-align: center;
 }
 
@@ -910,7 +910,7 @@ article img {
 .carte {
     text-align: center;
     padding: 2px;
-    cursor:auto;
+    cursor: pointer;
     max-width: 750px;
 }
 

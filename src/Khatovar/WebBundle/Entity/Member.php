@@ -139,7 +139,7 @@ class Member
 
     /**
      * @ORM\OneToOne(targetEntity="Carcel\UserBundle\Entity\User")
-     * @ORM\Column(nullable=true)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $owner;
 
@@ -166,7 +166,7 @@ class Member
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -189,11 +189,34 @@ class Member
     /**
      * Get name
      *
-     * @return string
+     * @return string 
      */
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Member
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string 
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 
     /**
@@ -212,7 +235,7 @@ class Member
     /**
      * Get rank
      *
-     * @return string
+     * @return string 
      */
     public function getRank()
     {
@@ -235,7 +258,7 @@ class Member
     /**
      * Get quote
      *
-     * @return string
+     * @return string 
      */
     public function getQuote()
     {
@@ -258,7 +281,7 @@ class Member
     /**
      * Get skill
      *
-     * @return string
+     * @return string 
      */
     public function getSkill()
     {
@@ -281,7 +304,7 @@ class Member
     /**
      * Get age
      *
-     * @return string
+     * @return string 
      */
     public function getAge()
     {
@@ -304,7 +327,7 @@ class Member
     /**
      * Get size
      *
-     * @return string
+     * @return string 
      */
     public function getSize()
     {
@@ -327,7 +350,7 @@ class Member
     /**
      * Get weight
      *
-     * @return string
+     * @return string 
      */
     public function getWeight()
     {
@@ -350,7 +373,7 @@ class Member
     /**
      * Get strength
      *
-     * @return string
+     * @return string 
      */
     public function getStrength()
     {
@@ -373,7 +396,7 @@ class Member
     /**
      * Get weakness
      *
-     * @return string
+     * @return string 
      */
     public function getWeakness()
     {
@@ -396,51 +419,57 @@ class Member
     /**
      * Get story
      *
-     * @return string
+     * @return string 
      */
     public function getStory()
     {
         return $this->story;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->photos = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
-     * Add photos
+     * Set active
      *
-     * @param \Khatovar\WebBundle\Entity\Photo $photos
+     * @param boolean $active
      * @return Member
      */
-    public function addPhoto(\Khatovar\WebBundle\Entity\Photo $photos)
+    public function setActive($active)
     {
-        $this->photos[] = $photos;
+        $this->active = $active;
 
         return $this;
     }
 
     /**
-     * Remove photos
+     * Get active
      *
-     * @param \Khatovar\WebBundle\Entity\Photo $photos
+     * @return boolean 
      */
-    public function removePhoto(\Khatovar\WebBundle\Entity\Photo $photos)
+    public function getActive()
     {
-        $this->photos->removeElement($photos);
+        return $this->active;
     }
 
     /**
-     * Get photos
+     * Set portrait
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @param \Khatovar\WebBundle\Entity\Photo $portrait
+     * @return Member
      */
-    public function getPhotos()
+    public function setPortrait(\Khatovar\WebBundle\Entity\Photo $portrait = null)
     {
-        return $this->photos;
+        $this->portrait = $portrait;
+
+        return $this;
+    }
+
+    /**
+     * Get portrait
+     *
+     * @return \Khatovar\WebBundle\Entity\Photo 
+     */
+    public function getPortrait()
+    {
+        return $this->portrait;
     }
 
     /**
@@ -459,79 +488,10 @@ class Member
     /**
      * Get owner
      *
-     * @return \Carcel\UserBundle\Entity\User
+     * @return \Carcel\UserBundle\Entity\User 
      */
     public function getOwner()
     {
         return $this->owner;
-    }
-
-    /**
-     * Set portrait
-     *
-     * @param string $portrait
-     * @return Member
-     */
-    public function setPortrait($portrait)
-    {
-        $this->portrait = $portrait;
-
-        return $this;
-    }
-
-    /**
-     * Get portrait
-     *
-     * @return string
-     */
-    public function getPortrait()
-    {
-        return $this->portrait;
-    }
-
-    /**
-     * Set active
-     *
-     * @param bool $active
-     * @return Member
-     */
-    public function setActive($active)
-    {
-        $this->active = $active;
-
-        return $this;
-    }
-
-    /**
-     * Get active
-     *
-     * @return bool
-     */
-    public function getActive()
-    {
-        return $this->active;
-    }
-
-    /**
-     * Set slug
-     *
-     * @param string $slug
-     * @return Member
-     */
-    public function setSlug($slug)
-    {
-        $this->slug = $slug;
-
-        return $this;
-    }
-
-    /**
-     * Get slug
-     *
-     * @return string
-     */
-    public function getSlug()
-    {
-        return $this->slug;
     }
 }

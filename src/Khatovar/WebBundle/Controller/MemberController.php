@@ -133,16 +133,24 @@ class MemberController extends Controller
     {
         $form = $this->createForm(new MemberType(), $member);
 
-        // TODO: Add a preferred choice for entity fields
-
-        // TODO: make a custom list of member's photos, and display in the side bar the same ones
         $form->add('portrait', 'entity', array(
                 'label' => 'Photo de profil :',
                 'class' => 'Khatovar\WebBundle\Entity\Photo',
                 'property' => 'id'
             ));
 
-        // TODO: Check for user to be an editor or a simple member and owner of the page
+        $currentUser = $this->container->get('security.context')
+            ->getToken()->getUser();
+        if ($currentUser != $member->getOwner()) {
+            return $this->render(
+                'KhatovarWebBundle:Member:edit.html.twig',
+                array(
+                    'not_a_member' => 1
+                )
+            );
+        }
+
+        // TODO: make a custom list of member's photos, and display in the side bar the same ones
         $photos = 'test';
 
         $request = $this->get('request');
