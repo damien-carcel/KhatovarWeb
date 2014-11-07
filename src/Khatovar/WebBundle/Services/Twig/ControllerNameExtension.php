@@ -68,35 +68,74 @@ class ControllerNameExtension extends \Twig_Extension
         return array(
             'get_controller_name' => new \Twig_Function_Method($this, 'getControllerName'),
             'get_action_name' => new \Twig_Function_Method($this, 'getActionName'),
+            'get_slug_or_id' => new \Twig_Function_Method($this, 'getSlugOrId')
         );
     }
 
     /**
-     * Get current controller name
+     * Get current controller name.
+     *
+     * @return string|null
      */
     public function getControllerName()
     {
+        $name = null;
+
         if (!is_null($this->request)) {
             $pattern = '#Controller\\\([a-zA-Z]*)Controller#';
             $matches = array();
             preg_match($pattern, $this->request->get('_controller'), $matches);
 
-            return strtolower($matches[1]);
+            $name = strtolower($matches[1]);
         }
+
+        return $name;
     }
 
     /**
-     * Get current action name
+     * Get current action name.
+     *
+     * @return string|null
      */
     public function getActionName()
     {
+        $name = null;
+
         if (!is_null($this->request)) {
             $pattern = "#::([a-zA-Z]*)Action#";
             $matches = array();
             preg_match($pattern, $this->request->get('_controller'), $matches);
 
-            return $matches[1];
+            $name =  $matches[1];
         }
+
+        return $name;
+    }
+
+    /**
+     * Return the current slug or ID of the displayed object.
+     *
+     * @return string|null
+     */
+    public function getSlugOrId()
+    {
+        $slugOrId = null;
+
+        if (!is_null($this->request)) {
+            // First we check if there is a slug
+            $slugOrId = $this->request->get('slug');
+            // If there is not, it's possible we are in edition, then
+            // We don't want a slug but an ID
+            if (is_null($slugOrId)) {
+                // Return an array containing one key/value, we want the value.
+                $route_params = $this->request->get('_route_params');
+                foreach ($route_params as $param) {
+                    $slugOrId = (int) $param;
+                }
+            }
+        }
+
+        return $slugOrId;
     }
 
     /**

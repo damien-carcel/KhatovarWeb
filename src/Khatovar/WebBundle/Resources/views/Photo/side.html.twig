@@ -6,9 +6,9 @@
         <div class="container">
         {% for photo in photos %}
             <div class="photo_admin">
-                {{ photo.getWebPath()|thumbnail('landscape', photo.alt) }}
-                <br />
                 {% if photo.entity == 'homepage' %}
+                    {{ photo.getWebPath()|thumbnail('landscape', photo.alt) }}
+                    <br />
                     {# Get the photo class to display it #}
                     {% if photo.class == 'photo_small' %}
                         {% set format = 'Petit format' %}
@@ -30,6 +30,8 @@
                     </form>
                     <hr />
                 {% else %}
+                    {{ photo.getWebPath()|thumbnail('landscape', photo.alt) }}
+                    <br />
                     Photo n° {{ photo.id }}
                 {% endif %}
             </div>

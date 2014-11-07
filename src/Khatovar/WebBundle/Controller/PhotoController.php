@@ -101,45 +101,66 @@ class PhotoController extends Controller
      *
      * @param string $entity Display only the photos attached to this
      * entity.
+     * @param string|int $entry The slug or the ID of the object
+     * currently rendered in the web page.
      * @return \Symfony\Component\HttpFoundation\Response
      * @Secure(roles="ROLE_VIEWER")
      */
-    public function sideAction($entity)
+    public function sideAction($entity, $entry)
     {
         $currentUser = $this->container->get('security.context')
             ->getToken()->getUser();
         $entityManager = $this->getDoctrine()->getManager();
 
+        // First we retrieve the object displayed on the web page.
+        // If entry is a string, then it is a object slug
+        if ($entity != 'default' and !is_null($entry) and is_string($entry)) {
+            // TODO: Should be a way to do this without quering it again, as it is already rendered on the main page
+            $currentRender = $entityManager
+                ->getRepository('KhatovarWebBundle:' . ucfirst($entity))
+                ->findOneBy(array('slug' => $entry));
+        // If it is an integer, then it is an object ID
+        } elseif ($entity != 'default' and !is_null($entry) and is_int($entry)) {
+            $currentRender = $entityManager
+                ->getRepository('KhatovarWebBundle:' . ucfirst($entity))
+                ->find($entry);
+        // If $entry is null, then there is no reason to display any photos
+        } else {
+            $currentRender = null;
+        }
+
         // If current user is an editor, then he can access photos of all pages
         if ($currentUser->hasRole('ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_EDITOR')) {
-            // We get all photos if we are on the homepage
+            // If we render a homepage, then we retrieve all homepages photos
             if ($entity == 'homepage') {
-                $photos = $entityManager->getRepository('KhatovarWebBundle:Photo')
+                $photos = $entityManager
+                    ->getRepository('KhatovarWebBundle:Photo')
                     ->findBy(array('entity' => $entity));
-            // or only photos linked if we are on an other page
-            } else {
-                // TODO: find how to retrieve current object displayed
-                $entry = $entityManager->getRepository('KhatovarWebBundle:' . ucfirst($entity))
-                    ->findOneBy(array('owner' => $currentUser));
+            // If not, we retrieve only the photo of the displayed page
+            } elseif (!is_null($currentRender)) {
                 $photos = $entityManager->getRepository('KhatovarWebBundle:Photo')
                     ->findBy(array(
                             'entity' => $entity,
-                            'entry' => $entry
+                            'entry' => $currentRender->getId()
                         ));
+            } else {
+                $photos = '';
             }
         // But if current user is a regular one, he can only access his own
-        // photos, and only when viewing/editing its own member’s page
-        } elseif (true) {
-            $entry = $entityManager->getRepository('KhatovarWebBundle:Member')
-                ->findOneBy(array('owner' => $currentUser));
-            $photos = $entityManager->getRepository('KhatovarWebBundle:Photo')
-                ->findBy(array(
-                        'entity' => $entity,
-                        'entry' => $entry
-                    ));
-        // For other pages, regular users shouldn't access any photos.
+        // photos and only when viewing/editing its own member page.
         } else {
-            $photos = '';
+            $owned = $entityManager->getRepository('KhatovarWebBundle:Member')
+                ->findOneBy(array('owner' => $currentUser));
+
+            if (!is_null($currentRender) and $owned == $currentRender) {
+                $photos = $entityManager->getRepository('KhatovarWebBundle:Photo')
+                    ->findBy(array(
+                            'entity' => $entity,
+                            'entry' => $owned
+                        ));
+            } else {
+                $photos = '';
+            }
         }
 
         return $this->render(

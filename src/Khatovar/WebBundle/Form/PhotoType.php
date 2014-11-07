@@ -86,6 +86,7 @@ class PhotoType extends AbstractType
                 // are defined in the templates, but we have to define
                 // which entity child own the photo.
                 } else {
+                    // TODO: show default option when editing → use a choice field with querybuilder?
                     $form->add('class', 'hidden', array(
                             'data' => 'none'
                         ))

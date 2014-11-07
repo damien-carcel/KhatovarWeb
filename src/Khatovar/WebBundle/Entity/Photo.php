@@ -92,7 +92,7 @@ class Photo
      *
      * @ORM\Column(name="path", type="string", length=255, nullable=true)
      */
-    public $path;
+    private $path;
 
     /**
      * Temporary attribute to remember the file path when deleting it.
