@@ -73,9 +73,18 @@ class MemberController extends Controller
         $currentUser = $this->container->get('security.context')
             ->getToken()->getUser();
 
+        // Get all but the portrait photos
+        $photos = $this->getDoctrine()
+            ->getRepository('KhatovarWebBundle:Photo')
+            ->getAllButPortrait($member);
+
         return $this->render(
             'KhatovarWebBundle:Member:view.html.twig',
-            array('member' => $member, 'currentUser' => $currentUser)
+            array(
+                'member' => $member,
+                'currentUser' => $currentUser,
+                'photos' => $photos
+            )
         );
     }
 

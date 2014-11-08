@@ -34,6 +34,9 @@ use Doctrine\ORM\EntityRepository;
 class PhotoRepository extends EntityRepository
 {
     /**
+     * Return photos ordered by entity and entry to ease the
+     * there display when an editor list all photos.
+     *
      * @return array
      */
     public function getAllOrdered()
@@ -41,6 +44,28 @@ class PhotoRepository extends EntityRepository
         $query = $this->createQueryBuilder('p')
             ->addOrderBy('p.entity')
             ->addOrderBy('p.entry')
+            ->getQuery();
+
+        return $query->getResult();
+    }
+
+    /**
+     * Return a list of all the photos of a member, except its portrait.
+     *
+     * @param Member $member
+     * @return array
+     */
+    public function getAllButPortrait(Member $member)
+    {
+        $query = $this->createQueryBuilder('p')
+            ->where('p.entity = :entity')
+            ->andWhere('p.entry = :member')
+            ->andWhere('p.id != :portrait')
+            ->setParameters(array(
+                    'entity' => 'member',
+                    'member' => $member,
+                    'portrait' => $member->getPortrait()
+                ))
             ->getQuery();
 
         return $query->getResult();

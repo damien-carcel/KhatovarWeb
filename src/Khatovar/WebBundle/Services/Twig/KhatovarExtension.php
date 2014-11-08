@@ -23,6 +23,8 @@
 
 namespace Khatovar\WebBundle\Services\Twig;
 
+use Khatovar\WebBundle\Entity\Photo;
+
 /**
  * Twig extension for KhatovarWebBundle.
  *
@@ -31,6 +33,11 @@ namespace Khatovar\WebBundle\Services\Twig;
  */
 class KhatovarExtension extends \Twig_Extension
 {
+    /**
+     * The minimum length between floating photos in a page.
+     */
+    const PARAGRAPH_LENGTH = 500;
+
     /**
      * Return the filters defined in this class.
      *
@@ -60,8 +67,8 @@ class KhatovarExtension extends \Twig_Extension
                 array('is_safe' => array('html'))
             ),
             new \Twig_SimpleFilter(
-                'add_paragraph',
-                array($this, 'addParagraph'),
+                'add_paragraph_and_photos',
+                array($this, 'addParagraphAndPhotos'),
                 array('is_safe' => array('html'))
             )
         );
@@ -143,17 +150,55 @@ class KhatovarExtension extends \Twig_Extension
     }
 
     /**
-     * Replace line breaks by paragraph
+     * Replace line breaks by paragraph and insert floatings between
+     * paragraph.
      *
      * @param string $text The text to transform.
+     * @param array $photos A list of photos to insert in the text.
      * @return string
      */
-    public function addParagraph($text)
+    public function addParagraphAndPhotos($text, array $photos)
     {
+        // First we add the paragraph tags and a special break tag
         $text = '<p>' . $text . '</p>';
-        $text = str_replace("\n", "</p><p>", $text);
 
-        return $text;
+        // If text is too small, we return it directly without adding photos
+        if (strlen($text) < $this::PARAGRAPH_LENGTH) {
+            return str_replace("\n", "</p>\n<p>", $text);
+        }
+
+        $text = str_replace("\n", "</p>\n[break]<p>", $text);
+
+        // We explode the text in paragraphs using the special tag
+        $exploded = explode('[break]', $text);
+
+        // We shuffle the photos and add the first one at the begining
+        // of the text we will return.
+        shuffle($photos);
+
+        $result = $this->addFloat($photos[0], 'right');
+
+        $photo = 1;
+        $photosCount = count($photos);
+        $paragraphs = count($exploded);
+
+        for ($p = 0; $p < $paragraphs; $p++) {
+            if (strlen($exploded[$p]) > $this::PARAGRAPH_LENGTH) {
+                $result .= $exploded[$p];
+                if ($photo < $photosCount) {
+                    $result .= $this->addFloat(
+                        $photos[$photo],
+                        $photo % 2 ? 'left' : 'right'
+                    );
+                    $photo += 1;
+                }
+            } elseif ($p + 1 < $paragraphs) {
+                $exploded[$p+1] = $exploded[$p] . $exploded[$p+1];
+                $exploded[$p] = '';
+            }
+        }
+
+        return $result;
     }
 
     /**
@@ -164,5 +209,26 @@ class KhatovarExtension extends \Twig_Extension
     public function getName()
     {
         return 'khatovar_extension';
+    }
+
+    /**
+     * Return the html code to display a photo as a floating element in
+     * a lightbox container.
+     *
+     * @param Photo $photo The photo to display.
+     * @param string $side The side the photo float (left or right).
+     * @return string
+     */
+    protected function addFloat(Photo $photo, $side)
+    {
+        $text = '<a href="' . $photo->getWebPath() . '" data-lightbox="Photos Khatovar"'
+            . ' title="Copyright &copy; ' . date('Y') . ' association La Compagnie franche du Khatovar">'
+            . '<img class="float float' . $side . ' photo_rest"'
+            . ' onmouseover="this.className=\'float float' . $side . ' photo_over\'"'
+            . ' onmouseout="this.className=\'float float' . $side . ' photo_rest\'"'
+            . ' src="'. $photo->getWebPath() . '" alt="' . $photo->getAlt() . '" />'
+            . '</a>';
+
+        return $text . "\n";
     }
 }

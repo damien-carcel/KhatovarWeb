@@ -62,7 +62,7 @@
 
     <h2>Son histoire</h2>
 
-    {{ member.story|add_paragraph() }}
+    {{ member.story|add_paragraph_and_photos(photos) }}
 
     <div style="text-align:right">
         <a href="{{ path('khatovar_web_members') }}">Retour</a>
