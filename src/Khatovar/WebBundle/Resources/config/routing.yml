@@ -51,8 +51,10 @@ khatovar_web_members:
     defaults:   { _controller: KhatovarWebBundle:Member:index }
 
 khatovar_web_members_view:
-    path:       /membres/membre/{slug}
+    path:       /membre/{member_slug}
     defaults:   { _controller: KhatovarWebBundle:Member:view }
+    requirements:
+        member_slug: "[a-zA-Z0-9-_/]+"
 
 khatovar_web_members_add:
     path:       /membres/add

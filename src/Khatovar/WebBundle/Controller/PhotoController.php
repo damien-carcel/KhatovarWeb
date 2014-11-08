@@ -112,21 +112,20 @@ class PhotoController extends Controller
             ->getToken()->getUser();
         $entityManager = $this->getDoctrine()->getManager();
 
-        // First we retrieve the object displayed on the web page.
-        // If entry is a string, then it is a object slug
+        // First we retrieve the ID of the object displayed on the web page.
+        // If entry is a string, then it is an object slug
         if ($entity != 'default' and !is_null($entry) and is_string($entry)) {
             // TODO: Should be a way to do this without quering it again, as it is already rendered on the main page
-            $currentRender = $entityManager
+            $currentRenderId = $entityManager
                 ->getRepository('KhatovarWebBundle:' . ucfirst($entity))
-                ->findOneBy(array('slug' => $entry));
+                ->findOneBy(array('slug' => $entry))
+                ->getId();
         // If it is an integer, then it is an object ID
         } elseif ($entity != 'default' and !is_null($entry) and is_int($entry)) {
-            $currentRender = $entityManager
-                ->getRepository('KhatovarWebBundle:' . ucfirst($entity))
-                ->find($entry);
+            $currentRenderId = $entry;
         // If $entry is null, then there is no reason to display any photos
         } else {
-            $currentRender = null;
+            $currentRenderId = null;
         }
 
         // If current user is an editor, then he can access photos of all pages
@@ -137,11 +136,11 @@ class PhotoController extends Controller
                     ->getRepository('KhatovarWebBundle:Photo')
                     ->findBy(array('entity' => $entity));
             // If not, we retrieve only the photo of the displayed page
-            } elseif (!is_null($currentRender)) {
+            } elseif (!is_null($currentRenderId)) {
                 $photos = $entityManager->getRepository('KhatovarWebBundle:Photo')
                     ->findBy(array(
                             'entity' => $entity,
-                            'entry' => $currentRender->getId()
+                            'entry' => $currentRenderId
                         ));
             } else {
                 $photos = '';
@@ -149,10 +148,12 @@ class PhotoController extends Controller
         // But if current user is a regular one, he can only access his own
         // photos and only when viewing/editing its own member page.
         } else {
-            $owned = $entityManager->getRepository('KhatovarWebBundle:Member')
-                ->findOneBy(array('owner' => $currentUser));
+            $owned = $entityManager
+                ->getRepository('KhatovarWebBundle:Member')
+                ->findOneBy(array('owner' => $currentUser))
+                ->getId();
 
-            if (!is_null($currentRender) and $owned == $currentRender) {
+            if (!is_null($currentRenderId) and $owned == $currentRenderId) {
                 $photos = $entityManager->getRepository('KhatovarWebBundle:Photo')
                     ->findBy(array(
                             'entity' => $entity,

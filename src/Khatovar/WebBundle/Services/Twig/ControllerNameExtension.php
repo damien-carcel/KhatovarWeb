@@ -123,7 +123,7 @@ class ControllerNameExtension extends \Twig_Extension
 
         if (!is_null($this->request)) {
             // First we check if there is a slug
-            $slugOrId = $this->request->get('slug');
+            $slugOrId = $this->request->get('member_slug');
             // If there is not, it's possible we are in edition, then
             // We don't want a slug but an ID
             if (is_null($slugOrId)) {

@@ -27,6 +27,7 @@ use Doctrine\ORM\EntityRepository;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Khatovar\WebBundle\Entity\Member;
 use Khatovar\WebBundle\Form\MemberType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
@@ -62,22 +63,19 @@ class MemberController extends Controller
     /**
      * Return info about a member.
      *
-     * @param string $slug
+     * @ParamConverter("member", options={"mapping": {"member_slug": "slug"}})
+     * @param Member $member
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function viewAction($slug)
+    public function viewAction(Member $member)
     {
         // Sent current user ID to the view for a possible page edition
         $currentUser = $this->container->get('security.context')
             ->getToken()->getUser();
 
-        $member = $this->getDoctrine()
-            ->getRepository('KhatovarWebBundle:Member')
-            ->findOneBy(array('slug' => $slug));
-
         return $this->render(
             'KhatovarWebBundle:Member:view.html.twig',
-            array('member' => $member, 'currentUser' => $currentUser->getId())
+            array('member' => $member, 'currentUser' => $currentUser)
         );
     }
 
