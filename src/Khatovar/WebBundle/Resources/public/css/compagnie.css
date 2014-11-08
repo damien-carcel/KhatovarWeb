@@ -516,8 +516,6 @@ article img {
 }
 
 .float {
-    margin-right: 10px;
-    margin-left: 10px;
     width: inherit;
     max-width: 220px;
     max-height: 220px;
@@ -526,10 +524,12 @@ article img {
 }
 
 .floatright {
+    margin: 5px 0 5px 10px;
     float: right;
 }
 
 .floatleft {
+    margin: 5px 10px 5px 0;
     float: left;
 }
 

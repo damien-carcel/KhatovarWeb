@@ -175,14 +175,15 @@ class KhatovarExtension extends \Twig_Extension
         // We shuffle the photos and add the first one at the begining
         // of the text we will return.
         shuffle($photos);
-
         $result = $this->addFloat($photos[0], 'right');
 
         $photo = 1;
         $photosCount = count($photos);
         $paragraphs = count($exploded);
 
+        // Then add the others
         for ($p = 0; $p < $paragraphs; $p++) {
+            // If paragraph is longer than the define length, we add a float
             if (strlen($exploded[$p]) > $this::PARAGRAPH_LENGTH) {
                 $result .= $exploded[$p];
                 if ($photo < $photosCount) {
@@ -192,6 +193,7 @@ class KhatovarExtension extends \Twig_Extension
                     );
                     $photo += 1;
                 }
+            // If it is not, we merge the current paragraph with the next one
             } elseif ($p + 1 < $paragraphs) {
                 $exploded[$p+1] = $exploded[$p] . $exploded[$p+1];
                 $exploded[$p] = '';
