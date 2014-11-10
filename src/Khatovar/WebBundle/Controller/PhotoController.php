@@ -24,6 +24,7 @@
 namespace Khatovar\WebBundle\Controller;
 
 use JMS\SecurityExtraBundle\Annotation\Secure;
+use Khatovar\WebBundle\Entity\Homepage;
 use Khatovar\WebBundle\Entity\Photo;
 use Khatovar\WebBundle\Form\PhotoType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -261,6 +262,11 @@ class PhotoController extends Controller
         // Then keep them as an id=>name array
         $list = array();
         foreach ($choices as $choice) {
+            /**
+             * @var $choice Homepage
+             * Only for editor autocompletion.
+             * In reality, it can be any entity except Photo.
+             */
             $list[$choice->getId()] = $choice->getName();
         }
         asort($list);

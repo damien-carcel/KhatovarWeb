@@ -166,7 +166,7 @@ class Member
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -189,7 +189,7 @@ class Member
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -212,7 +212,7 @@ class Member
     /**
      * Get slug
      *
-     * @return string 
+     * @return string
      */
     public function getSlug()
     {
@@ -235,7 +235,7 @@ class Member
     /**
      * Get rank
      *
-     * @return string 
+     * @return string
      */
     public function getRank()
     {
@@ -258,7 +258,7 @@ class Member
     /**
      * Get quote
      *
-     * @return string 
+     * @return string
      */
     public function getQuote()
     {
@@ -281,7 +281,7 @@ class Member
     /**
      * Get skill
      *
-     * @return string 
+     * @return string
      */
     public function getSkill()
     {
@@ -304,7 +304,7 @@ class Member
     /**
      * Get age
      *
-     * @return string 
+     * @return string
      */
     public function getAge()
     {
@@ -327,7 +327,7 @@ class Member
     /**
      * Get size
      *
-     * @return string 
+     * @return string
      */
     public function getSize()
     {
@@ -350,7 +350,7 @@ class Member
     /**
      * Get weight
      *
-     * @return string 
+     * @return string
      */
     public function getWeight()
     {
@@ -373,7 +373,7 @@ class Member
     /**
      * Get strength
      *
-     * @return string 
+     * @return string
      */
     public function getStrength()
     {
@@ -396,7 +396,7 @@ class Member
     /**
      * Get weakness
      *
-     * @return string 
+     * @return string
      */
     public function getWeakness()
     {
@@ -419,7 +419,7 @@ class Member
     /**
      * Get story
      *
-     * @return string 
+     * @return string
      */
     public function getStory()
     {
@@ -442,7 +442,7 @@ class Member
     /**
      * Get active
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getActive()
     {
@@ -465,7 +465,7 @@ class Member
     /**
      * Get portrait
      *
-     * @return \Khatovar\WebBundle\Entity\Photo 
+     * @return \Khatovar\WebBundle\Entity\Photo
      */
     public function getPortrait()
     {
@@ -488,7 +488,7 @@ class Member
     /**
      * Get owner
      *
-     * @return \Carcel\UserBundle\Entity\User 
+     * @return \Carcel\UserBundle\Entity\User
      */
     public function getOwner()
     {

@@ -94,7 +94,7 @@ class PhotoType extends AbstractType
                             'required' => true
                         ))
                         ->add('entry', 'hidden', array(
-                                'data' => 0
+                                'data' => null
                             ));
                 // For the other entities, class are not an option and
                 // are defined in the templates, but we have to define
