@@ -38,6 +38,18 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class PhotoType extends AbstractType
 {
+    private $choicesList;
+
+    /**
+     * Create an instance of Phototype.
+     *
+     * @param array $choicesList
+     */
+    public function __construct($choicesList)
+    {
+        $this->choicesList = $choicesList;
+    }
+
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -60,7 +72,9 @@ class PhotoType extends AbstractType
                     'preferred_choices' => array('homepage')
                 ));
 
-        $formModifier = function (FormInterface $form, $entity) {
+        $choicesList = $this->choicesList;
+
+        $formModifier = function (FormInterface $form, $entity) use ($choicesList) {
             // First we check if entity is defined. If not, then it is
             // a photo upload, so we don't have other fields to add to
             // the form. If it is not null, then the photo is already
@@ -86,13 +100,11 @@ class PhotoType extends AbstractType
                 // are defined in the templates, but we have to define
                 // which entity child own the photo.
                 } else {
-                    // TODO: show default option when editing → use a choice field with querybuilder?
                     $form->add('class', 'hidden', array(
                             'data' => 'none'
                         ))
-                        ->add('entry', 'entity', array(
-                            'class' => 'KhatovarWebBundle:' . ucfirst($entity),
-                            'property' => 'name',
+                        ->add('entry', 'choice', array(
+                            'choices' => $choicesList,
                             'required' => true,
                             'label' => 'Choix :'
                         ));

@@ -179,7 +179,7 @@ class PhotoController extends Controller
     public function addAction()
     {
         $photo = new Photo();
-        $form = $this->createForm(new PhotoType(), $photo);
+        $form = $this->createForm(new PhotoType(array()), $photo);
 
         $currentUser = $this->container->get('security.context')
             ->getToken()->getUser();
@@ -253,7 +253,20 @@ class PhotoController extends Controller
      */
     public function editAction(Photo $photo)
     {
-        $form = $this->createForm(new PhotoType(), $photo);
+        // We get all entries corresponding to the current photo entity
+        $choices = $this->getDoctrine()
+            ->getRepository('KhatovarWebBundle:' . ucfirst($photo->getEntity()))
+            ->findAll();
+
+        // Then keep them as an id=>name array
+        $list = array();
+        foreach ($choices as $choice) {
+            $list[$choice->getId()] = $choice->getName();
+        }
+        asort($list);
+
+        // And inject this array in the form tye to use it as the entry choice
+        $form = $this->createForm(new PhotoType($list), $photo);
         $entity = $photo->getEntity();
 
         $currentUser = $this->container->get('security.context')
