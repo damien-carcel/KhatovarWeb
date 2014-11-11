@@ -14,9 +14,7 @@
 
     <div class="container">
         <div class="photo_exactions">
-            {% autoescape false %}
             {{ member.portrait ? member.portrait.getWebPath()|popup_picture('photo') : 'Pas encore de photo' }}
-            {% endautoescape %}
         </div>
         <div class="exactions">
             <ul>
@@ -51,11 +49,10 @@
                 </li>
             </ul>
             <div class="container">
-                <a href="http://www.compagniefranchedukhatovar.fr/piwigo/index.php?/category/0" rel="external">
-                    <img src="{{ asset('bundles/khatovarweb/images/camera.png') }}" class="photolink" alt="" />
-                    <br />
-                    Album photo
-                </a>
+                {{ (member.portrait ? member.portrait.getWebPath() : asset('bundles/khatovarweb/photos/logonoir.jpg'))|link_album(asset('bundles/khatovarweb/images/camera.png'), 'album-photo') }}
+                {% for photo in photos %}
+                    {{ photo.getWebPath()|link_picture('', 'album-photo') }}
+                {% endfor %}
             </div>
         </div>
     </div>

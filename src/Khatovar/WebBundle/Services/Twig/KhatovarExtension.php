@@ -62,6 +62,11 @@ class KhatovarExtension extends \Twig_Extension
                 array('is_safe' => array('html'))
             ),
             new \Twig_SimpleFilter(
+                'link_album',
+                array($this, 'linkAlbum'),
+                array('is_safe' => array('html'))
+            ),
+            new \Twig_SimpleFilter(
                 'thumbnail',
                 array($this, 'thumbnail'),
                 array('is_safe' => array('html'))
@@ -80,12 +85,13 @@ class KhatovarExtension extends \Twig_Extension
      * @param string $path The path to the picture.
      * @param string $class The stylesheet class to use.
      * @param string $alt The alternative name of the picture.
+     * @param string $data The data-lightbox attribute.
      * @return string
      */
-    public function popupPicture($path, $class = '', $alt = '')
+    public function popupPicture($path, $class = '', $alt = '', $data = 'Photos Khatovar')
     {
         $link = '<a href="' . $path
-            . '" data-lightbox="Photos Khatovar" title="Copyright &copy; '
+            . '" data-lightbox="' . $data . '" title="Copyright &copy; '
             . date('Y') . ' association La Compagnie franche du Khatovar"><img class="'
             . $class . ' photo_rest" onmouseover="this.className=\''
             . $class . ' photo_over\'" onmouseout="this.className=\'' . $class
@@ -97,15 +103,34 @@ class KhatovarExtension extends \Twig_Extension
     /**
      * Return a link to display a picture with lightbox framework.
      *
-     * @param string $path
-     * @param string $text
+     * @param string $path The path to the picture.
+     * @param string $text The link text.
+     * @param string $data The data-lightbox attribute.
      * @return string
      */
-    public function linkPicture($path, $text = '')
+    public function linkPicture($path, $text = '', $data = '')
     {
-        $link = '<a href="' . $path . '" data-lightbox="' . $path
+        $link = '<a href="' . $path . '" data-lightbox="' . ($data ? $data : $path)
             . '" title="Copyright &copy; ' . date('Y')
             . ' association La Compagnie franche du Khatovar">' . $text . '</a>';
+
+        return $link;
+    }
+
+    /**
+     * Return
+     *
+     * @param string $path The path to the picture.
+     * @param string $icon The photo album icon.
+     * @param string $data The data-lightbox attribute.
+     * @return string
+     */
+    public function linkAlbum($path, $icon, $data)
+    {
+        $text = '<img src=' . '"' . $icon . '" class="photolink" '
+            . 'alt="Album photo" /><br />Album photo';
+
+        $link = $this->linkPicture($path, $text, $data);
 
         return $link;
     }
