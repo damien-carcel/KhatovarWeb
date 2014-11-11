@@ -38,7 +38,7 @@
 {% block insection %}
     <nav>
         <div class="container">
-            {% embed 'KhatovarWebBundle:Default:menu.html.twig' %}{% endembed %}
+            {{ knp_menu_render('KhatovarWebBundle:MenuBuilder:mainMenu') }}
         </div>
     </nav>
     {% if is_granted('ROLE_VIEWER') %}
