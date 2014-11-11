@@ -62,7 +62,6 @@ class PhotoType extends AbstractType
 
         $builder
             ->add('alt', 'text', array('label' => 'Nom de substitution : '))
-            // TODO: Find a way to get the entities list automatically
             ->add('entity', 'choice', array(
                     'label' => 'Rattacher la photo à : ',
                     'choices' => array(

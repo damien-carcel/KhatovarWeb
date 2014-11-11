@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "6733c71cee390b74eaa32394decef720",
+    "hash": "223d70e9b45d3871bd06cdf520058679",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -2186,6 +2186,56 @@
     ],
     "packages-dev": [
         {
+            "name": "coresphere/console-bundle",
+            "version": "dev-master",
+            "target-dir": "CoreSphere/ConsoleBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/CoreSphere/ConsoleBundle.git",
+                "reference": "6cf6090c995badc566e88ddd2ff5749f1cdcba7c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/CoreSphere/ConsoleBundle/zipball/6cf6090c995badc566e88ddd2ff5749f1cdcba7c",
+                "reference": "6cf6090c995badc566e88ddd2ff5749f1cdcba7c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3",
+                "symfony/framework-bundle": ">=2.1.0,<3.0"
+            },
+            "require-dev": {
+                "symfony/console": ">=2.1.0,<3.0"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-0": {
+                    "CoreSphere\\ConsoleBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Laszlo Korte",
+                    "email": "coresphere@laszlokorte.de"
+                },
+                {
+                    "name": "Markus Ullmann",
+                    "email": "mail@markus-ullmann.de"
+                }
+            ],
+            "description": "This bundle allows you accessing the symfony2 console via your browser",
+            "keywords": [
+                "console",
+                "javascript",
+                "symfony"
+            ],
+            "time": "2014-06-13 10:21:57"
+        },
+        {
             "name": "sensio/generator-bundle",
             "version": "v2.4.0",
             "target-dir": "Sensio/Bundle/GeneratorBundle",
@@ -2232,58 +2282,6 @@
             ],
             "description": "This bundle generates code for you",
             "time": "2014-09-22 14:56:14"
-        },
-        {
-            "name": "winzou/console-bundle",
-            "version": "dev-master",
-            "target-dir": "CoreSphere/ConsoleBundle",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/winzou/ConsoleBundle.git",
-                "reference": "f189929c13de8ddc5177b49f0a69f8680c9a9862"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/winzou/ConsoleBundle/zipball/f189929c13de8ddc5177b49f0a69f8680c9a9862",
-                "reference": "f189929c13de8ddc5177b49f0a69f8680c9a9862",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3",
-                "symfony/console": ">=2.1.0,<3.0",
-                "symfony/framework-bundle": ">=2.1.0,<3.0"
-            },
-            "type": "symfony-bundle",
-            "autoload": {
-                "psr-0": {
-                    "CoreSphere\\ConsoleBundle": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Laszlo Korte",
-                    "email": "coresphere@laszlokorte.de"
-                },
-                {
-                    "name": "Marmus Ullman",
-                    "email": "mail@markus-ullmann.de"
-                },
-                {
-                    "name": "Alexandre winzou Bacco",
-                    "homepage": "http://www.tutoriel-symfony2.fr/"
-                }
-            ],
-            "description": "This bundle allows you accessing the symfony2 console via your browser",
-            "keywords": [
-                "console",
-                "javascript",
-                "symfony"
-            ],
-            "time": "2013-02-22 08:46:21"
         }
     ],
     "aliases": [],
@@ -2291,7 +2289,7 @@
     "stability-flags": {
         "jms/security-extra-bundle": 20,
         "stof/doctrine-extensions-bundle": 20,
-        "winzou/console-bundle": 20
+        "coresphere/console-bundle": 20
     },
     "prefer-stable": false,
     "platform": {

@@ -44,7 +44,6 @@ khatovar_web_photos_delete:
     requirements:
         photo: \d+
 
-
 # Member’s pages
 khatovar_web_members:
     path:       /membres

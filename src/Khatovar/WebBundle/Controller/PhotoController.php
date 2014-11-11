@@ -57,7 +57,7 @@ class PhotoController extends Controller
             ->getToken()->getUser();
         $entityManager = $this->getDoctrine()->getManager();
 
-        // If an editor or more powerfull user is connected, we return
+        // If an editor or more powerful user is connected, we return
         // all photos, but is it is a regular user, we only return its
         // own photos, as he cannot edit/delete others.
         if ($currentUser->hasRole('ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_EDITOR')) {
@@ -75,7 +75,6 @@ class PhotoController extends Controller
                 );
         }
 
-        // TODO: Find a way to get the entities list automatically
         $filter = $this->get('khatovar.filters.array');
         $entityList = array(
             'homepage' => array(
