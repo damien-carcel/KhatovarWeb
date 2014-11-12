@@ -182,7 +182,7 @@ class MemberController extends Controller
                 return $this->redirect(
                     $this->generateUrl(
                         'khatovar_web_members_view',
-                        array('slug' => $member->getSlug())
+                        array('member_slug' => $member->getSlug())
                     )
                 );
             }
