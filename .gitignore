@@ -11,4 +11,6 @@
 /vendor/
 /bin/
 /.idea
+/src/Khatovar/WebBundle/Resources/public/photos/*
+!/src/Khatovar/WebBundle/Resources/public/photos/logonoir.jpg
 *~

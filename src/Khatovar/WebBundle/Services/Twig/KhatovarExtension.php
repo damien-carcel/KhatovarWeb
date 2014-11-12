@@ -182,13 +182,13 @@ class KhatovarExtension extends \Twig_Extension
      * @param array $photos A list of photos to insert in the text.
      * @return string
      */
-    public function addParagraphAndPhotos($text, array $photos)
+    public function addParagraphAndPhotos($text, $photos = array())
     {
         // First we add the paragraph tags and a special break tag
         $text = '<p>' . $text . '</p>';
 
         // If text is too small, we return it directly without adding photos
-        if (strlen($text) < $this::PARAGRAPH_LENGTH) {
+        if (strlen($text) < $this::PARAGRAPH_LENGTH or empty($photos)) {
             return str_replace("\n", "</p>\n<p>", $text);
         }
 

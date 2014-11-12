@@ -61,7 +61,7 @@ class Member
 
     /**
      * @ORM\OneToOne(targetEntity="Khatovar\WebBundle\Entity\Photo")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
     private $portrait;
 
@@ -138,8 +138,8 @@ class Member
     private $story;
 
     /**
-     * @ORM\OneToOne(targetEntity="Carcel\UserBundle\Entity\User")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\OneToOne(targetEntity="Carcel\UserBundle\Entity\User", cascade={"detach"})
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
     private $owner;
 
