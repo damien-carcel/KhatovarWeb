@@ -24,6 +24,7 @@
 namespace Khatovar\WebBundle\Menu;
 
 use Knp\Menu\FactoryInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Build the various application menus.
@@ -53,14 +54,29 @@ class MenuBuilder
     );
 
     /**
-     * Main menu of the application.
+     * @var FactoryInterface
+     */
+    private $factoryInterface;
+
+    /**
+     * Create an instance of MenuBuilder.
      *
      * @param FactoryInterface $factoryInterface
+     */
+    public function __construct(FactoryInterface $factoryInterface)
+    {
+        $this->factoryInterface = $factoryInterface;
+    }
+
+    /**
+     * Main menu of the application.
+     *
+     * @param Request $request
      * @return \Knp\Menu\ItemInterface
      */
-    public function mainMenu(FactoryInterface $factoryInterface)
+    public function createMainMenu(Request $request)
     {
-        $menu = $factoryInterface->createItem('root');
+        $menu = $this->factoryInterface->createItem('root');
 
         $menu->addChild(
             'home',

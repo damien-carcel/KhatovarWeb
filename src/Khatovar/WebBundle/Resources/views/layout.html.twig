@@ -38,7 +38,7 @@
 {% block insection %}
     <nav>
         <div class="container">
-            {{ knp_menu_render('KhatovarWebBundle:MenuBuilder:mainMenu') }}
+            {{ knp_menu_render('main') }}
         </div>
     </nav>
     {% if is_granted('ROLE_VIEWER') %}

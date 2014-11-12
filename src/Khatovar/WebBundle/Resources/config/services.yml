@@ -24,3 +24,16 @@ services:
     khatovar.filters.array:
         class: Khatovar\WebBundle\Services\Filters\KhatovarReturnArray
         arguments: [ "@doctrine.orm.entity_manager" ]
+
+    khatovar.menu.menu_builder:
+        class: Khatovar\WebBundle\Menu\MenuBuilder
+        arguments: [ "@knp_menu.factory" ]
+
+    khatovar.menu.main:
+        class: Knp\Menu\MenuItem
+        factory_service: khatovar.menu.menu_builder
+        factory_method: createMainMenu
+        arguments: ["@request"]
+        scope: request
+        tags:
+            - { name: knp_menu.menu, alias: main }
