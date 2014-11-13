@@ -6649,6 +6649,15 @@ header, body {
     background: #691900;
 }
 
+/* Cookie acknowledge bar */
+#cookie-law-info-bar {
+    background: #f5f1dc !important;
+    opacity: 0.9;
+    top: 0 !important;
+    bottom: auto !important;
+    font-weight: bold;
+}
+
 a, a:visited {
     color: #001723;
     text-decoration: none;

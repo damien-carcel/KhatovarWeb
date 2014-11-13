@@ -26,6 +26,7 @@ class AppKernel extends Kernel
             new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+            new Xsolve\CookieAcknowledgementBundle\XsolveCookieAcknowledgementBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

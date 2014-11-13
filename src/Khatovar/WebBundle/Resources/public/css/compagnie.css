@@ -61,6 +61,14 @@ body {
     }
 }
 
+/* Cookie acknowledge bar */
+#cookie-law-info-bar {
+    background: #f5f1dc !important;
+    opacity: 0.9;
+    top: 0 !important;
+    bottom: auto !important;
+}
+
 /* HEADER */
 
 header {
