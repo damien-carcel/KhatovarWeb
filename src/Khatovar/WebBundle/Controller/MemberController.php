@@ -91,7 +91,7 @@ class MemberController extends Controller
     /**
      * Add a new member's page.
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @Secure(roles="ROLE_EDITOR")
      */
     public function addAction()
@@ -134,7 +134,7 @@ class MemberController extends Controller
      * Edit a member information.
      *
      * @param Member $member
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @Secure(roles="ROLE_VIEWER")
      */
     public function editAction(Member $member)
@@ -198,7 +198,7 @@ class MemberController extends Controller
      * Delete a member's page.
      *
      * @param Member $member
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @Secure(roles="ROLE_EDITOR")
      */
     public function removeAction(Member $member)

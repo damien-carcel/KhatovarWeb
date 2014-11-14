@@ -173,7 +173,7 @@ class PhotoController extends Controller
     /**
      * Add a new photo to the collection.
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @Secure(roles="ROLE_VIEWER")
      */
     public function addAction()
@@ -248,7 +248,7 @@ class PhotoController extends Controller
      * Edit a photo information.
      *
      * @param Photo $photo The photo to edit.
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @Secure(roles="ROLE_VIEWER")
      */
     public function editAction(Photo $photo)
@@ -347,7 +347,7 @@ class PhotoController extends Controller
      * Remove a photo from the collection.
      *
      * @param Photo $photo The photo to delete.
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @Secure(roles="ROLE_VIEWER")
      */
     public function deleteAction(Photo $photo)
