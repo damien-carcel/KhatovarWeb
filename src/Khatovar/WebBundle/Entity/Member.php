@@ -23,12 +23,16 @@
 
 namespace Khatovar\WebBundle\Entity;
 
+use Carcel\UserBundle\Entity\User;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Member
+ *
+ * @author Damien Carcel (https://github.com/damien-carcel)
+ * @package Khatovar\WebBundle\Entity
  *
  * @ORM\Table(name="khatovar_web_members")
  * @ORM\Entity(repositoryClass="Khatovar\WebBundle\Entity\MemberRepository")
@@ -455,7 +459,7 @@ class Member
      * @param \Khatovar\WebBundle\Entity\Photo $portrait
      * @return Member
      */
-    public function setPortrait(\Khatovar\WebBundle\Entity\Photo $portrait = null)
+    public function setPortrait(Photo $portrait = null)
     {
         $this->portrait = $portrait;
 
@@ -478,7 +482,7 @@ class Member
      * @param \Carcel\UserBundle\Entity\User $owner
      * @return Member
      */
-    public function setOwner(\Carcel\UserBundle\Entity\User $owner = null)
+    public function setOwner(User $owner = null)
     {
         $this->owner = $owner;
 

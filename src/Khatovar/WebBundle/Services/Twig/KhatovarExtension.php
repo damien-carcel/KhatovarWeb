@@ -197,7 +197,7 @@ class KhatovarExtension extends \Twig_Extension
         // We explode the text in paragraphs using the special tag
         $exploded = explode('[break]', $text);
 
-        // We shuffle the photos and add the first one at the begining
+        // We shuffle the photos and add the first one at the beginning
         // of the text we will return.
         shuffle($photos);
         $result = $this->addFloat($photos[0], 'right');

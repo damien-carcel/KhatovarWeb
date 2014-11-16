@@ -30,6 +30,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Photo
  *
+ * @author Damien Carcel (https://github.com/damien-carcel)
+ * @package Khatovar\WebBundle\Entity
+ *
  * @ORM\Table(name="khatovar_web_photos")
  * @ORM\Entity(repositoryClass="Khatovar\WebBundle\Entity\PhotoRepository")
  * @ORM\HasLifecycleCallbacks()

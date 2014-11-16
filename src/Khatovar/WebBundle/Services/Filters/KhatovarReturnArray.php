@@ -24,6 +24,7 @@
 namespace Khatovar\WebBundle\Services\Filters;
 
 use Doctrine\ORM\EntityManager;
+use Khatovar\WebBundle\Entity\Homepage;
 
 /**
  * Return some data as array.
@@ -60,6 +61,11 @@ class KhatovarReturnArray
 
         $result = array();
         foreach ($entries as $entry) {
+            /**
+             * Just for IDE auto-completion
+             *
+             * @var Homepage $entry
+             */
             $result[$entry->getId()] = $entry->getName();
         }
 

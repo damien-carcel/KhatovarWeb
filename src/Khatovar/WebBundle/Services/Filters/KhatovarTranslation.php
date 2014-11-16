@@ -24,6 +24,7 @@
 namespace Khatovar\WebBundle\Services\Filters;
 
 use Doctrine\ORM\EntityManager;
+use Khatovar\WebBundle\Entity\Photo;
 
 /**
  * Perform some transformations on html code before display or saving.
@@ -74,6 +75,9 @@ class KhatovarTranslation
         $photos = array();
 
         foreach ($paths as $path) {
+            /**
+             * @var Photo $photo
+             */
             $photo = $repository->findOneByPath($path);
             if ($photo) {
                 $photos[] = '<a href="/uploaded/photos/'

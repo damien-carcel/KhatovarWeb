@@ -24,19 +24,20 @@
 namespace Khatovar\WebBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Homepage
+ * Camp
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
  * @package Khatovar\WebBundle\Entity
  *
- * @ORM\Table(name="khatovar_web_homepages")
- * @ORM\Entity(repositoryClass="Khatovar\WebBundle\Entity\HomepageRepository")
+ * @ORM\Table(name="khatovar_web_camp")
+ * @ORM\Entity(repositoryClass="Khatovar\WebBundle\Entity\CampRepository")
  */
-class Homepage
+class Camp
 {
     /**
      * @var integer
@@ -50,10 +51,17 @@ class Homepage
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="text")
+     * @ORM\Column(name="title", type="string", length=255)
+     * @Assert\Length(max="255")
      * @Assert\NotBlank()
      */
-    private $name;
+    private $title;
+
+    /**
+     * @Gedmo\Slug(fields={"title"})
+     * @ORM\Column(length=128, unique=true)
+     */
+    private $slug;
 
     /**
      * @var string
@@ -64,11 +72,23 @@ class Homepage
     private $content;
 
     /**
-     * @var boolean
+     * @var integer
      *
-     * @ORM\Column(name="active", type="boolean")
+     * @ORM\ManyToOne(
+     *      targetEntity="Khatovar\WebBundle\Entity\Camp",
+     *      inversedBy="children"
+     * )
+     * @ORM\JoinColumn(nullable=true)
      */
-    private $active;
+    private $parent;
+
+    /**
+     * @ORM\OneToMany(
+     *      targetEntity="Khatovar\WebBundle\Entity\Camp",
+     *      mappedBy="parent", cascade={"persist", "remove"}
+     * )
+     */
+    private $children;
 
 
     /**
@@ -83,6 +103,14 @@ class Homepage
     }
 
     /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->children = new ArrayCollection();
+    }
+
+    /**
      * Get id
      *
      * @return integer
@@ -93,10 +121,33 @@ class Homepage
     }
 
     /**
+     * Set title
+     *
+     * @param string $title
+     * @return Camp
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
      * Set content
      *
      * @param string $content
-     * @return Homepage
+     * @return Camp
      */
     public function setContent($content)
     {
@@ -116,89 +167,81 @@ class Homepage
     }
 
     /**
-     * Set active
+     * Set slug
      *
-     * @param boolean $active
-     * @return Homepage
+     * @param string $slug
+     * @return Camp
      */
-    public function setActive($active)
+    public function setSlug($slug)
     {
-        $this->active = $active;
+        $this->slug = $slug;
 
         return $this;
     }
 
     /**
-     * Get active
-     *
-     * @return boolean
-     */
-    public function getActive()
-    {
-        return $this->active;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->photos = new ArrayCollection();
-        $this->active = 0;
-    }
-
-    /**
-     * Add photos
-     *
-     * @param \Khatovar\WebBundle\Entity\Photo $photos
-     * @return Homepage
-     */
-    public function addPhoto(Photo $photos)
-    {
-        $this->photos[] = $photos;
-
-        return $this;
-    }
-
-    /**
-     * Remove photos
-     *
-     * @param \Khatovar\WebBundle\Entity\Photo $photos
-     */
-    public function removePhoto(Photo $photos)
-    {
-        $this->photos->removeElement($photos);
-    }
-
-    /**
-     * Get photos
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getPhotos()
-    {
-        return $this->photos;
-    }
-
-    /**
-     * Set name
-     *
-     * @param string $name
-     * @return Homepage
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get name
+     * Get slug
      *
      * @return string
      */
-    public function getName()
+    public function getSlug()
     {
-        return $this->name;
+        return $this->slug;
+    }
+
+    /**
+     * Set parent
+     *
+     * @param \Khatovar\WebBundle\Entity\Camp $parent
+     * @return Camp
+     */
+    public function setParent(Camp $parent = null)
+    {
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    /**
+     * Get parent
+     *
+     * @return \Khatovar\WebBundle\Entity\Camp
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
+     * Add children
+     *
+     * @param \Khatovar\WebBundle\Entity\Camp $children
+     * @return Camp
+     */
+    public function addChild(Camp $children)
+    {
+        $this->children[] = $children;
+
+        return $this;
+    }
+
+    /**
+     * Remove children
+     *
+     * @param \Khatovar\WebBundle\Entity\Camp $children
+     */
+    public function removeChild(Camp $children)
+    {
+        $this->children->removeElement($children);
+    }
+
+    /**
+     * Get children
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getChildren()
+    {
+        return $this->children;
     }
 }

@@ -262,8 +262,8 @@ class PhotoController extends Controller
         $list = array();
         foreach ($choices as $choice) {
             /**
-             * @var $choice Homepage
-             * Only for editor autocompletion.
+             * @var Homepage $choice
+             * Only for editor auto-completion.
              * In reality, it can be any entity except Photo.
              */
             $list[$choice->getId()] = $choice->getName();
