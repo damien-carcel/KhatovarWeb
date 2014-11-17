@@ -20,12 +20,14 @@
  * @link        https://github.com/damien-carcel/Documents
  * @license     http://www.gnu.org/licenses/gpl.html
  * @todo        Externalising email sending when removing a user account
+ * @todo        Externalising forms
  */
 
 namespace Carcel\UserBundle\Controller;
 
 use Carcel\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Global adminitration of the application users.
@@ -68,9 +70,10 @@ class AdminController extends Controller
      * Change the user's role.
      *
      * @param User $user
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function setRoleAction(User $user)
+    public function setRoleAction(User $user, Request $request)
     {
         // Get all roles available in the application
         $roles = $this->container->getParameter('security.role_hierarchy.roles');
@@ -99,22 +102,18 @@ class AdminController extends Controller
             ->add('submit', 'submit', array('label' => 'Modifier'))
             ->getForm();
 
-        $request = $this->get('request');
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $retrieved = $form->getData('roles');
+            $user->setRoles(array($choices[$retrieved['roles']]));
+            $entityManager->persist($user);
+            $entityManager->flush();
 
-        if ($request->getMethod() == 'POST') {
-            $form->handleRequest($request);
-            if ($form->isValid()) {
-                $entityManager = $this->getDoctrine()->getManager();
-                $retrieved = $form->getData('roles');
-                $user->setRoles(array($choices[$retrieved['roles']]));
-                $entityManager->persist($user);
-                $entityManager->flush();
+            $this->get('session')->getFlashBag()
+                ->add('notice', 'Le rôle de l’utilisateur a été modifié.');
 
-                $this->get('session')->getFlashBag()
-                    ->add('notice', 'Le rôle de l’utilisateur a été modifié.');
-
-                return $this->redirect($this->generateUrl('carcel_user_admin'));
-            }
+            return $this->redirect($this->generateUrl('carcel_user_admin'));
         }
 
         return $this->render(
@@ -130,9 +129,10 @@ class AdminController extends Controller
      * Edit a user's profile.
      *
      * @param User $user
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function editProfileAction(User $user)
+    public function editProfileAction(User $user, Request $request)
     {
         $form = $this->createFormBuilder($user)
             ->add('username', 'text', array('label' => 'Nom d’utilisateur :'))
@@ -140,20 +140,16 @@ class AdminController extends Controller
             ->add('submit', 'submit', array('label' => 'Mettre à jour'))
             ->getForm();
 
-        $request = $this->get('request');
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
 
-        if ($request->getMethod() == 'POST') {
-            $form->handleRequest($request);
-            if ($form->isValid()) {
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($user);
-                $entityManager->flush();
+            $this->get('session')->getFlashBag()
+                ->add('notice', 'Le profile utilisateur a été mis à jour.');
 
-                $this->get('session')->getFlashBag()
-                    ->add('notice', 'Le profile utilisateur a été mis à jour.');
-
-                return $this->redirect($this->generateUrl('carcel_user_admin'));
-            }
+            return $this->redirect($this->generateUrl('carcel_user_admin'));
         }
 
         return $this->render(
@@ -167,40 +163,38 @@ class AdminController extends Controller
      * his account has been destroyed.
      *
      * @param User $user
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function removeUserAction(User $user)
+    public function removeUserAction(User $user, Request $request)
     {
         $form = $this->createFormBuilder()->getForm();
-        $request = $this->get('request');
 
-        if ($request->getMethod() == 'POST') {
-            $form->handleRequest($request);
-            if ($form->isValid()) {
-                $email = $user->getEmail();
-                $username = $user->getUsername();
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $email = $user->getEmail();
+            $username = $user->getUsername();
 
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->remove($user);
-                $entityManager->flush();
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($user);
+            $entityManager->flush();
 
-                $this->get('session')->getFlashBag()
-                    ->add('notice', 'L’utilisateur a bien été effacé.');
+            $this->get('session')->getFlashBag()
+                ->add('notice', 'L’utilisateur a bien été effacé.');
 
-                $message = \Swift_Message::newInstance()
-                    ->setSubject('Suppression de compte')
-                    ->setFrom('registration@documents.com')
-                    ->setTo($email)
-                    ->setBody(
-                        $this->renderView(
-                            'CarcelUserBundle:Admin:email.txt.twig',
-                            array('username' => $username)
-                        )
-                    );
-                $this->get('mailer')->send($message);
+            $message = \Swift_Message::newInstance()
+                ->setSubject('Suppression de compte')
+                ->setFrom('registration@documents.com')
+                ->setTo($email)
+                ->setBody(
+                    $this->renderView(
+                        'CarcelUserBundle:Admin:email.txt.twig',
+                        array('username' => $username)
+                    )
+                );
+            $this->get('mailer')->send($message);
 
-                return $this->redirect($this->generateUrl('carcel_user_admin'));
-            }
+            return $this->redirect($this->generateUrl('carcel_user_admin'));
         }
 
         return $this->render(

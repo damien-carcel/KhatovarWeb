@@ -27,6 +27,7 @@ use Carcel\DocumentsBundle\Entity\File;
 use Carcel\DocumentsBundle\Entity\Folder;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -112,10 +113,11 @@ class DocumentsController extends Controller
      * Add a new folder.
      *
      * @param Folder $parent The folder inside which we want to create a new one.
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      * @Secure(roles="ROLE_ADMIN")
      */
-    public function addFolderAction(Folder $parent)
+    public function addFolderAction(Folder $parent, Request $request)
     {
         $folder = new Folder();
         $folder->setParent($parent);
@@ -125,25 +127,21 @@ class DocumentsController extends Controller
             ->add('submit', 'submit', array('label' => 'Ajouter'))
             ->getForm();
 
-        $request = $this->get('request');
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($folder);
+            $entityManager->flush();
 
-        if ($request->getMethod() == 'POST') {
-            $form->handleRequest($request);
-            if ($form->isValid()) {
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($folder);
-                $entityManager->flush();
+            $this->get('session')->getFlashBag()
+                ->add('notice', 'Nouveau dossier ajouté.');
 
-                $this->get('session')->getFlashBag()
-                    ->add('notice', 'Nouveau dossier ajouté.');
-
-                return $this->redirect(
-                    $this->generateUrl(
-                        'carcel_documents_homepage',
-                        array('folder' => $parent->getId())
-                    )
-                );
-            }
+            return $this->redirect(
+                $this->generateUrl(
+                    'carcel_documents_homepage',
+                    array('folder' => $parent->getId())
+                )
+            );
         }
 
         return $this->render(
@@ -161,10 +159,11 @@ class DocumentsController extends Controller
      * it will be deleted first.
      *
      * @param Folder $folder The folder inside which we want to upload a file.
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      * @Secure(roles="ROLE_UPLOADER")
      */
-    public function addFileAction(Folder $folder)
+    public function addFileAction(Folder $folder, Request $request)
     {
         $file = new File();
         $file->setFolder($folder);
@@ -174,43 +173,39 @@ class DocumentsController extends Controller
             ->add('submit', 'submit', array('label' => 'Envoyer'))
             ->getForm();
 
-        $request = $this->get('request');
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
 
-        if ($request->getMethod() == 'POST') {
-            $form->handleRequest($request);
-            if ($form->isValid()) {
-                $entityManager = $this->getDoctrine()->getManager();
-
-                $fileExists = $entityManager
-                    ->getRepository('CarcelDocumentsBundle:File')
-                    ->findOneBy(
-                        array(
-                            'name' => $file->getFilePath()->getClientOriginalName(),
-                            'folder' => $folder->getId()
-                        )
-                    );
-
-                if (isset($fileExists) and !empty($fileExists)) {
-                    $file->setCreated($fileExists->getCreated());
-                    $entityManager->remove($fileExists);
-
-                    $this->get('session')->getFlashBag()
-                        ->add('notice', 'Le fichier a bien été remplacé.');
-                } else {
-                    $this->get('session')->getFlashBag()
-                        ->add('notice', 'Le fichier a bien été ajouté.');
-                }
-
-                $entityManager->persist($file);
-                $entityManager->flush();
-
-                return $this->redirect(
-                    $this->generateUrl(
-                        'carcel_documents_homepage',
-                        array('folder' => $folder->getId())
+            $fileExists = $entityManager
+                ->getRepository('CarcelDocumentsBundle:File')
+                ->findOneBy(
+                    array(
+                        'name' => $file->getFilePath()->getClientOriginalName(),
+                        'folder' => $folder->getId()
                     )
                 );
+
+            if (isset($fileExists) and !empty($fileExists)) {
+                $file->setCreated($fileExists->getCreated());
+                $entityManager->remove($fileExists);
+
+                $this->get('session')->getFlashBag()
+                    ->add('notice', 'Le fichier a bien été remplacé.');
+            } else {
+                $this->get('session')->getFlashBag()
+                    ->add('notice', 'Le fichier a bien été ajouté.');
             }
+
+            $entityManager->persist($file);
+            $entityManager->flush();
+
+            return $this->redirect(
+                $this->generateUrl(
+                    'carcel_documents_homepage',
+                    array('folder' => $folder->getId())
+                )
+            );
         }
 
         return $this->render(
@@ -226,10 +221,11 @@ class DocumentsController extends Controller
      * Move a folder into a new one.
      *
      * @param Folder $folder The folder to move.
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      * @Secure(roles="ROLE_ADMIN")
      */
-    public function moveFolderAction(Folder $folder)
+    public function moveFolderAction(Folder $folder, Request $request)
     {
         $entityManager = $this->getDoctrine()->getManager();
 
@@ -252,24 +248,20 @@ class DocumentsController extends Controller
             ->add('submit', 'submit', array('label' => 'Déplacer'))
             ->getForm();
 
-        $request = $this->get('request');
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $entityManager->persist($folder);
+            $entityManager->flush();
 
-        if ($request->getMethod() == 'POST') {
-            $form->handleRequest($request);
-            if ($form->isValid()) {
-                $entityManager->persist($folder);
-                $entityManager->flush();
+            $this->get('session')->getFlashBag()
+                ->add('notice', 'Le dossier a bien été déplacé.');
 
-                $this->get('session')->getFlashBag()
-                    ->add('notice', 'Le dossier a bien été déplacé.');
-
-                return $this->redirect(
-                    $this->generateUrl(
-                        'carcel_documents_homepage',
-                        array('folder' => $folder->getParent()->getId())
-                    )
-                );
-            }
+            return $this->redirect(
+                $this->generateUrl(
+                    'carcel_documents_homepage',
+                    array('folder' => $folder->getParent()->getId())
+                )
+            );
         }
 
         return $this->render(
@@ -285,10 +277,11 @@ class DocumentsController extends Controller
      * Move a file into a new folder.
      *
      * @param File $file The file to move.
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      * @Secure(roles="ROLE_ADMIN")
      */
-    public function moveFileAction(File $file)
+    public function moveFileAction(File $file, Request $request)
     {
         $entityManager = $this->getDoctrine()->getManager();
 
@@ -311,24 +304,20 @@ class DocumentsController extends Controller
             ->add('submit', 'submit', array('label' => 'Déplacer'))
             ->getForm();
 
-        $request = $this->get('request');
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $entityManager->persist($file);
+            $entityManager->flush();
 
-        if ($request->getMethod() == 'POST') {
-            $form->handleRequest($request);
-            if ($form->isValid()) {
-                $entityManager->persist($file);
-                $entityManager->flush();
+            $this->get('session')->getFlashBag()
+                ->add('notice', 'Le fichier a bien été déplacé.');
 
-                $this->get('session')->getFlashBag()
-                    ->add('notice', 'Le fichier a bien été déplacé.');
-
-                return $this->redirect(
-                    $this->generateUrl(
-                        'carcel_documents_homepage',
-                        array('folder' => $file->getFolder()->getId())
-                    )
-                );
-            }
+            return $this->redirect(
+                $this->generateUrl(
+                    'carcel_documents_homepage',
+                    array('folder' => $file->getFolder()->getId())
+                )
+            );
         }
 
         return $this->render(
@@ -344,35 +333,32 @@ class DocumentsController extends Controller
      * Rename an existing folder.
      *
      * @param Folder $folder The Folder instance we want rename.
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      * @Secure(roles="ROLE_ADMIN")
      */
-    public function renameFolderAction(Folder $folder)
+    public function renameFolderAction(Folder $folder, Request $request)
     {
         $form = $this->createFormBuilder($folder)
             ->add('name', 'text', array('label' => 'Nouveau nom : '))
             ->add('submit', 'submit', array('label' => 'Renommer'))
             ->getForm();
 
-        $request = $this->get('request');
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($folder);
+            $entityManager->flush();
 
-        if ($request->getMethod() == 'POST') {
-            $form->handleRequest($request);
-            if ($form->isValid()) {
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($folder);
-                $entityManager->flush();
+            $this->get('session')->getFlashBag()
+                ->add('notice', 'Le dossier a bien été renommé.');
 
-                $this->get('session')->getFlashBag()
-                    ->add('notice', 'Le dossier a bien été renommé.');
-
-                return $this->redirect(
-                    $this->generateUrl(
-                        'carcel_documents_homepage',
-                        array('folder' => $folder->getParent()->getId())
-                    )
-                );
-            }
+            return $this->redirect(
+                $this->generateUrl(
+                    'carcel_documents_homepage',
+                    array('folder' => $folder->getParent()->getId())
+                )
+            );
         }
 
         return $this->render(
@@ -388,35 +374,32 @@ class DocumentsController extends Controller
      * Rename an existing file.
      *
      * @param File $file The File instance we want to rename.
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      * @Secure(roles="ROLE_ADMIN")
      */
-    public function renameFileAction(File $file)
+    public function renameFileAction(File $file, Request $request)
     {
         $form = $this->createFormBuilder($file)
             ->add('name', 'text', array('label' => 'Nouveau nom : '))
             ->add('submit', 'submit', array('label' => 'Renommer'))
             ->getForm();
 
-        $request = $this->get('request');
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($file);
+            $entityManager->flush();
 
-        if ($request->getMethod() == 'POST') {
-            $form->handleRequest($request);
-            if ($form->isValid()) {
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($file);
-                $entityManager->flush();
+            $this->get('session')->getFlashBag()
+                ->add('notice', 'Le fichier a bien été renommé.');
 
-                $this->get('session')->getFlashBag()
-                    ->add('notice', 'Le fichier a bien été renommé.');
-
-                return $this->redirect(
-                    $this->generateUrl(
-                        'carcel_documents_homepage',
-                        array('folder' => $file->getFolder()->getId())
-                    )
-                );
-            }
+            return $this->redirect(
+                $this->generateUrl(
+                    'carcel_documents_homepage',
+                    array('folder' => $file->getFolder()->getId())
+                )
+            );
         }
 
         return $this->render(
@@ -432,32 +415,29 @@ class DocumentsController extends Controller
      * Delete a folder and all its content.
      *
      * @param Folder $folder The folder to delete.
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      * @Secure(roles="ROLE_ADMIN")
      */
-    public function removeFolderAction(Folder $folder)
+    public function removeFolderAction(Folder $folder, Request $request)
     {
         $form = $this->createFormBuilder()->getForm();
-        $request = $this->get('request');
+        $form->handleRequest($request);
 
-        if ($request->getMethod() == 'POST') {
-            $form->handleRequest($request);
+        if ($form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($folder);
+            $entityManager->flush();
 
-            if ($form->isValid()) {
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->remove($folder);
-                $entityManager->flush();
+            $this->get('session')->getFlashBag()
+                ->add('notice', 'Le dossier a bien été supprimé.');
 
-                $this->get('session')->getFlashBag()
-                    ->add('notice', 'Le dossier a bien été supprimé.');
-
-                return $this->redirect(
-                    $this->generateUrl(
-                        'carcel_documents_homepage',
-                        array('folder' => $folder->getParent()->getId())
-                    )
-                );
-            }
+            return $this->redirect(
+                $this->generateUrl(
+                    'carcel_documents_homepage',
+                    array('folder' => $folder->getParent()->getId())
+                )
+            );
         }
 
         return $this->render(
@@ -470,32 +450,29 @@ class DocumentsController extends Controller
      * Delete a file on the server and its entry in database.
      *
      * @param File $file The file to delete.
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      * @Secure(roles="ROLE_ADMIN")
      */
-    public function removeFileAction(File $file)
+    public function removeFileAction(File $file, Request $request)
     {
         $form = $this->createFormBuilder()->getForm();
-        $request = $this->get('request');
+        $form->handleRequest($request);
 
-        if ($request->getMethod() == 'POST') {
-            $form->handleRequest($request);
+        if ($form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($file);
+            $entityManager->flush();
 
-            if ($form->isValid()) {
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->remove($file);
-                $entityManager->flush();
+            $this->get('session')->getFlashBag()
+                ->add('notice', 'Les fichier a bien été supprimé.');
 
-                $this->get('session')->getFlashBag()
-                    ->add('notice', 'Les fichier a bien été supprimé.');
-
-                return $this->redirect(
-                    $this->generateUrl(
-                        'carcel_documents_homepage',
-                        array('folder'=> $file->getFolder()->getId())
-                    )
-                );
-            }
+            return $this->redirect(
+                $this->generateUrl(
+                    'carcel_documents_homepage',
+                    array('folder'=> $file->getFolder()->getId())
+                )
+            );
         }
 
         return $this->render(
