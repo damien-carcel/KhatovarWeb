@@ -29,6 +29,7 @@ use Khatovar\WebBundle\Entity\Member;
 use Khatovar\WebBundle\Form\MemberType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class MemberController
@@ -91,37 +92,34 @@ class MemberController extends Controller
     /**
      * Add a new member's page.
      *
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @Secure(roles="ROLE_EDITOR")
      */
-    public function addAction()
+    public function addAction(Request $request)
     {
         $member = new Member();
 
         $form = $this->createForm(new MemberType(), $member);
 
-        $request = $this->get('request');
+        $form->handleRequest($request);
 
-        if ($request->getMethod() == 'POST') {
-            $form->handleRequest($request);
+        if ($form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($member);
+            $entityManager->flush();
 
-            if ($form->isValid()) {
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($member);
-                $entityManager->flush();
-
-                $this->get('session')->getFlashBag()
-                    ->add(
-                        'notice',
-                        'La page du membre ' . $member->getName()
-                        . ' a bien été créée. Vous pouvez maintenant ajouter'
-                        . ' des photos et choisir une photo de profil.'
-                    );
-
-                return $this->redirect(
-                    $this->generateUrl('khatovar_web_members')
+            $this->get('session')->getFlashBag()
+                ->add(
+                    'notice',
+                    'La page du membre ' . $member->getName()
+                    . ' a bien été créée. Vous pouvez maintenant ajouter'
+                    . ' des photos et choisir une photo de profil.'
                 );
-            }
+
+            return $this->redirect(
+                $this->generateUrl('khatovar_web_members')
+            );
         }
 
         return $this->render(
@@ -134,10 +132,11 @@ class MemberController extends Controller
      * Edit a member information.
      *
      * @param Member $member
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @Secure(roles="ROLE_VIEWER")
      */
-    public function editAction(Member $member)
+    public function editAction(Member $member, Request $request)
     {
         $form = $this->createForm(new MemberType(), $member);
 
@@ -166,26 +165,22 @@ class MemberController extends Controller
             }
         }
 
-        $request = $this->get('request');
+        $form->handleRequest($request);
 
-        if ($request->getMethod() == 'POST') {
-            $form->handleRequest($request);
+        if ($form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($member);
+            $entityManager->flush();
 
-            if ($form->isValid()) {
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($member);
-                $entityManager->flush();
+            $this->get('session')->getFlashBag()
+                ->add('notice', 'Page mise à jour.');
 
-                $this->get('session')->getFlashBag()
-                    ->add('notice', 'Page mise à jour.');
-
-                return $this->redirect(
-                    $this->generateUrl(
-                        'khatovar_web_members_view',
-                        array('member_slug' => $member->getSlug())
-                    )
-                );
-            }
+            return $this->redirect(
+                $this->generateUrl(
+                    'khatovar_web_members_view',
+                    array('member_slug' => $member->getSlug())
+                )
+            );
         }
 
         return $this->render(
@@ -198,30 +193,27 @@ class MemberController extends Controller
      * Delete a member's page.
      *
      * @param Member $member
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @Secure(roles="ROLE_EDITOR")
      */
-    public function removeAction(Member $member)
+    public function removeAction(Member $member, Request $request)
     {
         // As it is only to delete the photo, we just need an empty form
         $form = $this->createFormBuilder()->getForm();
-        $request = $this->get('request');
+        $form->handleRequest($request);
 
-        if ($request->getMethod() == 'POST') {
-            $form->handleRequest($request);
+        if ($form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($member);
+            $entityManager->flush();
 
-            if ($form->isValid()) {
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->remove($member);
-                $entityManager->flush();
+            $this->get('session')->getFlashBag()
+                ->add('notice', 'Page de membre supprimée');
 
-                $this->get('session')->getFlashBag()
-                    ->add('notice', 'Page de membre supprimée');
-
-                return $this->redirect(
-                    $this->generateUrl('khatovar_web_members')
-                );
-            }
+            return $this->redirect(
+                $this->generateUrl('khatovar_web_members')
+            );
         }
 
         return $this->render(

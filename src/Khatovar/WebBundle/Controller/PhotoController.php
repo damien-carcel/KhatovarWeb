@@ -28,6 +28,7 @@ use Khatovar\WebBundle\Entity\Homepage;
 use Khatovar\WebBundle\Entity\Photo;
 use Khatovar\WebBundle\Form\PhotoType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Photo controller. Only an user with "ROLE_EDITOR as a minimum
@@ -173,10 +174,11 @@ class PhotoController extends Controller
     /**
      * Add a new photo to the collection.
      *
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @Secure(roles="ROLE_VIEWER")
      */
-    public function addAction()
+    public function addAction(Request $request)
     {
         $photo = new Photo();
         $form = $this->createForm(new PhotoType(array()), $photo);
@@ -208,31 +210,26 @@ class PhotoController extends Controller
                         'data' => $entry
                     ));
         }
-
-        $request = $this->get('request');
-
-        if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
 
-            if ($form->isValid()) {
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($photo);
-                $entityManager->flush();
+        if ($form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($photo);
+            $entityManager->flush();
 
-                // We resize the uploaded photo according to the HEIGHT constant
-                $resize = $this->get('khatovar.filter.resize');
-                $resize->imageResize($photo->getAbsolutePath(), self::HEIGHT);
+            // We resize the uploaded photo according to the HEIGHT constant
+            $resize = $this->get('khatovar.filter.resize');
+            $resize->imageResize($photo->getAbsolutePath(), self::HEIGHT);
 
-                $this->get('session')->getFlashBag()
-                    ->add('notice', 'Photo ajoutée');
+            $this->get('session')->getFlashBag()
+                ->add('notice', 'Photo ajoutée');
 
-                return $this->redirect(
-                    $this->generateUrl(
-                        'khatovar_web_photos_edit',
-                        array('photo'=> $photo->getId())
-                    )
-                );
-            }
+            return $this->redirect(
+                $this->generateUrl(
+                    'khatovar_web_photos_edit',
+                    array('photo'=> $photo->getId())
+                )
+            );
         }
 
         return $this->render(
@@ -248,10 +245,11 @@ class PhotoController extends Controller
      * Edit a photo information.
      *
      * @param Photo $photo The photo to edit.
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @Secure(roles="ROLE_VIEWER")
      */
-    public function editAction(Photo $photo)
+    public function editAction(Photo $photo, Request $request)
     {
         // We get all entries corresponding to the current photo entity
         $choices = $this->getDoctrine()
@@ -302,35 +300,31 @@ class PhotoController extends Controller
                     ));
         }
 
-        $request = $this->get('request');
-
-        if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
 
-            if ($form->isValid()) {
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($photo);
-                $entityManager->flush();
+        if ($form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($photo);
+            $entityManager->flush();
 
-                // We check if the entity was changed, because if it
-                // was, then the other attributes (class or entry) may
-                // have to be changed too.
-                if ($photo->getEntity() != $entity) {
-                    return $this->redirect(
-                        $this->generateUrl(
-                            'khatovar_web_photos_edit',
-                            array('photo'=> $photo->getId())
-                        )
-                    );
-                } else {
-                    $this->get('session')->getFlashBag()
-                        ->add('notice', 'Photo modifiée');
-                }
-
+            // We check if the entity was changed, because if it
+            // was, then the other attributes (class or entry) may
+            // have to be changed too.
+            if ($photo->getEntity() != $entity) {
                 return $this->redirect(
-                    $this->generateUrl('khatovar_web_photos')
+                    $this->generateUrl(
+                        'khatovar_web_photos_edit',
+                        array('photo'=> $photo->getId())
+                    )
                 );
+            } else {
+                $this->get('session')->getFlashBag()
+                    ->add('notice', 'Photo modifiée');
             }
+
+            return $this->redirect(
+                $this->generateUrl('khatovar_web_photos')
+            );
         }
 
         return $this->render(
@@ -347,14 +341,14 @@ class PhotoController extends Controller
      * Remove a photo from the collection.
      *
      * @param Photo $photo The photo to delete.
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @Secure(roles="ROLE_VIEWER")
      */
-    public function deleteAction(Photo $photo)
+    public function deleteAction(Photo $photo, Request $request)
     {
         // As it is only to delete the photo, we just need an empty form
         $form = $this->createFormBuilder()->getForm();
-        $request = $this->get('request');
 
         $currentUser = $this->container->get('security.context')
             ->getToken()->getUser();
@@ -373,21 +367,19 @@ class PhotoController extends Controller
             );
         }
 
-        if ($request->getMethod() == 'POST') {
-            $form->handleRequest($request);
+        $form->handleRequest($request);
 
-            if ($form->isValid()) {
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->remove($photo);
-                $entityManager->flush();
+        if ($form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($photo);
+            $entityManager->flush();
 
-                $this->get('session')->getFlashBag()
-                    ->add('notice', 'Photo supprimée');
+            $this->get('session')->getFlashBag()
+                ->add('notice', 'Photo supprimée');
 
-                return $this->redirect(
-                    $this->generateUrl('khatovar_web_photos')
-                );
-            }
+            return $this->redirect(
+                $this->generateUrl('khatovar_web_photos')
+            );
         }
 
         return $this->render(

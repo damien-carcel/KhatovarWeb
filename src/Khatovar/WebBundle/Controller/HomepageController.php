@@ -27,6 +27,7 @@ use JMS\SecurityExtraBundle\Annotation\Secure;
 use Khatovar\WebBundle\Entity\Homepage;
 use Khatovar\WebBundle\Form\HomepageType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class HomepageController
@@ -69,32 +70,29 @@ class HomepageController extends Controller
     /**
      * Create a new homepage.
      *
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @Secure(roles="ROLE_EDITOR")
      */
-    public function createAction()
+    public function createAction(Request $request)
     {
         $homepage = new Homepage();
 
         $form = $this->createForm(new HomepageType(), $homepage);
 
-        $request = $this->get('request');
+        $form->handleRequest($request);
 
-        if ($request->getMethod() == 'POST') {
-            $form->handleRequest($request);
+        if ($form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($homepage);
+            $entityManager->flush();
 
-            if ($form->isValid()) {
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($homepage);
-                $entityManager->flush();
+            $this->get('session')->getFlashBag()
+                ->add('notice', 'Page d’accueil enregistrée');
 
-                $this->get('session')->getFlashBag()
-                    ->add('notice', 'Page d’accueil enregistrée');
-
-                return $this->redirect(
-                    $this->generateUrl('khatovar_web_homepage_list')
-                );
-            }
+            return $this->redirect(
+                $this->generateUrl('khatovar_web_homepage_list')
+            );
         }
 
         return $this->render(
@@ -107,30 +105,27 @@ class HomepageController extends Controller
      * Edit an existing homepage.
      *
      * @param Homepage $homepage
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @Secure(roles="ROLE_EDITOR")
      */
-    public function editAction(Homepage $homepage)
+    public function editAction(Homepage $homepage, Request $request)
     {
         $form = $this->createForm(new HomepageType(), $homepage);
 
-        $request = $this->get('request');
+        $form->handleRequest($request);
 
-        if ($request->getMethod() == 'POST') {
-            $form->handleRequest($request);
+        if ($form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($homepage);
+            $entityManager->flush();
 
-            if ($form->isValid()) {
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($homepage);
-                $entityManager->flush();
+            $this->get('session')->getFlashBag()
+                ->add('notice', 'Page d’accueil modifiée');
 
-                $this->get('session')->getFlashBag()
-                    ->add('notice', 'Page d’accueil modifiée');
-
-                return $this->redirect(
-                    $this->generateUrl('khatovar_web_homepage_list')
-                );
-            }
+            return $this->redirect(
+                $this->generateUrl('khatovar_web_homepage_list')
+            );
         }
 
         return $this->render(
@@ -143,10 +138,11 @@ class HomepageController extends Controller
      * Return a list of all Homepage stored in database, and allow to
      * activate one of them.
      *
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @Secure(roles="ROLE_EDITOR")
      */
-    public function listAction()
+    public function listAction(Request $request)
     {
         $entityManager = $this->getDoctrine()->getManager();
         $repository = $entityManager->getRepository('KhatovarWebBundle:Homepage');
@@ -166,34 +162,30 @@ class HomepageController extends Controller
             ->add('submit', 'submit', array('label' => 'Activer'))
             ->getForm();
 
-        $request = $this->get('request');
+        $form->handleRequest($request);
 
-        if ($request->getMethod() == 'POST') {
-            $form->handleRequest($request);
+        if ($form->isValid()) {
+            $new_homepage = $repository
+                ->find($form->get('active')->getData());
 
-            if ($form->isValid()) {
-                $new_homepage = $repository
-                    ->find($form->get('active')->getData());
-
-                // Todo: Understand why I have to manually setActive
-                if ($oldHomepage->getId() != $new_homepage->getId()) {
-                    if ($oldHomepage->getId()) {
-                        $oldHomepage->setActive(false);
-                        $entityManager->persist($oldHomepage);
-                    }
-
-                    $new_homepage->setActive(true);
-                    $entityManager->persist($new_homepage);
-                    $entityManager->flush();
-
-                    $this->get('session')->getFlashBag()
-                        ->add('notice', 'Page d’accueil activée');
+            // Todo: Understand why I have to manually setActive
+            if ($oldHomepage->getId() != $new_homepage->getId()) {
+                if ($oldHomepage->getId()) {
+                    $oldHomepage->setActive(false);
+                    $entityManager->persist($oldHomepage);
                 }
 
-                return $this->redirect(
-                    $this->generateUrl('khatovar_web_homepage_list')
-                );
+                $new_homepage->setActive(true);
+                $entityManager->persist($new_homepage);
+                $entityManager->flush();
+
+                $this->get('session')->getFlashBag()
+                    ->add('notice', 'Page d’accueil activée');
             }
+
+            return $this->redirect(
+                $this->generateUrl('khatovar_web_homepage_list')
+            );
         }
 
         // We get all the homepage in case we want to edit another one
@@ -210,30 +202,27 @@ class HomepageController extends Controller
      * Delete a homepage.
      *
      * @param Homepage $homepage
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @Secure(roles="ROLE_EDITOR")
      */
-    public function deleteAction(Homepage $homepage)
+    public function deleteAction(Homepage $homepage, Request $request)
     {
         // As it is only to delete the photo, we just need an empty form
         $form = $this->createFormBuilder()->getForm();
-        $request = $this->get('request');
+        $form->handleRequest($request);
 
-        if ($request->getMethod() == 'POST') {
-            $form->handleRequest($request);
+        if ($form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($homepage);
+            $entityManager->flush();
 
-            if ($form->isValid()) {
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->remove($homepage);
-                $entityManager->flush();
+            $this->get('session')->getFlashBag()
+                ->add('notice', 'Page d’accueil supprimée');
 
-                $this->get('session')->getFlashBag()
-                    ->add('notice', 'Page d’accueil supprimée');
-
-                return $this->redirect(
-                    $this->generateUrl('khatovar_web_homepage_list')
-                );
-            }
+            return $this->redirect(
+                $this->generateUrl('khatovar_web_homepage_list')
+            );
         }
 
         return $this->render(
