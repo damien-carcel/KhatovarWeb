@@ -11,6 +11,10 @@
 /vendor/
 /bin/
 /.idea
+/src/Carcel
 /src/Khatovar/WebBundle/Resources/public/photos/*
 !/src/Khatovar/WebBundle/Resources/public/photos/logonoir.jpg
 *~
+_*
+/src/Khatovar/WebBundle/Resources/doc/conf.py
+/src/Khatovar/WebBundle/Resources/doc/Makefile

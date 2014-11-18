@@ -1,8 +1,0 @@
-parameters:
-    carcel_user.handler.logout_success_handler.class: Carcel\UserBundle\Handler\LogoutSuccessHandler
-
-services:
-    carcel_user.handler.logout_success_handler:
-        class: %carcel_user.handler.logout_success_handler.class%
-        tags:
-            - { name: 'monolog_logger', channel: 'security' }

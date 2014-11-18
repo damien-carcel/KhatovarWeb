@@ -1,0 +1,2 @@
+Utilisateurs avec droits basiques
+=================================

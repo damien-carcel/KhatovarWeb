@@ -1,12 +1,10 @@
 # What is KhatovarWeb?
 
-This repository contain the source code for the web site of the medieval association : [“La compagnie franche du Khatovar”](http://www.compagniefranchedukhatovar.fr/)
+This repository contain the source code of the CMS handling the web site of the medieval association : [“La compagnie franche du Khatovar”](http://www.compagniefranchedukhatovar.fr/)
 
 #TODO
 
-* Documentation for the admin part of the site.
-* Dynamic menu using the ["KnpMenuBundle"](http://knpbundles.com/KnpLabs/KnpMenuBundle)
-* Member, appearance, contacts and future show pages
+* Appearance, contacts and future show pages
 * RSS feeds
 * Connection to the facebook page for automatic posts when adding a new show
 
