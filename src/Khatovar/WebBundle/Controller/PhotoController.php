@@ -196,7 +196,7 @@ class PhotoController extends Controller
                 return $this->render(
                     'KhatovarWebBundle:Photo:add.html.twig',
                     array(
-                        'not_a_member' => 1
+                        'not_a_member' => true
                     )
                 );
             }
@@ -209,8 +209,12 @@ class PhotoController extends Controller
                 ->add('entry', 'hidden', array(
                         'data' => $entry
                     ));
+            $isEditor = false;
+        } else {
+            $isEditor = true;
         }
-            $form->handleRequest($request);
+
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -224,12 +228,19 @@ class PhotoController extends Controller
             $this->get('session')->getFlashBag()
                 ->add('notice', 'Photo ajoutée');
 
-            return $this->redirect(
-                $this->generateUrl(
-                    'khatovar_web_photos_edit',
-                    array('photo'=> $photo->getId())
-                )
-            );
+            if ($isEditor) {
+                return $this->redirect(
+                    $this->generateUrl(
+                        'khatovar_web_photos_edit',
+                        array('photo'=> $photo->getId())
+                    )
+                );
+            }
+
+            // If member is a regular user, then all photo information
+            // are completed during the upload, so there is no need to
+            // edit it afterward.
+            return $this->redirect($this->generateUrl('khatovar_web_photos'));
         }
 
         return $this->render(
