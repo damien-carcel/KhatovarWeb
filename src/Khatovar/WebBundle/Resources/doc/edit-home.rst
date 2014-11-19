@@ -1,2 +1,2 @@
-Édition de la page d’accueil
-============================
+Édition des pages d’accueil
+===========================

@@ -17,8 +17,8 @@ Il est indispensable de lire l’introduction avant de passer aux autres section
     :maxdepth: 2
 
     Introduction <intro>
-    Upload et gestion des photos <upload>
+    Téléversement et gestion des photos <upload>
     Édition des pages <edition>
-    Page d’accueil <edit-home>
-    Page de membre <edit-member>
+    Pages d’accueil <edit-home>
+    Pages de membre <edit-member>
     Utilisateurs avec droits basiques <regular-users>
