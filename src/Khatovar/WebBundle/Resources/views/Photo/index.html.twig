@@ -5,6 +5,8 @@
 
     {% set entry = '' %}
 
+    {# TODO: Simplify all this (sort the photos in controller, not here #}
+
     {% for key, entity in entity_list %}
         <h2>{{ entity.name }}</h2>
         <div class="container">
@@ -15,12 +17,17 @@
                     {% set entry = photo.entry %}
                     {% if entry != old_entry and key != 'homepage' %}
                         {# entry is only an ID, we display the corresponding name #}
-                        {# TODO: make the orphan photos clearly visible in the list #}
-                        <h3>{{ entity.list[entry] is defined ? entity.list[entry]|capitalize : 'Photos orphelines' }}</h3>
+                        {% if entity.list[entry] is defined %}
+                            {% set title = entity.list[entry]|capitalize %}
+                        {% else %}
+                            {% set title = 'Photos orphelines' %}
+                            {% set photo_class = 'landscape orphan' %}
+                        {% endif %}
+                        <h3>{{ title }}</h3>
                     {% endif %}
 
                     <div class="trombi photo_admin">
-                        {{ photo.getWebPath()|thumbnail('landscape', photo.alt) }}
+                        {{ photo.getWebPath()|thumbnail(landscape is defined ? photo_class : 'landscape', photo.alt) }}
                         <br />
                         <a href="{{ path('khatovar_web_photos_edit', {'photo': photo.id}) }}">
                             Éditer
