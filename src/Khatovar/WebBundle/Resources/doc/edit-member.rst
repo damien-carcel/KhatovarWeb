@@ -1,2 +1,2 @@
-Édition des pages de membre
+Gestion des pages de membre
 ===========================

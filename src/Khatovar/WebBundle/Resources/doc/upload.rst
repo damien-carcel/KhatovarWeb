@@ -81,6 +81,8 @@ Une fois la photo téléversée, vous êtes redirigé sur la page d'édition de 
 photo. En effet, selon le type de page choisi, vous vous retrouvez face à des
 choix différents.
 
+.. _upload-photo-homepage:
+
 Téléversement de photos pour la page d'accueil
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
