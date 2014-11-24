@@ -143,7 +143,7 @@ class MemberController extends Controller
         $form->add('portrait', 'entity', array(
                 'label' => 'Photo de profil :',
                 'class' => 'Khatovar\WebBundle\Entity\Photo',
-                'property' => 'id',
+                'property' => 'alt',
                 'query_builder' => function (EntityRepository $er) use ($member) {
                     return $er->createQueryBuilder('p')
                         ->where('p.entry = ?1')

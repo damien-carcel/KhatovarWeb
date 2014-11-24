@@ -32,7 +32,7 @@
                 {% else %}
                     {{ photo.getWebPath()|thumbnail('landscape', photo.alt) }}
                     <br />
-                    Photo n° {{ photo.id }}
+                    {{ photo.alt }}
                 {% endif %}
             </div>
         {% endfor %}
