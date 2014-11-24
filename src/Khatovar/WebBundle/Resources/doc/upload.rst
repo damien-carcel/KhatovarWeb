@@ -1,6 +1,11 @@
 Téléversement et gestion des photos
 ===================================
 
+Cette page détaille le fonctionnement du gestionnaire de photo du site. Les
+informations sont en priorité écrite pour les éditeurs et administrateurs, mais
+sont pour l'essentiel également valable pour les utilisateurs ordinaires. Les
+sections inutiles et les différences sont indiquées tout au long des explications.
+
 Présentation
 ------------
 
@@ -19,6 +24,12 @@ Seules les photos de la page courante apparaissent dans ce panneau latéral.
 Il est possible d'obtenir une liste ordonnée de toutes les photos du site sur
 la page dédiée (allez à la section « :ref:`Gestion des photos <gestion-photos>` »
 pour plus d'informations.
+
+.. note::
+
+   En ce qui concerne les utilisateurs ordinaires, ils n'ont évidemment accès qu'à
+   leurs photos, et ceci uniquement lorsqu'il visualisent leur page de membre.
+   Le reste du temps, le panneau latéral sera vide.
 
 Il est possible de cacher le panneau à nouveau en cliquant sur le bouton prévu
 à cet effet (:ref:`capture d'écran ci-dessous <photo-panel-close>`).
@@ -60,17 +71,26 @@ Les étapes
 ^^^^^^^^^^
 
 Commencez par sélectionner le fichier que vous désirez téléverser en cliquant
-sur le bouton « Parcourir » (:ref:`en 1 <page-photo-upload>` sur la capture d'écran
-précédente).
+sur le bouton « Parcourir » (:ref:`en 1 <page-photo-upload>` sur la capture
+d'écran précédente).
 
 Choisissez ensuite un nom de substitution (:ref:`menu déroulant en 2 <page-photo-upload>`).
-Ce nom, pouvant être en plusieurs mots, doit décrire ce que représente la photo,
-car il apparaîtra à la place de la photo si celle-ci devient indisponible (effacée
-par erreur, renommée/déplacée, bug…).
+Ce nom, pouvant être en plusieurs mots (mais limité à 50 caractères de long),
+doit décrire ce que représente la photo, car il apparaîtra à la place de la
+photo si celle-ci devient indisponible (effacée par erreur, renommée/déplacée,
+bug…).
 
 Enfin, sélectionnez le type de page auquel vous voulez rattacher la photo
-(:ref:`menu déroulant en 3 <page-photo-upload>`) :  page d'accueil, page de membre…
+(:ref:`menu déroulant en 3 <page-photo-upload>`) : page d'accueil, page de membre…
 Cliquez sur le bouton « Envoyer », et la photo sera téléversée.
+
+.. note::
+
+   Ce dernier menu déroulant n'apparaîtra pas pour les utilisateurs ordinaires.
+   En effet, ces derniers ne peuvent téléverser de photo que pour leurs propres
+   pages. De fait, toute la section suivante, intitulée « Des différences selon
+   les pages » leur est inutile. Ils peuvent directement se rendre à la section
+   :ref:`Gestion des photos <gestion-photos>`.
 
 .. _differences:
 
@@ -155,6 +175,11 @@ Outre le téléversement des photos, vous avez également la possibilité de gé
 l'ensemble des photos du site. En cliquant sur le bouton situé tout en bas du
 panneau latéral (:ref:`capture d'écran ci-dessous <photo-button-edit>`), vous
 obtiendrez une liste de toutes les photos, classées par page d'appartenance.
+
+.. note::
+
+   Pour les utilisateurs ordinaires, seules leurs photos seront bien évidemment
+   visibles.
 
 .. _photo-button-edit:
 .. figure:: images/photo-button-edit.jpg

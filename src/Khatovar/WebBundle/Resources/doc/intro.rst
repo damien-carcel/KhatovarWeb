@@ -11,8 +11,8 @@ permettant d'utiliser le même compte utilisateur.
 Pour vous connecter, vous pouvez soit ouvrir l'application
 `Documents <http://www.compagniefranchedukhatovar.fr/documents>`_, soit aller
 directement à `cette adresse <http://www.compagniefranchedukhatovar.fr/login>`_.
-Aucun lien n'est directement affiché sur le site afin d'éviter le référencement
-de la page de connexion, et les tentatives d'authentifications par des robots.
+Aucun lien n'est directement affiché sur le site afin de limiter le référencement
+de la page de connexion, et les tentatives de création de comptes par des robots.
 
 Seuls les utilisateurs ayant au moins le rôle d'*éditeur* dans l'application
 peuvent éditer le site dans son intégralité (voir la documentation de
@@ -67,3 +67,16 @@ les deux liens à droite et à gauche.
    :align: center
 
    *Les liens visibles en bas de page.*
+
+Le menu
+-------
+
+Le site dispose d'un menu déroulant renvoyant à ses différentes sections :
+accueil, pages de membres, ateliers…
+
+Ce menu n'a aucun besoin d'être édité. Il se met à jour automatiquement selon le
+contenu du site. Par exemple, si un nouvel atelier est ajouté, une entrée sera
+automatiquement créée sous l'entrée « Nos prestations ». De même, lors de l'ajout
+d'une nouvelle page de membre, un nouveau portrait est automatiquement ajouté
+à la page listant tous les membres de la compagnie. Le même fonctionnement
+s'applique lors d'une suppression ou d'un renommage.
