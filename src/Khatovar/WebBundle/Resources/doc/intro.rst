@@ -38,6 +38,7 @@ plus d'informations sur l'édition des pages, rendez-vous dans la section
 .. figure:: images/edit-links.jpg
    :align: center
 
+
    *Les liens disponibles sur la page d'accueil*
 
 Vous noterez également l'apparition d'un bouton en haut à gauche, permettant

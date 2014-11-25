@@ -11,7 +11,7 @@ modules de l’application.
 La documentation est encore en cours de construction et est complétée au fur et
 à mesure de l’avancée des travaux sur l’application.
 
-Il est indispensable de lire l’introduction avant de passer aux autres sections.
+Il indispensable de lire l’introduction avant de passer aux autres sections.
 
 .. toctree::
     :maxdepth: 2
