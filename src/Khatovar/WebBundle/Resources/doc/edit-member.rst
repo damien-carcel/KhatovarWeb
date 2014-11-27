@@ -18,7 +18,7 @@ nouveau membre (capture d'écran :ref:`ci-dessous <member-create>`).
 De plus, chaque page de membre dispose de liens permettant d'éditer et de
 supprimer la page (capture d'écran :ref:`ci-dessous <member-links>`). Toute
 suppression de page renverra un message de confirmation avant que la suppression
-ne soit effective, afin d'éviter un effacement non désiré.
+ne soit effective, afin d'éviter une suppression non désirée.
 
 .. _member-links:
 .. figure:: images/member-links.jpg

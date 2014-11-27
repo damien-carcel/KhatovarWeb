@@ -1,5 +1,5 @@
-Utilisateurs stadards
-=====================
+Utilisateurs standards
+======================
 
 Édition de la page de membre
 ----------------------------

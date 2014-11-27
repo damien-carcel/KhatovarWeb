@@ -1,9 +1,9 @@
 Téléversement et gestion des photos
 ===================================
 
-Cette page détaille le fonctionnement du gestionnaire de photo du site. Les
-informations sont en priorité écrite pour les éditeurs et administrateurs, mais
-sont pour l'essentiel également valable pour les utilisateurs ordinaires. Les
+Cette page détaille le fonctionnement du gestionnaire de photos du site. Les
+informations sont en priorité écrites pour les éditeurs et administrateurs, mais
+sont pour l'essentiel également valables pour les utilisateurs ordinaires. Les
 sections inutiles et les différences sont indiquées tout au long des explications.
 
 Présentation
@@ -107,7 +107,7 @@ Téléversement de photos pour la page d'accueil
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Votre premier choix consiste déterminer à quelle page d'accueil vous souhaitez
-liér la photo (voir la capture d'écran :ref:`ci-dessous <page-photo-edit>`,
+lier la photo (voir la capture d'écran :ref:`ci-dessous <page-photo-edit>`,
 point 2).
 
 .. _page-photo-edit:
@@ -130,7 +130,7 @@ Il est possible de changer cette taille directement depuis le panneau latéral
 affichera les photos de la page sur laquelle vous vous trouvez). Vous trouverez
 en effet sous chaque photo, outre le code destiné à l'insertion des photos
 (voir la section :doc:`Édition des pages d’accueil <edit-home>` pour plus de
-détails), le format de l'image, et un lien revoyant directement sur la page
+détails), le format de l'image, et un lien renvoyant directement sur la page
 permettant d'éditer les informations de la photo (:ref:`capture d'écran ci-dessous <photo-home-edit>`).
 
 .. _photo-home-edit:
@@ -177,7 +177,7 @@ obtiendrez une liste de toutes les photos, classées par page d'appartenance.
 Sous chaque photo, vous trouverez deux liens pour respectivement éditer et
 supprimer la photo (:ref:`capture d'écran ci-dessous <photo-edit-links>`). Lors
 de la suppression, un message de confirmation vous demandera de confirmer votre
-choix pour éviter tout effacement non désiré.
+choix pour éviter toute suppression non désirée.
 
 .. _photo-edit-links:
 .. figure:: images/photo-edit-links.jpg

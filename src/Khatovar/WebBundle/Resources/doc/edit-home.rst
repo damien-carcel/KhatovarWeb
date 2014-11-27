@@ -9,7 +9,7 @@ manières. Vous le pouvez directement depuis la page d'accueil actuelle, comme
 vous l'avez sans doute remarqué en lisant l'introduction (la capture d'écran est
 remise :ref:`ci-dessous <home-edit-links>`). Le lien du milieu permet cela. Le second à
 droite permet l'édition de la page courante (mais nous y reviendrons un peu plus
-loin), et un troisième lien à gauche permet d'accéder à la liste des toutes les pages
+loin), et un troisième lien à gauche permet d'accéder à la liste de toutes les pages
 d'accueil.
 
 .. _home-edit-links:
@@ -40,7 +40,7 @@ liens, l'un pour éditer la page, l'un pour la supprimer.
    *La page permettant de gérer les pages d'accueil.*
 
 Comme pour la suppression de photo, un message de confirmation vous sera renvoyé
-pour éviter tout effacement accidentel. Notez qu'il n'y a pour l'instant pas
+pour éviter toute suppression accidentelle. Notez qu'il n'y a pour l'instant pas
 de possibilité de rétablir un élément effacé. Toute photo ou page supprimée l'est
 définitivement. Soyez donc sûr de votre choix !
 
@@ -49,12 +49,12 @@ définitivement. Soyez donc sûr de votre choix !
 
 Là aussi, nous venons de voir qu'il était possible d'atteindre l'éditeur de
 plusieurs manières : soit directement depuis les liens présents en haut de la
-page d'accueil active, soit depuis le listage de toutes les pages d'accueil
+page d'accueil active, soit depuis la liste de toutes les pages d'accueil
 enregistrées (permettant donc d'éditer n'importe laquelle de ces pages, y compris
 la page active).
 
 Vous arrivez alors sur la page :ref:`ci-dessous <homepage-edit>`. Et découvrez
-au passage une troisième manière de créer une page d'accueil en **1**.
+au passage une troisième manière de créer une page d'accueil au point **1**.
 
 .. _homepage-edit:
 .. figure:: images/homepage-edit.jpg
@@ -62,9 +62,9 @@ au passage une troisième manière de créer une page d'accueil en **1**.
 
    *L'éditeur pour page d'accueil.*
 
-Vous devez évidemment donner un nom à votre page (en **2**) pour la retrouver
+Vous devez évidemment donner un nom à votre page (point **2**) pour la retrouver
 facilement dans la liste des pages existantes. L'édition de la page elle-même
-est assurée (en **3**) par un traitement de texte, permettant de mettre en
+est assurée (point **3**) par un traitement de texte, permettant de mettre en
 forme votre contenu selon vos désirs : gras, italique, taille du texte, titres…
 Je ne rentrerai pas ici dans les détails de son fonctionnement, très intuitif,
 le plus simple est encore de l'essayer.
@@ -79,7 +79,7 @@ Insérer des photos
 L'insertion des photos dans les pages d'accueil mérite une explication détaillée.
 En effet, celle-ci n'est pas gérée directement par l'éditeur, mais depuis le
 panneau latéral. Sur les autres pages, les photos présentées dans le panneau
-sont seulement accompagnées d'un numéro les identifiants.
+sont seulement accompagnées d'un numéro les identifiant.
 
 Pour la page d'accueil en revanche, vous trouverez le format de la photo, un
 lien pour changer ce format (pour plus de détail, je vous laisse relire la partie

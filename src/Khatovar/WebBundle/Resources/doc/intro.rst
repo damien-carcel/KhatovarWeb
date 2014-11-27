@@ -53,7 +53,7 @@ sujet disponibles dans la section :doc:`Téléversement et gestion des photos <u
    *Le bouton permettant d'accéder au panneau latéral*
 
 Enfin, tout en bas de la page, sur le repli du rouleau de parchemin est
-habituellement affiché le Copiright de la compagnie. À la place, vous pouvez
+habituellement affiché le Copyright de la compagnie. À la place, vous pouvez
 maintenant voir quelques liens (:ref:`capture d'écran ci-dessous <admin-links>`).
 Le lien à gauche vous renvoie sur la page de votre compte utilisateur (la même
 page est accessible, de la même manière, depuis l'application Documents). Le

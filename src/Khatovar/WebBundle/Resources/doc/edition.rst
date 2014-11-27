@@ -16,7 +16,7 @@ couleur…) des différentes pages est définie par l'application elle-même, vo
 n'avez donc pas à vous en soucier lors de l'édition, et n'avez à vous concentrer
 que sur le contenu.
 
-Sauf pour la page d'accueil, pour laquelle vous disposez d'une plus grande
-souplesse de mise en forme. Dans son cas, vous avez donc accès à un véritable
+Pour la page d'accueil, vous disposez d'une plus grande
+souplesse de mise en forme, et avez accès à un véritable
 éditeur façon traitement de texte, alors que les autres pages ne consistent
-qu'en une succession de case de texte brut à remplir.
+qu'en une succession de cases de texte brut à remplir.
