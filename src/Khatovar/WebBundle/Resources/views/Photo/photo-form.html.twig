@@ -1,0 +1,25 @@
+<div class="form-group">
+    {{ form_row(form.alt, { 'attr': {'class': 'form-element'} }) }}
+</div>
+{% if form.entity is defined %}
+    <div class="form-group">
+        {{ form_row(form.entity, { 'attr': {'class': 'form-element'} }) }}
+    </div>
+{% endif %}
+{% if form.homepage is defined and 'hidden' not in form.homepage.vars.block_prefixes %}
+    <div class="form-group">
+        {{ form_row(form.homepage, { 'attr': {'class': 'form-element'} }) }}
+    </div>
+{% endif %}
+{% if form.member is defined and 'hidden' not in form.member.vars.block_prefixes %}
+    <div class="form-group">
+        {{ form_row(form.member, { 'attr': {'class': 'form-element'} }) }}
+    </div>
+{% endif %}
+{% if form.class is defined and 'hidden' not in form.class.vars.block_prefixes %}
+    <div class="form-group">
+        {{ form_row(form.class, { 'attr': {'class': 'form-element'} }) }}
+    </div>
+{% endif %}
+{{ form_row(form.submit, { 'attr': {'class': 'btn btn-default'} }) }}
+{{ form_rest(form) }}

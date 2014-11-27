@@ -146,8 +146,8 @@ class MemberController extends Controller
                 'property' => 'alt',
                 'query_builder' => function (EntityRepository $er) use ($member) {
                     return $er->createQueryBuilder('p')
-                        ->where('p.entry = ?1')
-                        ->setParameter(1, $member->getId());
+                        ->where('p.member = ?1')
+                        ->setParameter(1, $member);
                 }
             ));
 

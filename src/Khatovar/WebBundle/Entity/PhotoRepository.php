@@ -39,11 +39,12 @@ class PhotoRepository extends EntityRepository
      *
      * @return array
      */
-    public function getAllOrdered()
+    public function getOrphans()
     {
         $query = $this->createQueryBuilder('p')
-            ->addOrderBy('p.entity')
-            ->addOrderBy('p.entry')
+            ->where('p.homepage =  ?1')
+            ->andWhere('p.member = ?1')
+            ->setParameter(1, null)
             ->getQuery();
 
         return $query->getResult();
@@ -58,11 +59,9 @@ class PhotoRepository extends EntityRepository
     public function getAllButPortrait(Member $member)
     {
         $query = $this->createQueryBuilder('p')
-            ->where('p.entity = :entity')
-            ->andWhere('p.entry = :member')
+            ->where('p.member = :member')
             ->andWhere('p.id != :portrait')
             ->setParameters(array(
-                    'entity' => 'member',
                     'member' => $member,
                     'portrait' => $member->getPortrait()
                 ))

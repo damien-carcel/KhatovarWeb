@@ -2,43 +2,28 @@
 
 {% block inarticle %}
     <h1>Liste des photos</h1>
+    {% for key, entities in entity_list %}
+        {% if key != 'Photos orphelines' or (key == 'Photos orphelines' and entities is not empty) %}
+            <h2>{{ key }}</h2>
+            <div class="container {{ key == 'Photos orphelines' ? 'orphan' }}">
+                {% for entity in entities %}
+                    <h3>{{ entity.name }}</h3>
+                    {% for photo in entity.photos %}
+                        <div class="trombi photo_admin">
+                            {{ photo.getWebPath()|thumbnail('landscape', photo.alt) }}
+                            <br />
+                            <a href="{{ path('khatovar_web_photos_edit', {'photo': photo.id}) }}">
+                                Éditer
+                            </a>
+                            |
+                            <a href="{{ path('khatovar_web_photos_delete', {'photo': photo.id}) }}">
+                                Supprimer
+                            </a>
+                        </div>
 
-    {% set entry = '' %}
-
-    {# TODO: Simplify all this (sort the photos in controller, not here #}
-
-    {% for key, entity in entity_list %}
-        <h2>{{ entity.name }}</h2>
-        <div class="container">
-            {% for photo in photos %}
-                {% if photo.entity == key %}
-                    {# Define photo.entry as third level title only if photo.entry is filled #}
-                    {% set old_entry = entry %}
-                    {% set entry = photo.entry %}
-                    {% if entry != old_entry and key != 'homepage' %}
-                        {# entry is only an ID, we display the corresponding name #}
-                        {% if entity.list[entry] is defined %}
-                            {% set title = entity.list[entry]|capitalize %}
-                        {% else %}
-                            {% set title = 'Photos orphelines' %}
-                            {% set photo_class = 'landscape orphan' %}
-                        {% endif %}
-                        <h3>{{ title }}</h3>
-                    {% endif %}
-
-                    <div class="trombi photo_admin">
-                        {{ photo.getWebPath()|thumbnail(landscape is defined ? photo_class : 'landscape', photo.alt) }}
-                        <br />
-                        <a href="{{ path('khatovar_web_photos_edit', {'photo': photo.id}) }}">
-                            Éditer
-                        </a>
-                        |
-                        <a href="{{ path('khatovar_web_photos_delete', {'photo': photo.id}) }}">
-                            Supprimer
-                        </a>
-                    </div>
-                {% endif %}
-            {% endfor %}
-        </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        {% endif %}
     {% endfor %}
 {% endblock %}

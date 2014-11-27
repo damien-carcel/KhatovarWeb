@@ -6,10 +6,9 @@
         <div class="container">
         {% for photo in photos %}
             <div class="photo_admin">
-                {% if photo.entity == 'homepage' %}
+                {% if photo.homepage is not empty %}
                     {{ photo.getWebPath()|thumbnail('landscape', photo.alt) }}
                     <br />
-                    {# Get the photo class to display it #}
                     {% if photo.class == 'photo_small' %}
                         {% set format = 'Petit format' %}
                     {% elseif photo.class == 'photo' %}

@@ -56,112 +56,88 @@ class PhotoController extends Controller
     {
         $currentUser = $this->container->get('security.context')
             ->getToken()->getUser();
+
         $entityManager = $this->getDoctrine()->getManager();
 
-        // If an editor or more powerful user is connected, we return
-        // all photos, but is it is a regular user, we only return its
-        // own photos, as he cannot edit/delete others.
         if ($currentUser->hasRole('ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_EDITOR')) {
-            $photos = $entityManager->getRepository('KhatovarWebBundle:Photo')
-                ->getAllOrdered();
+            $entityList = array(
+                'Photos orphelines' => $entityManager
+                    ->getRepository('KhatovarWebBundle:Photo')
+                    ->getOrphans(),
+                'Pages d’accueil' => $entityManager
+                    ->getRepository('KhatovarWebBundle:Homepage')
+                    ->findAll(),
+                'Membres' => $entityManager
+                    ->getRepository('KhatovarWebBundle:Member')
+                    ->findAll()
+            );
         } else {
-            $entry = $entityManager->getRepository('KhatovarWebBundle:Member')
-                ->findOneBy(array('owner' => $currentUser->getId()));
-            $photos = $entityManager->getRepository('KhatovarWebBundle:Photo')
-                ->findBy(
-                    array(
-                        'entity' => 'member',
-                        'entry' => $entry
-                    )
-                );
-        }
+            $member = $entityManager->getRepository('KhatovarWebBundle:Member')
+                ->findOneBy(array('owner' => $currentUser));
 
-        $filter = $this->get('khatovar.filters.array');
-        $entityList = array(
-            'homepage' => array(
-                'name' => 'Pages d’accueil'
-            ),
-            'member' => array(
-                'name' => 'Membres',
-                'list' => $filter->returnArray('member')
-            )
-        );
+            $entityList = array(
+                'Membre :' => array(
+                    $member->getId() => $member
+                )
+            );
+        }
 
         return $this->render(
             'KhatovarWebBundle:Photo:index.html.twig',
-            array(
-                'photos' => $photos,
-                'entity_list' => $entityList
-            )
+            array('entity_list' => $entityList)
         );
     }
 
     /**
      * Display a list of all photos uploaded for the current page in a
-     * small sidebar.
+     * small sidebar. Editors and admin can access all photos, but
+     * regular users can only access photos of their own member page.
      *
-     * @param string $entity Display only the photos attached to this
-     * entity.
-     * @param string|int $entry The slug or the ID of the object
-     * currently rendered in the web page.
+     * @param string $controller The controller currently rendered.
+     * @param string $action The controller method used for rendering.
+     * @param string|int $slug_or_id The slug or the ID of the object
+     * currently rendered.
      * @return \Symfony\Component\HttpFoundation\Response
      * @Secure(roles="ROLE_VIEWER")
      */
-    public function sideAction($entity, $entry)
+    public function sideAction($controller, $action, $slug_or_id)
     {
+        $photos = array();
+        $currentlyRendered = null;
+
         $currentUser = $this->container->get('security.context')
             ->getToken()->getUser();
+
         $entityManager = $this->getDoctrine()->getManager();
 
-        // First we retrieve the ID of the object displayed on the web page.
-        // If entry is a string, then it is an object slug
-        if ($entity != 'default' and !is_null($entry) and is_string($entry)) {
-            // TODO: Should be a way to do this without quering it again, as it is already rendered on the main page
-            $currentRenderId = $entityManager
-                ->getRepository('KhatovarWebBundle:' . ucfirst($entity))
-                ->findOneBy(array('slug' => $entry))
-                ->getId();
-        // If it is an integer, then it is an object ID
-        } elseif ($entity != 'default' and !is_null($entry) and is_int($entry)) {
-            $currentRenderId = $entry;
-        // If $entry is null, then there is no reason to display any photos
-        } else {
-            $currentRenderId = null;
-        }
-
-        // If current user is an editor, then he can access photos of all pages
-        if ($currentUser->hasRole('ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_EDITOR')) {
-            // If we render a homepage, then we retrieve all homepages photos
-            if ($entity == 'homepage') {
-                $photos = $entityManager
-                    ->getRepository('KhatovarWebBundle:Photo')
-                    ->findBy(array('entity' => $entity));
-            // If not, we retrieve only the photo of the displayed page
-            } elseif (!is_null($currentRenderId)) {
-                $photos = $entityManager->getRepository('KhatovarWebBundle:Photo')
-                    ->findBy(array(
-                            'entity' => $entity,
-                            'entry' => $currentRenderId
-                        ));
-            } else {
-                $photos = '';
-            }
-        // But if current user is a regular one, he can only access his own
-        // photos and only when viewing/editing its own member page.
-        } else {
+        if ($controller != 'default' and $controller != 'photo') {
             $owned = $entityManager
                 ->getRepository('KhatovarWebBundle:Member')
-                ->findOneBy(array('owner' => $currentUser))
-                ->getId();
+                ->findOneBy(array('owner' => $currentUser));
 
-            if (!is_null($currentRenderId) and $owned == $currentRenderId) {
-                $photos = $entityManager->getRepository('KhatovarWebBundle:Photo')
-                    ->findBy(array(
-                            'entity' => $entity,
-                            'entry' => $owned
-                        ));
-            } else {
-                $photos = '';
+            $repo = $entityManager->getRepository(
+                'KhatovarWebBundle:' . ucfirst($controller)
+            );
+
+            if ($controller == 'homepage'
+                and is_null($slug_or_id)
+                and $action != 'create'
+                and $action != 'list') {
+                $currentlyRendered = $repo->findOneBy(array('active' => true));
+            }
+
+            if (!is_null($slug_or_id)) {
+                if (is_string($slug_or_id)) {
+                    $currentlyRendered = $repo->findOneBy(array('slug' => $slug_or_id));
+                } elseif (is_int($slug_or_id)) {
+                    $currentlyRendered = $repo->find($slug_or_id);
+                }
+            }
+
+            if (!is_null($currentlyRendered)
+                and ($currentUser->hasRole('ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_EDITOR')
+                or $owned->getOwner() == $currentUser)) {
+                $photos = $currentlyRendered->getPhotos();
             }
         }
 
@@ -173,6 +149,9 @@ class PhotoController extends Controller
 
     /**
      * Add a new photo to the collection.
+     * Editors can add photos every part of the web site, but regular
+     * users can only add photos for their own member page (if they
+     * have one).
      *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
@@ -181,18 +160,16 @@ class PhotoController extends Controller
     public function addAction(Request $request)
     {
         $photo = new Photo();
-        $form = $this->createForm(new PhotoType(array()), $photo);
 
         $currentUser = $this->container->get('security.context')
             ->getToken()->getUser();
-        $entry = $this->getDoctrine()->getManager()
-            ->getRepository('KhatovarWebBundle:Member')
-            ->findOneBy(array('owner' => $currentUser->getId()));
 
         if (!$currentUser->hasRole('ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_EDITOR')) {
-            // If the user doesn't have a member's page, then he have no
-            // reason to add photos
-            if (!$entry) {
+            $member = $this->getDoctrine()->getManager()
+                ->getRepository('KhatovarWebBundle:Member')
+                ->findOneBy(array('owner' => $currentUser));
+
+            if (!$member) {
                 return $this->render(
                     'KhatovarWebBundle:Photo:add.html.twig',
                     array(
@@ -200,17 +177,16 @@ class PhotoController extends Controller
                     )
                 );
             }
-            // If he has one, then he can upload, but only for its own
-            // member's page.
-            $form->remove('entity')->remove('entry');
-            $form->add('entity', 'hidden', array(
-                    'data' => 'member'
-                ))
-                ->add('entry', 'hidden', array(
-                        'data' => $entry
-                    ));
+
+            // TODO: Is it better to use hidden fields and transmormer for Member entity?
+            $photo->setClass('none')->setEntity('member')->setMember($member);
+
+            $form = $this->createForm(new PhotoType($currentUser), $photo);
+            $form->remove('class')->remove('entity')->remove('member');
+
             $isEditor = false;
         } else {
+            $form = $this->createForm(new PhotoType($currentUser), $photo);
             $isEditor = true;
         }
 
@@ -262,37 +238,19 @@ class PhotoController extends Controller
      */
     public function editAction(Photo $photo, Request $request)
     {
-        // We get all entries corresponding to the current photo entity
-        $choices = $this->getDoctrine()
-            ->getRepository('KhatovarWebBundle:' . ucfirst($photo->getEntity()))
-            ->findAll();
-
-        // Then keep them as an id=>name array
-        $list = array();
-        foreach ($choices as $choice) {
-            /**
-             * @var Homepage $choice
-             * Only for editor auto-completion.
-             * In reality, it can be any entity except Photo.
-             */
-            $list[$choice->getId()] = $choice->getName();
-        }
-        asort($list);
-
-        // And inject this array in the form tye to use it as the entry choice
-        $form = $this->createForm(new PhotoType($list), $photo);
         $entity = $photo->getEntity();
 
         $currentUser = $this->container->get('security.context')
             ->getToken()->getUser();
-        $entry = $this->getDoctrine()->getManager()
+
+        $form = $this->createForm(new PhotoType($currentUser), $photo);
+
+        $member = $this->getDoctrine()->getManager()
             ->getRepository('KhatovarWebBundle:Member')
             ->findOneBy(array('owner' => $currentUser->getId()));
 
         if (!$currentUser->hasRole('ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_EDITOR')) {
-            // If the user doesn't have a member's page, then he have no
-            // reason to edit photos
-            if (!$entry) {
+            if (!$member) {
                 return $this->render(
                     'KhatovarWebBundle:Photo:add.html.twig',
                     array(
@@ -300,28 +258,21 @@ class PhotoController extends Controller
                     )
                 );
             }
-            // If he has one, then he can edit, but only for its own
-            // member's page.
-            $form->remove('entity')->remove('entry');
-            $form->add('entity', 'hidden', array(
-                    'data' => 'member'
-                ))
-                ->add('entry', 'hidden', array(
-                        'data' => $entry
-                    ));
+
+            $form->remove('class')->remove('entity')->remove('member');
         }
 
-            $form->handleRequest($request);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($photo);
-            $entityManager->flush();
 
-            // We check if the entity was changed, because if it
-            // was, then the other attributes (class or entry) may
-            // have to be changed too.
             if ($photo->getEntity() != $entity) {
+                $photo->setHomepage(null)->setMember(null);
+
+                $entityManager->flush();
+
                 return $this->redirect(
                     $this->generateUrl(
                         'khatovar_web_photos_edit',
@@ -331,6 +282,8 @@ class PhotoController extends Controller
             } else {
                 $this->get('session')->getFlashBag()
                     ->add('notice', 'Photo modifiée');
+
+                $entityManager->flush();
             }
 
             return $this->redirect(
@@ -343,7 +296,7 @@ class PhotoController extends Controller
             array(
                 'photo' => $photo,
                 'form' => $form->createView(),
-                'owner' => $entry
+                'owner' => $member
             )
         );
     }
@@ -363,17 +316,17 @@ class PhotoController extends Controller
 
         $currentUser = $this->container->get('security.context')
             ->getToken()->getUser();
-        $entry = $this->getDoctrine()->getManager()
+        $member = $this->getDoctrine()->getManager()
             ->getRepository('KhatovarWebBundle:Member')
             ->findOneBy(array('owner' => $currentUser->getId()));
 
-        if (!$currentUser->hasRole('ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_EDITOR') and !$entry) {
+        if (!$currentUser->hasRole('ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_EDITOR') and !$member) {
             // If the user doesn't have a member's page, then he have no
             // reason to delete photos
             return $this->render(
-                'KhatovarWebBundle:Photo:add.html.twig',
+                'KhatovarWebBundle:Photo:delete.html.twig',
                 array(
-                    'not_a_member' => 1
+                    'not_an_editor' => 1
                 )
             );
         }
@@ -398,7 +351,7 @@ class PhotoController extends Controller
             array(
                 'photo' => $photo,
                 'form' => $form->createView(),
-                'owner' => $entry
+                'owner' => $member
             )
         );
     }

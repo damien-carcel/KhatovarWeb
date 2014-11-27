@@ -70,25 +70,6 @@ class Photo
     private $class;
 
     /**
-     * The section of the website the photo is attached to.
-     *
-     * @var string
-     *
-     * @Assert\NotBlank()
-     * @ORM\Column(name="entity", type="string", length=255)
-     */
-    private $entity;
-
-    /**
-     * The section's entry the photo is attached to.
-     *
-     * @var integer
-     *
-     * @ORM\Column(name="entry", type="integer", nullable=true)
-     */
-    private $entry;
-
-    /**
      * The location of the file on the server.
      *
      * @var string
@@ -110,6 +91,28 @@ class Photo
      * @Assert\File(maxSize="8000000", mimeTypes={"image/jpeg"})
      */
     private $file;
+
+    /**
+     * The type of page the photo is attached to.
+     *
+     * @var string
+     *
+     * @ORM\Column(name="entity", type="string", length=255, nullable=true)
+     * @Assert\Length(max="255")
+     */
+    private $entity;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Khatovar\WebBundle\Entity\Homepage", cascade={"detach"})
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
+     */
+    private $homepage;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Khatovar\WebBundle\Entity\Member", cascade={"detach"})
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
+     */
+    private $member;
 
 
     /**
@@ -314,6 +317,52 @@ class Photo
     }
 
     /**
+     * Set homepage
+     *
+     * @param \Khatovar\WebBundle\Entity\Homepage $homepage
+     * @return Photo
+     */
+    public function setHomepage(Homepage $homepage = null)
+    {
+        $this->homepage = $homepage;
+
+        return $this;
+    }
+
+    /**
+     * Get homepage
+     *
+     * @return \Khatovar\WebBundle\Entity\Homepage
+     */
+    public function getHomepage()
+    {
+        return $this->homepage;
+    }
+
+    /**
+     * Set member
+     *
+     * @param \Khatovar\WebBundle\Entity\Member $member
+     * @return Photo
+     */
+    public function setMember(Member $member = null)
+    {
+        $this->member = $member;
+
+        return $this;
+    }
+
+    /**
+     * Get member
+     *
+     * @return \Khatovar\WebBundle\Entity\Member
+     */
+    public function getMember()
+    {
+        return $this->member;
+    }
+
+    /**
      * Set entity
      *
      * @param string $entity
@@ -329,33 +378,10 @@ class Photo
     /**
      * Get entity
      *
-     * @return string
+     * @return string 
      */
     public function getEntity()
     {
         return $this->entity;
-    }
-
-    /**
-     * Set entry
-     *
-     * @param integer $entry
-     * @return Photo
-     */
-    public function setEntry($entry)
-    {
-        $this->entry = $entry;
-
-        return $this;
-    }
-
-    /**
-     * Get entry
-     *
-     * @return integer
-     */
-    public function getEntry()
-    {
-        return $this->entry;
     }
 }

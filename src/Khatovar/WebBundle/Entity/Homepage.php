@@ -70,6 +70,12 @@ class Homepage
      */
     private $active;
 
+    /**
+     * @var ArrayCollection $photos
+     * @ORM\OneToMany(targetEntity="Khatovar\WebBundle\Entity\Photo", mappedBy="homepage")
+     */
+    private $photos;
+
 
     /**
      * Allow to save only the ID the entity in database as a string

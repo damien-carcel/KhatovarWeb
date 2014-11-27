@@ -23,6 +23,7 @@
 
 namespace Khatovar\WebBundle\Form;
 
+use Carcel\UserBundle\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -38,16 +39,14 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class PhotoType extends AbstractType
 {
-    private $choicesList;
+    private $currentUser;
 
     /**
-     * Create an instance of Phototype.
-     *
-     * @param array $choicesList
+     * @param User $currentUser
      */
-    public function __construct($choicesList)
+    public function __construct(User $currentUser)
     {
-        $this->choicesList = $choicesList;
+        $this->currentUser = $currentUser;
     }
 
     /**
@@ -61,26 +60,14 @@ class PhotoType extends AbstractType
         }
 
         $builder
-            ->add('alt', 'text', array('label' => 'Nom de substitution : '))
-            ->add('entity', 'choice', array(
-                    'label' => 'Rattacher la photo à : ',
-                    'choices' => array(
-                        'homepage' => 'Page d’accueil',
-                        'member' => 'Membre'
-                    ),
-                    'preferred_choices' => array('homepage')
-                ));
+            ->add('alt', 'text', array('label' => 'Nom de substitution : '));
 
-        $choicesList = $this->choicesList;
-
-        $formModifier = function (FormInterface $form, $entity) use ($choicesList) {
+        $formModifier = function (FormInterface $form, $entity) {
             // First we check if entity is defined. If not, then it is
             // a photo upload, so we don't have other fields to add to
             // the form. If it is not null, then the photo is already
             // uploaded and we are editing it.
             if (!is_null($entity)) {
-                // If entity is defined as "homepage", then we have to
-                // define the class to apply to the photo.
                 if ($entity == 'homepage') {
                     $form->add('class', 'choice', array(
                             'label' => 'Taille de la photo : ',
@@ -91,41 +78,47 @@ class PhotoType extends AbstractType
                             ),
                             'preferred_choices' => array('photo'),
                             'required' => true
-                        ))
-                        ->add('entry', 'hidden', array(
-                                'data' => null
-                            ));
-                // For the other entities, class are not an option and
-                // are defined in the templates, but we have to define
-                // which entity child own the photo.
+                        ));
                 } else {
                     $form->add('class', 'hidden', array(
                             'data' => 'none'
-                        ))
-                        ->add('entry', 'choice', array(
-                            'choices' => $choicesList,
-                            'required' => true,
-                            'label' => 'Choix :'
                         ));
                 }
+
+                $form->add($entity, 'entity', array(
+                        'class' => 'KhatovarWebBundle:' . ucfirst($entity),
+                        'property' => 'name',
+                        'label' => 'Page :'
+                    ));
             }
         };
 
-        $builder->addEventListener(
-            FormEvents::PRE_SET_DATA,
-            function (FormEvent $event) use ($formModifier) {
-                $data = $event->getData();
-                $formModifier($event->getForm(), $data->getEntity());
-            }
-        );
+        if ($this->currentUser->hasRole('ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_EDITOR')) {
+            $builder->add('entity', 'choice', array(
+                    'label' => 'Rattacher la photo à une : ',
+                    'choices' => array(
+                        'homepage' => 'Page d’accueil',
+                        'member' => 'Page de membre'
+                    ),
+                    'preferred_choices' => array('homepage')
+                ));
 
-        $builder->get('entity')->addEventListener(
-            FormEvents::POST_SET_DATA,
-            function (FormEvent $event) use ($formModifier) {
-                $entity = $event->getForm()->getData();
-                $formModifier($event->getForm()->getParent(), $entity);
-            }
-        );
+            $builder->addEventListener(
+                FormEvents::PRE_SET_DATA,
+                function (FormEvent $event) use ($formModifier) {
+                    $data = $event->getData();
+                    $formModifier($event->getForm(), $data->getEntity());
+                }
+            );
+
+            $builder->get('entity')->addEventListener(
+                FormEvents::POST_SET_DATA,
+                function (FormEvent $event) use ($formModifier) {
+                    $entity = $event->getForm()->getData();
+                    $formModifier($event->getForm()->getParent(), $entity);
+                }
+            );
+        }
 
         $builder->add('submit', 'submit', array('label' => 'Envoyer'));
     }

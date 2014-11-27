@@ -25,6 +25,7 @@ namespace Khatovar\WebBundle\Entity;
 
 use Carcel\UserBundle\Entity\User;
 use Gedmo\Mapping\Annotation as Gedmo;
+use \Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -154,6 +155,12 @@ class Member
      * @Assert\Length(max="255")
      */
     private $active;
+
+    /**
+     * @var ArrayCollection $photos
+     * @ORM\OneToMany(targetEntity="Khatovar\WebBundle\Entity\Photo", mappedBy="member")
+     */
+    private $photos;
 
 
     /**
@@ -497,5 +504,45 @@ class Member
     public function getOwner()
     {
         return $this->owner;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->photos = new ArrayCollection();
+    }
+
+    /**
+     * Add photos
+     *
+     * @param \Khatovar\WebBundle\Entity\Photo $photos
+     * @return Member
+     */
+    public function addPhoto(Photo $photos)
+    {
+        $this->photos[] = $photos;
+
+        return $this;
+    }
+
+    /**
+     * Remove photos
+     *
+     * @param \Khatovar\WebBundle\Entity\Photo $photos
+     */
+    public function removePhoto(Photo $photos)
+    {
+        $this->photos->removeElement($photos);
+    }
+
+    /**
+     * Get photos
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPhotos()
+    {
+        return $this->photos;
     }
 }

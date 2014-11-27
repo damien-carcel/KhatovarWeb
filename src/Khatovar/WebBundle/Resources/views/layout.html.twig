@@ -45,7 +45,7 @@
         <button id="aside-open" class="aside-link aside-open" title="Afficher le panneau photo">
         </button>
         <aside id="aside">
-            {{ render(controller('KhatovarWebBundle:Photo:side', { 'entity': get_controller_name(), 'entry': get_slug_or_id() })) }}
+            {{ render(controller('KhatovarWebBundle:Photo:side', { 'controller': get_controller_name(), 'action': get_action_name(), 'slug_or_id': get_slug_or_id() })) }}
         </aside>
     {% endif %}
     <article>
