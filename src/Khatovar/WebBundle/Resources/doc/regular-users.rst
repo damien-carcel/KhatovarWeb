@@ -1,5 +1,5 @@
-Utilisateurs avec droits basiques
-=================================
+Utilisateurs stadards
+=====================
 
 Édition de la page de membre
 ----------------------------
@@ -23,5 +23,5 @@ ne pouvez téléverser de photos que pour cette même page. Le processus de gest
 des photos et de téléversement est donc simplifié.
 
 Vous pouvez lire la page :doc:`Téléversement et gestion des photos <upload>`.
-Les différences entre utilisateurs ordinaires et éditeurs y sont clairement
+Les différences entre utilisateurs standards et éditeurs y sont clairement
 spécifiées.

@@ -19,11 +19,11 @@ peuvent éditer le site dans son intégralité (voir la documentation de
 l'application Documents, section sécurité et rôles), et seront donc concernés
 par les autres sections.
 
-Les utilisateurs ordinaires sont limités à l'édition de leur page personnelle
+Les utilisateurs standards (comprendre sans droits d'édition ou d'administration)
+sont limités à l'édition de leur page personnelle
 et au téléversement de photos pour cette page uniquement. Pour des informations
 détaillées, ils peuvent se rendre directement à la page dédiée aux
-:doc:`utilisateurs avec droits basiques <regular-users>` après la lecture de
-cette introduction.
+:doc:`utilisateurs standards <regular-users>` après la lecture de cette introduction.
 
 Une fois connecté
 -----------------

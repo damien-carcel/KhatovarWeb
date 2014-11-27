@@ -21,4 +21,4 @@ Il indispensable de lire l’introduction avant de passer aux autres sections.
     Gestion des pages <edition>
     Pages d’accueil <edit-home>
     Pages de membre <edit-member>
-    Utilisateurs avec droits basiques <regular-users>
+    Utilisateurs standards <regular-users>

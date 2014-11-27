@@ -27,7 +27,7 @@ pour plus d'informations.
 
 .. note::
 
-   En ce qui concerne les utilisateurs ordinaires, ils n'ont évidemment accès qu'à
+   En ce qui concerne les utilisateurs standards, ils n'ont évidemment accès qu'à
    leurs photos, et ceci uniquement lorsqu'il visualisent leur page de membre.
    Le reste du temps, le panneau latéral sera vide.
 
@@ -86,7 +86,7 @@ Cliquez sur le bouton « Envoyer », et la photo sera téléversée.
 
 .. note::
 
-   Ce dernier menu déroulant n'apparaîtra pas pour les utilisateurs ordinaires.
+   Ce dernier menu déroulant n'apparaîtra pas pour les utilisateurs standards.
    En effet, ces derniers ne peuvent téléverser de photo que pour leurs propres
    pages. De fait, toute la section suivante, intitulée « Des différences selon
    les pages » leur est inutile. Ils peuvent directement se rendre à la section
@@ -106,25 +106,24 @@ choix différents.
 Téléversement de photos pour la page d'accueil
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Si vous avez choisi de rattacher la photo aux pages d'accueil, cette dernière
-est alors disponible pour toutes les pages d'accueil du site. À vous de choisir
-de l'intégrer ou non dans une page (plus d'information dans la section «
-:doc:`Édition des pages d'accueil <edit-home>` »).
+Votre premier choix consiste déterminer à quelle page d'accueil vous souhaitez
+liér la photo (voir la capture d'écran :ref:`ci-dessous <page-photo-edit>`,
+point 2).
 
-Vous devez à présent choisir quel format vous souhaitez attribuer à votre photo :
-petit, normal ou panoramique (voir capture d'écran
-:ref:`ci-dessous <page-photo-home>`. Le format « normal » est sélectionné par
+.. _page-photo-edit:
+.. figure:: images/page-photo-edit.jpg
+   :align: center
+
+   *Attribution d'une taille pour une photo liée aux pages d'accueil.*
+
+Vous devez à ensuite choisir quel format vous souhaitez attribuer à votre photo :
+petit, normal ou panoramique (:ref:`point 3 <page-photo-edit>`).
+Le format « normal » est sélectionné par
 défaut. Il est idéal lorsque vous placez une seule ou deux photos sur une même
 ligne. Le « petit format » est, comme son nom l'indique, plus petit, et permet
 de placer 3 ou 4 photos côte à côte sur la page. Finalement, le format
 panoramique est destiné aux panoramas très larges, assemblages de plusieurs
 photos. Les photos dans ce format occuperont toute la largeur de la page.
-
-.. _page-photo-home:
-.. figure:: images/page-photo-home.jpg
-   :align: center
-
-   *Attribution d'une taille pour une photo liée aux pages d'accueil.*
 
 Il est possible de changer cette taille directement depuis le panneau latéral
 (uniquement si vous visualisez/éditez une page d'accueil, sans quoi le panneau
@@ -132,8 +131,7 @@ affichera les photos de la page sur laquelle vous vous trouvez). Vous trouverez
 en effet sous chaque photo, outre le code destiné à l'insertion des photos
 (voir la section :doc:`Édition des pages d’accueil <edit-home>` pour plus de
 détails), le format de l'image, et un lien revoyant directement sur la page
-permettant d'éditer les informations de la photo
-(:ref:`capture d'écran ci-dessous <photo-home-edit>`).
+permettant d'éditer les informations de la photo (:ref:`capture d'écran ci-dessous <photo-home-edit>`).
 
 .. _photo-home-edit:
 .. figure:: images/photo-home-edit.jpg
@@ -142,7 +140,7 @@ permettant d'éditer les informations de la photo
    *Changer rapidement le format d'une photo de page d'accueil.*
 
 Veuillez noter également que si vous avez attribué à une photo un mauvais type
-de page, vous pouvez le changer immédiatement. Le bouton « Envoyer »
+de page, vous pouvez le changer immédiatement (:ref:`point 1 <page-photo-edit>`. Le bouton « Envoyer »
 réactualisera alors la page d'édition de la photo, vous présentant de nouveaux
 choix en fonction du nouveau type de page sélectionné.
 
@@ -150,21 +148,10 @@ Téléversement de photos pour les autres pages
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Dans le cas des autres types de pages, vous n'aurez pas à choisir de taille pour
-la photo, car celle-ci est définie par la page elle-même. Votre choix consistera
-cette fois à choisir à quelle page précise vous devez liée la photo
-(:ref:`voir la capture d'écran ci-dessous <page-photo-member>`).
-
-.. _page-photo-member:
-.. figure:: images/page-photo-member.jpg
-   :align: center
-
-   *Un exemple avec le choix de la page de membre à laquelle on veut lier la photo.*
-
-En effet, dans le cas des pages d'accueil, toutes les photos liées sont
-disponibles pour toutes les pages d'accueil. En revanche, dans le cas par
-exemple d'une page de membre, chaque photo ne peut être liée qu'à une seule
-page de membre et aucune autre. Cela n'aurait aucun sens de faire apparaître
-la photo d'un membre à la fois sur sa page et sur celle d'un autre membre.
+la photo, car celle-ci est définie par la page elle-même. Il n'y a donc aucun
+intérêt à proposer un choix de taille. Le reste est similaire à ce que vous
+avez pu voir avec les pages d'accueil (nom de substitution, type de page et
+pages correspondantes).
 
 .. _gestion-photos:
 
@@ -178,7 +165,7 @@ obtiendrez une liste de toutes les photos, classées par page d'appartenance.
 
 .. note::
 
-   Pour les utilisateurs ordinaires, seules leurs photos seront bien évidemment
+   Pour les utilisateurs standards, seules leurs photos seront bien évidemment
    visibles.
 
 .. _photo-button-edit:
