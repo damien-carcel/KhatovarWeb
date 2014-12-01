@@ -103,13 +103,13 @@ class Photo
     private $entity;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Khatovar\WebBundle\Entity\Homepage", cascade={"detach"})
+     * @ORM\ManyToOne(targetEntity="Khatovar\WebBundle\Entity\Homepage", cascade={"detach"}, inversedBy="photos")
      * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
     private $homepage;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Khatovar\WebBundle\Entity\Member", cascade={"detach"})
+     * @ORM\ManyToOne(targetEntity="Khatovar\WebBundle\Entity\Member", cascade={"detach"}, inversedBy="photos")
      * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
     private $member;
@@ -378,7 +378,7 @@ class Photo
     /**
      * Get entity
      *
-     * @return string 
+     * @return string
      */
     public function getEntity()
     {
