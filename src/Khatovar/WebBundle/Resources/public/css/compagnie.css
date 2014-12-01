@@ -613,7 +613,7 @@ article img {
 }
 
 .form-element {
-    display: table;
+    display: block;
 }
 
 .form-background {
