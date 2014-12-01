@@ -92,6 +92,14 @@ Cliquez sur le bouton « Envoyer », et la photo sera téléversée.
    les pages » leur est inutile. Ils peuvent directement se rendre à la section
    :ref:`Gestion des photos <gestion-photos>`.
 
+.. important::
+
+    Lors d'un téléversement, l'application redimensionne automatiquement la
+    photo pour qu'elle fasse 720 pixels de hauteur. Il n'y a donc aucun besoin
+    de redimensionner la photo vous même. Essayez cependant de toujours
+    téléverser des photos faisant au minimum 720 pixels de hauteur, afin de
+    garder  une certaine « harmonie » lors du visionnage des albums photo.
+
 .. _differences:
 
 Des différences selon les pages
