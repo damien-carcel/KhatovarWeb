@@ -4,6 +4,8 @@ This repository contain the source code of the CMS handling the web site of the 
 
 #TODO
 
+* Optimize presentation on the photo admin page.
+* Longer text fields in Member form.
 * Appearance, contacts and future show pages
 * RSS feeds
 * Connection to the facebook page for automatic posts when adding a new show
