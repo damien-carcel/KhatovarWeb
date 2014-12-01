@@ -184,21 +184,17 @@ class KhatovarExtension extends \Twig_Extension
      */
     public function addParagraphAndPhotos($text, $photos = array())
     {
-        // First we add the paragraph tags and a special break tag
+        $photoLimit = (strlen($text) / self::PARAGRAPH_LENGTH) - 3;
+
         $text = '<p>' . $text . '</p>';
 
-        // If text is too small, we return it directly without adding photos
-        if (strlen($text) < $this::PARAGRAPH_LENGTH or empty($photos)) {
+        if (strlen($text) < self::PARAGRAPH_LENGTH or empty($photos)) {
             return str_replace("\n", "</p>\n<p>", $text);
         }
 
         $text = str_replace("\n", "</p>\n[break]<p>", $text);
-
-        // We explode the text in paragraphs using the special tag
         $exploded = explode('[break]', $text);
 
-        // We shuffle the photos and add the first one at the beginning
-        // of the text we will return.
         shuffle($photos);
         $result = $this->addFloat($photos[0], 'right');
 
@@ -206,19 +202,16 @@ class KhatovarExtension extends \Twig_Extension
         $photosCount = count($photos);
         $paragraphs = count($exploded);
 
-        // Then add the others
         for ($p = 0; $p < $paragraphs; $p++) {
-            // If paragraph is longer than the define length, we add a float
-            if (strlen($exploded[$p]) > $this::PARAGRAPH_LENGTH) {
+            if (strlen($exploded[$p]) > self::PARAGRAPH_LENGTH) {
                 $result .= $exploded[$p];
-                if ($photo < $photosCount) {
+                if ($photo < $photosCount and $photo < $photoLimit) {
                     $result .= $this->addFloat(
                         $photos[$photo],
                         $photo % 2 ? 'left' : 'right'
                     );
                     $photo += 1;
                 }
-            // If it is not, we merge the current paragraph with the next one
             } elseif ($p + 1 < $paragraphs) {
                 $exploded[$p+1] = $exploded[$p] . $exploded[$p+1];
                 $exploded[$p] = '';
