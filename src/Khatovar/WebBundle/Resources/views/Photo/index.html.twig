@@ -3,9 +3,26 @@
 {% block inarticle %}
     <h1>Liste des photos</h1>
     {% for key, entities in entity_list %}
-        {% if key != 'Photos orphelines' or (key == 'Photos orphelines' and entities is not empty) %}
+        {% if key == 'Photos orphelines' and entities is not empty %}
             <h2>{{ key }}</h2>
-            <div class="container {{ key == 'Photos orphelines' ? 'orphan' }}">
+            <div class="container orphan">
+                {% for photo in entities %}
+                    <div class="trombi photo_admin">
+                        {{ photo.getWebPath()|thumbnail('landscape', photo.alt) }}
+                        <br />
+                        <a href="{{ path('khatovar_web_photos_edit', {'photo': photo.id}) }}">
+                            Éditer
+                        </a>
+                        |
+                        <a href="{{ path('khatovar_web_photos_delete', {'photo': photo.id}) }}">
+                            Supprimer
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% elseif key != 'Photos orphelines' %}
+            <h2>{{ key }}</h2>
+            <div class="container">
                 {% for entity in entities %}
                     <h3>{{ entity.name }}</h3>
                     {% for photo in entity.photos %}

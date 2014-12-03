@@ -193,6 +193,7 @@ class KhatovarExtension extends \Twig_Extension
         }
 
         $text = str_replace("\n", "</p>\n[break]<p>", $text);
+        // TODO: supprimer les paragraphes en trop !
         $exploded = explode('[break]', $text);
 
         shuffle($photos);
@@ -201,6 +202,9 @@ class KhatovarExtension extends \Twig_Extension
         $photo = 1;
         $photosCount = count($photos);
         $paragraphs = count($exploded);
+        if ($photoLimit > $paragraphs) {
+            $photoLimit = $paragraphs - 2;
+        }
 
         for ($p = 0; $p < $paragraphs; $p++) {
             if (strlen($exploded[$p]) > self::PARAGRAPH_LENGTH) {

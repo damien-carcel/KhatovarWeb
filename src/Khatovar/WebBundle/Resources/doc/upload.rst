@@ -100,6 +100,11 @@ Cliquez sur le bouton « Envoyer », et la photo sera téléversée.
     téléverser des photos faisant au minimum 720 pixels de hauteur, afin de
     garder  une certaine « harmonie » lors du visionnage des albums photo.
 
+.. important::
+
+    Le téléversement est plus ou moins long selon la taille de la photo. Il peut
+    donc arriver que cela prenne plusieurs secondes, soyez patients.
+
 .. _differences:
 
 Des différences selon les pages

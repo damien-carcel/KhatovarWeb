@@ -42,9 +42,8 @@ class PhotoRepository extends EntityRepository
     public function getOrphans()
     {
         $query = $this->createQueryBuilder('p')
-            ->where('p.homepage =  ?1')
-            ->andWhere('p.member = ?1')
-            ->setParameter(1, null)
+            ->where('p.homepage IS NULL')
+            ->andWhere('p.member IS NULL')
             ->getQuery();
 
         return $query->getResult();

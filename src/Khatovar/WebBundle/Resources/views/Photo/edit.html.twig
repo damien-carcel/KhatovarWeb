@@ -14,7 +14,7 @@
         <h2>Modifier les informations de la photo</h2>
 
         <div class="form-background">
-            <div class="float floatright">
+            <div class="float floatright photo_admin">
                 {{ photo.getWebPath()|thumbnail('landscape', photo.alt) }}
             </div>
 
@@ -24,6 +24,7 @@
             {% embed '@KhatovarWeb/Photo/photo-form.html.twig' %}{% endembed %}
 
             {{ form_end(form) }}
+            <br class="clearboth" />
         </div>
     {% endif %}
 {% endblock %}
