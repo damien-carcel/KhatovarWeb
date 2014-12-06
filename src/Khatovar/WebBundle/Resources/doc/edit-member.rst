@@ -32,6 +32,12 @@ directement sur la page elle-même (capture d'écran
 l'édition des pages de membres étant quasiment identiques, ils seront traités
 conjointement dans la section suivante.
 
+.. note::
+
+    Ce lien présent sur la page de membre est évidemment le seul lien d'édition
+    que verront les utilisateurs réguliers, et cela uniquement sur leur propre
+    page.
+
 .. _member-edit-link:
 .. figure:: images/member-edit-link.jpg
    :align: center
@@ -78,3 +84,18 @@ Il s'agit simplement d'une suite de champs à remplir de manière adéquate :
     particulière. Tant que la page n'existe pas, il n'est donc pas possible de
     lui lier une photo. Le téléversement de photo ne peut donc être fait
     qu'après la création de la page.
+
+Vous remarquerez qu'à part la photo de profil, vous n'avez pas à vous soucier
+des autres photos. En effet, l'application se chargera pour vous de les répartir
+dans le texte, tantôt à droite, tantôt à gauche. Les photos affichées dans le
+texte sont sélectionnées au hasard à chaque rechargement de la page, parmi
+toutes les photos disponibles pour cette page.
+
+Vous pouvez donc téléverser autant de photos que vous le désirez pour une page
+donnée. L'ensemble des photos sera visible sous forme d'album, en cliquant sur
+l'icône en forme d'appareil photo présent sur la page.
+
+.. important::
+
+    Veillez cependant à ne pas dépasser une vingtaine de photos pour chaque page,
+    car le chargement des albums et donc des pages risquerait de devenir trop long.
