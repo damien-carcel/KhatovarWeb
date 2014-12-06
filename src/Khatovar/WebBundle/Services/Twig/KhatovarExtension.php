@@ -175,8 +175,8 @@ class KhatovarExtension extends \Twig_Extension
     }
 
     /**
-     * Replace line breaks by paragraph and insert floatings between
-     * paragraph.
+     * Replace line breaks, and remove useless ones, by paragraphs and
+     * insert floatings between paragraphs.
      *
      * @param string $text The text to transform.
      * @param array $photos A list of photos to insert in the text.
@@ -184,8 +184,7 @@ class KhatovarExtension extends \Twig_Extension
      */
     public function addParagraphAndPhotos($text, $photos = array())
     {
-        $photoLimit = (strlen($text) / self::PARAGRAPH_LENGTH) - 3;
-
+        $text = preg_replace('`[\r\n]+`', "\n", $text);
         $text = '<p>' . $text . '</p>';
 
         if (strlen($text) < self::PARAGRAPH_LENGTH or empty($photos)) {
@@ -193,32 +192,43 @@ class KhatovarExtension extends \Twig_Extension
         }
 
         $text = str_replace("\n", "</p>\n[break]<p>", $text);
-        // TODO: supprimer les paragraphes en trop !
         $exploded = explode('[break]', $text);
 
         shuffle($photos);
         $result = $this->addFloat($photos[0], 'right');
 
-        $photo = 1;
+        $currentPhoto = 1;
         $photosCount = count($photos);
         $paragraphs = count($exploded);
-        if ($photoLimit > $paragraphs) {
-            $photoLimit = $paragraphs - 2;
-        }
 
         for ($p = 0; $p < $paragraphs; $p++) {
-            if (strlen($exploded[$p]) > self::PARAGRAPH_LENGTH) {
+            /**
+             * @var Photo $photo
+             */
+            $photo = $photos[$currentPhoto-1];
+            $photoSize = getimagesize($photo->getAbsolutePath());
+            if ($photoSize[0] / $photoSize[1] < 1) {
+                $photoLimit = self::PARAGRAPH_LENGTH +100;
+            } else {
+                $photoLimit = self::PARAGRAPH_LENGTH;
+            }
+
+            if (strlen($exploded[$p]) > $photoLimit) {
                 $result .= $exploded[$p];
-                if ($photo < $photosCount and $photo < $photoLimit) {
+
+                $remain = strlen(implode(' ', array_slice($exploded, $p+1)));
+                if ($currentPhoto < $photosCount and $remain > $photoLimit + 600) {
                     $result .= $this->addFloat(
-                        $photos[$photo],
-                        $photo % 2 ? 'left' : 'right'
+                        $photos[$currentPhoto],
+                        $currentPhoto % 2 ? 'left' : 'right'
                     );
-                    $photo += 1;
+                    $currentPhoto += 1;
                 }
             } elseif ($p + 1 < $paragraphs) {
                 $exploded[$p+1] = $exploded[$p] . $exploded[$p+1];
                 $exploded[$p] = '';
+            } else {
+                $result .= $exploded[$p];
             }
         }
 
