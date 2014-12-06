@@ -3,7 +3,7 @@ parameters:
 
 services:
     khatovar.twig.khatovar_extension:
-        class: Khatovar\WebBundle\Services\Twig\KhatovarExtension
+        class: Khatovar\WebBundle\Services\Twig\KhatovarPhotosExtension
         tags:
             - { name: twig.extension }
 

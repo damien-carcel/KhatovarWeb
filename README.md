@@ -4,8 +4,6 @@ This repository contain the source code of the CMS handling the web site of the 
 
 #TODO
 
-* Bug to correct : long photo are truncated when edited.
-
 * Complete documentation to explain how the photos are displayed on member pages.
 * Optimize presentation on the photo admin page.
 * Larger text fields in Member form.

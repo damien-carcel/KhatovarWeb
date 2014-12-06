@@ -62,8 +62,6 @@ class KhatovarReturnArray
         $result = array();
         foreach ($entries as $entry) {
             /**
-             * Just for IDE auto-completion
-             *
              * @var Homepage $entry
              */
             $result[$entry->getId()] = $entry->getName();

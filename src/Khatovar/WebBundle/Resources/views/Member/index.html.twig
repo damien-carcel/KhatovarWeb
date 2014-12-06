@@ -13,13 +13,7 @@
 
         {% for member in activeMembers %}
             <div class="trombi">
-                <div class="thumbnail_link portrait photo_rest"
-                     onmouseover="this.className='thumbnail_link portrait photo_over';"
-                     onmouseout="this.className='thumbnail_link portrait photo_rest';"
-                     onclick="location.href='{{ path('khatovar_web_members_view', {'member_slug': member.slug}) }}';">
-                    <img src="{{ member.portrait ? member.portrait.getWebPath() : '' }}" class="trombinoscope" alt="" /><br />
-                    {{ member.name }}
-                </div>
+                {{ (member.portrait ? member.portrait.getWebPath() : '')|thumbnail_link(path('khatovar_web_members_view', {'member_slug': member.slug}), 'portrait', member.name, member.name) }}
                 {% if is_granted('ROLE_EDITOR') %}
                     <a href="{{ path('khatovar_web_members_edit', {'member': member.id}) }}">Éditer</a>
                     |
@@ -37,13 +31,7 @@
 
             {% for member in pastMembers %}
                 <div class="trombi">
-                    <div class="thumbnail_link portrait photo_rest"
-                         onmouseover="this.className='thumbnail_link portrait photo_over';"
-                         onmouseout="this.className='thumbnail_link portrait photo_rest';"
-                         onclick="location.href='{{ path('khatovar_web_members_view', {'member_slug': member.slug}) }}';">
-                        <img src="{{ member.portrait ? member.portrait.getWebPath() : '' }}" class="trombinoscope" alt="" /><br />
-                        {{ member.name }}
-                    </div>
+                    {{ (member.portrait ? member.portrait.getWebPath() : '')|thumbnail_link(path('khatovar_web_members_view', {'member_slug': member.slug}), 'portrait', member.name, member.name) }}
                     {% if is_granted('ROLE_EDITOR') %}
                         <a href="{{ path('khatovar_web_members_edit', {'member': member.id}) }}">Éditer</a>
                         |

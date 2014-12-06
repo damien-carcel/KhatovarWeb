@@ -26,12 +26,12 @@ namespace Khatovar\WebBundle\Services\Twig;
 use Khatovar\WebBundle\Entity\Photo;
 
 /**
- * Twig extension for KhatovarWebBundle.
+ * Twig extension for photo disposition in text.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
  * @package Khatovar\WebBundle\Services\Twig
  */
-class KhatovarExtension extends \Twig_Extension
+class KhatovarPhotosExtension extends \Twig_Extension
 {
     /**
      * The minimum length between floating photos in a page.
@@ -57,11 +57,6 @@ class KhatovarExtension extends \Twig_Extension
                 array('is_safe' => array('html'))
             ),
             new \Twig_SimpleFilter(
-                'link_picture',
-                array($this, 'linkPicture'),
-                array('is_safe' => array('html'))
-            ),
-            new \Twig_SimpleFilter(
                 'link_album',
                 array($this, 'linkAlbum'),
                 array('is_safe' => array('html'))
@@ -69,6 +64,11 @@ class KhatovarExtension extends \Twig_Extension
             new \Twig_SimpleFilter(
                 'thumbnail',
                 array($this, 'thumbnail'),
+                array('is_safe' => array('html'))
+            ),
+            new \Twig_SimpleFilter(
+                'thumbnail_link',
+                array($this, 'thumbnailLink'),
                 array('is_safe' => array('html'))
             ),
             new \Twig_SimpleFilter(
@@ -242,7 +242,7 @@ class KhatovarExtension extends \Twig_Extension
      */
     public function getName()
     {
-        return 'khatovar_extension';
+        return 'khatovar_photos_extension';
     }
 
     /**
