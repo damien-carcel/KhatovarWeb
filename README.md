@@ -5,8 +5,6 @@ This repository contain the source code of the CMS handling the web site of the 
 #TODO
 
 * Optimize presentation on the photo admin page.
-* Larger text fields in Member form.
-* Standardize photo height on member main page.
 
 * Appearance, contacts and future show pages
 * RSS feeds

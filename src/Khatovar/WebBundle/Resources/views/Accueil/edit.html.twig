@@ -12,13 +12,20 @@
     </p>
 
     {{ form_start(form) }}
-    <div class="form-group form-textarea">
-        {{ form_row(form.name, { 'attr': {'class': 'form-element'} }) }}
+    <div class="form-group">
+        {{ form_label(form.name) }}
+        {{ form_widget(form.name, { 'attr': {'class': 'form-element'} }) }}
     </div>
     <div class="form-group form-textarea">
-        {{ form_row(form.content, { 'attr': {'class': 'form-element'} }) }}
+        {{ form_label(form.content) }}
+        {{ form_widget(form.content, { 'attr': {'class': 'form-element'} }) }}
     </div>
-    {{ form_row(form.submit, { 'attr': {'class': 'btn btn-default'} }) }}
+
     {{ form_rest(form) }}
+
+    <div class="form-group">
+        {{ form_widget(form.submit, { 'attr': {'class': 'btn btn-default'} }) }}
+    </div>
+
     {{ form_end(form) }}
 {% endblock %}

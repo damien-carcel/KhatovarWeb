@@ -8,18 +8,25 @@
 {% endif %}
 {% if form.homepage is defined and 'hidden' not in form.homepage.vars.block_prefixes %}
     <div class="form-group">
-        {{ form_row(form.homepage, { 'attr': {'class': 'form-element'} }) }}
+        {{ form_label(form.homepage) }}
+        {{ form_widget(form.homepage, { 'attr': {'class': 'form-element'} }) }}
     </div>
 {% endif %}
 {% if form.member is defined and 'hidden' not in form.member.vars.block_prefixes %}
     <div class="form-group">
-        {{ form_row(form.member, { 'attr': {'class': 'form-element'} }) }}
+        {{ form_label(form.member) }}
+        {{ form_widget(form.member, { 'attr': {'class': 'form-element'} }) }}
     </div>
 {% endif %}
 {% if form.class is defined and 'hidden' not in form.class.vars.block_prefixes %}
     <div class="form-group">
-        {{ form_row(form.class, { 'attr': {'class': 'form-element'} }) }}
+        {{ form_label(form.class) }}
+        {{ form_widget(form.class, { 'attr': {'class': 'form-element'} }) }}
     </div>
 {% endif %}
-{{ form_row(form.submit, { 'attr': {'class': 'btn btn-default'} }) }}
+
 {{ form_rest(form) }}
+
+<div class="form-group">
+    {{ form_widget(form.submit, { 'attr': {'class': 'btn btn-default'} }) }}
+</div>

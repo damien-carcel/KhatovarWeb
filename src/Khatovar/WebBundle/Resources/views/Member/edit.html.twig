@@ -10,49 +10,78 @@
     {% else %}
         {{ form_start(form) }}
         <div class="form-group form-textarea">
-            {{ form_row(form.name, { 'attr': {'class': 'form-element'} }) }}
+            {{ form_label(form.name) }}
+            {{ form_widget(form.name, { 'attr': {'class': 'form-element form-textarea'} }) }}
         </div>
+
         <div class="form-group form-textarea">
-            {{ form_row(form.rank, { 'attr': {'class': 'form-element'} }) }}
+            {{ form_label(form.rank) }}
+            {{ form_widget(form.rank, { 'attr': {'class': 'form-element form-textarea'} }) }}
         </div>
+
         <div class="form-group form-textarea">
-            {{ form_row(form.quote, { 'attr': {'class': 'form-element'} }) }}
+            {{ form_label(form.quote) }}
+            {{ form_widget(form.quote, { 'attr': {'class': 'form-element form-textarea'} }) }}
         </div>
+
         <div class="form-group form-textarea">
-            {{ form_row(form.skill, { 'attr': {'class': 'form-element'} }) }}
+            {{ form_label(form.skill) }}
+            {{ form_widget(form.skill, { 'attr': {'class': 'form-element form-textarea'} }) }}
         </div>
+
         <div class="form-group form-textarea">
-            {{ form_row(form.age, { 'attr': {'class': 'form-element'} }) }}
+            {{ form_label(form.age) }}
+            {{ form_widget(form.age, { 'attr': {'class': 'form-element form-textarea'} }) }}
         </div>
+
         <div class="form-group form-textarea">
-            {{ form_row(form.size, { 'attr': {'class': 'form-element'} }) }}
+            {{ form_label(form.size) }}
+            {{ form_widget(form.size, { 'attr': {'class': 'form-element form-textarea'} }) }}
         </div>
+
         <div class="form-group form-textarea">
-            {{ form_row(form.weight, { 'attr': {'class': 'form-element'} }) }}
+            {{ form_label(form.weight) }}
+            {{ form_widget(form.weight, { 'attr': {'class': 'form-element form-textarea'} }) }}
         </div>
+
         <div class="form-group form-textarea">
-            {{ form_row(form.strength, { 'attr': {'class': 'form-element'} }) }}
+            {{ form_label(form.strength) }}
+            {{ form_widget(form.strength, { 'attr': {'class': 'form-element form-textarea'} }) }}
         </div>
+
         <div class="form-group form-textarea">
-            {{ form_row(form.weakness, { 'attr': {'class': 'form-element'} }) }}
+            {{ form_label(form.weakness) }}
+            {{ form_widget(form.weakness, { 'attr': {'class': 'form-element form-textarea'} }) }}
         </div>
+
         <div class="form-group form-textarea">
-            {{ form_row(form.story, { 'attr': {'class': 'form-element'} }) }}
+            {{ form_label(form.story) }}
+            {{ form_widget(form.story, { 'attr': {'class': 'form-element form-textarea'} }) }}
         </div>
-        <div class="form-group form-textarea">
-            {{ form_row(form.active, { 'attr': {'class': 'form-element'} }) }}
+
+        <div class="form-group">
+            {{ form_label(form.active) }}
+            {{ form_widget(form.active) }}
         </div>
+
         {% if edit is defined %}
-            <div class="form-group form-textarea">
-                {{ form_row(form.portrait, { 'attr': {'class': 'form-element'} }) }}
+            <div class="form-group">
+                {{ form_label(form.portrait) }}
+                {{ form_widget(form.portrait, { 'attr': {'class': 'form-element'} }) }}
             </div>
         {% endif %}
+
         {% if is_granted('ROLE_EDITOR') %}
-            <div class="form-group form-textarea">
-                {{ form_row(form.owner, { 'attr': {'class': 'form-element'} }) }}
+            <div class="form-group">
+                {{ form_label(form.owner) }}
+                {{ form_widget(form.owner, { 'attr': {'class': 'form-element'} }) }}
             </div>
         {% endif %}
-        {{ form_row(form.submit, { 'attr': {'class': 'btn btn-default'} }) }}
+
+        <div class="form-group">
+            {{ form_widget(form.submit, { 'attr': {'class': 'btn btn-default'} }) }}
+        </div>
+
         {{ form_rest(form) }}
         {{ form_end(form) }}
     {% endif %}

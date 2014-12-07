@@ -577,6 +577,11 @@ article img {
     width: 100px;
 }
 
+.member-portrait {
+    height: 300px;
+    width: auto;
+}
+
 .landscape {
     width: 150px;
 }

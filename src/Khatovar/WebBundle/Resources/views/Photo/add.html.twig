@@ -15,7 +15,8 @@
             {{ form_errors(form) }}
 
             <div class="form-group">
-                {{ form_row(form.file) }}
+                {{ form_label(form.file) }}
+                {{ form_widget(form.file, { 'attr': {'class': 'form-element'} }) }}
             </div>
 
             {% embed '@KhatovarWeb/Photo/photo-form.html.twig' %}{% endembed %}
