@@ -35,6 +35,7 @@ class DefaultController extends Controller
 {
     /**
      * @param int $atelier
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function campAction($atelier)
@@ -46,6 +47,7 @@ class DefaultController extends Controller
 
     /**
      * @param string $pratique
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function fightAction($pratique)
@@ -67,6 +69,7 @@ class DefaultController extends Controller
 
     /**
      * @param int $year
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function referencesAction($year)
@@ -78,6 +81,7 @@ class DefaultController extends Controller
 
     /**
      * @param string $contact
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function linksAction($contact)

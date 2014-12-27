@@ -24,9 +24,8 @@
 namespace Khatovar\Bundle\PhotoBundle\Controller;
 
 use JMS\SecurityExtraBundle\Annotation\Secure;
-use Khatovar\WebBundle\Entity\Homepage;
-use Khatovar\WebBundle\Entity\Photo;
-use Khatovar\WebBundle\Form\PhotoType;
+use Khatovar\Bundle\PhotoBundle\Entity\Photo;
+use Khatovar\Bundle\PhotoBundle\Form\PhotoType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 

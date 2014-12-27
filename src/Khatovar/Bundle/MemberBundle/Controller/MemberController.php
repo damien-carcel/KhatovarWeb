@@ -25,8 +25,8 @@ namespace Khatovar\Bundle\WebBundle\Controller;
 
 use Doctrine\ORM\EntityRepository;
 use JMS\SecurityExtraBundle\Annotation\Secure;
-use Khatovar\Bundle\WebBundle\Entity\Member;
-use Khatovar\Bundle\WebBundle\Form\MemberType;
+use Khatovar\Bundle\MemberBundle\Entity\Member;
+use Khatovar\Bundle\MemberBundle\Form\MemberType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;

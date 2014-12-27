@@ -24,6 +24,8 @@
 namespace Khatovar\Bundle\PhotoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Khatovar\Bundle\HomepageBundle\Entity\Homepage;
+use Khatovar\Bundle\MemberBundle\Entity\Member;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -103,13 +105,21 @@ class Photo
     private $entity;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Khatovar\WebBundle\Entity\Homepage", cascade={"detach"}, inversedBy="photos")
+     * @ORM\ManyToOne(
+     *  targetEntity="Khatovar\Bundle\HomepageBundle\Entity\Homepage",
+     *  cascade={"detach"},
+     *  inversedBy="photos"
+     * )
      * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
     private $homepage;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Khatovar\WebBundle\Entity\Member", cascade={"detach"}, inversedBy="photos")
+     * @ORM\ManyToOne(
+     *  targetEntity="Khatovar\Bundle\MemberBundle\Entity\Member",
+     *  cascade={"detach"},
+     *  inversedBy="photos"
+     * )
      * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
     private $member;
@@ -319,7 +329,8 @@ class Photo
     /**
      * Set homepage
      *
-     * @param \Khatovar\WebBundle\Entity\Homepage $homepage
+     * @param \Khatovar\Bundle\HomepageBundle\Entity\Homepage $homepage
+     *
      * @return Photo
      */
     public function setHomepage(Homepage $homepage = null)
@@ -332,7 +343,7 @@ class Photo
     /**
      * Get homepage
      *
-     * @return \Khatovar\WebBundle\Entity\Homepage
+     * @return \Khatovar\Bundle\HomepageBundle\Entity\Homepage
      */
     public function getHomepage()
     {
@@ -342,7 +353,7 @@ class Photo
     /**
      * Set member
      *
-     * @param \Khatovar\WebBundle\Entity\Member $member
+     * @param \Khatovar\Bundle\MemberBundle\Entity\Member $member
      * @return Photo
      */
     public function setMember(Member $member = null)
@@ -355,7 +366,7 @@ class Photo
     /**
      * Get member
      *
-     * @return \Khatovar\WebBundle\Entity\Member
+     * @return \Khatovar\Bundle\MemberBundle\Entity\Member
      */
     public function getMember()
     {

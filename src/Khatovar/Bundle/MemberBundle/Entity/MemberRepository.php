@@ -21,7 +21,7 @@
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
-namespace Khatovar\Bundle\WebBundle\Entity;
+namespace Khatovar\Bundle\MemberBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 

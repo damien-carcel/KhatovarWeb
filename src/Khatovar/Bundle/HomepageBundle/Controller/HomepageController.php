@@ -59,7 +59,7 @@ class HomepageController extends Controller
         }
 
         return $this->render(
-            'KhatovarHomepageBundle:Accueil:index.html.twig',
+            'KhatovarHomepageBundle:Homepage:index.html.twig',
             array(
                 'content' => $content,
                 'page_id' => $pageId
@@ -98,7 +98,7 @@ class HomepageController extends Controller
         }
 
         return $this->render(
-            'KhatovarWebBundle:Accueil:edit.html.twig',
+            'KhatovarHomepageBundle:Homepage:edit.html.twig',
             array('form' => $form->createView())
         );
     }
@@ -133,7 +133,7 @@ class HomepageController extends Controller
         }
 
         return $this->render(
-            'KhatovarWebBundle:Accueil:edit.html.twig',
+            'KhatovarHomepageBundle:Homepage:edit.html.twig',
             array('form' => $form->createView())
         );
     }
@@ -151,7 +151,7 @@ class HomepageController extends Controller
     public function listAction(Request $request)
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $repository = $entityManager->getRepository('KhatovarWebBundle:Homepage');
+        $repository = $entityManager->getRepository('KhatovarHomepageBundle:Homepage');
 
         $oldHomepage = $repository->findOneBy(array('active' => true));
 
@@ -160,7 +160,7 @@ class HomepageController extends Controller
         }
         $form = $this->createFormBuilder()
             ->add('active', 'entity', array(
-                    'class' => 'Khatovar\WebBundle\Entity\Homepage',
+                    'class' => 'Khatovar\Bundle\HomepageBundle\Entity\Homepage',
                     'label' => false,
                     'property' => 'name',
                     'preferred_choices' => array($oldHomepage)
@@ -197,7 +197,7 @@ class HomepageController extends Controller
         $list = $repository->findAll();
 
         return $this->render(
-            'KhatovarWebBundle:Accueil:list.html.twig',
+            'KhatovarHomepageBundle:Homepage:list.html.twig',
             array('homepage_list' => $list, 'form' => $form->createView())
         );
     }
@@ -231,7 +231,7 @@ class HomepageController extends Controller
         }
 
         return $this->render(
-            'KhatovarWebBundle:Accueil:delete.html.twig',
+            'KhatovarHomepageBundle:Homepage:delete.html.twig',
             array('homepage' => $homepage, 'form' => $form->createView())
         );
     }

@@ -24,7 +24,7 @@
 namespace Khatovar\Bundle\WebBundle\Services\Filters;
 
 use Doctrine\ORM\EntityManager;
-use Khatovar\WebBundle\Entity\Homepage;
+use Khatovar\Bundle\HomepageBundle\Entity\Homepage;
 
 /**
  * Return some data as array.

@@ -72,6 +72,7 @@ class MenuBuilder
      * Main menu of the application.
      *
      * @param Request $request
+     *
      * @return \Knp\Menu\ItemInterface
      */
     public function createMainMenu(Request $request)

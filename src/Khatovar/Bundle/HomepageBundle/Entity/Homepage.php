@@ -25,6 +25,7 @@ namespace Khatovar\Bundle\HomepageBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Khatovar\Bundle\PhotoBundle\Entity\Photo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -72,7 +73,7 @@ class Homepage
 
     /**
      * @var ArrayCollection $photos
-     * @ORM\OneToMany(targetEntity="Khatovar\WebBundle\Entity\Photo", mappedBy="homepage")
+     * @ORM\OneToMany(targetEntity="Khatovar\Bundle\PhotoBundle\Entity\Photo", mappedBy="homepage")
      */
     private $photos;
 
@@ -89,6 +90,15 @@ class Homepage
     }
 
     /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->photos = new ArrayCollection();
+        $this->active = 0;
+    }
+
+    /**
      * Get id
      *
      * @return integer
@@ -102,6 +112,7 @@ class Homepage
      * Set content
      *
      * @param string $content
+     *
      * @return Homepage
      */
     public function setContent($content)
@@ -125,6 +136,7 @@ class Homepage
      * Set active
      *
      * @param boolean $active
+     *
      * @return Homepage
      */
     public function setActive($active)
@@ -143,19 +155,12 @@ class Homepage
     {
         return $this->active;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->photos = new ArrayCollection();
-        $this->active = 0;
-    }
 
     /**
      * Add photos
      *
-     * @param \Khatovar\WebBundle\Entity\Photo $photos
+     * @param Photo $photos
+     *
      * @return Homepage
      */
     public function addPhoto(Photo $photos)
@@ -168,7 +173,7 @@ class Homepage
     /**
      * Remove photos
      *
-     * @param \Khatovar\WebBundle\Entity\Photo $photos
+     * @param Photo $photos
      */
     public function removePhoto(Photo $photos)
     {
@@ -189,6 +194,7 @@ class Homepage
      * Set name
      *
      * @param string $name
+     *
      * @return Homepage
      */
     public function setName($name)

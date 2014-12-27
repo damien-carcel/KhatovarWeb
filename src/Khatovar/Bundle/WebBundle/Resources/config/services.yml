@@ -3,30 +3,30 @@ parameters:
 
 services:
     khatovar.twig.khatovar_extension:
-        class: Khatovar\WebBundle\Services\Twig\KhatovarPhotosExtension
+        class: Khatovar\Bundle\WebBundle\Services\Twig\KhatovarPhotosExtension
         tags:
             - { name: twig.extension }
 
     khatovar.twig.controller_name_extension:
-        class: Khatovar\WebBundle\Services\Twig\ControllerNameExtension
+        class: Khatovar\Bundle\WebBundle\Services\Twig\ControllerNameExtension
         calls:
             - [setRequest, ["@?request="]]
         tags:
             - { name: twig.extension }
 
     khatovar.filters.translation:
-        class: Khatovar\WebBundle\Services\Filters\KhatovarTranslation
+        class: Khatovar\Bundle\WebBundle\Services\Filters\KhatovarTranslation
         arguments: [ "@doctrine.orm.entity_manager" ]
 
     khatovar.filter.resize:
-        class: Khatovar\WebBundle\Services\Filters\KhatovarImageResize
+        class: Khatovar\Bundle\WebBundle\Services\Filters\KhatovarImageResize
 
     khatovar.filters.array:
-        class: Khatovar\WebBundle\Services\Filters\KhatovarReturnArray
+        class: Khatovar\Bundle\WebBundle\Services\Filters\KhatovarReturnArray
         arguments: [ "@doctrine.orm.entity_manager" ]
 
     khatovar.menu.menu_builder:
-        class: Khatovar\WebBundle\Menu\MenuBuilder
+        class: Khatovar\Bundle\WebBundle\Menu\MenuBuilder
         arguments: [ "@knp_menu.factory" ]
 
     khatovar.menu.main:

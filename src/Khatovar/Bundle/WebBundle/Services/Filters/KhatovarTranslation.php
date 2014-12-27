@@ -24,7 +24,7 @@
 namespace Khatovar\Bundle\WebBundle\Services\Filters;
 
 use Doctrine\ORM\EntityManager;
-use Khatovar\WebBundle\Entity\Photo;
+use Khatovar\Bundle\PhotoBundle\Entity\Photo;
 
 /**
  * Perform some transformations on html code before display or saving.

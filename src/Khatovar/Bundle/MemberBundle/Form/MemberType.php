@@ -21,7 +21,7 @@
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
-namespace Khatovar\Bundle\WebBundle\Form;
+namespace Khatovar\Bundle\MemberBundle\Form;
 
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
@@ -32,7 +32,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  * Class MemberType
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
- * @package Khatovar\Bundle\WebBundle\Form
+ * @package Khatovar\Bundle\MemberBundle\Form
  */
 class MemberType extends AbstractType
 {

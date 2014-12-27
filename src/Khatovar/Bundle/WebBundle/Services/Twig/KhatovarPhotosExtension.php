@@ -82,10 +82,11 @@ class KhatovarPhotosExtension extends \Twig_Extension
     /**
      * Return a picture as a link to display it using lightbox framework.
      *
-     * @param string $path The path to the picture.
+     * @param string $path  The path to the picture.
      * @param string $class The stylesheet class to use.
-     * @param string $alt The alternative name of the picture.
-     * @param string $data The data-lightbox attribute.
+     * @param string $alt   The alternative name of the picture.
+     * @param string $data  The data-lightbox attribute.
+     *
      * @return string
      */
     public function popupPicture($path, $class = '', $alt = '', $data = 'Photos Khatovar')
@@ -106,6 +107,7 @@ class KhatovarPhotosExtension extends \Twig_Extension
      * @param string $path The path to the picture.
      * @param string $text The link text.
      * @param string $data The data-lightbox attribute.
+     *
      * @return string
      */
     public function linkPicture($path, $text = '', $data = '')
@@ -123,6 +125,7 @@ class KhatovarPhotosExtension extends \Twig_Extension
      * @param string $path The path to the picture.
      * @param string $icon The photo album icon.
      * @param string $data The data-lightbox attribute.
+     *
      * @return string
      */
     public function linkAlbum($path, $icon, $data)
@@ -141,6 +144,7 @@ class KhatovarPhotosExtension extends \Twig_Extension
      * @param string $path
      * @param string $class
      * @param string $alt
+     *
      * @return string
      */
     public function thumbnail($path, $class, $alt = '')
@@ -154,10 +158,11 @@ class KhatovarPhotosExtension extends \Twig_Extension
      * Make an hyperlink from a thumbnail.
      *
      * @param string $destination The hyperlink
-     * @param string $path The path of the picture for the thumbnail
-     * @param string $class The class to apply to the thumbnail: "portrait" or "landscape"
-     * @param string $alt The alternative text for the thumbnail
-     * @param string $text An optionnal text to display under the thumbnail
+     * @param string $path        The path of the picture for the thumbnail
+     * @param string $class       The class to apply to the thumbnail: "portrait" or "landscape"
+     * @param string $alt         The alternative text for the thumbnail
+     * @param string $text        An optional text to display under the thumbnail
+     *
      * @return string
      */
     public function thumbnailLink($path, $destination, $class, $alt = '', $text = '')
