@@ -22,11 +22,14 @@ class AppKernel extends Kernel
             new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
             new JMS\DiExtraBundle\JMSDiExtraBundle($this),
             new FOS\UserBundle\FOSUserBundle(),
-            new Khatovar\WebBundle\KhatovarWebBundle(),
             new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new Xsolve\CookieAcknowledgementBundle\XsolveCookieAcknowledgementBundle(),
+            new Khatovar\Bundle\WebBundle\KhatovarWebBundle(),
+            new Khatovar\Bundle\HomepageBundle\KhatovarHomepageBundle(),
+            new Khatovar\Bundle\PhotoBundle\KhatovarPhotoBundle(),
+            new Khatovar\Bundle\MemberBundle\KhatovarMemberBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

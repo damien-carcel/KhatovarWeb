@@ -13,7 +13,7 @@
 /.idea
 
 /src/Carcel
-/src/Khatovar/WebBundle/Resources/public/photos/*
-!/src/Khatovar/WebBundle/Resources/public/photos/logonoir.jpg
+/Khatovar/Bundle/WebBundle/Resources/public/photos/*
+!/Khatovar/Bundle/WebBundle/Resources/public/photos/logonoir.jpg
 
 *~
