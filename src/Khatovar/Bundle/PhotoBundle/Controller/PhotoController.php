@@ -49,6 +49,7 @@ class PhotoController extends Controller
      * display admin utilities to manage them.
      *
      * @return \Symfony\Component\HttpFoundation\Response
+     *
      * @Secure(roles="ROLE_VIEWER")
      */
     public function indexAction()
@@ -61,17 +62,17 @@ class PhotoController extends Controller
         if ($currentUser->hasRole('ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_EDITOR')) {
             $entityList = array(
                 'Photos orphelines' => $entityManager
-                    ->getRepository('KhatovarWebBundle:Photo')
+                    ->getRepository('KhatovarPhotoBundle:Photo')
                     ->getOrphans(),
                 'Pages d\'accueil' => $entityManager
-                    ->getRepository('KhatovarWebBundle:Homepage')
+                    ->getRepository('KhatovarHomepageBundle:Homepage')
                     ->findAll(),
                 'Membres' => $entityManager
-                    ->getRepository('KhatovarWebBundle:Member')
+                    ->getRepository('KhatovarMemberBundle:Member')
                     ->findAll()
             );
         } else {
-            $member = $entityManager->getRepository('KhatovarWebBundle:Member')
+            $member = $entityManager->getRepository('KhatovarMemberBundle:Member')
                 ->findOneBy(array('owner' => $currentUser));
 
             $entityList = array(
@@ -82,7 +83,7 @@ class PhotoController extends Controller
         }
 
         return $this->render(
-            'KhatovarWebBundle:Photo:index.html.twig',
+            'KhatovarPhotoBundle:Photo:index.html.twig',
             array('entity_list' => $entityList)
         );
     }
@@ -92,11 +93,12 @@ class PhotoController extends Controller
      * small sidebar. Editors and admin can access all photos, but
      * regular users can only access photos of their own member page.
      *
-     * @param string $controller The controller currently rendered.
-     * @param string $action The controller method used for rendering.
-     * @param string|int $slug_or_id The slug or the ID of the object
-     * currently rendered.
+     * @param string     $controller The controller currently rendered.
+     * @param string     $action     The controller method used for rendering.
+     * @param string|int $slug_or_id The slug or the ID of the object currently rendered.
+     *
      * @return \Symfony\Component\HttpFoundation\Response
+     *
      * @Secure(roles="ROLE_VIEWER")
      */
     public function sideAction($controller, $action, $slug_or_id)
@@ -111,11 +113,11 @@ class PhotoController extends Controller
 
         if ($controller != 'default' and $controller != 'photo') {
             $owned = $entityManager
-                ->getRepository('KhatovarWebBundle:Member')
+                ->getRepository('KhatovarMemberBundle:Member')
                 ->findOneBy(array('owner' => $currentUser));
 
             $repo = $entityManager->getRepository(
-                'KhatovarWebBundle:' . ucfirst($controller)
+                'Khatovar' . ucfirst($controller) . 'Bundle:' . ucfirst($controller)
             );
 
             if ($controller == 'homepage'
@@ -141,7 +143,7 @@ class PhotoController extends Controller
         }
 
         return $this->render(
-            'KhatovarWebBundle:Photo:side.html.twig',
+            'KhatovarPhotoBundle:Photo:side.html.twig',
             array('photos' => $photos)
         );
     }
@@ -153,7 +155,9 @@ class PhotoController extends Controller
      * have one).
      *
      * @param Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     *
      * @Secure(roles="ROLE_VIEWER")
      */
     public function addAction(Request $request)
@@ -165,19 +169,19 @@ class PhotoController extends Controller
 
         if (!$currentUser->hasRole('ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_EDITOR')) {
             $member = $this->getDoctrine()->getManager()
-                ->getRepository('KhatovarWebBundle:Member')
+                ->getRepository('KhatovarMemberBundle:Member')
                 ->findOneBy(array('owner' => $currentUser));
 
             if (!$member) {
                 return $this->render(
-                    'KhatovarWebBundle:Photo:add.html.twig',
+                    'KhatovarPhotoBundle:Photo:add.html.twig',
                     array(
                         'not_a_member' => true
                     )
                 );
             }
 
-            // TODO: Is it better to use hidden fields and transmormer for Member entity?
+            // TODO: Is it better to use hidden fields and transformer for Member entity?
             $photo->setClass('none')->setEntity('member')->setMember($member);
 
             $form = $this->createForm(new PhotoType($currentUser), $photo);
@@ -219,7 +223,7 @@ class PhotoController extends Controller
         }
 
         return $this->render(
-            'KhatovarWebBundle:Photo:add.html.twig',
+            'KhatovarPhotoBundle:Photo:add.html.twig',
             array(
                 'form' => $form->createView(),
                 'photo' => $photo
@@ -230,9 +234,11 @@ class PhotoController extends Controller
     /**
      * Edit a photo information.
      *
-     * @param Photo $photo The photo to edit.
+     * @param Photo   $photo The photo to edit.
      * @param Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     *
      * @Secure(roles="ROLE_VIEWER")
      */
     public function editAction(Photo $photo, Request $request)
@@ -245,13 +251,13 @@ class PhotoController extends Controller
         $form = $this->createForm(new PhotoType($currentUser), $photo);
 
         $member = $this->getDoctrine()->getManager()
-            ->getRepository('KhatovarWebBundle:Member')
+            ->getRepository('KhatovarMemberBundle:Member')
             ->findOneBy(array('owner' => $currentUser->getId()));
 
         if (!$currentUser->hasRole('ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_EDITOR')) {
             if (!$member) {
                 return $this->render(
-                    'KhatovarWebBundle:Photo:add.html.twig',
+                    'KhatovarPhotoBundle:Photo:add.html.twig',
                     array(
                         'not_a_member' => 1
                     )
@@ -291,7 +297,7 @@ class PhotoController extends Controller
         }
 
         return $this->render(
-            'KhatovarWebBundle:Photo:edit.html.twig',
+            'KhatovarPhotoBundle:Photo:edit.html.twig',
             array(
                 'photo' => $photo,
                 'form' => $form->createView(),
@@ -323,7 +329,7 @@ class PhotoController extends Controller
             // If the user doesn't have a member's page, then he have no
             // reason to delete photos
             return $this->render(
-                'KhatovarWebBundle:Photo:delete.html.twig',
+                'KhatovarPhotoBundle:Photo:delete.html.twig',
                 array(
                     'not_an_editor' => 1
                 )
@@ -346,7 +352,7 @@ class PhotoController extends Controller
         }
 
         return $this->render(
-            'KhatovarWebBundle:Photo:delete.html.twig',
+            'KhatovarPhotoBundle:Photo:delete.html.twig',
             array(
                 'photo' => $photo,
                 'form' => $form->createView(),

@@ -1,19 +1,19 @@
 khatovar_web_photos:
     path:       /photos
-    defaults:   { _controller: KhatovarWebBundle:Photo:index }
+    defaults:   { _controller: KhatovarPhotoBundle:Photo:index }
 
 khatovar_web_photos_add:
     path:       /photos/add
-    defaults:   { _controller: KhatovarWebBundle:Photo:add }
+    defaults:   { _controller: KhatovarPhotoBundle:Photo:add }
 
 khatovar_web_photos_edit:
     path:       /photos/edit/{photo}
-    defaults:   { _controller: KhatovarWebBundle:Photo:edit }
+    defaults:   { _controller: KhatovarPhotoBundle:Photo:edit }
     requirements:
         photo: \d+
 
 khatovar_web_photos_delete:
     path:       /photos/delete/{photo}
-    defaults:   { _controller: KhatovarWebBundle:Photo:delete }
+    defaults:   { _controller: KhatovarPhotoBundle:Photo:delete }
     requirements:
         photo: \d+
