@@ -129,7 +129,7 @@ class PhotoType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Khatovar\WebBundle\Entity\Photo'
+            'data_class' => 'Khatovar\Bundle\PhotoBundle\Entity\Photo'
         ));
     }
 

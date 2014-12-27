@@ -21,7 +21,7 @@
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
-namespace Khatovar\Bundle\WebBundle\Controller;
+namespace Khatovar\Bundle\MemberBundle\Controller;
 
 use Doctrine\ORM\EntityRepository;
 use JMS\SecurityExtraBundle\Annotation\Secure;
@@ -35,7 +35,7 @@ use Symfony\Component\HttpFoundation\Request;
  * Class MemberController
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
- * @package Khatovar\Bundle\WebBundle\Controller
+ * @package Khatovar\Bundle\MemberBundle\Controller
  */
 class MemberController extends Controller
 {
@@ -53,7 +53,7 @@ class MemberController extends Controller
         $pastMembers = $entityManager->findBy(array('active' => false));
 
         return $this->render(
-            'KhatovarWebBundle:Member:index.html.twig',
+            'KhatovarMemberBundle:Member:index.html.twig',
             array(
                 'activeMembers' => $activeMembers,
                 'pastMembers' => $pastMembers
@@ -76,11 +76,11 @@ class MemberController extends Controller
 
         // Get all but the portrait photos
         $photos = $this->getDoctrine()
-            ->getRepository('KhatovarWebBundle:Photo')
+            ->getRepository('KhatovarPhotoBundle:Photo')
             ->getAllButPortrait($member);
 
         return $this->render(
-            'KhatovarWebBundle:Member:view.html.twig',
+            'KhatovarMemberBundle:Member:view.html.twig',
             array(
                 'member' => $member,
                 'currentUser' => $currentUser,
@@ -123,7 +123,7 @@ class MemberController extends Controller
         }
 
         return $this->render(
-            'KhatovarWebBundle:Member:edit.html.twig',
+            'KhatovarMemberBundle:Member:edit.html.twig',
             array('form' => $form->createView())
         );
     }
@@ -142,7 +142,7 @@ class MemberController extends Controller
 
         $form->add('portrait', 'entity', array(
                 'label' => 'Photo de profil :',
-                'class' => 'Khatovar\WebBundle\Entity\Photo',
+                'class' => 'Khatovar\Bundle\PhotoBundle\Entity\Photo',
                 'property' => 'alt',
                 'query_builder' => function (EntityRepository $er) use ($member) {
                     return $er->createQueryBuilder('p')
@@ -157,7 +157,7 @@ class MemberController extends Controller
             $form->remove('owner');
             if ($currentUser != $member->getOwner()) {
                 return $this->render(
-                    'KhatovarWebBundle:Member:edit.html.twig',
+                    'KhatovarMemberBundle:Member:edit.html.twig',
                     array(
                         'not_a_member' => 1
                     )
@@ -184,7 +184,7 @@ class MemberController extends Controller
         }
 
         return $this->render(
-            'KhatovarWebBundle:Member:edit.html.twig',
+            'KhatovarMemberBundle:Member:edit.html.twig',
             array('form' => $form->createView(), 'edit' => 'is_defined')
         );
     }
@@ -217,7 +217,7 @@ class MemberController extends Controller
         }
 
         return $this->render(
-            'KhatovarWebBundle:Member:remove.html.twig',
+            'KhatovarMemberBundle:Member:remove.html.twig',
             array('member' => $member, 'form' => $form->createView())
         );
     }

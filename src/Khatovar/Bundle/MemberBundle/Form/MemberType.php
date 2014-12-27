@@ -74,7 +74,7 @@ class MemberType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Khatovar\WebBundle\Entity\Member'
+            'data_class' => 'Khatovar\Bundle\MemberBundle\Entity\Member'
         ));
     }
 

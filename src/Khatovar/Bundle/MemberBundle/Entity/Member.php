@@ -25,18 +25,19 @@ namespace Khatovar\Bundle\MemberBundle\Entity;
 
 use Carcel\UserBundle\Entity\User;
 use Gedmo\Mapping\Annotation as Gedmo;
-use \Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Khatovar\Bundle\PhotoBundle\Entity\Photo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Member
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
- * @package Khatovar\Bundle\WebBundle\Entity
+ * @package Khatovar\Bundle\MemberBundle\Entity
  *
  * @ORM\Table(name="khatovar_web_members")
- * @ORM\Entity(repositoryClass="Khatovar\Bundle\WebBundle\Entity\MemberRepository")
+ * @ORM\Entity(repositoryClass="Khatovar\Bundle\MemberBundle\Entity\MemberRepository")
  */
 class Member
 {
@@ -65,7 +66,7 @@ class Member
     private $slug;
 
     /**
-     * @ORM\OneToOne(targetEntity="Khatovar\WebBundle\Entity\Photo")
+     * @ORM\OneToOne(targetEntity="Khatovar\Bundle\PhotoBundle\Entity\Photo")
      * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
     private $portrait;
@@ -158,7 +159,7 @@ class Member
 
     /**
      * @var ArrayCollection $photos
-     * @ORM\OneToMany(targetEntity="Khatovar\WebBundle\Entity\Photo", mappedBy="member")
+     * @ORM\OneToMany(targetEntity="Khatovar\Bundle\PhotoBundle\Entity\Photo", mappedBy="member")
      */
     private $photos;
 
@@ -175,6 +176,14 @@ class Member
     }
 
     /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->photos = new ArrayCollection();
+    }
+
+    /**
      * Get id
      *
      * @return integer
@@ -188,6 +197,7 @@ class Member
      * Set name
      *
      * @param string $name
+     *
      * @return Member
      */
     public function setName($name)
@@ -211,6 +221,7 @@ class Member
      * Set slug
      *
      * @param string $slug
+     *
      * @return Member
      */
     public function setSlug($slug)
@@ -234,6 +245,7 @@ class Member
      * Set rank
      *
      * @param string $rank
+     *
      * @return Member
      */
     public function setRank($rank)
@@ -257,6 +269,7 @@ class Member
      * Set quote
      *
      * @param string $quote
+     *
      * @return Member
      */
     public function setQuote($quote)
@@ -280,6 +293,7 @@ class Member
      * Set skill
      *
      * @param string $skill
+     *
      * @return Member
      */
     public function setSkill($skill)
@@ -303,6 +317,7 @@ class Member
      * Set age
      *
      * @param string $age
+     *
      * @return Member
      */
     public function setAge($age)
@@ -326,6 +341,7 @@ class Member
      * Set size
      *
      * @param string $size
+     *
      * @return Member
      */
     public function setSize($size)
@@ -349,6 +365,7 @@ class Member
      * Set weight
      *
      * @param string $weight
+     *
      * @return Member
      */
     public function setWeight($weight)
@@ -372,6 +389,7 @@ class Member
      * Set strength
      *
      * @param string $strength
+     *
      * @return Member
      */
     public function setStrength($strength)
@@ -395,6 +413,7 @@ class Member
      * Set weakness
      *
      * @param string $weakness
+     *
      * @return Member
      */
     public function setWeakness($weakness)
@@ -418,6 +437,7 @@ class Member
      * Set story
      *
      * @param string $story
+     *
      * @return Member
      */
     public function setStory($story)
@@ -441,6 +461,7 @@ class Member
      * Set active
      *
      * @param boolean $active
+     *
      * @return Member
      */
     public function setActive($active)
@@ -463,7 +484,8 @@ class Member
     /**
      * Set portrait
      *
-     * @param \Khatovar\WebBundle\Entity\Photo $portrait
+     * @param Photo $portrait
+     *
      * @return Member
      */
     public function setPortrait(Photo $portrait = null)
@@ -476,7 +498,7 @@ class Member
     /**
      * Get portrait
      *
-     * @return \Khatovar\WebBundle\Entity\Photo
+     * @return Photo
      */
     public function getPortrait()
     {
@@ -486,7 +508,7 @@ class Member
     /**
      * Set owner
      *
-     * @param \Carcel\UserBundle\Entity\User $owner
+     * @param User $owner
      * @return Member
      */
     public function setOwner(User $owner = null)
@@ -499,24 +521,17 @@ class Member
     /**
      * Get owner
      *
-     * @return \Carcel\UserBundle\Entity\User
+     * @return User
      */
     public function getOwner()
     {
         return $this->owner;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->photos = new ArrayCollection();
-    }
 
     /**
      * Add photos
      *
-     * @param \Khatovar\WebBundle\Entity\Photo $photos
+     * @param Photo $photos
      * @return Member
      */
     public function addPhoto(Photo $photos)
@@ -529,7 +544,7 @@ class Member
     /**
      * Remove photos
      *
-     * @param \Khatovar\WebBundle\Entity\Photo $photos
+     * @param Photo $photos
      */
     public function removePhoto(Photo $photos)
     {

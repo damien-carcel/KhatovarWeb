@@ -56,7 +56,7 @@ class HomepageType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Khatovar\WebBundle\Entity\Homepage'
+            'data_class' => 'Khatovar\Bundle\HomepageBundle\Entity\Homepage'
         ));
     }
 

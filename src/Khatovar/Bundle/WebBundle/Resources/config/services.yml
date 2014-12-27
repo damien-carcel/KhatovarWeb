@@ -1,5 +1,5 @@
 parameters:
-#    khatovar_web.example.class: Khatovar\WebBundle\Example
+#    khatovar_web.example.class: Khatovar\Bundle\WebBundle\Example
 
 services:
     khatovar.twig.khatovar_extension:

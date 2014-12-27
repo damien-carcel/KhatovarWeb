@@ -24,6 +24,7 @@
 namespace Khatovar\Bundle\PhotoBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Khatovar\Bundle\MemberBundle\Entity\Member;
 
 /**
  * PhotoRepository
