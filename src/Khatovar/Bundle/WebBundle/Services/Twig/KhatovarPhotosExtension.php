@@ -141,9 +141,9 @@ class KhatovarPhotosExtension extends \Twig_Extension
     /**
      * .
      *
-     * @param string $path
-     * @param string $class
-     * @param string $alt
+     * @param string $path  The path to the picture for the thumbnail
+     * @param string $class The class to apply to the thumbnail: "portrait" or "landscape"
+     * @param string $alt   The alternative text for the thumbnail
      *
      * @return string
      */
