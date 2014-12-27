@@ -63,7 +63,7 @@ class PhotoController extends Controller
                 'Photos orphelines' => $entityManager
                     ->getRepository('KhatovarWebBundle:Photo')
                     ->getOrphans(),
-                'Pages d’accueil' => $entityManager
+                'Pages d\'accueil' => $entityManager
                     ->getRepository('KhatovarWebBundle:Homepage')
                     ->findAll(),
                 'Membres' => $entityManager

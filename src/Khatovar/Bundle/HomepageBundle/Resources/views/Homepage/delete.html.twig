@@ -3,14 +3,14 @@
 {% block inarticle %}
     {% if homepage.active == 1 %}
         <h4>
-            Vous ne pouvez pas effacer la page d’accueil par défaut.<br />
-            Veuillez Sélectionner une nouvelle page d’accueil par défaut avant d‘effacer celle-ci.
+            Vous ne pouvez pas effacer la page d\'accueil par défaut.<br />
+            Veuillez Sélectionner une nouvelle page d\'accueil par défaut avant d‘effacer celle-ci.
         </h4>
-        <a href="{{ path('khatovar_web_homepage_list') }}">Retour à la liste des pages d’accueil</a>
+        <a href="{{ path('khatovar_web_homepage_list') }}">Retour à la liste des pages d\'accueil</a>
     {% else %}
-        <h2>Suppression d’une page d’accueil</h2>
+        <h2>Suppression d\'une page d\'accueil</h2>
 
-        <p>Êtes-vous certain de vouloir supprimer la page d’accueil « {{ homepage.name }} » ?</p>
+        <p>Êtes-vous certain de vouloir supprimer la page d\'accueil « {{ homepage.name }} » ?</p>
 
         <div class="form-background">
             <form action="{{ path('khatovar_web_homepage_delete', {'homepage': homepage.id}) }}"

@@ -97,7 +97,7 @@ class PhotoType extends AbstractType
             $builder->add('entity', 'choice', array(
                     'label' => 'Rattacher la photo à une : ',
                     'choices' => array(
-                        'homepage' => 'Page d’accueil',
+                        'homepage' => 'Page d\'accueil',
                         'member' => 'Page de membre'
                     ),
                     'preferred_choices' => array('homepage')

@@ -2,7 +2,7 @@
 
 {% block inarticle %}
     {% if is_granted('ROLE_EDITOR') %}
-        <a href="{{ path('khatovar_web_homepage_list') }}">Liste des pages d’accueil disponibles</a>
+        <a href="{{ path('khatovar_web_homepage_list') }}">Liste des pages d\'accueil disponibles</a>
         |
         <a href="{{ path('khatovar_web_homepage_create') }}">Créer une nouvelle page</a>
         {% if page_id %}

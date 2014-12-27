@@ -90,7 +90,7 @@ class HomepageController extends Controller
             $entityManager->flush();
 
             $this->get('session')->getFlashBag()
-                ->add('notice', 'Page d’accueil enregistrée');
+                ->add('notice', 'Page d\'accueil enregistrée');
 
             return $this->redirect(
                 $this->generateUrl('khatovar_web_homepage_list')
@@ -125,7 +125,7 @@ class HomepageController extends Controller
             $entityManager->flush();
 
             $this->get('session')->getFlashBag()
-                ->add('notice', 'Page d’accueil modifiée');
+                ->add('notice', 'Page d\'accueil modifiée');
 
             return $this->redirect(
                 $this->generateUrl('khatovar_web_homepage_list')
@@ -186,7 +186,7 @@ class HomepageController extends Controller
                 $entityManager->flush();
 
                 $this->get('session')->getFlashBag()
-                    ->add('notice', 'Page d’accueil activée');
+                    ->add('notice', 'Page d\'accueil activée');
             }
 
             return $this->redirect(
@@ -223,7 +223,7 @@ class HomepageController extends Controller
             $entityManager->flush();
 
             $this->get('session')->getFlashBag()
-                ->add('notice', 'Page d’accueil supprimée');
+                ->add('notice', 'Page d\'accueil supprimée');
 
             return $this->redirect(
                 $this->generateUrl('khatovar_web_homepage_list')

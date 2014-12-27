@@ -95,7 +95,7 @@ class KhatovarTranslation
                     . '" alt="' . $photo->getAlt()
                     . '" /></a>';
             } else {
-                $photos[] = 'Cette photo n’existe pas';
+                $photos[] = 'Cette photo n\'existe pas';
             }
         }
 
