@@ -144,8 +144,6 @@ class Photo
     {
         $this->file = $file;
 
-        // If there already is a path, it is stored in the $temp
-        // attribute in case of a future deletion
         if ($this->path) {
             $this->temp = $this->path;
             $this->path = null;
@@ -161,7 +159,6 @@ class Photo
     public function preUpload()
     {
         if (!is_null($this->file)) {
-            // The photo is named according to the time stamp of the upload.
             $this->path = 'photo-' . time() . '.'
                 . $this->getFile()->guessExtension();
         }
@@ -181,7 +178,6 @@ class Photo
 
         $this->file->move($this->getUploadRootDir(), $this->path);
 
-        // check if we have an old image, and then delete it
         if (isset($this->temp)) {
             unlink($this->getUploadRootDir().'/'.$this->temp);
             $this->temp = null;
@@ -233,7 +229,7 @@ class Photo
      */
     protected function getUploadRootDir()
     {
-        return __DIR__ . '/../../../../www/' . $this->getUploadDir();
+        return __DIR__ . '/../../../../../www/' . $this->getUploadDir();
     }
 
     /**

@@ -322,7 +322,7 @@ class PhotoController extends Controller
         $currentUser = $this->container->get('security.context')
             ->getToken()->getUser();
         $member = $this->getDoctrine()->getManager()
-            ->getRepository('KhatovarWebBundle:Member')
+            ->getRepository('KhatovarMemberBundle:Member')
             ->findOneBy(array('owner' => $currentUser->getId()));
 
         if (!$currentUser->hasRole('ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_EDITOR') and !$member) {

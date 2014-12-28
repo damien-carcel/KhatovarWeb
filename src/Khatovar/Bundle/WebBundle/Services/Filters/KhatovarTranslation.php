@@ -71,7 +71,7 @@ class KhatovarTranslation
 
         // Then retrieve the corresponding objects and use them to
         // generate the html code.
-        $repository = $this->em->getRepository('KhatovarWebBundle:Photo');
+        $repository = $this->em->getRepository('KhatovarPhotoBundle:Photo');
         $photos = array();
 
         foreach ($paths as $path) {

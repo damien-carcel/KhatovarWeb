@@ -3,15 +3,15 @@
 {% block inarticle %}
     {% if not_an_editor is defined %}
         <h4>
-            Désolé, vous n\'avez pas de page de membres.<br />
+            Désolé, vous n'avez pas de page de membres.<br />
             Vous ne pouvez donc pas éditer de photos.
         </h4>
-        <a href="{{ path('khatovar_web_photos') }}">Retour à l\'accueil du site</a>
+        <a href="{{ path('khatovar_web_photos') }}">Retour à l'accueil du site</a>
     {% elseif not is_granted('ROLE_EDITOR') and photo.member != owner %}
-        <h4 class="container">Désolé, vous n\'avez pas le droit d\'effacer cette photo.</h4>
+        <h4 class="container">Désolé, vous n'avez pas le droit d'effacer cette photo.</h4>
         <a href="{{ path('khatovar_web_photos') }}">Retour à la liste des photos</a>
     {% else %}
-        <h2>Suppression d\'une photo</h2>
+        <h2>Suppression d'une photo</h2>
 
         <p>Êtes-vous certain de vouloir supprimer la photo « {{ photo.alt }} » ci-contre ?</p>
 

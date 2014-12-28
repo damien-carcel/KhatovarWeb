@@ -56,7 +56,7 @@ class KhatovarReturnArray
     public function returnArray($entity)
     {
         $entries = $this->em
-            ->getRepository('KhatovarWebBundle:' . ucfirst($entity))
+            ->getRepository('Khatovar' . ucfirst($entity) . 'Bundle:' . ucfirst($entity))
             ->findAll();
 
         $result = array();

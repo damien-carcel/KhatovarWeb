@@ -1,6 +1,6 @@
 {% extends '::layout.html.twig' %}
 {% block title %}
-    La Compagnie Franche du Khatovar, Compagnie médiévale d\'Anjou (association d\'Angers - Maine et Loire)
+    La Compagnie Franche du Khatovar, Compagnie médiévale d'Anjou (association d'Angers - Maine et Loire)
 {% endblock %}
 {% block stylesheets %}
     {% stylesheets 'bundles/khatovarweb/css/normalize.css'
@@ -45,7 +45,7 @@
         <button id="aside-open" class="aside-link aside-open" title="Afficher le panneau photo">
         </button>
         <aside id="aside">
-            {{ render(controller('KhatovarWebBundle:Photo:side', { 'controller': get_controller_name(), 'action': get_action_name(), 'slug_or_id': get_slug_or_id() })) }}
+            {{ render(controller('KhatovarPhotoBundle:Photo:side', { 'controller': get_controller_name(), 'action': get_action_name(), 'slug_or_id': get_slug_or_id() })) }}
         </aside>
     {% endif %}
     <article>
@@ -67,7 +67,7 @@
                 </a>
                 {% if is_granted('ROLE_SUPER_ADMIN') %}
                     |
-                    <a href="{{ path('carcel_user_admin') }}">Page d\'adminitration</a>
+                    <a href="{{ path('carcel_user_admin') }}">Page d'adminitration</a>
                 {% endif %}
                 |
                 <a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a>

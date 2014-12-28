@@ -47,7 +47,7 @@ class MemberController extends Controller
     public function indexAction()
     {
         $entityManager = $this->getDoctrine()
-            ->getRepository('KhatovarWebBundle:Member');
+            ->getRepository('KhatovarMemberBundle:Member');
 
         $activeMembers = $entityManager->findBy(array('active' => true));
         $pastMembers = $entityManager->findBy(array('active' => false));

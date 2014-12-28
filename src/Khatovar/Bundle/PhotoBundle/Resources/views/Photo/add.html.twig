@@ -5,10 +5,10 @@
 
     {% if not_a_member is defined %}
         <h4>
-            Désolé, vous n\'avez pas de page de membres.<br />
+            Désolé, vous n'avez pas de page de membres.<br />
             Vous ne pouvez donc pas uploader de photos.
         </h4>
-        <a href="{{ path('khatovar_web_photos') }}">Retour à l\'accueil du site</a>
+        <a href="{{ path('khatovar_web_photos') }}">Retour à l'accueil du site</a>
     {% else %}
         <div class="form-background">
             {{ form_start(form) }}

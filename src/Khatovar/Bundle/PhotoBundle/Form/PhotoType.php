@@ -86,7 +86,7 @@ class PhotoType extends AbstractType
                 }
 
                 $form->add($entity, 'entity', array(
-                        'class' => 'KhatovarWebBundle:' . ucfirst($entity),
+                        'class' => 'Khatovar' . ucfirst($entity) . 'Bundle:' . ucfirst($entity),
                         'property' => 'name',
                         'label' => 'Page :'
                     ));
