@@ -1,0 +1,45 @@
+{% extends 'KhatovarWebBundle::layout.html.twig' %}
+
+{% block inarticle %}
+    <h1>Le tissage</h1>
+
+    {% autoescape false %}
+    {{ 'http://www.compagniefranchedukhatovar.fr/piwigo/upload/2011/08/24/20110824110118-1fd34d52.jpg'|popup_picture('float floatright') }}
+    {% endautoescape %}
+    <p>
+        Deux animateurs proposent au visiteur de découvrir le monde du filage, de la teinture et du tissage.
+    </p>
+    <p>
+        Les participants pourront découvrir :
+    </p>
+    <ul>
+        <li>
+            les plantes à partir desquelles sont créés les textiles et les différentes techniques employées (cardage, filage…),
+
+        </li>
+        <li>
+            les plantes tinctoriales et leur utilisation,
+
+        </li>
+        <li>
+            le tissage aux tablettes, pour réaliser un galon, accessoire de mode indispensable du moyen-âge.
+        </li>
+    </ul>
+
+    <div class="container flex-container-always">
+        <div class="navigation nav-left">
+            <a href="{{ path('khatovar_web_camp', {'atelier': 'herbo'}) }}"><img src="{{ asset('bundles/khatovarweb/images/hache_gauche.png') }}" class="photolink" alt="" /><br />
+                L'herboristerie et la cuisine</a>
+        </div>
+        <div class="navigation nav-center">
+            <!--
+            <a href="http://www.compagniefranchedukhatovar.fr/piwigo/index.php?/category/12" rel="external"><img src="{{ asset('bundles/khatovarweb/images/camera.png') }}" class="photolink" alt="" /><br />
+                    Album photo</a>
+            -->
+        </div>
+        <div class="navigation nav-right">
+            <a href="{{ path('khatovar_web_camp', {'atelier': 'calligraphie'}) }}"><img src="{{ asset('bundles/khatovarweb/images/hache_droite.png') }}" class="photolink" alt="" /><br />
+                La calligraphie</a>
+        </div>
+    </div>
+{% endblock %}

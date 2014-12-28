@@ -1,0 +1,87 @@
+{% extends '::layout.html.twig' %}
+{% block title %}
+    La Compagnie Franche du Khatovar, Compagnie médiévale d'Anjou (association d'Angers - Maine et Loire)
+{% endblock %}
+{% block stylesheets %}
+    {% stylesheets 'bundles/khatovarweb/css/normalize.css'
+                   'bundles/khatovarweb/css/compagnie.css'
+                   'bundles/khatovarweb/css/lightbox.css'
+                   filter='cssrewrite'
+                   output='css/compagnie.css' %}
+    <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+    {% endstylesheets %}
+    <!--[if lt IE 9]>
+    {% stylesheets 'bundles/khatovarweb/css/ie.css' filter='cssrewrite' output='css/ie.css' %}
+    <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+    {% endstylesheets %}
+    <![endif]-->
+{% endblock %}
+{% block javascript %}
+    {{ parent() }}
+    {% javascripts 'bundles/khatovarweb/js/lightbox.min.js'
+                   'bundles/khatovarweb/js/jquery.cycle2.min.js'
+                   'bundles/khatovarweb/js/jquery.cycle2.center.min.js'
+                   'bundles/khatovarweb/js/xhtml-external-links.js'
+                   output='js/compagnie.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+{% block container %}page_block{% endblock %}
+{% block header %}
+    <header>
+        <div id="main_title">
+            <img src="{{ asset('bundles/khatovarweb/images/logo.png') }}" alt="Logo" id="logo" />
+            <h1>La compagnie franche du Khatovar</h1>
+        </div>
+    </header>
+{% endblock %}
+{% block insection %}
+    <nav>
+        <div class="container">
+            {{ knp_menu_render('main') }}
+        </div>
+    </nav>
+    {% if is_granted('ROLE_VIEWER') %}
+        <button id="aside-open" class="aside-link aside-open" title="Afficher le panneau photo">
+        </button>
+        <aside id="aside">
+            {{ render(controller('KhatovarPhotoBundle:Photo:side', { 'controller': get_controller_name(), 'action': get_action_name(), 'slug_or_id': get_slug_or_id() })) }}
+        </aside>
+    {% endif %}
+    <article>
+        {% for message in app.session.flashbag.get('notice') %}
+            <div class="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% block inarticle %}{% endblock %}
+    </article>
+{% endblock %}
+{% block footer %}
+    <footer>
+        <div class="footer-text">
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                {{ 'layout.logged_in_as'|trans({'%username%': ''}, 'FOSUserBundle') }}
+                <a href="{{ path('fos_user_profile_show') }}">
+                    {{ app.user.username }}
+                </a>
+                {% if is_granted('ROLE_SUPER_ADMIN') %}
+                    |
+                    <a href="{{ path('carcel_user_admin') }}">Page d'adminitration</a>
+                {% endif %}
+                |
+                <a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a>
+            {% else %}
+                Copyright <span class="copyright">&copy;</span> {{ "now"|date("Y") }} association « La compagnie franche du Khatovar »
+            {% endif %}
+        </div>
+    </footer>
+    <script type="text/javascript">
+        $("#aside-open").click(function() {
+            $("aside").addClass("visible");
+        });
+        $("#aside-close").click(function() {
+            $("aside").removeClass("visible");
+        });
+    </script>
+{% endblock %}

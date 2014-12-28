@@ -1,0 +1,37 @@
+{% extends "KhatovarWebBundle::layout.html.twig" %}
+
+{% block inarticle %}
+    {% if not_an_editor is defined %}
+        <h4>
+            Désolé, vous n'avez pas de page de membres.<br />
+            Vous ne pouvez donc pas éditer de photos.
+        </h4>
+        <a href="{{ path('khatovar_web_photos') }}">Retour à l'accueil du site</a>
+    {% elseif not is_granted('ROLE_EDITOR') and photo.member != owner %}
+        <h4 class="container">Désolé, vous n'avez pas le droit d'effacer cette photo.</h4>
+        <a href="{{ path('khatovar_web_photos') }}">Retour à la liste des photos</a>
+    {% else %}
+        <h2>Suppression d'une photo</h2>
+
+        <p>Êtes-vous certain de vouloir supprimer la photo « {{ photo.alt }} » ci-contre ?</p>
+
+        <div class="form-background">
+            <div class="button-group photo_admin">
+                {{ photo.getWebPath()|thumbnail('landscape', photo.alt) }}
+            </div>
+
+            <form action="{{ path('khatovar_web_photos_delete', {'photo': photo.id}) }}"
+                  method="post"
+                  class="button-group"
+                  id="form">
+
+                <input type="submit" value="Supprimer" class="btn btn-default" />
+                <a href="{{ path('khatovar_web_photos') }}" class="btn btn-default">
+                    Annuler
+                </a>
+
+                {{ form_rest(form) }}
+            </form>
+        </div>
+    {% endif %}
+{% endblock %}

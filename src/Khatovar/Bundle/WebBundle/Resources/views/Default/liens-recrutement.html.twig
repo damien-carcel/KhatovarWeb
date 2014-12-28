@@ -1,0 +1,42 @@
+{% extends 'KhatovarWebBundle::layout.html.twig' %}
+
+{% block inarticle %}
+    <h1>Nous avons besoin de vous&nbsp;!!!</h1>
+
+    <p>
+        Si vous aimez l'armée, si vous aimez en baver, si vous trouvez qu'un oeil au beurre noir c'est joli,
+        si vous aimez les contusions, si vous aimez la sueur, si vous aimez recevoir les coups comme en donner…
+        Bref si vous aimez trimer comme un malade, vous surpasser pour devenir un autre homme, alors ENRÔLEZ-VOUS .
+    </p>
+
+    <p>
+        Pas convaincu&nbsp;???
+    </p>
+
+    <p>
+        Bon, alors disons que, comme dans toutes les compagnies, faut bien s'entraîner un peu pour garder la forme.
+        Mais que le soir venu, sur le camp, nous aimons festoyer autour d'un bon feu, avec de la bonne ripaille cuite
+        sur les braises, avec un trait de Clairet ou d'Hyprocas. Bon d'accord, avec plusieurs traits de Clairet et
+        d'Hypocras… Et qu'ensuite bien repus et bien joyeux, nous aimons nous étendre sur de la paille bien fraîche
+        pour passer la nuit sous nos tentes…
+    </p>
+
+    <p>
+        Bahhh… la vie de camp… le rêve quoi…
+    </p>
+
+    <p>
+        Du coup, intéressé(e) n'est-ce pas&nbsp;??? <a href="{{ path('khatovar_web_links', {'contact': 'contact'}) }}" title="">Contactez-nous&nbsp;!</a>
+    </p>
+
+    <div style="text-align:center">
+        {% autoescape false %}
+        {{ asset('bundles/khatovarweb/photos/recrutement/entrainement-courseapiedpierre.jpg')|popup_picture('photo-small') }}
+        {{ asset('bundles/khatovarweb/photos/recrutement/entrainement-grp.jpg')|popup_picture('photo-small') }}
+        {{ asset('bundles/khatovarweb/photos/recrutement/entrainement-grp2.jpg')|popup_picture('photo-small') }}
+        {{ asset('bundles/khatovarweb/photos/recrutement/veillee_1.jpg')|popup_picture('photo-small') }}
+        {{ asset('bundles/khatovarweb/photos/recrutement/veillee_2.jpg')|popup_picture('photo-small') }}
+        {{ asset('bundles/khatovarweb/photos/recrutement/veillee_3.jpg')|popup_picture('photo-small') }}
+        {% endautoescape %}
+    </div>
+{% endblock %}
