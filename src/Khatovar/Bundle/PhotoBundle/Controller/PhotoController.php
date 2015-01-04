@@ -102,42 +102,10 @@ class PhotoController extends Controller
      */
     public function sideAction($controller, $action, $slug_or_id)
     {
-        $photos = array();
-        $currentlyRendered = null;
-
         $currentUser = $this->getUser();
 
-        $entityManager = $this->getDoctrine()->getManager();
-
-        if ($controller != 'default' and $controller != 'photo') {
-            $owned = $entityManager
-                ->getRepository('KhatovarMemberBundle:Member')
-                ->findOneBy(array('owner' => $currentUser));
-
-            $repo = $entityManager->getRepository(
-                'Khatovar' . ucfirst($controller) . 'Bundle:' . ucfirst($controller)
-            );
-
-            if ($controller == 'homepage'
-                and is_null($slug_or_id)
-                and $action != 'create'
-                and $action != 'list') {
-                $currentlyRendered = $repo->findOneBy(array('active' => true));
-            }
-
-            if (!is_null($slug_or_id)) {
-                if (is_string($slug_or_id)) {
-                    $currentlyRendered = $repo->findOneBy(array('slug' => $slug_or_id));
-                } elseif (is_int($slug_or_id)) {
-                    $currentlyRendered = $repo->find($slug_or_id);
-                }
-            }
-
-            if (!is_null($currentlyRendered)
-                and ($this->isGranted('ROLE_EDITOR') or $owned->getOwner() == $currentUser)) {
-                $photos = $currentlyRendered->getPhotos();
-            }
-        }
+        $photoSide = $this->get('khatovar_photo.side');
+        $photos = $photoSide->get($currentUser, $controller, $action, $slug_or_id);
 
         return $this->render(
             'KhatovarPhotoBundle:Photo:side.html.twig',

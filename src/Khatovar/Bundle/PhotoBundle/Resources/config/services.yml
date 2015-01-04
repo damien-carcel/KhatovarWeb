@@ -1,4 +1,4 @@
 services:
-#    khatovar_photo.example:
-#        class: Khatovar\Bundle\PhotoBundle\Example
-#        arguments: [@service_id, "plain_value", %parameter%]
+    khatovar_photo.side:
+        class: Khatovar\Bundle\PhotoBundle\Services\PhotosSide
+        arguments: [ "@doctrine.orm.entity_manager" ]
