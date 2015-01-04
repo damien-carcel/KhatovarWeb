@@ -71,8 +71,7 @@ class MemberController extends Controller
     public function viewAction(Member $member)
     {
         // Sent current user ID to the view for a possible page edition
-        $currentUser = $this->container->get('security.context')
-            ->getToken()->getUser();
+        $currentUser = $this->getUser();
 
         // Get all but the portrait photos
         $photos = $this->getDoctrine()
@@ -151,9 +150,8 @@ class MemberController extends Controller
                 }
             ));
 
-        $currentUser = $this->container->get('security.context')
-            ->getToken()->getUser();
-        if (!$currentUser->hasRole('ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_EDITOR')) {
+        $currentUser = $this->getUser();
+        if (!$this->isGranted('ROLE_EDITOR')) {
             $form->remove('owner');
             if ($currentUser != $member->getOwner()) {
                 return $this->render(
