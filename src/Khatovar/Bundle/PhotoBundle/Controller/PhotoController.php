@@ -54,12 +54,11 @@ class PhotoController extends Controller
      */
     public function indexAction()
     {
-        $currentUser = $this->container->get('security.context')
-            ->getToken()->getUser();
+        $currentUser = $this->getUser();
 
         $entityManager = $this->getDoctrine()->getManager();
 
-        if ($currentUser->hasRole('ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_EDITOR')) {
+        if ($this->isGranted('ROLE_EDITOR')) {
             $entityList = array(
                 'Photos orphelines' => $entityManager
                     ->getRepository('KhatovarPhotoBundle:Photo')
@@ -103,44 +102,10 @@ class PhotoController extends Controller
      */
     public function sideAction($controller, $action, $slug_or_id)
     {
-        $photos = array();
-        $currentlyRendered = null;
+        $currentUser = $this->getUser();
 
-        $currentUser = $this->container->get('security.context')
-            ->getToken()->getUser();
-
-        $entityManager = $this->getDoctrine()->getManager();
-
-        if ($controller != 'default' and $controller != 'photo') {
-            $owned = $entityManager
-                ->getRepository('KhatovarMemberBundle:Member')
-                ->findOneBy(array('owner' => $currentUser));
-
-            $repo = $entityManager->getRepository(
-                'Khatovar' . ucfirst($controller) . 'Bundle:' . ucfirst($controller)
-            );
-
-            if ($controller == 'homepage'
-                and is_null($slug_or_id)
-                and $action != 'create'
-                and $action != 'list') {
-                $currentlyRendered = $repo->findOneBy(array('active' => true));
-            }
-
-            if (!is_null($slug_or_id)) {
-                if (is_string($slug_or_id)) {
-                    $currentlyRendered = $repo->findOneBy(array('slug' => $slug_or_id));
-                } elseif (is_int($slug_or_id)) {
-                    $currentlyRendered = $repo->find($slug_or_id);
-                }
-            }
-
-            if (!is_null($currentlyRendered)
-                and ($currentUser->hasRole('ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_EDITOR')
-                or $owned->getOwner() == $currentUser)) {
-                $photos = $currentlyRendered->getPhotos();
-            }
-        }
+        $photoSide = $this->get('khatovar_photo.side');
+        $photos = $photoSide->get($currentUser, $controller, $action, $slug_or_id);
 
         return $this->render(
             'KhatovarPhotoBundle:Photo:side.html.twig',
@@ -164,10 +129,9 @@ class PhotoController extends Controller
     {
         $photo = new Photo();
 
-        $currentUser = $this->container->get('security.context')
-            ->getToken()->getUser();
+        $currentUser = $this->getUser();
 
-        if (!$currentUser->hasRole('ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_EDITOR')) {
+        if (!$this->isGranted('ROLE_EDITOR')) {
             $member = $this->getDoctrine()->getManager()
                 ->getRepository('KhatovarMemberBundle:Member')
                 ->findOneBy(array('owner' => $currentUser));
@@ -245,8 +209,7 @@ class PhotoController extends Controller
     {
         $entity = $photo->getEntity();
 
-        $currentUser = $this->container->get('security.context')
-            ->getToken()->getUser();
+        $currentUser = $this->getUser();
 
         $form = $this->createForm(new PhotoType($currentUser), $photo);
 
@@ -254,7 +217,7 @@ class PhotoController extends Controller
             ->getRepository('KhatovarMemberBundle:Member')
             ->findOneBy(array('owner' => $currentUser->getId()));
 
-        if (!$currentUser->hasRole('ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_EDITOR')) {
+        if (!$this->isGranted('ROLE_EDITOR')) {
             if (!$member) {
                 return $this->render(
                     'KhatovarPhotoBundle:Photo:add.html.twig',
@@ -316,18 +279,14 @@ class PhotoController extends Controller
      */
     public function deleteAction(Photo $photo, Request $request)
     {
-        // As it is only to delete the photo, we just need an empty form
         $form = $this->createFormBuilder()->getForm();
 
-        $currentUser = $this->container->get('security.context')
-            ->getToken()->getUser();
+        $currentUser = $this->getUser();
         $member = $this->getDoctrine()->getManager()
             ->getRepository('KhatovarMemberBundle:Member')
             ->findOneBy(array('owner' => $currentUser->getId()));
 
-        if (!$currentUser->hasRole('ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_EDITOR') and !$member) {
-            // If the user doesn't have a member's page, then he have no
-            // reason to delete photos
+        if (!$this->isGranted('ROLE_EDITOR') and !$member) {
             return $this->render(
                 'KhatovarPhotoBundle:Photo:delete.html.twig',
                 array(

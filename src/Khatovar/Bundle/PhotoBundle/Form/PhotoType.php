@@ -59,14 +59,9 @@ class PhotoType extends AbstractType
             $builder->add('file', 'file', array('label' => false));
         }
 
-        $builder
-            ->add('alt', 'text', array('label' => 'Nom de substitution : '));
+        $builder->add('alt', 'text', array('label' => 'Nom de substitution : '));
 
         $formModifier = function (FormInterface $form, $entity) {
-            // First we check if entity is defined. If not, then it is
-            // a photo upload, so we don't have other fields to add to
-            // the form. If it is not null, then the photo is already
-            // uploaded and we are editing it.
             if (!is_null($entity)) {
                 if ($entity == 'homepage') {
                     $form->add('class', 'choice', array(
