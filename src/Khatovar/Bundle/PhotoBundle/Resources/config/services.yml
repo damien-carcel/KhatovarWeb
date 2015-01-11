@@ -1,4 +1,8 @@
 services:
-    khatovar_photo.side:
+    khatovar.photo.photo_side:
         class: Khatovar\Bundle\PhotoBundle\Services\PhotosSide
+        arguments: [ "@doctrine.orm.entity_manager" ]
+
+    khatovar.photo.entity_list:
+        class: Khatovar\Bundle\PhotoBundle\Services\EntityList
         arguments: [ "@doctrine.orm.entity_manager" ]

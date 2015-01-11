@@ -42,7 +42,7 @@ class PhotoController extends Controller
     /**
      * Maximal height accepted for photo.
      */
-    const HEIGHT = 720;
+    const MAX_HEIGHT = 720;
 
     /**
      * Return the list of all photos uploaded for the website and
@@ -56,29 +56,12 @@ class PhotoController extends Controller
     {
         $currentUser = $this->getUser();
 
-        $entityManager = $this->getDoctrine()->getManager();
+        $entityListService = $this->get('khatovar.photo.entity_list');
 
         if ($this->isGranted('ROLE_EDITOR')) {
-            $entityList = array(
-                'Photos orphelines' => $entityManager
-                    ->getRepository('KhatovarPhotoBundle:Photo')
-                    ->getOrphans(),
-                'Pages d\'accueil' => $entityManager
-                    ->getRepository('KhatovarHomepageBundle:Homepage')
-                    ->findAll(),
-                'Membres' => $entityManager
-                    ->getRepository('KhatovarMemberBundle:Member')
-                    ->findAll()
-            );
+            $entityList = $entityListService->getEntirePhotoList();
         } else {
-            $member = $entityManager->getRepository('KhatovarMemberBundle:Member')
-                ->findOneBy(array('owner' => $currentUser));
-
-            $entityList = array(
-                'Membre :' => array(
-                    $member->getId() => $member
-                )
-            );
+            $entityList = $entityListService->getCurrentMemberPhotos($currentUser);
         }
 
         return $this->render(
@@ -104,7 +87,7 @@ class PhotoController extends Controller
     {
         $currentUser = $this->getUser();
 
-        $photoSide = $this->get('khatovar_photo.side');
+        $photoSide = $this->get('khatovar.photo.photo_side');
         $photos = $photoSide->get($currentUser, $controller, $action, $slug_or_id);
 
         return $this->render(
@@ -165,8 +148,8 @@ class PhotoController extends Controller
             $entityManager->flush();
 
             // We resize the uploaded photo according to the HEIGHT constant
-            $resize = $this->get('khatovar.filter.resize');
-            $resize->imageResize($photo->getAbsolutePath(), self::HEIGHT);
+            $resize = $this->get('khatovar.filter.image_resize');
+            $resize->imageResize($photo->getAbsolutePath(), self::MAX_HEIGHT);
 
             $this->get('session')->getFlashBag()
                 ->add('notice', 'Photo ajoutée');

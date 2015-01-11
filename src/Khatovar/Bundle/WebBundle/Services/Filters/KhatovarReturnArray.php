@@ -19,6 +19,7 @@
  * @copyright   Copyright (C) Damien Carcel (https://github.com/damien-carcel)
  * @link        https://github.com/damien-carcel/KhatovarWeb
  * @license     http://www.gnu.org/licenses/gpl.html
+ * @todo        Not use anymore. To remove?
  */
 
 namespace Khatovar\Bundle\WebBundle\Services\Filters;
