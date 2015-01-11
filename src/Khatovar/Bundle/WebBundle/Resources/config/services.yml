@@ -2,7 +2,7 @@ parameters:
 #    khatovar_web.example.class: Khatovar\Bundle\WebBundle\Example
 
 services:
-    khatovar.twig.khatovar_extension:
+    khatovar.twig.khatovar_photos_extension:
         class: Khatovar\Bundle\WebBundle\Services\Twig\KhatovarPhotosExtension
         tags:
             - { name: twig.extension }
@@ -18,10 +18,10 @@ services:
         class: Khatovar\Bundle\WebBundle\Services\Filters\KhatovarTranslation
         arguments: [ "@doctrine.orm.entity_manager" ]
 
-    khatovar.filter.resize:
+    khatovar.filter.image_resize:
         class: Khatovar\Bundle\WebBundle\Services\Filters\KhatovarImageResize
 
-    khatovar.filters.array:
+    khatovar.filters.return_array:
         class: Khatovar\Bundle\WebBundle\Services\Filters\KhatovarReturnArray
         arguments: [ "@doctrine.orm.entity_manager" ]
 

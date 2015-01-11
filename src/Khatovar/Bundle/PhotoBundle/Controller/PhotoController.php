@@ -23,6 +23,7 @@
 
 namespace Khatovar\Bundle\PhotoBundle\Controller;
 
+use Carcel\UserBundle\Entity\User;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Khatovar\Bundle\PhotoBundle\Entity\Photo;
 use Khatovar\Bundle\PhotoBundle\Form\PhotoType;
@@ -42,7 +43,7 @@ class PhotoController extends Controller
     /**
      * Maximal height accepted for photo.
      */
-    const HEIGHT = 720;
+    const MAX_HEIGHT = 720;
 
     /**
      * Return the list of all photos uploaded for the website and
@@ -56,29 +57,12 @@ class PhotoController extends Controller
     {
         $currentUser = $this->getUser();
 
-        $entityManager = $this->getDoctrine()->getManager();
+        $entityListService = $this->get('khatovar.photo.entity_list');
 
         if ($this->isGranted('ROLE_EDITOR')) {
-            $entityList = array(
-                'Photos orphelines' => $entityManager
-                    ->getRepository('KhatovarPhotoBundle:Photo')
-                    ->getOrphans(),
-                'Pages d\'accueil' => $entityManager
-                    ->getRepository('KhatovarHomepageBundle:Homepage')
-                    ->findAll(),
-                'Membres' => $entityManager
-                    ->getRepository('KhatovarMemberBundle:Member')
-                    ->findAll()
-            );
+            $entityList = $entityListService->getEntirePhotoList();
         } else {
-            $member = $entityManager->getRepository('KhatovarMemberBundle:Member')
-                ->findOneBy(array('owner' => $currentUser));
-
-            $entityList = array(
-                'Membre :' => array(
-                    $member->getId() => $member
-                )
-            );
+            $entityList = $entityListService->getCurrentMemberPhotos($currentUser);
         }
 
         return $this->render(
@@ -104,7 +88,7 @@ class PhotoController extends Controller
     {
         $currentUser = $this->getUser();
 
-        $photoSide = $this->get('khatovar_photo.side');
+        $photoSide = $this->get('khatovar.photo.photo_side');
         $photos = $photoSide->get($currentUser, $controller, $action, $slug_or_id);
 
         return $this->render(
@@ -132,10 +116,7 @@ class PhotoController extends Controller
         $currentUser = $this->getUser();
 
         if (!$this->isGranted('ROLE_EDITOR')) {
-            $member = $this->getDoctrine()->getManager()
-                ->getRepository('KhatovarMemberBundle:Member')
-                ->findOneBy(array('owner' => $currentUser));
-
+            $member = $this->getMember($currentUser);
             if (!$member) {
                 return $this->render(
                     'KhatovarPhotoBundle:Photo:add.html.twig',
@@ -158,15 +139,14 @@ class PhotoController extends Controller
         }
 
         $form->handleRequest($request);
-
         if ($form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($photo);
             $entityManager->flush();
 
             // We resize the uploaded photo according to the HEIGHT constant
-            $resize = $this->get('khatovar.filter.resize');
-            $resize->imageResize($photo->getAbsolutePath(), self::HEIGHT);
+            $resize = $this->get('khatovar.filter.image_resize');
+            $resize->imageResize($photo->getAbsolutePath(), self::MAX_HEIGHT);
 
             $this->get('session')->getFlashBag()
                 ->add('notice', 'Photo ajoutée');
@@ -180,9 +160,6 @@ class PhotoController extends Controller
                 );
             }
 
-            // If member is a regular user, then all photo information
-            // are completed during the upload, so there is no need to
-            // edit it afterward.
             return $this->redirect($this->generateUrl('khatovar_web_photos'));
         }
 
@@ -210,12 +187,9 @@ class PhotoController extends Controller
         $entity = $photo->getEntity();
 
         $currentUser = $this->getUser();
+        $member = $this->getMember($currentUser);
 
         $form = $this->createForm(new PhotoType($currentUser), $photo);
-
-        $member = $this->getDoctrine()->getManager()
-            ->getRepository('KhatovarMemberBundle:Member')
-            ->findOneBy(array('owner' => $currentUser->getId()));
 
         if (!$this->isGranted('ROLE_EDITOR')) {
             if (!$member) {
@@ -226,12 +200,10 @@ class PhotoController extends Controller
                     )
                 );
             }
-
             $form->remove('class')->remove('entity')->remove('member');
         }
 
         $form->handleRequest($request);
-
         if ($form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($photo);
@@ -282,9 +254,7 @@ class PhotoController extends Controller
         $form = $this->createFormBuilder()->getForm();
 
         $currentUser = $this->getUser();
-        $member = $this->getDoctrine()->getManager()
-            ->getRepository('KhatovarMemberBundle:Member')
-            ->findOneBy(array('owner' => $currentUser->getId()));
+        $member = $this->getMember($currentUser);
 
         if (!$this->isGranted('ROLE_EDITOR') and !$member) {
             return $this->render(
@@ -296,7 +266,6 @@ class PhotoController extends Controller
         }
 
         $form->handleRequest($request);
-
         if ($form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($photo);
@@ -318,5 +287,19 @@ class PhotoController extends Controller
                 'owner' => $member
             )
         );
+    }
+
+    /**
+     * Get the member page corresponding to the current user.
+     *
+     * @param User $currentUser
+     *
+     * @return \Khatovar\Bundle\MemberBundle\Entity\Member
+     */
+    protected function getMember(User $currentUser)
+    {
+        return $this->getDoctrine()->getManager()
+            ->getRepository('KhatovarMemberBundle:Member')
+            ->findOneBy(array('owner' => $currentUser->getId()));
     }
 }
