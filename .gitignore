@@ -1,19 +1,17 @@
 /app/bootstrap.php.cache
 /app/cache/*
 /app/config/parameters.yml
-/app/config/parameters-compagnie.yml
+/app/config/khatovar-parameters.yml
 /app/logs/*
 !app/cache/.gitkeep
 !app/logs/.gitkeep
 /bin/
 /build/
 /vendor/
-/www/
+/www/bundles/
+/www/css/
+/www/js/
+/www/uploaded/
 
-/.idea
-
-/src/Carcel
 /Khatovar/Bundle/WebBundle/Resources/public/photos/*
 !/Khatovar/Bundle/WebBundle/Resources/public/photos/logonoir.jpg
-
-*~

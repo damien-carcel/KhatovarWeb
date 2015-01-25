@@ -1,6 +1,7 @@
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
+    - { resource: khatovar-parameters.yml }
 
 framework:
     #esi:             ~
@@ -63,6 +64,7 @@ doctrine:
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: true
+        entity_listener_resolver: carcel_documents.doctrine.entity_listener_resolver
 
 # Swiftmailer Configuration
 swiftmailer:

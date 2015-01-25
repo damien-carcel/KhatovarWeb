@@ -1,8 +1,14 @@
 {
-    "name": "symfony/framework-standard-edition",
-    "license": "MIT",
+    "name": "KhatovarWeb",
+    "license": "GPL",
     "type": "project",
-    "description": "The \"Symfony Standard Edition\" distribution",
+    "description": "Repository for the web site of the french association \"La compagnie franche du Khatovar\"",
+    "authors": [
+        {
+            "name": "Damien Carcel",
+            "homepage": "http://www.compagniefranchedukhatovar.fr"
+        }
+    ],
     "autoload": {
         "psr-0": { "": "src/", "SymfonyStandard": "app/" }
     },
@@ -23,11 +29,13 @@
         "egeloen/ckeditor-bundle": "~2.0",
         "stof/doctrine-extensions-bundle": "~1.1@dev",
         "knplabs/knp-menu-bundle": "~2.0",
-        "xsolve-pl/xsolve-cookie-acknowledgement-bundle": "1.0.*"
+        "xsolve-pl/xsolve-cookie-acknowledgement-bundle": "1.0.*",
+        "carcel/documents": "0.2.*@dev"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",
-        "coresphere/console-bundle": "dev-master"
+        "coresphere/console-bundle": "dev-master",
+        "phpspec/phpspec": "~2.0"
     },
     "scripts": {
         "post-root-package-install": [
@@ -61,7 +69,7 @@
             "file": "app/config/parameters.yml"
         },
         "branch-alias": {
-            "dev-master": "2.6-dev"
+            "dev-master": "master"
         }
     }
 }
