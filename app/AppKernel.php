@@ -25,7 +25,6 @@ class AppKernel extends Kernel
             new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
-            new Xsolve\CookieAcknowledgementBundle\XsolveCookieAcknowledgementBundle(),
             new Khatovar\Bundle\WebBundle\KhatovarWebBundle(),
             new Khatovar\Bundle\HomepageBundle\KhatovarHomepageBundle(),
             new Khatovar\Bundle\PhotoBundle\KhatovarPhotoBundle(),
