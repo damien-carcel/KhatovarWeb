@@ -12,6 +12,7 @@
 /www/css/
 /www/js/
 /www/uploaded/
+composer.lock
 
 /Khatovar/Bundle/WebBundle/Resources/public/photos/*
 !/Khatovar/Bundle/WebBundle/Resources/public/photos/logonoir.jpg
