@@ -29,6 +29,7 @@ class AppKernel extends Kernel
             new Khatovar\Bundle\HomepageBundle\KhatovarHomepageBundle(),
             new Khatovar\Bundle\PhotoBundle\KhatovarPhotoBundle(),
             new Khatovar\Bundle\MemberBundle\KhatovarMemberBundle(),
+            new Khatovar\Bundle\ExactionBundle\KhatovarExactionBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

@@ -11,16 +11,6 @@ khatovar_web_fight:
     requirements:
         pratique: \w*
 
-khatovar_web_schedule:
-    path:       /programmation
-    defaults:   { _controller: KhatovarWebBundle:Default:schedule }
-
-khatovar_web_references:
-    path:       /references/{year}
-    defaults:   { _controller: KhatovarWebBundle:Default:references, year: 0 }
-    requirements:
-        year: \d*
-
 khatovar_web_links:
     path:       /liens/{contact}
     defaults:   { _controller: KhatovarWebBundle:Default:links, contact: 'liste' }

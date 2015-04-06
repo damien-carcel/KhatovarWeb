@@ -113,7 +113,7 @@ class MenuBuilder
             'schedule',
             array(
                 'label' => 'Exactions à venir',
-                'route' => 'khatovar_web_schedule'
+                'route' => 'khatovar_exaction_to_come'
             )
         );
 
@@ -121,15 +121,16 @@ class MenuBuilder
             'references',
             array(
                 'label' => 'Exactions passées',
-                'route' => 'khatovar_web_references'
+                'route' => 'khatovar_exaction_past'
             )
         );
+        // TODO: Query instead of this hazardous year guess
         foreach (range(date('Y'), 2009) as $ref) {
             $menu['references']->addChild(
                 $ref,
                 array(
                     'label' => 'Saison ' . $ref,
-                    'route' => 'khatovar_web_references',
+                    'route' => 'khatovar_exaction_list_by_year',
                     'routeParameters' => array('year' => $ref)
                 )
             );

@@ -1,3 +1,7 @@
+khatovar_schedule:
+    resource: "@KhatovarExactionBundle/Resources/config/routing.yml"
+    prefix:   /
+
 khatovar_member:
     resource: "@KhatovarMemberBundle/Resources/config/routing.yml"
     prefix:   /
