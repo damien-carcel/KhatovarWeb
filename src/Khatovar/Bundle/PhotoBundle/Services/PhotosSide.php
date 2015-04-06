@@ -34,17 +34,15 @@ use Doctrine\ORM\EntityManager;
  */
 class PhotosSide
 {
-    /**
-     * @var EntityManager
-     */
-    protected $em;
+    /** @var EntityManager */
+    protected $entityManager;
 
     /**
-     * @param EntityManager $em
+     * @param EntityManager $entityManager
      */
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $entityManager)
     {
-        $this->em = $em;
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -54,34 +52,18 @@ class PhotosSide
      * @param User   $currentUser
      * @param string $controller
      * @param string $action
-     * @param string $slug_or_id
+     * @param string $slugOrId
      *
-     * @return array
+     * @return \Khatovar\Bundle\PhotoBundle\Entity\Photo[]
      */
-    public function get(User $currentUser, $controller, $action, $slug_or_id)
+    public function get(User $currentUser, $controller, $action, $slugOrId)
     {
         $photos = array();
-        $currentlyRendered = null;
 
-        $repo = $this->em->getRepository(
-            'Khatovar' . ucfirst($controller) . 'Bundle:' . ucfirst($controller)
-        );
-
-        if ($controller == 'homepage'
-            and is_null($slug_or_id)
-            and $action != 'create'
-            and $action != 'list') {
-            $currentlyRendered = $repo->findOneBy(array('active' => true));
-        } elseif (!is_null($slug_or_id)) {
-            if (is_string($slug_or_id)) {
-                $currentlyRendered = $repo->findOneBy(array('slug' => $slug_or_id));
-            } elseif (is_int($slug_or_id)) {
-                $currentlyRendered = $repo->find($slug_or_id);
-            }
-        }
+        $currentlyRendered = $this->getCurrentlyRendered($controller, $action, $slugOrId);
 
         $owner = null;
-        if ($controller == 'member' and !is_null($slug_or_id)) {
+        if ($controller == 'member' and !is_null($slugOrId)) {
             $owner = $currentlyRendered->getOwner();
         }
 
@@ -93,5 +75,58 @@ class PhotosSide
         }
 
         return $photos;
+    }
+
+    /**
+     * Return the entity which content is currently rendered by the
+     * application.
+     *
+     * @param $controller
+     * @param $action
+     * @param $slugOrId
+     *
+     * @return null|object
+     */
+    protected function getCurrentlyRendered($controller, $action, $slugOrId)
+    {
+        $currentlyRendered = null;
+        $repo = $this->getRepository($controller);
+
+        if (null === $repo) {
+            return null;
+        }
+
+        if ($controller === 'homepage'
+            and is_null($slugOrId)
+            and $action !== 'create'
+            and $action !== 'list') {
+            $currentlyRendered = $repo->findOneBy(array('active' => true));
+        } elseif (!is_null($slugOrId)) {
+            if (is_string($slugOrId)) {
+                $currentlyRendered = $repo->findOneBy(array('slug' => $slugOrId));
+            } elseif (is_int($slugOrId)) {
+                $currentlyRendered = $repo->find($slugOrId);
+            }
+        }
+
+        return $currentlyRendered;
+    }
+
+    /**
+     * Get entity repository for a corresponding controller.
+     *
+     * @param string $controller
+     *
+     * @return \Doctrine\ORM\EntityRepository|null
+     */
+    protected function getRepository($controller)
+    {
+        if ($controller !== 'default') {
+            $entity = 'Khatovar' . ucfirst($controller) . 'Bundle:' . ucfirst($controller);
+
+            return $this->entityManager->getRepository($entity);
+        }
+
+        return null;
     }
 }

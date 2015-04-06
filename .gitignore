@@ -14,5 +14,5 @@
 /www/uploaded/
 composer.lock
 
-/Khatovar/Bundle/WebBundle/Resources/public/photos/*
-!/Khatovar/Bundle/WebBundle/Resources/public/photos/logonoir.jpg
+/src/Khatovar/Bundle/WebBundle/Resources/public/photos/*
+!/src/Khatovar/Bundle/WebBundle/Resources/public/photos/logonoir.jpg

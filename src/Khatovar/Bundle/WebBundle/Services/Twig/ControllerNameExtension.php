@@ -128,8 +128,8 @@ class ControllerNameExtension extends \Twig_Extension
             // We don't want a slug but an ID
             if (is_null($slugOrId)) {
                 // Return an array containing one key/value, we want the value.
-                $route_params = $this->request->get('_route_params');
-                foreach ($route_params as $param) {
+                $routeParams = $this->request->get('_route_params');
+                foreach ($routeParams as $param) {
                     $slugOrId = (int) $param;
                 }
             }
