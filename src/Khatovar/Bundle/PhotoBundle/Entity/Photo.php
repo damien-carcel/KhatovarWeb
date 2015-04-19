@@ -24,6 +24,7 @@
 namespace Khatovar\Bundle\PhotoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Khatovar\Bundle\ExactionBundle\Entity\Exaction;
 use Khatovar\Bundle\HomepageBundle\Entity\Homepage;
 use Khatovar\Bundle\MemberBundle\Entity\Member;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -124,6 +125,15 @@ class Photo
      */
     private $member;
 
+    /**
+     * @ORM\ManyToOne(
+     *  targetEntity="Khatovar\Bundle\ExactionBundle\Entity\Exaction",
+     *  cascade={"detach"},
+     *  inversedBy="photos"
+     * )
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
+     */
+    private $exaction;
 
     /**
      * Get file.
@@ -323,53 +333,6 @@ class Photo
     }
 
     /**
-     * Set homepage
-     *
-     * @param \Khatovar\Bundle\HomepageBundle\Entity\Homepage $homepage
-     *
-     * @return Photo
-     */
-    public function setHomepage(Homepage $homepage = null)
-    {
-        $this->homepage = $homepage;
-
-        return $this;
-    }
-
-    /**
-     * Get homepage
-     *
-     * @return \Khatovar\Bundle\HomepageBundle\Entity\Homepage
-     */
-    public function getHomepage()
-    {
-        return $this->homepage;
-    }
-
-    /**
-     * Set member
-     *
-     * @param \Khatovar\Bundle\MemberBundle\Entity\Member $member
-     * @return Photo
-     */
-    public function setMember(Member $member = null)
-    {
-        $this->member = $member;
-
-        return $this;
-    }
-
-    /**
-     * Get member
-     *
-     * @return \Khatovar\Bundle\MemberBundle\Entity\Member
-     */
-    public function getMember()
-    {
-        return $this->member;
-    }
-
-    /**
      * Set entity
      *
      * @param string $entity
@@ -390,5 +353,76 @@ class Photo
     public function getEntity()
     {
         return $this->entity;
+    }
+
+    /**
+     * Set homepage
+     *
+     * @param Homepage $homepage
+     *
+     * @return Photo
+     */
+    public function setHomepage(Homepage $homepage = null)
+    {
+        $this->homepage = $homepage;
+
+        return $this;
+    }
+
+    /**
+     * Get homepage
+     *
+     * @return Homepage
+     */
+    public function getHomepage()
+    {
+        return $this->homepage;
+    }
+
+    /**
+     * Set member
+     *
+     * @param Member $member
+     * @return Photo
+     */
+    public function setMember(Member $member = null)
+    {
+        $this->member = $member;
+
+        return $this;
+    }
+
+    /**
+     * Get member
+     *
+     * @return Member
+     */
+    public function getMember()
+    {
+        return $this->member;
+    }
+
+    /**
+     * Set exaction
+     *
+     * @param Exaction $exaction
+     *
+     * @return Photo
+     */
+    public function setExaction(Exaction $exaction = null)
+    {
+        $this->exaction = $exaction;
+
+        return $this;
+    }
+
+    /**
+     * Get exaction
+     *
+     * @return Exaction
+     */
+    public function getExaction()
+    {
+        return $this->exaction;
     }
 }

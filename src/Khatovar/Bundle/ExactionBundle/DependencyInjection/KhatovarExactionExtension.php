@@ -21,41 +21,29 @@
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
-namespace Khatovar\Bundle\ExactionBundle\Entity;
+namespace Khatovar\Bundle\ExactionBundle\DependencyInjection;
 
-use Doctrine\ORM\EntityRepository;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Symfony\Component\DependencyInjection\Loader;
 
 /**
- * Exaction repository
+ * This is the class that loads and manages your bundle configuration
  *
- * @author  Damien Carcel (https://github.com/damien-carcel)
- * @package Khatovar\Bundle\ExactionBundle\Entity
+ * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
-class ExactionRepository extends EntityRepository
+class KhatovarExactionExtension extends Extension
 {
     /**
-     * @return array
+     * {@inheritdoc}
      */
-    protected function getPastExactions()
+    public function load(array $configs, ContainerBuilder $container)
     {
-        $query = $this->createQueryBuilder('pe')
-            ->where('pe.startingDate < :start')
-            ->setParameter('start', new \DateTime())
-            ->getQuery();
+        $configuration = new Configuration();
+        $config = $this->processConfiguration($configuration, $configs);
 
-        return $query->getResult();
-    }
-
-    /**
-     * @return array
-     */
-    protected function getFutureExactions()
-    {
-        $query = $this->createQueryBuilder('pf')
-            ->where('pf.startingDate > :start')
-            ->setParameter('start', new \DateTime())
-            ->getQuery();
-
-        return $query->getResult();
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader->load('services.yml');
     }
 }

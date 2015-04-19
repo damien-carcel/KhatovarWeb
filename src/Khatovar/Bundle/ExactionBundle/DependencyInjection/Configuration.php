@@ -21,41 +21,30 @@
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
-namespace Khatovar\Bundle\ExactionBundle\Entity;
+namespace Khatovar\Bundle\ExactionBundle\DependencyInjection;
 
-use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Config\Definition\Builder\TreeBuilder;
+use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 /**
- * Exaction repository
+ * This is the class that validates and merges configuration from your app/config files
  *
- * @author  Damien Carcel (https://github.com/damien-carcel)
- * @package Khatovar\Bundle\ExactionBundle\Entity
+ * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html#cookbook-bundles-extension-config-class}
  */
-class ExactionRepository extends EntityRepository
+class Configuration implements ConfigurationInterface
 {
     /**
-     * @return array
+     * {@inheritdoc}
      */
-    protected function getPastExactions()
+    public function getConfigTreeBuilder()
     {
-        $query = $this->createQueryBuilder('pe')
-            ->where('pe.startingDate < :start')
-            ->setParameter('start', new \DateTime())
-            ->getQuery();
+        $treeBuilder = new TreeBuilder();
+        $rootNode = $treeBuilder->root('khatovar_exaction');
 
-        return $query->getResult();
-    }
+        // Here you should define the parameters that are allowed to
+        // configure your bundle. See the documentation linked above for
+        // more information on that topic.
 
-    /**
-     * @return array
-     */
-    protected function getFutureExactions()
-    {
-        $query = $this->createQueryBuilder('pf')
-            ->where('pf.startingDate > :start')
-            ->setParameter('start', new \DateTime())
-            ->getQuery();
-
-        return $query->getResult();
+        return $treeBuilder;
     }
 }

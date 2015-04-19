@@ -58,12 +58,15 @@ class EntityList
             'Photos orphelines' => $this->em
                 ->getRepository('KhatovarPhotoBundle:Photo')
                 ->getOrphans(),
-            'Pages d\'accueil' => $this->em
+            'Pages d\'accueil'  => $this->em
                 ->getRepository('KhatovarHomepageBundle:Homepage')
                 ->findAll(),
-            'Membres' => $this->em
+            'Membres'           => $this->em
                 ->getRepository('KhatovarMemberBundle:Member')
-                ->findAll()
+                ->findAll(),
+            'Exactions'         => $this->em
+                ->getRepository('KhatovarExactionBundle:Exaction')
+                ->findAll(),
         );
     }
 

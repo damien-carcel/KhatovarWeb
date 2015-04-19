@@ -153,7 +153,6 @@ class Member
      * @var bool
      *
      * @ORM\Column(name="active", type="boolean", nullable=true)
-     * @Assert\Length(max="255")
      */
     private $active;
 
