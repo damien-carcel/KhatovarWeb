@@ -23,36 +23,46 @@
 
 namespace Khatovar\Bundle\ExactionBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityRepository;
 
 /**
  * Exaction repository
  *
- * @author  Damien Carcel (https://github.com/damien-carcel)
- * @package Khatovar\Bundle\ExactionBundle\Entity
+ * @author Damien Carcel (https://github.com/damien-carcel)
  */
 class ExactionRepository extends EntityRepository
 {
     /**
-     * @return array
+     * Get exactions by year.
+     *
+     * @param int $year
+     *
+     * @return Exaction[]
      */
-    protected function getPastExactions()
+    public function getExactionsByYear($year)
     {
         $query = $this->createQueryBuilder('pe')
-            ->where('pe.startingDate < :start')
-            ->setParameter('start', new \DateTime())
-            ->getQuery();
+            ->where('pe.start >= :start AND pe.start <= :end')
+            ->setParameters(new ArrayCollection(
+                array(
+                    'start', new \DateTime($year . '-01-01'),
+                    'end', new \DateTime($year . '-12-31')
+                    )
+            ))->getQuery();
 
         return $query->getResult();
     }
 
     /**
-     * @return array
+     * Get all exactions to come.
+     *
+     * @return Exaction[]
      */
-    protected function getFutureExactions()
+    public function getFutureExactions()
     {
         $query = $this->createQueryBuilder('pf')
-            ->where('pf.startingDate > :start')
+            ->where('pf.start > :start')
             ->setParameter('start', new \DateTime())
             ->getQuery();
 

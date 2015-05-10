@@ -1,0 +1,41 @@
+{% extends 'KhatovarWebBundle::layout.html.twig' %}
+
+{% block inarticle %}
+    {% for exaction in exactions %}
+        {% if exaction.onlyPhotos %}
+            <h1>
+                {{ exaction.name }}, {{ exaction.place }}, {{ exaction.start|normalize_date(exaction.end) }}
+            </h1>
+            <div class="container">
+                <div class="cycle-slideshow" data-cycle-slides="> a"  data-cycle-center-horz=true data-cycle-center-vert=true>
+                    {% autoescape false %}
+                        {% for photo in exaction.photos %}
+                            {{ asset(photo)|popup_picture('slide') }}
+                        {% endfor %}
+                    {% endautoescape %}
+                </div>
+            </div>
+        {% else %}
+            <h1>
+                {{ exaction.name }}, {{ exaction.place }}, {{ exaction.start|normalize_date(exaction.end) }}
+            </h1>
+            <div class="container flex-container">
+                <div class="photo_exactions">
+                    {% autoescape false %}
+                    {{ exaction.image|popup_picture('photo') }}
+                    {% endautoescape %}
+                </div>
+                <div class="exactions">
+                    {{ exaction.abstract|add_paragraph_and_photos() }}
+                    <div class="note_exaction">
+                        <b>La photo&nbsp;:</b> {{ exaction.imageStory }}
+                    </div>
+                    <div class="photo_exactions">
+                        {# TODO: Javascript album photo #}
+                        Album photo
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endblock %}

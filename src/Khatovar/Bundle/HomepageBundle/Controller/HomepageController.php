@@ -48,7 +48,7 @@ class HomepageController extends Controller
             ->getRepository('KhatovarHomepageBundle:Homepage')
             ->findOneBy(array('active' => true));
 
-        $translations = $this->get('khatovar.filters.translation');
+        $translations = $this->get('khatovar.web.filters.translation');
 
         if ($homepage) {
             $content = $translations->imageTranslate($homepage->getContent());
@@ -171,18 +171,18 @@ class HomepageController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $new_homepage = $repository
+            $newHomepage = $repository
                 ->find($form->get('active')->getData());
 
             // Todo: Understand why I have to manually setActive
-            if ($oldHomepage->getId() != $new_homepage->getId()) {
+            if ($oldHomepage->getId() != $newHomepage->getId()) {
                 if ($oldHomepage->getId()) {
                     $oldHomepage->setActive(false);
                     $entityManager->persist($oldHomepage);
                 }
 
-                $new_homepage->setActive(true);
-                $entityManager->persist($new_homepage);
+                $newHomepage->setActive(true);
+                $entityManager->persist($newHomepage);
                 $entityManager->flush();
 
                 $this->get('session')->getFlashBag()

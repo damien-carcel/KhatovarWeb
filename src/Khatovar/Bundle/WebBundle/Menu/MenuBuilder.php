@@ -23,6 +23,7 @@
 
 namespace Khatovar\Bundle\WebBundle\Menu;
 
+use Khatovar\Bundle\ExactionBundle\Services\Lister\YearLister;
 use Knp\Menu\FactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -34,7 +35,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class MenuBuilder
 {
-    private $performances = array(
+    /** @var array */
+    protected $performances = array(
         'introduction' => 'Introduction',
         'combat' => 'Combat',
         'campement' => 'Vie de camp',
@@ -47,25 +49,27 @@ class MenuBuilder
         'calligraphie' => 'Calligraphie'
     );
 
-    private $contacts = array(
+    /** @var array */
+    protected $contacts = array(
         'contact' => 'Qui sommes-nous ?',
         'allies' => 'Nos alliés',
         'fournisseurs' => 'Nos fournisseurs'
     );
 
-    /**
-     * @var FactoryInterface
-     */
-    private $factoryInterface;
+    /** @var array */
+    protected $exactionYears;
+
+    /** @var FactoryInterface */
+    protected $factoryInterface;
 
     /**
-     * Create an instance of MenuBuilder.
-     *
      * @param FactoryInterface $factoryInterface
+     * @param YearLister       $lister
      */
-    public function __construct(FactoryInterface $factoryInterface)
+    public function __construct(FactoryInterface $factoryInterface, YearLister $lister)
     {
         $this->factoryInterface = $factoryInterface;
+        $this->exactionYears    = $lister->getSortedYears();
     }
 
     /**
@@ -124,14 +128,14 @@ class MenuBuilder
                 'route' => 'khatovar_exaction_past'
             )
         );
-        // TODO: Query instead of this hazardous year guess
-        foreach (range(date('Y'), 2009) as $ref) {
+
+        foreach ($this->exactionYears as $year) {
             $menu['references']->addChild(
-                $ref,
+                $year,
                 array(
-                    'label' => 'Saison ' . $ref,
+                    'label' => 'Saison ' . $year,
                     'route' => 'khatovar_exaction_list_by_year',
-                    'routeParameters' => array('year' => $ref)
+                    'routeParameters' => array('year' => $year)
                 )
             );
         }

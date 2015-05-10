@@ -21,15 +21,50 @@
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
-namespace Khatovar\Bundle\ExactionBundle;
+namespace Khatovar\Bundle\ExactionBundle\Services\Lister;
 
-use Symfony\Component\HttpKernel\Bundle\Bundle;
+use Doctrine\ORM\EntityManager;
 
 /**
- * Khatovar exaction bundle
+ * Year lister
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
  */
-class KhatovarExactionBundle extends Bundle
+class YearLister
 {
+    protected $entityManager;
+
+    /**
+     * @param EntityManager $entityManager
+     */
+    public function __construct(EntityManager $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
+
+    /**
+     * Return a sorted array of all years having exactions, most recent
+     * first.
+     *
+     * @return array
+     */
+    public function getSortedYears()
+    {
+        $yearList = array();
+
+        $exactions = $this->entityManager
+            ->getRepository('KhatovarExactionBundle:Exaction')
+            ->findAll();
+
+        foreach ($exactions as $exaction) {
+            $year = $exaction->getStart()->format('Y');
+            if (!in_array($year, $yearList)) {
+                $yearList[] = $year;
+            }
+        }
+
+        arsort($yearList);
+
+        return $yearList;
+    }
 }

@@ -29,12 +29,11 @@ use Khatovar\Bundle\PhotoBundle\Entity\Photo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Class Exaction
+ * Exaction entity.s
  *
- * @author  Damien Carcel (https://github.com/damien-carcel)
- * @package Khatovar\Bundle\ExactionBundle\Entity
+ * @author Damien Carcel (https://github.com/damien-carcel)
  *
- * @ORM\Table()
+ * @ORM\Table(name="khatovar_web_exactions")
  * @ORM\Entity(repositoryClass="Khatovar\Bundle\ExactionBundle\Entity\ExactionRepository")
  */
 class Exaction
@@ -75,18 +74,18 @@ class Exaction
      *
      * @var \DateTime
      *
-     * @ORM\Column(name="starting_date", type="datetime")
+     * @ORM\Column(name="start", type="datetime")
      */
-    protected $startingDate;
+    protected $start;
 
     /**
      * When the festival ends.
      *
      * @var \DateTime
      *
-     * @ORM\Column(name="ending_date", type="datetime")
+     * @ORM\Column(name="$end", type="datetime")
      */
-    protected $endingDate;
+    protected $end;
 
     /**
      * Photos of the festival.
@@ -171,7 +170,7 @@ class Exaction
     }
 
     /**
-     * Constructor
+     * Create an instance of Exaction.
      */
     public function __construct()
     {
@@ -179,7 +178,7 @@ class Exaction
     }
 
     /**
-     * Get id
+     * Get id.
      *
      * @return integer
      */
@@ -189,7 +188,7 @@ class Exaction
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      *
@@ -203,7 +202,7 @@ class Exaction
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -213,7 +212,7 @@ class Exaction
     }
 
     /**
-     * Set place
+     * Set place.
      *
      * @param string $place
      *
@@ -227,7 +226,7 @@ class Exaction
     }
 
     /**
-     * Get place
+     * Get place.
      *
      * @return string
      */
@@ -237,7 +236,7 @@ class Exaction
     }
 
     /**
-     * Set map
+     * Set map.
      *
      * @param string $map
      *
@@ -251,7 +250,7 @@ class Exaction
     }
 
     /**
-     * Get map
+     * Get map.
      *
      * @return string
      */
@@ -261,7 +260,7 @@ class Exaction
     }
 
     /**
-     * Set introduction
+     * Set introduction.
      *
      * @param string $introduction
      *
@@ -275,7 +274,7 @@ class Exaction
     }
 
     /**
-     * Get introduction
+     * Get introduction.
      *
      * @return string
      */
@@ -285,7 +284,7 @@ class Exaction
     }
 
     /**
-     * Set links
+     * Set links.
      *
      * @param array $links
      *
@@ -299,7 +298,7 @@ class Exaction
     }
 
     /**
-     * Get links
+     * Get links.
      *
      * @return array
      */
@@ -309,7 +308,7 @@ class Exaction
     }
 
     /**
-     * Set abstract
+     * Set abstract.
      *
      * @param string $abstract
      *
@@ -323,7 +322,7 @@ class Exaction
     }
 
     /**
-     * Get abstract
+     * Get abstract.
      *
      * @return string
      */
@@ -333,7 +332,7 @@ class Exaction
     }
 
     /**
-     * Set imageStory
+     * Set imageStory.
      *
      * @param string $imageStory
      *
@@ -347,7 +346,7 @@ class Exaction
     }
 
     /**
-     * Get imageStory
+     * Get imageStory.
      *
      * @return string
      */
@@ -357,7 +356,7 @@ class Exaction
     }
 
     /**
-     * Set onlyPhotos
+     * Set onlyPhotos.
      *
      * @param boolean $onlyPhotos
      *
@@ -371,7 +370,7 @@ class Exaction
     }
 
     /**
-     * Get onlyPhotos
+     * Get onlyPhotos.
      *
      * @return boolean
      */
@@ -381,7 +380,7 @@ class Exaction
     }
 
     /**
-     * Add photo
+     * Add photo.
      *
      * @param Photo $photo
      *
@@ -395,7 +394,7 @@ class Exaction
     }
 
     /**
-     * Remove photo
+     * Remove photo.
      *
      * @param Photo $photo
      */
@@ -405,7 +404,7 @@ class Exaction
     }
 
     /**
-     * Get photos
+     * Get photos.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -415,7 +414,7 @@ class Exaction
     }
 
     /**
-     * Set image
+     * Set image.
      *
      * @param Photo $image
      *
@@ -429,7 +428,7 @@ class Exaction
     }
 
     /**
-     * Get image
+     * Get image.
      *
      * @return Photo
      */
@@ -439,50 +438,50 @@ class Exaction
     }
 
     /**
-     * Set startingDate
+     * Set start.
      *
-     * @param \DateTime $startingDate
+     * @param \DateTime $start
      *
      * @return Exaction
      */
-    public function setStartingDate($startingDate)
+    public function setStart($start)
     {
-        $this->startingDate = $startingDate;
+        $this->start = $start;
 
         return $this;
     }
 
     /**
-     * Get startingDate
+     * Get start.
      *
      * @return \DateTime
      */
-    public function getStartingDate()
+    public function getStart()
     {
-        return $this->startingDate;
+        return $this->start;
     }
 
     /**
-     * Set endingDate
+     * Set end.
      *
-     * @param \DateTime $endingDate
+     * @param \DateTime $end
      *
      * @return Exaction
      */
-    public function setEndingDate($endingDate)
+    public function setEnd($end)
     {
-        $this->endingDate = $endingDate;
+        $this->end = $end;
 
         return $this;
     }
 
     /**
-     * Get endingDate
+     * Get end.
      *
      * @return \DateTime
      */
-    public function getEndingDate()
+    public function getEnd()
     {
-        return $this->endingDate;
+        return $this->end;
     }
 }

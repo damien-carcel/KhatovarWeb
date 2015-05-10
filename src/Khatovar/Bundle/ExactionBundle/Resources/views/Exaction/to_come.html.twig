@@ -1,0 +1,32 @@
+{% extends 'KhatovarWebBundle::layout.html.twig' %}
+
+{% block inarticle %}
+    <p>
+        Vous trouverez ici toutes les fêtes médiévales où vous pourrez nous rencontrer durant la <strong>saison {{ date('+2months')|date('Y') }}</strong>.
+    </p>
+    <p>
+        Nous mettons à jour régulièrement cette page au fur et à mesure des réponses des organisateurs.
+    </p>
+
+    {% for exaction in future_exactions %}
+        <h1>
+            {{ exaction.name }}, {{ exaction.place }}, {{ exaction.start|normalize_date(exaction.end) }}
+        </h1>
+        <div class="container flex-container">
+            <div class="programmation">
+                {{ exaction.map }}
+            </div>
+            <div class="programmation">
+                {% if exaction.introduction is defined %}
+                    <p>{{ exaction.introduction }}</p>
+                {% endif %}
+
+                {% if exaction.links is defined %}
+                    {% for link in exation.link %}
+                        <p><a href="{{ link.link }}" rel="external" title="">{{ link.label }}</a></p>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

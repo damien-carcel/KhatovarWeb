@@ -29,10 +29,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Class ScheduleController
+ * Exaction controller.
  *
- * @author  Damien Carcel (https://github.com/damien-carcel)
- * @package Khatovar\Bundle\ScheduleBundle\Controller
+ * @author Damien Carcel (https://github.com/damien-carcel)
  */
 class ExactionController extends Controller
 {
@@ -43,7 +42,13 @@ class ExactionController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('KhatovarExactionBundle:Exaction:index.html.twig');
+        $yearLister = $this->get('khatovar.exaction.lister.year');
+        $activeYears = $yearLister->getSortedYears();
+
+        return $this->render(
+            'KhatovarExactionBundle:Exaction:index.html.twig',
+            array('active_years' => $activeYears)
+        );
     }
 
     /**
@@ -53,7 +58,14 @@ class ExactionController extends Controller
      */
     public function toComeAction()
     {
-        return $this->render('KhatovarExactionBundle:Exaction:to_come.html.twig');
+        $entityManager = $this->getDoctrine()->getRepository('KhatovarExactionBundle:Exaction');
+
+        $futureExactions = $entityManager->getFutureExactions();
+
+        return $this->render(
+            'KhatovarExactionBundle:Exaction:to_come.html.twig',
+            array('future_exactions' => $futureExactions)
+        );
     }
 
     /**
@@ -65,7 +77,14 @@ class ExactionController extends Controller
      */
     public function viewByYearAction($year)
     {
-        return $this->render('KhatovarExactionBundle:Exaction:view_by_year.html.twig');
+        $entityManager = $this->getDoctrine()->getRepository('KhatovarExactionBundle:Exaction');
+
+        $exactions = $entityManager->getExactionsByYear($year);
+
+        return $this->render(
+            'KhatovarExactionBundle:Exaction:view_by_year.html.twig',
+            array('exactions' => $exactions)
+        );
     }
 
     /**
