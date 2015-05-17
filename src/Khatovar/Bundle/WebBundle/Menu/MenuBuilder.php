@@ -117,7 +117,7 @@ class MenuBuilder
             'schedule',
             array(
                 'label' => 'Exactions à venir',
-                'route' => 'khatovar_exaction_to_come'
+                'route' => 'khatovar_web_exaction_to_come'
             )
         );
 
@@ -125,7 +125,7 @@ class MenuBuilder
             'references',
             array(
                 'label' => 'Exactions passées',
-                'route' => 'khatovar_exaction_past'
+                'route' => 'khatovar_web_exaction_past'
             )
         );
 
@@ -134,7 +134,7 @@ class MenuBuilder
                 $year,
                 array(
                     'label' => 'Saison ' . $year,
-                    'route' => 'khatovar_exaction_list_by_year',
+                    'route' => 'khatovar_web_exaction_list_by_year',
                     'routeParameters' => array('year' => $year)
                 )
             );

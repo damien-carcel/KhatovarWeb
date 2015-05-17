@@ -1,6 +1,11 @@
 {% extends 'KhatovarWebBundle::layout.html.twig' %}
 
 {% block inarticle %}
+    {% if is_granted('ROLE_EDITOR') %}
+        <a href="{{ path('khatovar_web_exaction_add') }}">Ajouter une nouvelle exaction</a>
+        <hr />
+    {% endif %}
+
     <p>
         Vous trouverez ici toutes les fêtes médiévales où vous pourrez nous rencontrer durant la <strong>saison {{ date('+2months')|date('Y') }}</strong>.
     </p>
@@ -12,9 +17,18 @@
         <h1>
             {{ exaction.name }}, {{ exaction.place }}, {{ exaction.start|normalize_date(exaction.end) }}
         </h1>
+
+        {% if is_granted('ROLE_EDITOR') %}
+            <a href="{{ path('khatovar_web_exaction_edit', {'exaction': exaction.id}) }}">Éditer</a>
+            |
+            <a href="{{ path('khatovar_web_exaction_remove', {'exaction': exaction.id}) }}">Supprimer</a>
+        {% endif %}
+
         <div class="container flex-container">
             <div class="programmation">
-                {{ exaction.map }}
+                {% autoescape false %}
+                    {{ exaction.map }}
+                {% endautoescape %}
             </div>
             <div class="programmation">
                 {% if exaction.introduction is defined %}
@@ -22,8 +36,8 @@
                 {% endif %}
 
                 {% if exaction.links is defined %}
-                    {% for link in exation.link %}
-                        <p><a href="{{ link.link }}" rel="external" title="">{{ link.label }}</a></p>
+                    {% for link in exaction.links %}
+                        <p><a href="{{ link }}" rel="external" title="">{{ link }}</a></p>
                     {% endfor %}
                 {% endif %}
             </div>

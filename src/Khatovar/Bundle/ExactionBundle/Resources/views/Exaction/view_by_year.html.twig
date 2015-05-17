@@ -1,11 +1,22 @@
 {% extends 'KhatovarWebBundle::layout.html.twig' %}
 
 {% block inarticle %}
+    {% if is_granted('ROLE_EDITOR') %}
+        <a href="{{ path('khatovar_web_exaction_add') }}">Ajouter une nouvelle exaction</a>
+        <hr />
+    {% endif %}
+
     {% for exaction in exactions %}
+        <h1>
+            {{ exaction.name }}, {{ exaction.place }}, {{ exaction.start|normalize_date(exaction.end) }}
+        </h1>
+        {% if is_granted('ROLE_EDITOR') %}
+            <a href="{{ path('khatovar_web_exaction_edit', {'exaction': exaction.id}) }}">Éditer</a>
+            |
+            <a href="{{ path('khatovar_web_exaction_remove', {'exaction': exaction.id}) }}">Supprimer</a>
+        {% endif %}
+
         {% if exaction.onlyPhotos %}
-            <h1>
-                {{ exaction.name }}, {{ exaction.place }}, {{ exaction.start|normalize_date(exaction.end) }}
-            </h1>
             <div class="container">
                 <div class="cycle-slideshow" data-cycle-slides="> a"  data-cycle-center-horz=true data-cycle-center-vert=true>
                     {% autoescape false %}
@@ -16,9 +27,6 @@
                 </div>
             </div>
         {% else %}
-            <h1>
-                {{ exaction.name }}, {{ exaction.place }}, {{ exaction.start|normalize_date(exaction.end) }}
-            </h1>
             <div class="container flex-container">
                 <div class="photo_exactions">
                     {% autoescape false %}

@@ -123,9 +123,7 @@ class PhotoType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'Khatovar\Bundle\PhotoBundle\Entity\Photo'
-        ));
+        $resolver->setDefaults(array('data_class' => 'Khatovar\Bundle\PhotoBundle\Entity\Photo'));
     }
 
     /**
@@ -133,6 +131,6 @@ class PhotoType extends AbstractType
      */
     public function getName()
     {
-        return 'khatovar_webbundle_photo';
+        return 'khatovar_bundle_photobundle_photo';
     }
 }

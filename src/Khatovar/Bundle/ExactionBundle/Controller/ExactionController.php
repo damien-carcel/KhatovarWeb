@@ -25,6 +25,7 @@ namespace Khatovar\Bundle\ExactionBundle\Controller;
 
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Khatovar\Bundle\ExactionBundle\Entity\Exaction;
+use Khatovar\Bundle\ExactionBundle\Form\ExactionType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -98,14 +99,38 @@ class ExactionController extends Controller
      */
     public function addAction(Request $request)
     {
-        return $this->render('KhatovarExactionBundle:Exaction:edit.html.twig');
+        $exactionExists = false;
+        $exaction = new Exaction();
+        $form = $this->createForm(new ExactionType($exactionExists), $exaction);
+
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($exaction);
+            $entityManager->flush();
+
+            $this->get('session')->getFlashBag()->add(
+                'notice',
+                'La nouvelle exaction a bien été sauvegardée.'
+            );
+
+            return $this->redirect($this->generateUrl('khatovar_web_exaction_to_come'));
+        }
+
+        return $this->render(
+            'KhatovarExactionBundle:Exaction:edit.html.twig',
+            array(
+                'form'            => $form->createView(),
+                'exaction_exists' => $exactionExists,
+            )
+        );
     }
 
     /**
      * Edit an exaction.
      *
      * @param Exaction $exaction
-     * @param Request $request
+     * @param Request  $request
      *
      * @return \Symfony\Component\HttpFoundation\Response
      *
@@ -113,14 +138,37 @@ class ExactionController extends Controller
      */
     public function editAction(Exaction $exaction, Request $request)
     {
-        return $this->render('KhatovarExactionBundle:Exaction:edit.html.twig');
+        $exactionExists = true;
+        $form = $this->createForm(new ExactionType($exactionExists), $exaction);
+
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($exaction);
+            $entityManager->flush();
+
+            $this->get('session')->getFlashBag()->add(
+                'notice',
+                'L\'exaction a bien été mise à jour.'
+            );
+
+            return $this->redirect($this->generateUrl('khatovar_web_exaction_to_come'));
+        }
+
+        return $this->render(
+            'KhatovarExactionBundle:Exaction:edit.html.twig',
+            array(
+                'form'            => $form->createView(),
+                'exaction_exists' => $exactionExists,
+            )
+        );
     }
 
     /**
      * Remove an exaction.
      *
      * @param Exaction $exaction
-     * @param Request $request
+     * @param Request  $request
      *
      * @return \Symfony\Component\HttpFoundation\Response
      *
@@ -128,6 +176,30 @@ class ExactionController extends Controller
      */
     public function removeAction(Exaction $exaction, Request $request)
     {
-        return $this->render('KhatovarExactionBundle:Exaction:remove.html.twig');
+        $form = $this->createFormBuilder()->getForm();
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($exaction);
+            $entityManager->flush();
+
+            $this->get('session')->getFlashBag()->add(
+                'notice',
+                'Exaction supprimée'
+            );
+
+            return $this->redirect(
+                $this->generateUrl('khatovar_web_exaction_to_come')
+            );
+        }
+
+        return $this->render(
+            'KhatovarExactionBundle:Exaction:remove.html.twig',
+            array(
+                'exaction' => $exaction,
+                'form'     => $form->createView(),
+            )
+        );
     }
 }

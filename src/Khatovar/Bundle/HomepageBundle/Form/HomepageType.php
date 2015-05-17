@@ -55,9 +55,7 @@ class HomepageType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'Khatovar\Bundle\HomepageBundle\Entity\Homepage'
-        ));
+        $resolver->setDefaults(array('data_class' => 'Khatovar\Bundle\HomepageBundle\Entity\Homepage'));
     }
 
     /**
@@ -65,6 +63,6 @@ class HomepageType extends AbstractType
      */
     public function getName()
     {
-        return 'khatovar_webbundle_homepagetype';
+        return 'khatovar_bundle_homepagebundle_homepage';
     }
 }

@@ -1,0 +1,15 @@
+{% block form_row %}
+    {% spaceless %}
+        <div class="form-group form-textarea">
+            {{ form_label(form) }}
+            {{ form_errors(form) }}
+            {{ form_widget(form, { 'attr': {'class': 'form-element'} }) }}
+        </div>
+    {% endspaceless %}
+{% endblock form_row %}
+
+{% block text_widget %}
+    {% spaceless %}
+        {{ form_widget(form, { 'attr': {'class': 'form-element form-text'} }) }}
+    {% endspaceless %}
+{% endblock text_widget %}

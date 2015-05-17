@@ -34,7 +34,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Member
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
- * @package Khatovar\Bundle\MemberBundle\Entity
  *
  * @ORM\Table(name="khatovar_web_members")
  * @ORM\Entity(repositoryClass="Khatovar\Bundle\MemberBundle\Entity\MemberRepository")
@@ -61,7 +60,7 @@ class Member
 
     /**
      * @Gedmo\Slug(fields={"name"})
-     * @ORM\Column(length=128, unique=true)
+     * @ORM\Column(name="slug", length=128, unique=true)
      */
     private $slug;
 
@@ -475,7 +474,7 @@ class Member
      *
      * @return boolean
      */
-    public function getActive()
+    public function isActive()
     {
         return $this->active;
     }

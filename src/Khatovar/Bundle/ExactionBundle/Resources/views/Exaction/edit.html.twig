@@ -1,5 +1,67 @@
 {% extends 'KhatovarWebBundle::layout.html.twig' %}
 
-{% block inarticle %}
+{% form_theme form 'KhatovarWebBundle:form:fields.html.twig' %}
 
+{% block inarticle %}
+    <style>
+        article ul {
+            list-style: none;
+        }
+    </style>
+
+    {{ form_start(form) }}
+
+    {{ form_row(form.name) }}
+    {{ form_row(form.place) }}
+    {{ form_row(form.start) }}
+    {{ form_row(form.end) }}
+    {{ form_row(form.map) }}
+    {{ form_row(form.introduction) }}
+
+    <div class="form-group form-textarea">
+        {{ form_label(form.links) }}
+        {{ form_errors(form.links) }}
+        <ul id="link-fields-list" data-prototype="{{ form_widget(form.links.vars.prototype) | e }}">
+            {% for linkField in form.links %}
+                <li>
+                    {{ form_errors(linkField) }}
+                    {{ form_widget(linkField) }}
+                </li>
+            {% endfor %}
+        </ul>
+        <a href="#" id="add-another-link">Add another link</a>
+    </div>
+
+    {% if exaction_exists is defined and exaction_exists %}
+        {{ form_row(form.onlyPhotos) }}
+        {{ form_row(form.abstract) }}
+        {{ form_row(form.image) }}
+        {{ form_row(form.imageStory) }}
+    {% endif %}
+
+    <div class="form-group">
+        {{ form_widget(form.submit, { 'attr': {'class': 'btn btn-default'} }) }}
+    </div>
+
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+
+    <script type="text/javascript">
+        var linkCount = '{{ form.links | length }}';
+
+        jQuery(document).ready(function() {
+            jQuery('#add-another-link').click(function() {
+                var linkList = jQuery('#link-fields-list');
+
+                var newWidget = linkList.attr('data-prototype');
+                newWidget = newWidget.replace(/__name__/g, linkCount);
+                linkCount++;
+
+                var newLi = jQuery('<li></li>').html(newWidget);
+                newLi.appendTo(linkList);
+
+                return false;
+            });
+        })
+    </script>
 {% endblock %}

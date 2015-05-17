@@ -1,5 +1,23 @@
 {% extends 'KhatovarWebBundle::layout.html.twig' %}
 
 {% block inarticle %}
+    <h2>Suppression d'une exaction</h2>
 
+    <p>Êtes-vous certain de vouloir supprimer l'exaction « {{ exaction.name }} » ?</p>
+
+    <div class="form-background">
+
+        <form action="{{ path('khatovar_web_exaction_remove', {'exaction': exaction.id}) }}"
+              method="post"
+              class="button-group"
+              id="form">
+
+            <input type="submit" value="Supprimer" class="btn btn-default" />
+            <a href="{{ path('khatovar_web_exaction_to_come') }}" class="btn btn-default">
+                Annuler
+            </a>
+
+            {{ form_rest(form) }}
+        </form>
+    </div>
 {% endblock %}

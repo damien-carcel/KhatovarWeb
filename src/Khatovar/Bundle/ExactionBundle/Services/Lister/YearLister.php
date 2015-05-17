@@ -57,9 +57,12 @@ class YearLister
             ->findAll();
 
         foreach ($exactions as $exaction) {
-            $year = $exaction->getStart()->format('Y');
-            if (!in_array($year, $yearList)) {
-                $yearList[] = $year;
+            $now = new \DateTime();
+            if ($exaction->getStart() < $now) {
+                $year = $exaction->getStart()->format('Y');
+                if (!in_array($year, $yearList)) {
+                    $yearList[] = $year;
+                }
             }
         }
 

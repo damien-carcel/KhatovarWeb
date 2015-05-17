@@ -35,7 +35,6 @@ use Symfony\Component\HttpFoundation\Request;
  * Class MemberController
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
- * @package Khatovar\Bundle\MemberBundle\Controller
  */
 class MemberController extends Controller
 {
@@ -50,13 +49,13 @@ class MemberController extends Controller
             ->getRepository('KhatovarMemberBundle:Member');
 
         $activeMembers = $entityManager->findBy(array('active' => true));
-        $pastMembers = $entityManager->findBy(array('active' => false));
+        $pastMembers   = $entityManager->findBy(array('active' => false));
 
         return $this->render(
             'KhatovarMemberBundle:Member:index.html.twig',
             array(
                 'activeMembers' => $activeMembers,
-                'pastMembers' => $pastMembers
+                'pastMembers'   => $pastMembers
             )
         );
     }
@@ -65,7 +64,9 @@ class MemberController extends Controller
      * Return info about a member.
      *
      * @ParamConverter("member", options={"mapping": {"member_slug": "slug"}})
+     *
      * @param Member $member
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function viewAction(Member $member)
@@ -81,9 +82,9 @@ class MemberController extends Controller
         return $this->render(
             'KhatovarMemberBundle:Member:view.html.twig',
             array(
-                'member' => $member,
+                'member'      => $member,
                 'currentUser' => $currentUser,
-                'photos' => $photos
+                'photos'      => $photos,
             )
         );
     }
@@ -92,7 +93,9 @@ class MemberController extends Controller
      * Add a new member's page.
      *
      * @param Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     *
      * @Secure(roles="ROLE_EDITOR")
      */
     public function addAction(Request $request)
@@ -108,13 +111,12 @@ class MemberController extends Controller
             $entityManager->persist($member);
             $entityManager->flush();
 
-            $this->get('session')->getFlashBag()
-                ->add(
-                    'notice',
-                    'La page du membre ' . $member->getName()
-                    . ' a bien été créée. Vous pouvez maintenant ajouter'
-                    . ' des photos et choisir une photo de profil.'
-                );
+            $this->get('session')->getFlashBag()->add(
+                'notice',
+                'La page du membre ' . $member->getName() .
+                ' a bien été créée. Vous pouvez maintenant ajouter' .
+                ' des photos et choisir une photo de profil.'
+            );
 
             return $this->redirect(
                 $this->generateUrl('khatovar_web_members')
@@ -130,9 +132,11 @@ class MemberController extends Controller
     /**
      * Edit a member information.
      *
-     * @param Member $member
+     * @param Member  $member
      * @param Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     *
      * @Secure(roles="ROLE_VIEWER")
      */
     public function editAction(Member $member, Request $request)
@@ -140,7 +144,7 @@ class MemberController extends Controller
         $form = $this->createForm(new MemberType(), $member);
 
         $form->add('portrait', 'entity', array(
-                'label' => 'Photo de profil :',
+                'label' => 'Photo de profil',
                 'class' => 'Khatovar\Bundle\PhotoBundle\Entity\Photo',
                 'property' => 'alt',
                 'query_builder' => function (EntityRepository $er) use ($member) {
@@ -156,9 +160,7 @@ class MemberController extends Controller
             if ($currentUser != $member->getOwner()) {
                 return $this->render(
                     'KhatovarMemberBundle:Member:edit.html.twig',
-                    array(
-                        'not_a_member' => 1
-                    )
+                    array('not_a_member' => 1)
                 );
             }
         }
@@ -183,21 +185,25 @@ class MemberController extends Controller
 
         return $this->render(
             'KhatovarMemberBundle:Member:edit.html.twig',
-            array('form' => $form->createView(), 'edit' => 'is_defined')
+            array(
+                'form' => $form->createView(),
+                'edit' => 'is_defined',
+            )
         );
     }
 
     /**
      * Delete a member's page.
      *
-     * @param Member $member
+     * @param Member  $member
      * @param Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     *
      * @Secure(roles="ROLE_EDITOR")
      */
     public function removeAction(Member $member, Request $request)
     {
-        // As it is only to delete the photo, we just need an empty form
         $form = $this->createFormBuilder()->getForm();
         $form->handleRequest($request);
 
@@ -216,7 +222,10 @@ class MemberController extends Controller
 
         return $this->render(
             'KhatovarMemberBundle:Member:remove.html.twig',
-            array('member' => $member, 'form' => $form->createView())
+            array(
+                'member' => $member,
+                'form'   => $form->createView(),
+            )
         );
     }
 }

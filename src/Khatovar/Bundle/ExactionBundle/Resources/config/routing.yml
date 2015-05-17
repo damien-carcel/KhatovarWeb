@@ -1,29 +1,29 @@
-khatovar_exaction_past:
-    path:     /references
-    defaults: { _controller: KhatovarExactionBundle:Exaction:index }
-
-khatovar_exaction_to_come:
+khatovar_web_exaction_to_come:
     path:     /programmation
     defaults: { _controller: KhatovarExactionBundle:Exaction:toCome }
 
-khatovar_exaction_list_by_year:
+khatovar_web_exaction_past:
+    path:     /references
+    defaults: { _controller: KhatovarExactionBundle:Exaction:index }
+
+khatovar_web_exaction_list_by_year:
     path:     /references/{year}
     defaults: { _controller: KhatovarExactionBundle:Exaction:viewByYear }
     requirements:
         year: \d+
 
-khatovar_exaction_add:
-    path:     /references/add
+khatovar_web_exaction_add:
+    path:     /exaction/add
     defaults: { _controller: KhatovarExactionBundle:Exaction:add }
 
-khatovar_exaction_edit:
-    path:     /references/edit/{exaction}
+khatovar_web_exaction_edit:
+    path:     /exaction/edit/{exaction}
     defaults: { _controller: KhatovarExactionBundle:Exaction:edit }
     requirements:
         exaction: \d+
 
-khatovar_exaction_remove:
-    path:     /references/remove/{exaction}
+khatovar_web_exaction_remove:
+    path:     /exaction/remove/{exaction}
     defaults: { _controller: KhatovarExactionBundle:Exaction:remove }
     requirements:
         exaction: \d+

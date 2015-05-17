@@ -44,12 +44,9 @@ class ExactionRepository extends EntityRepository
     {
         $query = $this->createQueryBuilder('pe')
             ->where('pe.start >= :start AND pe.start <= :end')
-            ->setParameters(new ArrayCollection(
-                array(
-                    'start', new \DateTime($year . '-01-01'),
-                    'end', new \DateTime($year . '-12-31')
-                    )
-            ))->getQuery();
+            ->setParameter('start', new \DateTime($year . '-01-01'))
+            ->setParameter('end', new \DateTime($year . '-12-31'))
+            ->getQuery();
 
         return $query->getResult();
     }

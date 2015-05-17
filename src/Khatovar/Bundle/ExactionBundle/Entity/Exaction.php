@@ -75,6 +75,7 @@ class Exaction
      * @var \DateTime
      *
      * @ORM\Column(name="start", type="datetime")
+     * @Assert\NotBlank()
      */
     protected $start;
 
@@ -84,6 +85,7 @@ class Exaction
      * @var \DateTime
      *
      * @ORM\Column(name="$end", type="datetime")
+     * @Assert\NotBlank()
      */
     protected $end;
 
@@ -110,7 +112,7 @@ class Exaction
      *
      * @var string
      *
-     * @ORM\Column(name="introduction", type="text")
+     * @ORM\Column(name="introduction", type="text", nullable=true)
      */
     protected $introduction;
 
@@ -119,7 +121,7 @@ class Exaction
      *
      * @var array
      *
-     * @ORM\Column(name="links", type="array")
+     * @ORM\Column(name="links", type="array", nullable=true)
      */
     protected $links;
 
@@ -136,7 +138,7 @@ class Exaction
      *
      * @var string
      *
-     * @ORM\Column(name="abstract", type="text")
+     * @ORM\Column(name="abstract", type="text", nullable=true)
      */
     protected $abstract;
 
@@ -145,7 +147,7 @@ class Exaction
      *
      * @var string
      *
-     * @ORM\Column(name="image_story", type="text")
+     * @ORM\Column(name="image_story", type="text", nullable=true)
      */
     protected $imageStory;
 
@@ -156,7 +158,7 @@ class Exaction
      *
      * @ORM\Column(name="only_photos", type="boolean")
      */
-    protected $onlyPhotos;
+    protected $onlyPhotos = false;
 
     /**
      * Allow to save only the ID the entity in database as a string
