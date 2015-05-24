@@ -69,7 +69,7 @@ class ExactionType extends AbstractType
                     'type'               => 'text',
                     'allow_add'          => true,
                     'allow_delete'       => true,
-                    'cascade_validation' => true
+                    'cascade_validation' => true,
                 )
             )
         ;

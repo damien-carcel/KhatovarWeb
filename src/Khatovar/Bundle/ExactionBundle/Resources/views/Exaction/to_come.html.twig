@@ -15,7 +15,7 @@
 
     {% for exaction in future_exactions %}
         <h1>
-            {{ exaction.name }}, {{ exaction.place }}, {{ exaction.start|normalize_date(exaction.end) }}
+            {{ exaction.name }}, {{ exaction.place }}, {{ khatovar_normalize_date(exaction.start, exaction.end) }}
         </h1>
 
         {% if is_granted('ROLE_EDITOR') %}
@@ -27,17 +27,22 @@
         <div class="container flex-container">
             <div class="programmation">
                 {% autoescape false %}
-                    {{ exaction.map }}
+                {{ exaction.map }}
                 {% endautoescape %}
             </div>
             <div class="programmation">
                 {% if exaction.introduction is defined %}
                     <p>{{ exaction.introduction }}</p>
+                    <hr />
                 {% endif %}
 
                 {% if exaction.links is defined %}
                     {% for link in exaction.links %}
-                        <p><a href="{{ link }}" rel="external" title="">{{ link }}</a></p>
+                        {% if link is not empty %}
+                            {% autoescape false %}
+                            <p>{{ khatovar_normalize_link(link) }}</p>
+                            {% endautoescape %}
+                        {% endif %}
                     {% endfor %}
                 {% endif %}
             </div>

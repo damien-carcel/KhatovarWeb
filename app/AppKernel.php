@@ -11,9 +11,7 @@ use Symfony\Component\Config\Loader\LoaderInterface;
 class AppKernel extends Kernel
 {
     /**
-     * Register the application bundles.
-     *
-     * @return array
+     * {@inheritdoc}
      */
     public function registerBundles()
     {
@@ -44,9 +42,7 @@ class AppKernel extends Kernel
     }
 
     /**
-     * Register the container configuration.
-     *
-     * @param LoaderInterface $loader
+     * {@inheritdoc}
      */
     public function registerContainerConfiguration(LoaderInterface $loader)
     {

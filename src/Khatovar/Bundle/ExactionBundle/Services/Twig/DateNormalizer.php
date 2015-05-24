@@ -31,15 +31,13 @@ namespace Khatovar\Bundle\ExactionBundle\Services\Twig;
 class DateNormalizer extends \Twig_Extension
 {
     /**
-     * Return the filters defined in this class.
-     *
-     * @return array
+     * {@inheritdoc}
      */
-    public function getFilters()
+    public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFilter(
-                'normalize_date',
+            new \Twig_SimpleFunction(
+                'khatovar_normalize_date',
                 array($this, 'normalize'),
                 array('is_sage' => array('html'))
             ),
@@ -56,26 +54,78 @@ class DateNormalizer extends \Twig_Extension
      */
     public function normalize(\DateTime $start, \DateTime $end)
     {
-        if ($start !== $end) {
+        if ($start->format('Y-m-d') !== $end->format('Y-m-d')) {
             if ($start->format('m') !== $end->format('m')) {
-                $normalizedDate = $start->format('j F') . ' au ' . $end->format('j F');
+                $normalizedDate = sprintf(
+                    '%s %s au %s %s',
+                    $this->getDay($start),
+                    $this->translateMonth($start),
+                    $this->getDay($end),
+                    $this->translateMonth($end)
+                );
             } else {
-                $normalizedDate = $start->format('j') . ' au ' . $end->format('j F');
+                $normalizedDate = sprintf(
+                    '%s au %s %s',
+                    $this->getDay($start),
+                    $this->getDay($end),
+                    $this->translateMonth($end)
+                );
             }
         } else {
-            $normalizedDate = $start->format('j F');
+            $normalizedDate = sprintf('%s %s', $this->getDay($start), $this->translateMonth($start));
         }
 
         return $normalizedDate;
     }
 
     /**
-     * Return the name of the extension.
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function getName()
     {
         return 'khatovar_date_normalizer';
+    }
+
+    /**
+     * Return a formatted DateTime day.
+     *
+     * @param \DateTime $date
+     *
+     * @return string
+     */
+    protected function getDay(\DateTime $date)
+    {
+        if ($date->format('d') == '1') {
+            return '1er';
+        } else {
+            return $date->format('d');
+        }
+    }
+
+    /**
+     * Return the french translation of a DateTime month.
+     *
+     * @param \DateTime $date
+     *
+     * @return string
+     */
+    protected function translateMonth(\DateTime $date)
+    {
+        $frenchMonths = array(
+            'janvier',
+            'février',
+            'mars',
+            'avril',
+            'mai',
+            'juin',
+            'juillet',
+            'août',
+            'septembre',
+            'octobre',
+            'novembre',
+            'décembre'
+        );
+
+        return $frenchMonths[((int) $date->format('m')) - 1];
     }
 }
