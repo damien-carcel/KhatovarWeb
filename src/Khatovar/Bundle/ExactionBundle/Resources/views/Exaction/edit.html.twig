@@ -26,6 +26,7 @@
                 <li>
                     {{ form_errors(linkField) }}
                     {{ form_widget(linkField) }}
+                    <a href="#" class="remove-closest-link">Remove</a>
                 </li>
             {% endfor %}
         </ul>
@@ -49,16 +50,22 @@
     <script type="text/javascript">
         var linkCount = '{{ form.links | length }}';
 
-        jQuery(document).ready(function() {
-            jQuery('#add-another-link').click(function() {
-                var linkList = jQuery('#link-fields-list');
+        $(function() {
+            $('#add-another-link').click(function() {
+                var linkList = $('#link-fields-list');
 
                 var newWidget = linkList.attr('data-prototype');
-                newWidget = newWidget.replace(/__name__/g, linkCount);
                 linkCount++;
+                newWidget = newWidget.replace(/__name__/g, linkCount);
 
-                var newLi = jQuery('<li></li>').html(newWidget);
+                var newLi = $('<li></li>').html(newWidget);
                 newLi.appendTo(linkList);
+
+                return false;
+            });
+
+            $('.remove-closest-link').click(function(){
+                $(this).closest('li').remove();
 
                 return false;
             });
