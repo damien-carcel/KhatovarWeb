@@ -25,11 +25,12 @@ namespace Khatovar\Bundle\ExactionBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Khatovar\Bundle\ExactionBundle\Validator\Constraints as KhatovarAssert;
 use Khatovar\Bundle\PhotoBundle\Entity\Photo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Exaction entity.s
+ * Exaction entity.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
  *
@@ -122,6 +123,8 @@ class Exaction
      * @var array
      *
      * @ORM\Column(name="links", type="array", nullable=true)
+     * @Assert\NotBlank()
+     * @KhatovarAssert\ExactionLink()
      */
     protected $links;
 
