@@ -36,6 +36,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="khatovar_web_exactions")
  * @ORM\Entity(repositoryClass="Khatovar\Bundle\ExactionBundle\Entity\ExactionRepository")
+ * @KhatovarAssert\Dates()
  */
 class Exaction
 {
