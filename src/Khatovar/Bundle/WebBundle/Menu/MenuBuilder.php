@@ -147,18 +147,8 @@ class MenuBuilder
 
         $menu->addChild(
             'links',
-            array('label' => 'Contacts', 'route' => 'khatovar_web_links')
+            array('label' => 'Contact', 'route' => 'khatovar_web_contact')
         );
-        foreach ($this->contacts as $key => $name) {
-            $menu['links']->addChild(
-                $key,
-                array(
-                    'label' => $name,
-                    'route' => 'khatovar_web_links',
-                    'routeParameters' => array('contact' => $key)
-                )
-            );
-        }
 
         return $menu;
     }

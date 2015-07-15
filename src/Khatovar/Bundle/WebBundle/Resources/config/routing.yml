@@ -11,8 +11,6 @@ khatovar_web_fight:
     requirements:
         pratique: \w*
 
-khatovar_web_links:
-    path:       /liens/{contact}
-    defaults:   { _controller: KhatovarWebBundle:Default:links, contact: 'liste' }
-    requirements:
-        contact: \w*
+khatovar_web_contact:
+    path:       /contact
+    defaults:   { _controller: KhatovarWebBundle:Default:contact }

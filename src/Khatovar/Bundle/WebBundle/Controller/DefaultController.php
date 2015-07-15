@@ -60,34 +60,10 @@ class DefaultController extends Controller
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function scheduleAction()
+    public function contactAction()
     {
         return $this->render(
-            'KhatovarWebBundle:Default:programmation.html.twig'
-        );
-    }
-
-    /**
-     * @param int $year
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function referencesAction($year)
-    {
-        return $this->render(
-            'KhatovarWebBundle:Default:reference-' . $year . '.html.twig'
-        );
-    }
-
-    /**
-     * @param string $contact
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function linksAction($contact)
-    {
-        return $this->render(
-            'KhatovarWebBundle:Default:liens-' . $contact . '.html.twig'
+            'KhatovarWebBundle:Default:contact.html.twig'
         );
     }
 }
