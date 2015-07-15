@@ -51,27 +51,34 @@
     {{ form_end(form) }}
 
     <script type="text/javascript">
-        var linkCount = '{{ form.links | length }}';
+        var linkCount   = 0;
+        var $linkList   = $('#link-fields-list');
+        var linkKeys    = {{ form.links|keys|json_encode }};
+        var $addLinkTag = $('#add-another-link');
 
         $(function() {
-            $('#add-another-link').click(function() {
-                var linkList = $('#link-fields-list');
+            $addLinkTag.click(function(e) {
+                e.preventDefault();
 
-                var newWidget = linkList.attr('data-prototype');
-                linkCount++;
+                if (-1 !== $.inArray(linkCount, linkKeys)) {
+                    linkCount++;
+                }
+
+                var newWidget = $linkList.attr('data-prototype');
                 newWidget = newWidget.replace(/__name__/g, linkCount);
 
-                var newLi = $('<li></li>').html(newWidget);
-                newLi.appendTo(linkList);
+                var newLink = $('<li></li>').html(newWidget).append('<a href="#" class="remove-closest-link">Remove</a>');
+                newLink.appendTo($linkList);
 
+                linkCount++;
                 return false;
             });
 
-            $('.remove-closest-link').click(function(){
+            $(document).on('click', '.remove-closest-link', function(){
                 $(this).closest('li').remove();
 
                 return false;
             });
-        })
+        });
     </script>
 {% endblock %}
