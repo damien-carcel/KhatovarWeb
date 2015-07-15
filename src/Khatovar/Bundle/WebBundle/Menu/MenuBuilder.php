@@ -23,6 +23,7 @@
 
 namespace Khatovar\Bundle\WebBundle\Menu;
 
+use Khatovar\Bundle\ExactionBundle\Services\Lister\YearLister;
 use Knp\Menu\FactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -34,7 +35,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class MenuBuilder
 {
-    private $performances = array(
+    /** @var array */
+    protected $performances = array(
         'introduction' => 'Introduction',
         'combat' => 'Combat',
         'campement' => 'Vie de camp',
@@ -47,25 +49,27 @@ class MenuBuilder
         'calligraphie' => 'Calligraphie'
     );
 
-    private $contacts = array(
+    /** @var array */
+    protected $contacts = array(
         'contact' => 'Qui sommes-nous ?',
         'allies' => 'Nos alliés',
         'fournisseurs' => 'Nos fournisseurs'
     );
 
-    /**
-     * @var FactoryInterface
-     */
-    private $factoryInterface;
+    /** @var array */
+    protected $exactionYears;
+
+    /** @var FactoryInterface */
+    protected $factoryInterface;
 
     /**
-     * Create an instance of MenuBuilder.
-     *
      * @param FactoryInterface $factoryInterface
+     * @param YearLister       $lister
      */
-    public function __construct(FactoryInterface $factoryInterface)
+    public function __construct(FactoryInterface $factoryInterface, YearLister $lister)
     {
         $this->factoryInterface = $factoryInterface;
+        $this->exactionYears    = $lister->getSortedYears();
     }
 
     /**
@@ -113,7 +117,7 @@ class MenuBuilder
             'schedule',
             array(
                 'label' => 'Exactions à venir',
-                'route' => 'khatovar_web_schedule'
+                'route' => 'khatovar_web_exaction_to_come'
             )
         );
 
@@ -121,16 +125,17 @@ class MenuBuilder
             'references',
             array(
                 'label' => 'Exactions passées',
-                'route' => 'khatovar_web_references'
+                'route' => 'khatovar_web_exaction_past'
             )
         );
-        foreach (range(date('Y'), 2009) as $ref) {
+
+        foreach ($this->exactionYears as $year) {
             $menu['references']->addChild(
-                $ref,
+                $year,
                 array(
-                    'label' => 'Saison ' . $ref,
-                    'route' => 'khatovar_web_references',
-                    'routeParameters' => array('year' => $ref)
+                    'label' => 'Saison ' . $year,
+                    'route' => 'khatovar_web_exaction_list_by_year',
+                    'routeParameters' => array('year' => $year)
                 )
             );
         }
@@ -142,18 +147,8 @@ class MenuBuilder
 
         $menu->addChild(
             'links',
-            array('label' => 'Contacts', 'route' => 'khatovar_web_links')
+            array('label' => 'Contact', 'route' => 'khatovar_web_contact')
         );
-        foreach ($this->contacts as $key => $name) {
-            $menu['links']->addChild(
-                $key,
-                array(
-                    'label' => $name,
-                    'route' => 'khatovar_web_links',
-                    'routeParameters' => array('contact' => $key)
-                )
-            );
-        }
 
         return $menu;
     }

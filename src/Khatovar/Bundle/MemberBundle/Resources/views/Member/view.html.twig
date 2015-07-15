@@ -49,9 +49,9 @@
                 </li>
             </ul>
             <div class="container">
-                {{ (member.portrait ? member.portrait.getWebPath() : asset('bundles/khatovarweb/photos/logonoir.jpg'))|link_album(asset('bundles/khatovarweb/images/camera.png'), 'album-photo') }}
+                {{ (member.portrait ? member.portrait.webPath : asset('bundles/khatovarweb/photos/logonoir.jpg'))|link_album(asset('bundles/khatovarweb/images/camera.png'), 'album-photo') }}
                 {% for photo in photos %}
-                    {{ photo.getWebPath()|link_picture('', 'album-photo') }}
+                    {{ photo.webPath|link_picture('', 'album-photo') }}
                 {% endfor %}
             </div>
         </div>

@@ -32,7 +32,6 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  * Class MemberType
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
- * @package Khatovar\Bundle\MemberBundle\Form
  */
 class MemberType extends AbstractType
 {
@@ -43,19 +42,19 @@ class MemberType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', 'text', array('label' => 'Nom :'))
-            ->add('rank', 'text', array('label' => 'Rang :'))
-            ->add('quote', 'text', array('label' => 'Citation :'))
-            ->add('skill', 'text', array('label' => 'Compétences :'))
-            ->add('age', 'text', array('label' => 'Âge :'))
-            ->add('size', 'text', array('label' => 'Taille :'))
-            ->add('weight', 'text', array('label' => 'Poids :'))
-            ->add('strength', 'text', array('label' => 'Point fort :'))
-            ->add('weakness', 'text', array('label' => 'Point faible :'))
-            ->add('story', 'textarea', array('label' => 'Histoire personnelle :'))
-            ->add('active', 'checkbox', array('label' => 'Membre actif :', 'required' => false))
+            ->add('name', 'text', array('label' => 'Nom'))
+            ->add('rank', 'text', array('label' => 'Rang'))
+            ->add('quote', 'text', array('label' => 'Citation'))
+            ->add('skill', 'text', array('label' => 'Compétences'))
+            ->add('age', 'text', array('label' => 'Âge'))
+            ->add('size', 'text', array('label' => 'Taille'))
+            ->add('weight', 'text', array('label' => 'Poids'))
+            ->add('strength', 'text', array('label' => 'Point fort'))
+            ->add('weakness', 'text', array('label' => 'Point faible'))
+            ->add('story', 'textarea', array('label' => 'Histoire personnelle'))
+            ->add('active', 'checkbox', array('label' => 'Membre actif', 'required' => false))
             ->add('owner', 'entity', array(
-                    'label' => 'Utilisateur lié :',
+                    'label' => 'Utilisateur lié',
                     'class' => 'Carcel\UserBundle\Entity\User',
                     'property' => 'username',
                     'required' => false,
@@ -73,9 +72,7 @@ class MemberType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'Khatovar\Bundle\MemberBundle\Entity\Member'
-        ));
+        $resolver->setDefaults(array('data_class' => 'Khatovar\Bundle\MemberBundle\Entity\Member'));
     }
 
     /**
@@ -83,6 +80,6 @@ class MemberType extends AbstractType
      */
     public function getName()
     {
-        return 'khatovar_webbundle_member';
+        return 'khatovar_bundle_memberbundle_member';
     }
 }

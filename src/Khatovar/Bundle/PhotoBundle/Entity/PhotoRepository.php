@@ -45,6 +45,7 @@ class PhotoRepository extends EntityRepository
         $query = $this->createQueryBuilder('p')
             ->where('p.homepage IS NULL')
             ->andWhere('p.member IS NULL')
+            ->andWhere('p.exaction IS NULL')
             ->getQuery();
 
         return $query->getResult();

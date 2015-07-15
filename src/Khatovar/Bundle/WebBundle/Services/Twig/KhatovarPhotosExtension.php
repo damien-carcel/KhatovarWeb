@@ -196,10 +196,38 @@ class KhatovarPhotosExtension extends \Twig_Extension
         }
 
         $text = str_replace("\n", "</p>\n[break]<p>", $text);
+
+        if (!empty($photos)) {
+            $text = $this->addPhotos($text, $photos);
+        }
+
+        return $text;
+    }
+
+    /**
+     * Return the name of the extension.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return 'khatovar_photos_extension';
+    }
+
+    /**
+     * Insert floatings between paragraphs.
+     *
+     * @param string $text
+     * @param array  $photos
+     *
+     * @return string
+     */
+    protected function addPhotos($text, array $photos)
+    {
         $exploded = explode('[break]', $text);
 
         shuffle($photos);
-        $result = $this->addFloat($photos[0], 'right');
+        $textWithPhotos = $this->addFloat($photos[0], 'right');
 
         $currentPhoto = 1;
         $photosCount = count($photos);
@@ -218,11 +246,11 @@ class KhatovarPhotosExtension extends \Twig_Extension
             }
 
             if (strlen($exploded[$p]) > $photoLimit) {
-                $result .= $exploded[$p];
+                $textWithPhotos .= $exploded[$p];
 
                 $remain = strlen(implode(' ', array_slice($exploded, $p+1)));
                 if ($currentPhoto < $photosCount and $remain > $photoLimit + 600) {
-                    $result .= $this->addFloat(
+                    $textWithPhotos .= $this->addFloat(
                         $photos[$currentPhoto],
                         $currentPhoto % 2 ? 'left' : 'right'
                     );
@@ -232,21 +260,11 @@ class KhatovarPhotosExtension extends \Twig_Extension
                 $exploded[$p+1] = $exploded[$p] . $exploded[$p+1];
                 $exploded[$p] = '';
             } else {
-                $result .= $exploded[$p];
+                $textWithPhotos .= $exploded[$p];
             }
         }
 
-        return $result;
-    }
-
-    /**
-     * Return the name of the extension.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return 'khatovar_photos_extension';
+        return $textWithPhotos;
     }
 
     /**

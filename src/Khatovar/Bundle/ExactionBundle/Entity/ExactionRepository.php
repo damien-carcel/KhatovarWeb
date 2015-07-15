@@ -21,49 +21,48 @@
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
-namespace Khatovar\Bundle\WebBundle\Controller;
+namespace Khatovar\Bundle\ExactionBundle\Entity;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\EntityRepository;
 
 /**
- * Class DefaultController
+ * Exaction repository
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
- * @package Khatovar\Bundle\WebBundle\Controller
  */
-class DefaultController extends Controller
+class ExactionRepository extends EntityRepository
 {
     /**
-     * @param int $atelier
+     * Get exactions by year.
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param int $year
+     *
+     * @return Exaction[]
      */
-    public function campAction($atelier)
+    public function getExactionsByYear($year)
     {
-        return $this->render(
-            'KhatovarWebBundle:Default:camp-' . $atelier . '.html.twig'
-        );
+        $query = $this->createQueryBuilder('pe')
+            ->where('pe.start >= :start AND pe.start <= :end')
+            ->setParameter('start', new \DateTime($year . '-01-01'))
+            ->setParameter('end', new \DateTime($year . '-12-31'))
+            ->getQuery();
+
+        return $query->getResult();
     }
 
     /**
-     * @param string $pratique
+     * Get all exactions to come.
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Exaction[]
      */
-    public function fightAction($pratique)
+    public function getFutureExactions()
     {
-        return $this->render(
-            'KhatovarWebBundle:Default:combat-' . $pratique . '.html.twig'
-        );
-    }
+        $query = $this->createQueryBuilder('pf')
+            ->where('pf.start > :start')
+            ->setParameter('start', new \DateTime())
+            ->getQuery();
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function contactAction()
-    {
-        return $this->render(
-            'KhatovarWebBundle:Default:contact.html.twig'
-        );
+        return $query->getResult();
     }
 }

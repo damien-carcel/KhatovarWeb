@@ -21,49 +21,26 @@
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
-namespace Khatovar\Bundle\WebBundle\Controller;
+namespace Khatovar\Bundle\ExactionBundle\DependencyInjection;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Symfony\Component\DependencyInjection\Loader;
 
 /**
- * Class DefaultController
+ * Khatovar exaction extensions.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
- * @package Khatovar\Bundle\WebBundle\Controller
  */
-class DefaultController extends Controller
+class KhatovarExactionExtension extends Extension
 {
     /**
-     * @param int $atelier
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * {@inheritdoc}
      */
-    public function campAction($atelier)
+    public function load(array $configs, ContainerBuilder $container)
     {
-        return $this->render(
-            'KhatovarWebBundle:Default:camp-' . $atelier . '.html.twig'
-        );
-    }
-
-    /**
-     * @param string $pratique
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function fightAction($pratique)
-    {
-        return $this->render(
-            'KhatovarWebBundle:Default:combat-' . $pratique . '.html.twig'
-        );
-    }
-
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function contactAction()
-    {
-        return $this->render(
-            'KhatovarWebBundle:Default:contact.html.twig'
-        );
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader->load('services.yml');
     }
 }

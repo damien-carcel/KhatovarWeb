@@ -21,49 +21,26 @@
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
-namespace Khatovar\Bundle\WebBundle\Controller;
+namespace Khatovar\Bundle\ExactionBundle\Validator\Constraints;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Validator\Constraint;
 
 /**
- * Class DefaultController
+ * Class Dates
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
- * @package Khatovar\Bundle\WebBundle\Controller
+ *
+ * @Annotation
  */
-class DefaultController extends Controller
+class Dates extends Constraint
 {
-    /**
-     * @param int $atelier
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function campAction($atelier)
-    {
-        return $this->render(
-            'KhatovarWebBundle:Default:camp-' . $atelier . '.html.twig'
-        );
-    }
+    public $message = 'La date de fin de la fête ne peut pas être plus ancienne que la date de début.';
 
     /**
-     * @param string $pratique
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * {@inheritdoc}
      */
-    public function fightAction($pratique)
+    public function getTargets()
     {
-        return $this->render(
-            'KhatovarWebBundle:Default:combat-' . $pratique . '.html.twig'
-        );
-    }
-
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function contactAction()
-    {
-        return $this->render(
-            'KhatovarWebBundle:Default:contact.html.twig'
-        );
+        return self::CLASS_CONSTRAINT;
     }
 }

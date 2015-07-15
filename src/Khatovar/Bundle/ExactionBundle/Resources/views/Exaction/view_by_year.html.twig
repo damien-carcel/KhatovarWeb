@@ -1,0 +1,57 @@
+{% extends 'KhatovarWebBundle::layout.html.twig' %}
+
+{% block inarticle %}
+    {% if is_granted('ROLE_EDITOR') %}
+        <a href="{{ path('khatovar_web_exaction_add') }}">Ajouter une nouvelle exaction</a>
+        <hr />
+    {% endif %}
+
+    {% for exaction in exactions %}
+        <h1>
+            {{ exaction.name }}, {{ exaction.place }}, {{ khatovar_normalize_date(exaction.start, exaction.end) }}
+        </h1>
+        {% if is_granted('ROLE_EDITOR') %}
+            <a href="{{ path('khatovar_web_exaction_edit', {'exaction': exaction.id}) }}">Éditer</a>
+            |
+            <a href="{{ path('khatovar_web_exaction_remove', {'exaction': exaction.id}) }}">Supprimer</a>
+        {% endif %}
+
+        {% if exaction.onlyPhotos %}
+            <div class="container">
+                <div class="cycle-slideshow" data-cycle-slides="> a" data-cycle-center-horz=true data-cycle-center-vert=true>
+                    {% autoescape false %}
+                    {% for photo in exaction.photos %}
+                        {{ asset(photo)|popup_picture('slide') }}
+                    {% endfor %}
+                    {% endautoescape %}
+                </div>
+            </div>
+        {% else %}
+            <div class="container flex-container">
+                <div class="photo_exactions">
+                    {% if exaction.image is not null %}
+                        {% set the_image = exaction.image %}
+                    {% else %}
+                        {% set the_image = asset('bundles/khatovarweb/photos/logonoir.jpg') %}
+                    {% endif %}
+
+                    {% autoescape false %}
+                    {{ the_image|popup_picture('photo') }}
+                    {% endautoescape %}
+                </div>
+                <div class="exactions">
+                    {{ exaction.abstract|add_paragraph_and_photos() }}
+                    <div class="note_exaction">
+                        <b>La photo&nbsp;:</b> {{ exaction.imageStory }}
+                    </div>
+                    <div class="photo_exactions">
+                        {{ (exaction.image ? exaction.image.webPath : asset('bundles/khatovarweb/photos/logonoir.jpg'))|link_album(asset('bundles/khatovarweb/images/camera.png'), 'album-photo') }}
+                        {% for photo in exaction.photos %}
+                            {{ photo|link_picture('', 'album-photo') }}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endblock %}

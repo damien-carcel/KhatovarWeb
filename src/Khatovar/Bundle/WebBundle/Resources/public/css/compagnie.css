@@ -785,3 +785,8 @@ aside .btn {
 a:link.btn, a:visited.btn, a:hover.btn, a:active.btn {
     color: #333;
 }
+
+.form-text {
+    width: 40%;
+    min-width: 200px;
+}

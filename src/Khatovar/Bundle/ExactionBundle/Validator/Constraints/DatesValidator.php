@@ -21,49 +21,28 @@
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
-namespace Khatovar\Bundle\WebBundle\Controller;
+namespace Khatovar\Bundle\ExactionBundle\Validator\Constraints;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Khatovar\Bundle\ExactionBundle\Entity\Exaction;
+use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\ConstraintValidator;
 
 /**
- * Class DefaultController
+ * Class DatesValidator
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
- * @package Khatovar\Bundle\WebBundle\Controller
  */
-class DefaultController extends Controller
+class DatesValidator extends ConstraintValidator
 {
     /**
-     * @param int $atelier
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * {@inheritdoc}
      */
-    public function campAction($atelier)
+    public function validate($exaction, Constraint $constraint)
     {
-        return $this->render(
-            'KhatovarWebBundle:Default:camp-' . $atelier . '.html.twig'
-        );
-    }
-
-    /**
-     * @param string $pratique
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function fightAction($pratique)
-    {
-        return $this->render(
-            'KhatovarWebBundle:Default:combat-' . $pratique . '.html.twig'
-        );
-    }
-
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function contactAction()
-    {
-        return $this->render(
-            'KhatovarWebBundle:Default:contact.html.twig'
-        );
+        if ($exaction instanceof Exaction) {
+            if ($exaction->getStart() > $exaction->getEnd()) {
+                $this->context->buildViolation($constraint->message)->addViolation();
+            }
+        }
     }
 }

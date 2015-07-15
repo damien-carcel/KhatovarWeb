@@ -145,7 +145,7 @@ class PhotoController extends Controller
             $entityManager->flush();
 
             // We resize the uploaded photo according to the HEIGHT constant
-            $resize = $this->get('khatovar.filter.image_resize');
+            $resize = $this->get('khatovar.web.filter.image_resize');
             $resize->imageResize($photo->getAbsolutePath(), self::MAX_HEIGHT);
 
             $this->get('session')->getFlashBag()

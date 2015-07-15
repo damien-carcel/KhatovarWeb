@@ -1,0 +1,20 @@
+parameters:
+    khatovar.exaction.lister.year.class:     Khatovar\Bundle\ExactionBundle\Services\Lister\YearLister
+    khatovar.exaction.normalizer.date.class: Khatovar\Bundle\ExactionBundle\Services\Twig\DateNormalizer
+    khatovar.exaction.normalizer.link.class: Khatovar\Bundle\ExactionBundle\Services\Twig\LinkNormalizer
+
+services:
+    khatovar.exaction.lister.year:
+        class: %khatovar.exaction.lister.year.class%
+        arguments:
+            - '@doctrine.orm.entity_manager'
+
+    khatovar.exaction.normalizer.date:
+        class: %khatovar.exaction.normalizer.date.class%
+        tags:
+            - { name: twig.extension }
+
+    khatovar.exaction.normalizer.link:
+        class: %khatovar.exaction.normalizer.link.class%
+        tags:
+            - { name: twig.extension }

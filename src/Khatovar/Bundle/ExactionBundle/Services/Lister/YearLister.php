@@ -21,49 +21,53 @@
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
-namespace Khatovar\Bundle\WebBundle\Controller;
+namespace Khatovar\Bundle\ExactionBundle\Services\Lister;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Doctrine\ORM\EntityManager;
 
 /**
- * Class DefaultController
+ * Year lister
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
- * @package Khatovar\Bundle\WebBundle\Controller
  */
-class DefaultController extends Controller
+class YearLister
 {
+    protected $entityManager;
+
     /**
-     * @param int $atelier
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param EntityManager $entityManager
      */
-    public function campAction($atelier)
+    public function __construct(EntityManager $entityManager)
     {
-        return $this->render(
-            'KhatovarWebBundle:Default:camp-' . $atelier . '.html.twig'
-        );
+        $this->entityManager = $entityManager;
     }
 
     /**
-     * @param string $pratique
+     * Return a sorted array of all years having exactions, most recent
+     * first.
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return array
      */
-    public function fightAction($pratique)
+    public function getSortedYears()
     {
-        return $this->render(
-            'KhatovarWebBundle:Default:combat-' . $pratique . '.html.twig'
-        );
-    }
+        $yearList = array();
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function contactAction()
-    {
-        return $this->render(
-            'KhatovarWebBundle:Default:contact.html.twig'
-        );
+        $exactions = $this->entityManager
+            ->getRepository('KhatovarExactionBundle:Exaction')
+            ->findAll();
+
+        foreach ($exactions as $exaction) {
+            $now = new \DateTime();
+            if ($exaction->getStart() < $now) {
+                $year = $exaction->getStart()->format('Y');
+                if (!in_array($year, $yearList)) {
+                    $yearList[] = $year;
+                }
+            }
+        }
+
+        arsort($yearList);
+
+        return $yearList;
     }
 }

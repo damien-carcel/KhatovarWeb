@@ -1,8 +1,12 @@
+parameters:
+    khatovar.photo.photo_side.class:  Khatovar\Bundle\PhotoBundle\Services\PhotosSide
+    khatovar.photo.entity_list.class: Khatovar\Bundle\PhotoBundle\Services\EntityList
+
 services:
     khatovar.photo.photo_side:
-        class: Khatovar\Bundle\PhotoBundle\Services\PhotosSide
+        class: %khatovar.photo.photo_side.class%
         arguments: [ "@doctrine.orm.entity_manager" ]
 
     khatovar.photo.entity_list:
-        class: Khatovar\Bundle\PhotoBundle\Services\EntityList
+        class: %khatovar.photo.entity_list.class%
         arguments: [ "@doctrine.orm.entity_manager" ]

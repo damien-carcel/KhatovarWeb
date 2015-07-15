@@ -1,39 +1,50 @@
 parameters:
-#    khatovar_web.example.class: Khatovar\Bundle\WebBundle\Example
+    khatovar.web.twig.khatovar_photos_extension.class: Khatovar\Bundle\WebBundle\Services\Twig\KhatovarPhotosExtension
+    khatovar.web.twig.controller_name_extension.class: Khatovar\Bundle\WebBundle\Services\Twig\ControllerNameExtension
+    khatovar.web.filters.translation.class:            Khatovar\Bundle\WebBundle\Services\Filters\KhatovarTranslation
+    khatovar.web.filter.image_resize.class:                Khatovar\Bundle\WebBundle\Services\Filters\KhatovarImageResize
+    khatovar.web.filters.return_array.class:           Khatovar\Bundle\WebBundle\Services\Filters\KhatovarReturnArray
+    khatovar.web.menu.menu_builder.class:              Khatovar\Bundle\WebBundle\Menu\MenuBuilder
+    khatovar.web.menu.main.class:                      Knp\Menu\MenuItem
 
 services:
-    khatovar.twig.khatovar_photos_extension:
-        class: Khatovar\Bundle\WebBundle\Services\Twig\KhatovarPhotosExtension
+    khatovar.web.twig.khatovar_photos_extension:
+        class: %khatovar.web.twig.khatovar_photos_extension.class%
         tags:
             - { name: twig.extension }
 
-    khatovar.twig.controller_name_extension:
-        class: Khatovar\Bundle\WebBundle\Services\Twig\ControllerNameExtension
+    khatovar.web.twig.controller_name_extension:
+        class: %khatovar.web.twig.controller_name_extension.class%
         calls:
-            - [setRequest, ["@?request="]]
+            - [setRequest, ['@?request=']]
         tags:
             - { name: twig.extension }
 
-    khatovar.filters.translation:
-        class: Khatovar\Bundle\WebBundle\Services\Filters\KhatovarTranslation
-        arguments: [ "@doctrine.orm.entity_manager" ]
+    khatovar.web.filters.translation:
+        class: %khatovar.web.filters.translation.class%
+        arguments:
+            - '@doctrine.orm.entity_manager'
 
-    khatovar.filter.image_resize:
-        class: Khatovar\Bundle\WebBundle\Services\Filters\KhatovarImageResize
+    khatovar.web.filter.image_resize:
+        class: %khatovar.web.filter.image_resize.class%
 
-    khatovar.filters.return_array:
-        class: Khatovar\Bundle\WebBundle\Services\Filters\KhatovarReturnArray
-        arguments: [ "@doctrine.orm.entity_manager" ]
+    khatovar.web.filters.return_array:
+        class: %khatovar.web.filters.return_array.class%
+        arguments:
+            - '@doctrine.orm.entity_manager'
 
-    khatovar.menu.menu_builder:
-        class: Khatovar\Bundle\WebBundle\Menu\MenuBuilder
-        arguments: [ "@knp_menu.factory" ]
+    khatovar.web.menu.menu_builder:
+        class: %khatovar.web.menu.menu_builder.class%
+        arguments:
+            - '@knp_menu.factory'
+            - '@khatovar.exaction.lister.year'
 
-    khatovar.menu.main:
-        class: Knp\Menu\MenuItem
-        factory_service: khatovar.menu.menu_builder
+    khatovar.web.menu.main:
+        class: %khatovar.web.menu.main.class%
+        factory_service: khatovar.web.menu.menu_builder
         factory_method: createMainMenu
-        arguments: ["@request"]
+        arguments:
+            - '@request'
         scope: request
         tags:
             - { name: knp_menu.menu, alias: main }

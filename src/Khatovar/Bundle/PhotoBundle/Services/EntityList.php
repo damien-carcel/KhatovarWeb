@@ -37,14 +37,14 @@ class EntityList
     /**
      * @var EntityManager
      */
-    protected $em;
+    protected $entityManager;
 
     /**
-     * @param EntityManager $em
+     * @param EntityManager $entityManager
      */
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $entityManager)
     {
-        $this->em = $em;
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -55,15 +55,18 @@ class EntityList
     public function getEntirePhotoList()
     {
         return array(
-            'Photos orphelines' => $this->em
+            'Photos orphelines' => $this->entityManager
                 ->getRepository('KhatovarPhotoBundle:Photo')
                 ->getOrphans(),
-            'Pages d\'accueil' => $this->em
+            'Pages d\'accueil'  => $this->entityManager
                 ->getRepository('KhatovarHomepageBundle:Homepage')
                 ->findAll(),
-            'Membres' => $this->em
+            'Membres'           => $this->entityManager
                 ->getRepository('KhatovarMemberBundle:Member')
-                ->findAll()
+                ->findAll(),
+            'Exactions'         => $this->entityManager
+                ->getRepository('KhatovarExactionBundle:Exaction')
+                ->findAll(),
         );
     }
 
@@ -76,7 +79,7 @@ class EntityList
      */
     public function getCurrentMemberPhotos(User $currentUser)
     {
-        $member = $this->em->getRepository('KhatovarMemberBundle:Member')
+        $member = $this->entityManager->getRepository('KhatovarMemberBundle:Member')
             ->findOneBy(array('owner' => $currentUser));
 
         return array(

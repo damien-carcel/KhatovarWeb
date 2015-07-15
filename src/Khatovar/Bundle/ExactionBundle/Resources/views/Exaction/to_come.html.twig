@@ -1,0 +1,51 @@
+{% extends 'KhatovarWebBundle::layout.html.twig' %}
+
+{% block inarticle %}
+    {% if is_granted('ROLE_EDITOR') %}
+        <a href="{{ path('khatovar_web_exaction_add') }}">Ajouter une nouvelle exaction</a>
+        <hr />
+    {% endif %}
+
+    <p>
+        Vous trouverez ici toutes les fêtes médiévales où vous pourrez nous rencontrer durant la <strong>saison {{ date('+2months')|date('Y') }}</strong>.
+    </p>
+    <p>
+        Nous mettons à jour régulièrement cette page au fur et à mesure des réponses des organisateurs.
+    </p>
+
+    {% for exaction in future_exactions %}
+        <h1>
+            {{ exaction.name }}, {{ exaction.place }}, {{ khatovar_normalize_date(exaction.start, exaction.end) }}
+        </h1>
+
+        {% if is_granted('ROLE_EDITOR') %}
+            <a href="{{ path('khatovar_web_exaction_edit', {'exaction': exaction.id}) }}">Éditer</a>
+            |
+            <a href="{{ path('khatovar_web_exaction_remove', {'exaction': exaction.id}) }}">Supprimer</a>
+        {% endif %}
+
+        <div class="container flex-container">
+            <div class="programmation">
+                {% autoescape false %}
+                {{ exaction.map }}
+                {% endautoescape %}
+            </div>
+            <div class="programmation">
+                {% if exaction.introduction is defined %}
+                    <p>{{ exaction.introduction }}</p>
+                    <hr />
+                {% endif %}
+
+                {% if exaction.links is defined %}
+                    {% for link in exaction.links %}
+                        {% if link is not empty %}
+                            {% autoescape false %}
+                            <p>{{ khatovar_normalize_link(link) }}</p>
+                            {% endautoescape %}
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
