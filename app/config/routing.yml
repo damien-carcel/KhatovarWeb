@@ -1,4 +1,4 @@
-khatovar_schedule:
+khatovar_exaction:
     resource: "@KhatovarExactionBundle/Resources/config/routing.yml"
     prefix:   /
 
