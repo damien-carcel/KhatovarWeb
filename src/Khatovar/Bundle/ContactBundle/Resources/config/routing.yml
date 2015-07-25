@@ -1,3 +1,0 @@
-khatovar_contact_homepage:
-    path:     /contact
-    defaults: { _controller: KhatovarContactBundle:Contact:index }
