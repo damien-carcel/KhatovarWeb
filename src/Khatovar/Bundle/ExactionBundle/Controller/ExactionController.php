@@ -30,7 +30,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Exaction controller.
+ * Main Controller for Exaction bundle.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
  */

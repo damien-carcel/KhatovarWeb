@@ -30,7 +30,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Class HomepageController
+ * Main Controller for Homepage bundle.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
  * @package Khatovar\Bundle\HomepageBundle\Controller
