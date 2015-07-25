@@ -1,3 +1,4 @@
+/www/bundles/
 /app/bootstrap.php.cache
 /app/cache/*
 /app/config/parameters.yml
@@ -5,14 +6,15 @@
 /app/logs/*
 !app/cache/.gitkeep
 !app/logs/.gitkeep
-/bin/
+/app/phpunit.xml
 /build/
 /vendor/
-/www/bundles/
+/bin/
+/composer.phar
+
 /www/css/
 /www/js/
 /www/uploaded/
 composer.lock
-
 /src/Khatovar/Bundle/WebBundle/Resources/public/photos/*
 !/src/Khatovar/Bundle/WebBundle/Resources/public/photos/logonoir.jpg
