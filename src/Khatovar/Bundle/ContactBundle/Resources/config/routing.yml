@@ -1,0 +1,42 @@
+contact:
+     path:     /
+     defaults: { _controller: 'khatovar_contact.controller.contact:indexAction' }
+
+contact_list:
+    path:     /list
+    defaults: { _controller: 'khatovar_contact.controller.contact:listAction' }
+
+contact_show:
+    path:     /{id}/show
+    defaults: { _controller: 'khatovar_contact.controller.contact:showAction' }
+    requirements:
+        contact: \d+
+
+contact_create:
+    path:     /new
+    defaults: { _controller: 'khatovar_contact.controller.contact:createAction' }
+    methods:  [GET, POST]
+
+contact_new:
+    path:     /new
+    defaults: { _controller: 'khatovar_contact.controller.contact:newAction' }
+
+contact_edit:
+    path:     /{id}/edit
+    defaults: { _controller: 'khatovar_contact.controller.contact:editAction' }
+    requirements:
+        contact: \d+
+
+contact_update:
+    path:     /{id}/edit
+    defaults: { _controller: 'khatovar_contact.controller.contact:updateAction' }
+    methods:  [POST, PUT]
+    requirements:
+        contact: \d+
+
+contact_delete:
+    path:     /{id}/delete
+    defaults: { _controller: 'khatovar_contact.controller.contact:deleteAction' }
+    methods:  [POST, DELETE]
+    requirements:
+        contact: \d+

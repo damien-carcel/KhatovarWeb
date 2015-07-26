@@ -1,0 +1,29 @@
+{% extends 'KhatovarWebBundle::layout.html.twig' %}
+
+{% block inarticle %}
+    <style>
+        article ul {
+            list-style: none;
+        }
+    </style>
+
+    <h1>{{ contact.title }}</h1>
+
+    {% autoescape false %}
+        {{ contact.content }}
+    {% endautoescape %}
+
+    <ul class="record_actions">
+        <li>
+            <a href="{{ path('contact_list') }}">
+                Back to the list
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('contact_edit', { 'id': contact.id }) }}">
+                Edit
+            </a>
+        </li>
+        <li>{{ form(delete_form) }}</li>
+    </ul>
+{% endblock %}

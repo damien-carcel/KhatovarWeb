@@ -1,0 +1,24 @@
+{% extends 'KhatovarWebBundle::layout.html.twig' %}
+
+{% form_theme edit_form 'KhatovarWebBundle:form:fields.html.twig' %}
+
+{% block inarticle %}
+    <style>
+        article ul {
+            list-style: none;
+        }
+    </style>
+
+    <h1>Contact edit</h1>
+
+    {% include 'KhatovarContactBundle:Contact:_form.html.twig' with {'form': edit_form} %}
+
+    <ul class="record_actions">
+        <li>
+            <a href="{{ path('contact_list') }}">
+                Back to the list
+            </a>
+        </li>
+        <li>{{ form(delete_form) }}</li>
+    </ul>
+{% endblock %}

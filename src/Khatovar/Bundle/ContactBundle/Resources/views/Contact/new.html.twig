@@ -1,0 +1,23 @@
+{% extends 'KhatovarWebBundle::layout.html.twig' %}
+
+{% form_theme form 'KhatovarWebBundle:form:fields.html.twig' %}
+
+{% block inarticle %}
+    <style>
+        article ul {
+            list-style: none;
+        }
+    </style>
+
+    <h1>Création d'une nouvelle carte de visite</h1>
+
+    {% include 'KhatovarContactBundle:Contact:_form.html.twig' with {'form': form} %}
+
+    <ul class="record_actions">
+        <li>
+            <a href="{{ path('contact_list') }}">
+                Back to the list
+            </a>
+        </li>
+    </ul>
+{% endblock %}

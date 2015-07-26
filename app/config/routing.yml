@@ -1,6 +1,6 @@
 khatovar_contact:
     resource: "@KhatovarContactBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /contact
 
 khatovar_exaction:
     resource: "@KhatovarExactionBundle/Resources/config/routing.yml"

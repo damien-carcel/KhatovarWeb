@@ -21,7 +21,7 @@ Khatovar\Bundle\ContactBundle\Entity\Contact:
         active:
             type: boolean
             column: active
-            nullable: false
+            nullable: true
     manyToOne:
         visitCard:
             targetEntity: Khatovar\Bundle\PhotoBundle\Entity\Photo

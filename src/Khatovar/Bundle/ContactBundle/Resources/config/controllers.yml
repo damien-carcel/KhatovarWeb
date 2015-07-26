@@ -1,0 +1,10 @@
+parameters:
+    khatovar_contact.controller.contact.class: Khatovar\Bundle\ContactBundle\Controller\ContactController
+
+services:
+    khatovar_contact.controller.contact:
+        scope: request
+        class: %khatovar_contact.controller.contact.class%
+        arguments:
+            - '@service_container'
+            - '@doctrine.orm.entity_manager'

@@ -1,0 +1,12 @@
+{{ form_start(form) }}
+<div class="alert">
+    {{ form_errors(form) }}
+</div>
+
+{{ form_row(form.title) }}
+{{ form_row(form.content) }}
+{{ form_row(form.visitCard) }}
+{{ form_row(form.active) }}
+
+{{ form_rest(form) }}
+{{ form_end(form) }}

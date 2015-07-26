@@ -67,8 +67,8 @@ class ControllerNameExtension extends \Twig_Extension
     {
         return array(
             'get_controller_name' => new \Twig_Function_Method($this, 'getControllerName'),
-            'get_action_name' => new \Twig_Function_Method($this, 'getActionName'),
-            'get_slug_or_id' => new \Twig_Function_Method($this, 'getSlugOrId')
+            'get_action_name'     => new \Twig_Function_Method($this, 'getActionName'),
+            'get_slug_or_id'      => new \Twig_Function_Method($this, 'getSlugOrId')
         );
     }
 
@@ -121,17 +121,11 @@ class ControllerNameExtension extends \Twig_Extension
     {
         $slugOrId = null;
 
-        if (!is_null($this->request)) {
-            // First we check if there is a slug
-            $slugOrId = $this->request->get('member_slug');
-            // If there is not, it's possible we are in edition, then
-            // We don't want a slug but an ID
-            if (is_null($slugOrId)) {
-                // Return an array containing one key/value, we want the value.
-                $routeParams = $this->request->get('_route_params');
-                foreach ($routeParams as $param) {
-                    $slugOrId = (int) $param;
-                }
+        if (null === $this->request) {
+            $slugOrId = $this->getSlug();
+
+            if (null === $slugOrId) {
+                $slugOrId = $this->getId();
             }
         }
 
@@ -146,5 +140,28 @@ class ControllerNameExtension extends \Twig_Extension
     public function getName()
     {
         return 'controller_name_extension';
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function getSlug()
+    {
+        return $this->request->get('member_slug');
+    }
+
+    /**
+     * @return int|null
+     */
+    protected function getId()
+    {
+        $id = null;
+
+        $routeParams = $this->request->get('_route_params');
+        foreach ($routeParams as $param) {
+            $id = (int) $param;
+        }
+
+        return $id;
     }
 }

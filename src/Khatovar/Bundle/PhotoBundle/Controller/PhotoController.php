@@ -78,18 +78,18 @@ class PhotoController extends Controller
      *
      * @param string     $controller The controller currently rendered.
      * @param string     $action     The controller method used for rendering.
-     * @param string|int $slug_or_id The slug or the ID of the object currently rendered.
+     * @param string|int $slugOrId   The slug or the ID of the object currently rendered.
      *
      * @return \Symfony\Component\HttpFoundation\Response
      *
      * @Secure(roles="ROLE_VIEWER")
      */
-    public function sideAction($controller, $action, $slug_or_id)
+    public function sideAction($controller, $action, $slugOrId)
     {
         $currentUser = $this->getUser();
 
         $photoSide = $this->get('khatovar.photo.photo_side');
-        $photos = $photoSide->get($currentUser, $controller, $action, $slug_or_id);
+        $photos = $photoSide->get($currentUser, $controller, $action, $slugOrId);
 
         return $this->render(
             'KhatovarPhotoBundle:Photo:side.html.twig',
