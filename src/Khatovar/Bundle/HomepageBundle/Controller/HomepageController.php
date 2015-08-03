@@ -23,10 +23,12 @@
 
 namespace Khatovar\Bundle\HomepageBundle\Controller;
 
+use Doctrine\Common\Persistence\ObjectManager;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Khatovar\Bundle\HomepageBundle\Entity\Homepage;
 use Khatovar\Bundle\HomepageBundle\Form\HomepageType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -151,54 +153,24 @@ class HomepageController extends Controller
     public function listAction(Request $request)
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $repository = $entityManager->getRepository('KhatovarHomepageBundle:Homepage');
-
-        $oldHomepage = $repository->findOneBy(array('active' => true));
-
-        if (!$oldHomepage) {
-            $oldHomepage = new Homepage();
-        }
-        $form = $this->createFormBuilder()
-            ->add('active', 'entity', array(
-                    'class' => 'Khatovar\Bundle\HomepageBundle\Entity\Homepage',
-                    'label' => false,
-                    'property' => 'name',
-                    'preferred_choices' => array($oldHomepage)
-                ))
-            ->add('submit', 'submit', array('label' => 'Activer'))
-            ->getForm();
+        $form          = $this->createActivationForm();
 
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $newHomepage = $repository
-                ->find($form->get('active')->getData());
+            $this->changeActiveHomepage($entityManager, $form);
 
-            // Todo: Understand why I have to manually setActive
-            if ($oldHomepage->getId() != $newHomepage->getId()) {
-                if ($oldHomepage->getId()) {
-                    $oldHomepage->setActive(false);
-                    $entityManager->persist($oldHomepage);
-                }
-
-                $newHomepage->setActive(true);
-                $entityManager->persist($newHomepage);
-                $entityManager->flush();
-
-                $this->get('session')->getFlashBag()
-                    ->add('notice', 'Page d\'accueil activée');
-            }
-
-            return $this->redirect(
-                $this->generateUrl('khatovar_web_homepage_list')
-            );
+            return $this->redirect($this->generateUrl('khatovar_web_homepage_list'));
         }
 
-        $list = $repository->findAll();
+        $list = $entityManager->getRepository('KhatovarHomepageBundle:Homepage')->findAll();
 
         return $this->render(
             'KhatovarHomepageBundle:Homepage:list.html.twig',
-            array('homepage_list' => $list, 'form' => $form->createView())
+            array(
+                'homepage_list' => $list,
+                'form'          => $form->createView()
+            )
         );
     }
 
@@ -234,5 +206,52 @@ class HomepageController extends Controller
             'KhatovarHomepageBundle:Homepage:delete.html.twig',
             array('homepage' => $homepage, 'form' => $form->createView())
         );
+    }
+
+    /**
+     * Create a form to activate a Homepage.
+     *
+     * @return \Symfony\Component\Form\Form
+     */
+    protected function createActivationForm()
+    {
+        $form = $this->createFormBuilder()
+            ->add(
+                'active',
+                'entity',
+                array(
+                    'class'    => 'Khatovar\Bundle\HomepageBundle\Entity\Homepage',
+                    'label'    => false,
+                    'property' => 'name',
+                )
+            )
+            ->add('submit', 'submit', array('label' => 'Activer'))
+            ->getForm();
+
+        return $form;
+    }
+
+    /**
+     * Change the active Homepage.
+     *
+     * @param ObjectManager $entityManager
+     * @param FormInterface $form
+     */
+    protected function changeActiveHomepage(ObjectManager $entityManager, FormInterface $form)
+    {
+        $repository  = $entityManager->getRepository('KhatovarHomepageBundle:Homepage');
+        $newHomepage = $repository->find($form->get('active')->getData());
+        $oldHomepage = $repository->findOneBy(array('active' => true));
+
+        if (null !== $oldHomepage) {
+            $oldHomepage->setActive(false);
+            $entityManager->persist($oldHomepage);
+        }
+
+        $newHomepage->setActive(true);
+        $entityManager->persist($newHomepage);
+        $entityManager->flush();
+
+        $this->get('session')->getFlashBag()->add('notice', 'Page d\'accueil activée');
     }
 }

@@ -7,6 +7,7 @@ use JMS\SecurityExtraBundle\Annotation\Secure;
 use Khatovar\Bundle\ContactBundle\Entity\Contact;
 use Khatovar\Bundle\ContactBundle\Form\ContactType;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -52,18 +53,30 @@ class ContactController extends Controller
     /**
      * Lists all Contact entities.
      *
+     * @param Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      *
      * @Secure(roles="ROLE_EDITOR")
      */
-    public function listAction()
+    public function listAction(Request $request)
     {
+        $form = $this->createActivationForm();
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $this->changeActiveContact($form);
+
+            return $this->redirect($this->generateUrl('contact_list'));
+        }
+
         $contacts = $this->entityManager->getRepository('KhatovarContactBundle:Contact')->findAll();
 
         return $this->render(
             'KhatovarContactBundle:Contact:list.html.twig',
             array(
-                'contacts' => $contacts,
+                'contacts'        => $contacts,
+                'activation_form' => $form->createView(),
             )
         );
     }
@@ -309,5 +322,51 @@ class ContactController extends Controller
         }
 
         return $contact;
+    }
+
+    /**
+     * Create a form to activate a Homepage.
+     *
+     * @return \Symfony\Component\Form\Form
+     */
+    protected function createActivationForm()
+    {
+        $form = $this->createFormBuilder()
+            ->add(
+                'active',
+                'entity',
+                array(
+                    'class'    => 'Khatovar\Bundle\ContactBundle\Entity\Contact',
+                    'label'    => false,
+                    'property' => 'title',
+                )
+            )
+            ->add('submit', 'submit', array('label' => 'Activer'))
+            ->getForm();
+
+        return $form;
+    }
+
+    /**
+     * Change the active Homepage.
+     *
+     * @param FormInterface $form
+     */
+    protected function changeActiveContact(FormInterface $form)
+    {
+        $repository = $this->entityManager->getRepository('KhatovarContactBundle:Contact');
+        $newContact = $repository->find($form->get('active')->getData());
+        $oldContact = $repository->findOneBy(array('active' => true));
+
+        if (null !== $oldContact) {
+            $oldContact->setActive(false);
+            $this->entityManager->persist($oldContact);
+        }
+
+        $newContact->setActive(true);
+        $this->entityManager->persist($newContact);
+        $this->entityManager->flush();
+
+        $this->get('session')->getFlashBag()->add('notice', 'Page de contact activée');
     }
 }

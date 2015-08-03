@@ -14,8 +14,26 @@
 
     <h1>Contact list</h1>
 
-    <a href="{{ path('contact_new') }}">Créer une nouvelle page de contact</a>
+    <p>
+        <a href="{{ path('contact_new') }}">Créer une nouvelle page de contact</a>
+    </p>
 
+    {{ form_start(activation_form) }}
+    <div class="form-group">
+        {{ form_label(activation_form.active) }}
+        {{ form_widget(activation_form.active, { 'attr': {'class': 'form-element'} }) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_widget(activation_form.submit) }}
+    </div>
+
+    {{ form_rest(activation_form) }}
+    {{ form_end(activation_form) }}
+
+    <p>
+        Liste des pages de contact disponibles :
+    </p>
     <table class="table-responsive">
         <thead>
         <tr>
