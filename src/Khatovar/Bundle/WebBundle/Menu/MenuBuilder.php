@@ -60,16 +60,16 @@ class MenuBuilder
     protected $exactionYears;
 
     /** @var FactoryInterface */
-    protected $factoryInterface;
+    protected $menuFactory;
 
     /**
-     * @param FactoryInterface $factoryInterface
+     * @param FactoryInterface $menuFactory
      * @param YearLister       $lister
      */
-    public function __construct(FactoryInterface $factoryInterface, YearLister $lister)
+    public function __construct(FactoryInterface $menuFactory, YearLister $lister)
     {
-        $this->factoryInterface = $factoryInterface;
-        $this->exactionYears    = $lister->getSortedYears();
+        $this->menuFactory   = $menuFactory;
+        $this->exactionYears = $lister->getSortedYears();
     }
 
     /**
@@ -81,7 +81,7 @@ class MenuBuilder
      */
     public function createMainMenu(Request $request)
     {
-        $menu = $this->factoryInterface->createItem('root');
+        $menu = $this->menuFactory->createItem('root');
 
         $menu->addChild(
             'home',

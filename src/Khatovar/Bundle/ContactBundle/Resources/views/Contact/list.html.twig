@@ -1,0 +1,43 @@
+{% extends 'KhatovarWebBundle::layout.html.twig' %}
+
+{% block inarticle %}
+    <style>
+        .table-responsive {
+            width: 100%;
+            margin: 15px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            -webkit-overflow-scrolling: touch;
+            -ms-overflow-style: -ms-autohiding-scrollbar;
+        }
+    </style>
+
+    <h1>Contact list</h1>
+
+    <a href="{{ path('contact_new') }}">Créer une nouvelle page de contact</a>
+
+    <table class="table-responsive">
+        <thead>
+        <tr>
+            <th>Identifiant</th>
+            <th>Titre</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for contact in contacts %}
+            <tr>
+                <td><a href="{{ path('contact_show', { 'id': contact.id }) }}">{{ contact.id }}</a></td>
+                <td>{{ contact.title }}</td>
+                <td>
+                    <a href="{{ path('contact_show', { 'id': contact.id }) }}">Visualiser</a>
+                    |
+                    <a href="{{ path('contact_edit', { 'id': contact.id }) }}">Éditer</a>
+                    |
+                    <a href="{{ path('contact_delete', { 'id': contact.id }) }}">Supprimer</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

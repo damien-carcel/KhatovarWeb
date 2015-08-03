@@ -40,14 +40,9 @@ class ContactController extends Controller
     {
         $activeContact = $this->findActiveOr404();
 
-        $deleteForm = $this->createDeleteForm($activeContact);
-
         return $this->render(
             'KhatovarContactBundle:Contact:show.html.twig',
-            array(
-                'contact'     => $activeContact,
-                'delete_form' => $deleteForm->createView(),
-            )
+            array('contact' => $activeContact,)
         );
     }
 
@@ -59,7 +54,7 @@ class ContactController extends Controller
         $contacts = $this->entityManager->getRepository('KhatovarContactBundle:Contact')->findAll();
 
         return $this->render(
-            'KhatovarContactBundle:Contact:index.html.twig',
+            'KhatovarContactBundle:Contact:list.html.twig',
             array(
                 'contacts' => $contacts,
             )
@@ -88,7 +83,7 @@ class ContactController extends Controller
 
         return $this->render(
             'KhatovarContactBundle:Contact:new.html.twig',
-            array('form' => $form->createView(),)
+            array('form' => $form->createView())
         );
     }
 
@@ -119,14 +114,9 @@ class ContactController extends Controller
     {
         $contact = $this->findByIdOr404($id);
 
-        $deleteForm = $this->createDeleteForm($contact);
-
         return $this->render(
             'KhatovarContactBundle:Contact:show.html.twig',
-            array(
-                'contact'     => $contact,
-                'delete_form' => $deleteForm->createView(),
-            )
+            array('contact' => $contact)
         );
     }
 
@@ -227,7 +217,7 @@ class ContactController extends Controller
             )
         );
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form->add('submit', 'submit', array('label' => 'Créer'));
 
         return $form;
     }
@@ -250,7 +240,7 @@ class ContactController extends Controller
             )
         );
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        $form->add('submit', 'submit', array('label' => 'Mettre à jour'));
 
         return $form;
     }
@@ -268,7 +258,7 @@ class ContactController extends Controller
             ->createFormBuilder()
             ->setAction($this->generateUrl('contact_delete', array('id' => $contact->getId())))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
+            ->add('submit', 'submit', array('label' => 'Effacer'))
             ->getForm();
     }
 

@@ -19,22 +19,28 @@ class ContactType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title', 'text')
+            ->add(
+                'title',
+                'text',
+                array(
+                    'label' => 'Titre',
+                )
+            )
             ->add(
                 'content',
                 'ckeditor',
                 array(
-                    'label'       => false,
                     'config_name' => 'basic_config',
+                    'label'       => 'Contenu',
                 )
             )
-            ->add('active', 'checkbox')
             ->add(
                 'visitCard',
                 'entity',
                 array(
                     'class'    => 'Khatovar\Bundle\PhotoBundle\Entity\Photo',
                     'property' => 'alt',
+                    'label'    => 'Carte de visite',
                 )
             );
     }
