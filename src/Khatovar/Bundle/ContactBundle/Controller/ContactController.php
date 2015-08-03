@@ -3,6 +3,7 @@
 namespace Khatovar\Bundle\ContactBundle\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
+use JMS\SecurityExtraBundle\Annotation\Secure;
 use Khatovar\Bundle\ContactBundle\Entity\Contact;
 use Khatovar\Bundle\ContactBundle\Form\ContactType;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -35,6 +36,8 @@ class ContactController extends Controller
 
     /**
      * Display the default Contact entity.
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction()
     {
@@ -48,6 +51,10 @@ class ContactController extends Controller
 
     /**
      * Lists all Contact entities.
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @Secure(roles="ROLE_EDITOR")
      */
     public function listAction()
     {
@@ -67,6 +74,8 @@ class ContactController extends Controller
      * @param Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     *
+     * @Secure(roles="ROLE_EDITOR")
      */
     public function createAction(Request $request)
     {
@@ -91,6 +100,8 @@ class ContactController extends Controller
      * Displays a form to create a new Contact entity.
      *
      * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @Secure(roles="ROLE_EDITOR")
      */
     public function newAction()
     {
@@ -126,6 +137,8 @@ class ContactController extends Controller
      * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @Secure(roles="ROLE_EDITOR")
      */
     public function editAction($id)
     {
@@ -151,6 +164,8 @@ class ContactController extends Controller
      * @param int     $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     *
+     * @Secure(roles="ROLE_EDITOR")
      */
     public function updateAction(Request $request, $id)
     {
@@ -183,6 +198,8 @@ class ContactController extends Controller
      * @param int     $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @Secure(roles="ROLE_EDITOR")
      */
     public function deleteAction(Request $request, $id)
     {
