@@ -38,15 +38,17 @@ class ContactController extends Controller
      */
     public function indexAction()
     {
-        $activeContact = $this->entityManager
-            ->getRepository('KhatovarContactBundle:Contact')
-            ->findOneBy(array('active' => true));
+        $activeContact = $this->findActiveOr404();
 
-        if (null === $activeContact) {
-            throw new NotFoundHttpException('There is no active Contact entity. You must activate one.');
-        }
+        $deleteForm = $this->createDeleteForm($activeContact);
 
-        return $this->showAction($activeContact->getId());
+        return $this->render(
+            'KhatovarContactBundle:Contact:show.html.twig',
+            array(
+                'contact'     => $activeContact,
+                'delete_form' => $deleteForm->createView(),
+            )
+        );
     }
 
     /**
@@ -115,11 +117,7 @@ class ContactController extends Controller
      */
     public function showAction($id)
     {
-        $contact = $this->entityManager->getRepository('KhatovarContactBundle:Contact')->find($id);
-
-        if (!$contact) {
-            throw $this->createNotFoundException('Unable to find the contact.');
-        }
+        $contact = $this->findByIdOr404($id);
 
         $deleteForm = $this->createDeleteForm($contact);
 
@@ -141,11 +139,7 @@ class ContactController extends Controller
      */
     public function editAction($id)
     {
-        $contact = $this->entityManager->getRepository('KhatovarContactBundle:Contact')->find($id);
-
-        if (!$contact) {
-            throw $this->createNotFoundException('Unable to find the contact.');
-        }
+        $contact = $this->findByIdOr404($id);
 
         $editForm   = $this->createEditForm($contact);
         $deleteForm = $this->createDeleteForm($contact);
@@ -170,11 +164,7 @@ class ContactController extends Controller
      */
     public function updateAction(Request $request, $id)
     {
-        $contact = $this->entityManager->getRepository('KhatovarContactBundle:Contact')->find($id);
-
-        if (!$contact) {
-            throw $this->createNotFoundException('Unable to find the contact.');
-        }
+        $contact = $this->findByIdOr404($id);
 
         $deleteForm = $this->createDeleteForm($contact);
         $editForm = $this->createEditForm($contact);
@@ -206,11 +196,7 @@ class ContactController extends Controller
      */
     public function deleteAction(Request $request, $id)
     {
-        $contact = $this->entityManager->getRepository('KhatovarContactBundle:Contact')->find($id);
-
-        if (!$contact) {
-            throw $this->createNotFoundException('Unable to find the contact.');
-        }
+        $contact = $this->findByIdOr404($id);
 
         $form = $this->createDeleteForm($contact);
         $form->handleRequest($request);
@@ -284,5 +270,37 @@ class ContactController extends Controller
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm();
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return Contact
+     */
+    protected function findByIdOr404($id)
+    {
+        $contact = $this->entityManager->getRepository('KhatovarContactBundle:Contact')->find($id);
+
+        if (!$contact) {
+            throw $this->createNotFoundException('Unable to find the contact.');
+        }
+
+        return $contact;
+    }
+
+    /**
+     * @return Contact
+     */
+    protected function findActiveOr404()
+    {
+        $contact = $this->entityManager
+            ->getRepository('KhatovarContactBundle:Contact')
+            ->findOneBy(array('active' => true));
+
+        if (null === $contact) {
+            throw new NotFoundHttpException('There is no active Contact entity. You must activate one.');
+        }
+
+        return $contact;
     }
 }
