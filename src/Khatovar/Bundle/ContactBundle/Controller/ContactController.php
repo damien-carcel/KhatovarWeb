@@ -67,7 +67,7 @@ class ContactController extends Controller
         if ($form->isValid()) {
             $this->changeActiveContact($form);
 
-            return $this->redirect($this->generateUrl('contact_list'));
+            return $this->redirect($this->generateUrl('khatovar_web_contact_list'));
         }
 
         $contacts = $this->entityManager->getRepository('KhatovarContactBundle:Contact')->findAll();
@@ -100,7 +100,7 @@ class ContactController extends Controller
             $this->entityManager->persist($contact);
             $this->entityManager->flush();
 
-            return $this->redirect($this->generateUrl('contact_show', array('id' => $contact->getId())));
+            return $this->redirect($this->generateUrl('khatovar_web_contact_show', array('id' => $contact->getId())));
         }
 
         return $this->render(
@@ -191,7 +191,7 @@ class ContactController extends Controller
         if ($editForm->isValid()) {
             $this->entityManager->flush();
 
-            return $this->redirect($this->generateUrl('contact_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('khatovar_web_contact_edit', array('id' => $id)));
         }
 
         return $this->render(
@@ -226,7 +226,7 @@ class ContactController extends Controller
             $this->entityManager->flush();
         }
 
-        return $this->redirect($this->generateUrl('contact_list'));
+        return $this->redirect($this->generateUrl('khatovar_web_contact_list'));
     }
 
     /**
@@ -242,7 +242,7 @@ class ContactController extends Controller
             new ContactType(),
             $contact,
             array(
-                'action' => $this->generateUrl('contact_create'),
+                'action' => $this->generateUrl('khatovar_web_contact_create'),
                 'method' => 'POST',
             )
         );
@@ -265,7 +265,7 @@ class ContactController extends Controller
             new ContactType(),
             $contact,
             array(
-                'action' => $this->generateUrl('contact_update', array('id' => $contact->getId())),
+                'action' => $this->generateUrl('khatovar_web_contact_update', array('id' => $contact->getId())),
                 'method' => 'PUT',
             )
         );
@@ -286,7 +286,7 @@ class ContactController extends Controller
     {
         return $this
             ->createFormBuilder()
-            ->setAction($this->generateUrl('contact_delete', array('id' => $contact->getId())))
+            ->setAction($this->generateUrl('khatovar_web_contact_delete', array('id' => $contact->getId())))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Effacer'))
             ->getForm();

@@ -38,21 +38,21 @@ class MenuBuilder
     /** @var array */
     protected $performances = array(
         'introduction' => 'Introduction',
-        'combat' => 'Combat',
-        'campement' => 'Vie de camp',
-        'forge' => 'Forge',
-        'cuir' => 'Cuir',
-        'maille' => 'Maille',
-        'armes' => 'Armes et armures',
-        'herbo' => 'Herboristerie et cuisine',
-        'tissage' => 'Tissage',
+        'combat'       => 'Combat',
+        'campement'    => 'Vie de camp',
+        'forge'        => 'Forge',
+        'cuir'         => 'Cuir',
+        'maille'       => 'Maille',
+        'armes'        => 'Armes et armures',
+        'herbo'        => 'Herboristerie et cuisine',
+        'tissage'      => 'Tissage',
         'calligraphie' => 'Calligraphie'
     );
 
     /** @var array */
     protected $contacts = array(
-        'contact' => 'Qui sommes-nous ?',
-        'allies' => 'Nos alliés',
+        'contact'      => 'Qui sommes-nous ?',
+        'allies'       => 'Nos alliés',
         'fournisseurs' => 'Nos fournisseurs'
     );
 

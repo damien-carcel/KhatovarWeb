@@ -15,7 +15,7 @@
     <h1>Contact list</h1>
 
     <p>
-        <a href="{{ path('contact_new') }}">Créer une nouvelle page de contact</a>
+        <a href="{{ path('khatovar_web_contact_new') }}">Créer une nouvelle page de contact</a>
     </p>
 
     {{ form_start(activation_form) }}
@@ -45,14 +45,14 @@
         <tbody>
         {% for contact in contacts %}
             <tr>
-                <td><a href="{{ path('contact_show', { 'id': contact.id }) }}">{{ contact.id }}</a></td>
+                <td><a href="{{ path('khatovar_web_contact_show', { 'id': contact.id }) }}">{{ contact.id }}</a></td>
                 <td>{{ contact.title }}</td>
                 <td>
-                    <a href="{{ path('contact_show', { 'id': contact.id }) }}">Visualiser</a>
+                    <a href="{{ path('khatovar_web_contact_show', { 'id': contact.id }) }}">Visualiser</a>
                     |
-                    <a href="{{ path('contact_edit', { 'id': contact.id }) }}">Éditer</a>
+                    <a href="{{ path('khatovar_web_contact_edit', { 'id': contact.id }) }}">Éditer</a>
                     |
-                    <a href="{{ path('contact_delete', { 'id': contact.id }) }}">Supprimer</a>
+                    <a href="{{ path('khatovar_web_contact_delete', { 'id': contact.id }) }}">Supprimer</a>
                 </td>
             </tr>
         {% endfor %}

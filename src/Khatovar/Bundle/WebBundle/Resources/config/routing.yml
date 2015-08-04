@@ -10,7 +10,3 @@ khatovar_web_fight:
     defaults:   { _controller: KhatovarWebBundle:Default:fight, pratique: 'introduction' }
     requirements:
         pratique: \w*
-
-khatovar_web_contact:
-    path:       /contact
-    defaults:   { _controller: KhatovarWebBundle:Default:contact }
