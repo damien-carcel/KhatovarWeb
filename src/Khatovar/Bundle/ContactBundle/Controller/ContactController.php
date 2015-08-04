@@ -67,6 +67,11 @@ class ContactController extends Controller
         if ($form->isValid()) {
             $this->changeActiveContact($form);
 
+            $this->get('session')->getFlashBag()->add(
+                'notice',
+                'Page de contact activée'
+            );
+
             return $this->redirect($this->generateUrl('khatovar_web_contact_list'));
         }
 
@@ -128,6 +133,11 @@ class ContactController extends Controller
         if ($form->isValid()) {
             $this->entityManager->persist($contact);
             $this->entityManager->flush();
+
+            $this->get('session')->getFlashBag()->add(
+                'notice',
+                'Page de contact créée'
+            );
 
             return $this->redirect($this->generateUrl('khatovar_web_contact_show', array('id' => $contact->getId())));
         }
@@ -199,6 +209,11 @@ class ContactController extends Controller
         if ($editForm->isValid()) {
             $this->entityManager->flush();
 
+            $this->get('session')->getFlashBag()->add(
+                'notice',
+                'Page de contact mise à jour'
+            );
+
             return $this->redirect($this->generateUrl('khatovar_web_contact_edit', array('id' => $id)));
         }
 
@@ -230,6 +245,11 @@ class ContactController extends Controller
             $contact = $this->findByIdOr404($id);
             $this->entityManager->remove($contact);
             $this->entityManager->flush();
+
+            $this->get('session')->getFlashBag()->add(
+                'notice',
+                'Page de contact supprimée'
+            );
         }
 
         return $this->redirect($this->generateUrl('khatovar_web_contact_list'));
