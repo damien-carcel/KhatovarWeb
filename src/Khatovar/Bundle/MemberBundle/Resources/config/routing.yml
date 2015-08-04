@@ -1,25 +1,25 @@
 khatovar_web_members:
-    path:       /membres
+    path:       /
     defaults:   { _controller: KhatovarMemberBundle:Member:index }
 
 khatovar_web_members_view:
-    path:       /membre/{member_slug}
+    path:       /{member_slug}
     defaults:   { _controller: KhatovarMemberBundle:Member:view }
     requirements:
         member_slug: "[a-zA-Z0-9-_/]+"
 
 khatovar_web_members_add:
-    path:       /membres/add
+    path:       /add
     defaults:   { _controller: KhatovarMemberBundle:Member:add }
 
 khatovar_web_members_edit:
-    path:       /membres/edit/{member}
+    path:       /edit/{member}
     defaults:   { _controller: KhatovarMemberBundle:Member:edit }
     requirements:
         member: \d+
 
 khatovar_web_members_remove:
-    path:       /membres/remove/{member}
+    path:       /remove/{member}
     defaults:   { _controller: KhatovarMemberBundle:Member:remove }
     requirements:
         member: \d+
