@@ -37,7 +37,7 @@ services:
         class: %khatovar.web.menu.menu_builder.class%
         arguments:
             - '@knp_menu.factory'
-            - '@khatovar.exaction.lister.year'
+            - '@khatovar_exaction.manager.exaction'
 
     khatovar.web.menu.main:
         class: %khatovar.web.menu.main.class%

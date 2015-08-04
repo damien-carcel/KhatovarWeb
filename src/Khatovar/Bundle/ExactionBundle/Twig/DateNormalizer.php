@@ -21,7 +21,7 @@
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
-namespace Khatovar\Bundle\ExactionBundle\Services\Twig;
+namespace Khatovar\Bundle\ExactionBundle\Twig;
 
 /**
  * Date normalizer.

@@ -1,0 +1,62 @@
+Khatovar\Bundle\ExactionBundle\Entity\Exaction:
+    type: entity
+    table: khatovar_web_exactions
+    repositoryClass: Khatovar\Bundle\ExactionBundle\Entity\ExactionRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+            column: name
+            nullable: false
+        place:
+            type: string
+            length: 255
+            column: place
+            nullable: false
+        start:
+            type: datetime
+            column: start
+            nullable: false
+        end:
+            type: datetime
+            column: end
+            nullable: false
+        map:
+            type: text
+            column: map
+        introduction:
+            type: text
+            column: introduction
+            nullable: true
+        links:
+            type: array
+            column: links
+            nullable: true
+        abstract:
+            type: text
+            column: abstract
+            nullable: true
+        imageStory:
+            type: text
+            column: image_story
+            nullable: true
+        onlyPhotos:
+            type: boolean
+            column: only_photos
+            nullable: false
+    oneToOne:
+        image:
+            targetEntity: Khatovar\Bundle\PhotoBundle\Entity\Photo
+            JoinColumn:
+                nullable: true
+                onDelete: 'SET NULL'
+    oneToMany:
+        photos:
+            targetEntity: Khatovar\Bundle\PhotoBundle\Entity\Photo
+            mappedBy: exaction

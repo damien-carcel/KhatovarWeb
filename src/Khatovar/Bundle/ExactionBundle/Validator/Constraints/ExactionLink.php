@@ -29,8 +29,6 @@ use Symfony\Component\Validator\Constraint;
  * Class ExactionLink
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
- *
- * @Annotation
  */
 class ExactionLink extends Constraint
 {

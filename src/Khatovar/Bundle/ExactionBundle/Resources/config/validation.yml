@@ -1,0 +1,11 @@
+KhatovarExactionBundle\Entity\Exaction:
+    properties:
+        name:
+            - NotBlank: ~
+        place:
+            - NotBlank: ~
+        links:
+            - NotBlank: ~
+            - KhatovarExactionBundle\Validator\Contraints\ExactionLink: ~
+    constraints:
+        - KhatovarExactionBundle\Validator\Contraints\Dates: ~

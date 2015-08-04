@@ -23,6 +23,7 @@
 
 namespace Khatovar\Bundle\WebBundle\Menu;
 
+use Khatovar\Bundle\ExactionBundle\Manager\ExactionManager;
 use Khatovar\Bundle\ExactionBundle\Services\Lister\YearLister;
 use Knp\Menu\FactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -64,12 +65,12 @@ class MenuBuilder
 
     /**
      * @param FactoryInterface $menuFactory
-     * @param YearLister       $lister
+     * @param ExactionManager  $exactionManager
      */
-    public function __construct(FactoryInterface $menuFactory, YearLister $lister)
+    public function __construct(FactoryInterface $menuFactory, ExactionManager $exactionManager)
     {
         $this->menuFactory   = $menuFactory;
-        $this->exactionYears = $lister->getSortedYears();
+        $this->exactionYears = $exactionManager->getSortedYears();
     }
 
     /**

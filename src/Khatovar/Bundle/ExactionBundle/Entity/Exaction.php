@@ -24,39 +24,22 @@
 namespace Khatovar\Bundle\ExactionBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
-use Khatovar\Bundle\ExactionBundle\Validator\Constraints as KhatovarAssert;
 use Khatovar\Bundle\PhotoBundle\Entity\Photo;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Exaction entity.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
- *
- * @ORM\Table(name="khatovar_web_exactions")
- * @ORM\Entity(repositoryClass="Khatovar\Bundle\ExactionBundle\Entity\ExactionRepository")
- * @KhatovarAssert\Dates()
  */
 class Exaction
 {
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    /** @var int */
     protected $id;
 
     /**
      * The name of the festival.
      *
      * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=255)
-     * @Assert\NotBlank()
-     * @Assert\Length(max="255")
      */
     protected $name;
 
@@ -64,10 +47,6 @@ class Exaction
      * Where the festival take place.
      *
      * @var string
-     *
-     * @ORM\Column(name="place", type="string", length=255)
-     * @Assert\NotBlank()
-     * @Assert\Length(max="255")
      */
     protected $place;
 
@@ -75,9 +54,6 @@ class Exaction
      * When the festival starts.
      *
      * @var \DateTime
-     *
-     * @ORM\Column(name="start", type="datetime")
-     * @Assert\NotBlank()
      */
     protected $start;
 
@@ -85,9 +61,6 @@ class Exaction
      * When the festival ends.
      *
      * @var \DateTime
-     *
-     * @ORM\Column(name="$end", type="datetime")
-     * @Assert\NotBlank()
      */
     protected $end;
 
@@ -95,8 +68,6 @@ class Exaction
      * Photos of the festival.
      *
      * @var ArrayCollection $photos
-     *
-     * @ORM\OneToMany(targetEntity="Khatovar\Bundle\PhotoBundle\Entity\Photo", mappedBy="exaction")
      */
     protected $photos;
 
@@ -104,8 +75,6 @@ class Exaction
      * A map in an iframe to locate the festival.
      *
      * @var string
-     *
-     * @ORM\Column(name="map", type="text")
      */
     protected $map;
 
@@ -113,8 +82,6 @@ class Exaction
      * The announcement of the festival.
      *
      * @var string
-     *
-     * @ORM\Column(name="introduction", type="text", nullable=true)
      */
     protected $introduction;
 
@@ -122,18 +89,13 @@ class Exaction
      * Useful links (festival website, town website…).
      *
      * @var array
-     *
-     * @ORM\Column(name="links", type="array", nullable=true)
-     * @Assert\NotBlank()
-     * @KhatovarAssert\ExactionLink()
      */
     protected $links;
 
     /**
      * An emblematic photo of the festival.
      *
-     * @ORM\OneToOne(targetEntity="Khatovar\Bundle\PhotoBundle\Entity\Photo")
-     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
+     * @var Photo
      */
     protected $image;
 
@@ -141,8 +103,6 @@ class Exaction
      * An abstract of what happened on the festival.
      *
      * @var string
-     *
-     * @ORM\Column(name="abstract", type="text", nullable=true)
      */
     protected $abstract;
 
@@ -150,8 +110,6 @@ class Exaction
      * Description of the emblematic photo.
      *
      * @var string
-     *
-     * @ORM\Column(name="image_story", type="text", nullable=true)
      */
     protected $imageStory;
 
@@ -159,8 +117,6 @@ class Exaction
      * Is there an abstract or only photos?
      *
      * @var boolean
-     *
-     * @ORM\Column(name="only_photos", type="boolean")
      */
     protected $onlyPhotos = false;
 

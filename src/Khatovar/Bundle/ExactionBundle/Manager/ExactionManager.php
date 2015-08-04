@@ -21,7 +21,7 @@
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
-namespace Khatovar\Bundle\ExactionBundle\Services\Lister;
+namespace Khatovar\Bundle\ExactionBundle\Manager;
 
 use Doctrine\ORM\EntityManager;
 
@@ -30,7 +30,7 @@ use Doctrine\ORM\EntityManager;
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
  */
-class YearLister
+class ExactionManager
 {
     protected $entityManager;
 

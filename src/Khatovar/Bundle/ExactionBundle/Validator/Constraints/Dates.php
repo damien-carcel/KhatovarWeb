@@ -29,8 +29,6 @@ use Symfony\Component\Validator\Constraint;
  * Class Dates
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
- *
- * @Annotation
  */
 class Dates extends Constraint
 {

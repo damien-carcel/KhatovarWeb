@@ -1,0 +1,8 @@
+parameters:
+    khatovar_exaction.manager.exaction.class: Khatovar\Bundle\ExactionBundle\Manager\ExactionManager
+
+services:
+    khatovar_exaction.manager.exaction:
+        class: %khatovar_exaction.manager.exaction.class%
+        arguments:
+            - '@doctrine.orm.entity_manager'

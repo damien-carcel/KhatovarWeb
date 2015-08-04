@@ -1,29 +1,29 @@
 khatovar_web_exaction_to_come:
     path:     /a_venir
-    defaults: { _controller: KhatovarExactionBundle:Exaction:toCome }
+    defaults: { _controller: 'khatovar_exaction.controller.exaction:toComeAction' }
 
 khatovar_web_exaction_past:
     path:     /passees
-    defaults: { _controller: KhatovarExactionBundle:Exaction:index }
+    defaults: { _controller: 'khatovar_exaction.controller.exaction:indexAction' }
 
 khatovar_web_exaction_list_by_year:
     path:     /passees/{year}
-    defaults: { _controller: KhatovarExactionBundle:Exaction:viewByYear }
+    defaults: { _controller: 'khatovar_exaction.controller.exaction:viewByYearAction' }
     requirements:
         year: \d+
 
 khatovar_web_exaction_add:
     path:     /add
-    defaults: { _controller: KhatovarExactionBundle:Exaction:add }
+    defaults: { _controller: 'khatovar_exaction.controller.exaction:addAction' }
 
 khatovar_web_exaction_edit:
     path:     /edit/{exaction}
-    defaults: { _controller: KhatovarExactionBundle:Exaction:edit }
+    defaults: { _controller: 'khatovar_exaction.controller.exaction:editAction' }
     requirements:
         exaction: \d+
 
 khatovar_web_exaction_remove:
     path:     /remove/{exaction}
-    defaults: { _controller: KhatovarExactionBundle:Exaction:remove }
+    defaults: { _controller: 'khatovar_exaction.controller.exaction:removeAction' }
     requirements:
         exaction: \d+

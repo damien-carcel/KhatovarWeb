@@ -23,10 +23,13 @@
 
 namespace Khatovar\Bundle\ExactionBundle\Controller;
 
+use Doctrine\ORM\EntityManagerInterface;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Khatovar\Bundle\ExactionBundle\Entity\Exaction;
 use Khatovar\Bundle\ExactionBundle\Form\ExactionType;
+use Khatovar\Bundle\ExactionBundle\Manager\ExactionManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -36,6 +39,30 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ExactionController extends Controller
 {
+    /** @var ContainerInterface */
+    protected $container;
+
+    /** @var EntityManagerInterface */
+    protected $entityManager;
+
+    /** @var ExactionManager */
+    protected $exactionManager;
+
+    /**
+     * @param ContainerInterface     $container
+     * @param EntityManagerInterface $entityManager
+     * @param ExactionManager        $exactionManager
+     */
+    public function __construct(
+        ContainerInterface $container,
+        EntityManagerInterface $entityManager,
+        ExactionManager $exactionManager
+    ) {
+        $this->container       = $container;
+        $this->entityManager   = $entityManager;
+        $this->exactionManager = $exactionManager;
+    }
+
     /**
      * Display the list of all years of exaction.
      *
@@ -43,8 +70,7 @@ class ExactionController extends Controller
      */
     public function indexAction()
     {
-        $yearLister = $this->get('khatovar.exaction.lister.year');
-        $activeYears = $yearLister->getSortedYears();
+        $activeYears = $this->exactionManager->getSortedYears();
 
         return $this->render(
             'KhatovarExactionBundle:Exaction:index.html.twig',
@@ -59,9 +85,9 @@ class ExactionController extends Controller
      */
     public function toComeAction()
     {
-        $entityManager = $this->getDoctrine()->getRepository('KhatovarExactionBundle:Exaction');
-
-        $futureExactions = $entityManager->getFutureExactions();
+        $futureExactions = $this->entityManager
+            ->getRepository('KhatovarExactionBundle:Exaction')
+            ->getFutureExactions();
 
         return $this->render(
             'KhatovarExactionBundle:Exaction:to_come.html.twig',
@@ -78,9 +104,9 @@ class ExactionController extends Controller
      */
     public function viewByYearAction($year)
     {
-        $entityManager = $this->getDoctrine()->getRepository('KhatovarExactionBundle:Exaction');
-
-        $exactions = $entityManager->getExactionsByYear($year);
+        $exactions = $this->entityManager
+            ->getRepository('KhatovarExactionBundle:Exaction')
+            ->getExactionsByYear($year);
 
         return $this->render(
             'KhatovarExactionBundle:Exaction:view_by_year.html.twig',
@@ -105,9 +131,8 @@ class ExactionController extends Controller
 
         $form->handleRequest($request);
         if ($form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($exaction);
-            $entityManager->flush();
+            $this->entityManager->persist($exaction);
+            $this->entityManager->flush();
 
             $this->get('session')->getFlashBag()->add(
                 'notice',
@@ -143,9 +168,8 @@ class ExactionController extends Controller
 
         $form->handleRequest($request);
         if ($form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($exaction);
-            $entityManager->flush();
+            $this->entityManager->persist($exaction);
+            $this->entityManager->flush();
 
             $this->get('session')->getFlashBag()->add(
                 'notice',
@@ -180,9 +204,8 @@ class ExactionController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($exaction);
-            $entityManager->flush();
+            $this->entityManager->remove($exaction);
+            $this->entityManager->flush();
 
             $this->get('session')->getFlashBag()->add(
                 'notice',

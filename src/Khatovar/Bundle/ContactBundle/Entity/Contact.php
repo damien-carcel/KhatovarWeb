@@ -2,7 +2,6 @@
 
 namespace Khatovar\Bundle\ContactBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Khatovar\Bundle\PhotoBundle\Entity\Photo;
 
 /**
