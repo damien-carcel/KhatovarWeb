@@ -72,11 +72,39 @@ class ContactController extends Controller
 
         $contacts = $this->entityManager->getRepository('KhatovarContactBundle:Contact')->findAll();
 
+        $deleteForms = array();
+        foreach ($contacts as $contact) {
+            $deleteForms[$contact->getId()] = $this->createDeleteForm($contact->getId())->createView();
+        }
+
         return $this->render(
             'KhatovarContactBundle:Contact:list.html.twig',
             array(
                 'contacts'        => $contacts,
                 'activation_form' => $form->createView(),
+                'delete_forms'    => $deleteForms,
+            )
+        );
+    }
+
+    /**
+     * Displays a form to create a new Contact entity.
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @Secure(roles="ROLE_EDITOR")
+     */
+    public function newAction()
+    {
+        $contact = new Contact();
+
+        $form = $this->createCreateForm($contact);
+
+        return $this->render(
+            'KhatovarContactBundle:Contact:new.html.twig',
+            array(
+                'contact' => $contact,
+                'form'    => $form->createView(),
             )
         );
     }
@@ -93,6 +121,7 @@ class ContactController extends Controller
     public function createAction(Request $request)
     {
         $contact = new Contact();
+
         $form = $this->createCreateForm($contact);
         $form->handleRequest($request);
 
@@ -107,24 +136,6 @@ class ContactController extends Controller
             'KhatovarContactBundle:Contact:new.html.twig',
             array('form' => $form->createView())
         );
-    }
-
-    /**
-     * Displays a form to create a new Contact entity.
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     *
-     * @Secure(roles="ROLE_EDITOR")
-     */
-    public function newAction()
-    {
-        $contact = new Contact();
-        $form = $this->createCreateForm($contact);
-
-        return $this->render('KhatovarContactBundle:Contact:new.html.twig', array(
-            'contact' => $contact,
-            'form'    => $form->createView(),
-        ));
     }
 
     /**
@@ -157,15 +168,13 @@ class ContactController extends Controller
     {
         $contact = $this->findByIdOr404($id);
 
-        $editForm   = $this->createEditForm($contact);
-        $deleteForm = $this->createDeleteForm($contact);
+        $editForm = $this->createEditForm($contact);
 
         return $this->render(
             'KhatovarContactBundle:Contact:edit.html.twig',
             array(
-                'contact'     => $contact,
-                'edit_form'   => $editForm->createView(),
-                'delete_form' => $deleteForm->createView(),
+                'contact'   => $contact,
+                'edit_form' => $editForm->createView(),
             )
         );
     }
@@ -184,7 +193,6 @@ class ContactController extends Controller
     {
         $contact = $this->findByIdOr404($id);
 
-        $deleteForm = $this->createDeleteForm($contact);
         $editForm = $this->createEditForm($contact);
         $editForm->handleRequest($request);
 
@@ -197,9 +205,8 @@ class ContactController extends Controller
         return $this->render(
             'KhatovarContactBundle:Contact:edit.html.twig',
             array(
-                'contact'     => $contact,
-                'edit_form'   => $editForm->createView(),
-                'delete_form' => $deleteForm->createView(),
+                'contact'   => $contact,
+                'edit_form' => $editForm->createView(),
             )
         );
     }
@@ -216,12 +223,11 @@ class ContactController extends Controller
      */
     public function deleteAction(Request $request, $id)
     {
-        $contact = $this->findByIdOr404($id);
-
-        $form = $this->createDeleteForm($contact);
+        $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+            $contact = $this->findByIdOr404($id);
             $this->entityManager->remove($contact);
             $this->entityManager->flush();
         }
@@ -278,17 +284,24 @@ class ContactController extends Controller
     /**
      * Creates a form to delete a Contact entity.
      *
-     * @param Contact $contact
+     * @param int $id
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    protected function createDeleteForm(Contact $contact)
+    protected function createDeleteForm($id)
     {
         return $this
             ->createFormBuilder()
-            ->setAction($this->generateUrl('khatovar_web_contact_delete', array('id' => $contact->getId())))
+            ->setAction($this->generateUrl('khatovar_web_contact_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Effacer'))
+            ->add(
+                'submit',
+                'submit',
+                array(
+                    'label' => 'Effacer',
+                    'attr'  => array('onclick' => 'return confirm("Êtes-vous sûr ?")'),
+                )
+            )
             ->getForm();
     }
 

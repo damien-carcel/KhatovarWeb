@@ -10,6 +10,12 @@
             -webkit-overflow-scrolling: touch;
             -ms-overflow-style: -ms-autohiding-scrollbar;
         }
+        .column-center {
+            text-align: center;
+        }
+        td, th {
+            padding: 5px 0 5px 0;
+        }
     </style>
 
     <h1>Contact list</h1>
@@ -37,22 +43,34 @@
     <table class="table-responsive">
         <thead>
         <tr>
-            <th>Identifiant</th>
-            <th>Titre</th>
-            <th>Actions</th>
+            <th class="column-center">
+                Identifiant
+            </th>
+            <th>
+                Titre
+            </th>
+            <th class="column-center">
+                Actions
+            </th>
         </tr>
         </thead>
         <tbody>
         {% for contact in contacts %}
+            {% set delete_form = delete_forms[contact.id] %}
+
             <tr>
-                <td><a href="{{ path('khatovar_web_contact_show', { 'id': contact.id }) }}">{{ contact.id }}</a></td>
-                <td>{{ contact.title }}</td>
+                <td class="column-center">
+                    <a href="{{ path('khatovar_web_contact_show', { 'id': contact.id }) }}">{{ contact.id }}</a>
+                </td>
                 <td>
+                    {{ contact.title }}
+                </td>
+                <td class="column-center">
                     <a href="{{ path('khatovar_web_contact_show', { 'id': contact.id }) }}">Visualiser</a>
                     |
                     <a href="{{ path('khatovar_web_contact_edit', { 'id': contact.id }) }}">Éditer</a>
-                    |
-                    <a href="{{ path('khatovar_web_contact_delete', { 'id': contact.id }) }}">Supprimer</a>
+
+                    {{ form(delete_form) }}
                 </td>
             </tr>
         {% endfor %}

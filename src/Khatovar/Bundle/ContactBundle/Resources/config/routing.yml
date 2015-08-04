@@ -6,37 +6,29 @@ khatovar_web_contact_list:
     path:     /list
     defaults: { _controller: 'khatovar_contact.controller.contact:listAction' }
 
-khatovar_web_contact_show:
-    path:     /{id}/show
-    defaults: { _controller: 'khatovar_contact.controller.contact:showAction' }
-    requirements:
-        contact: \d+
-
-khatovar_web_contact_create:
-    path:     /new
-    defaults: { _controller: 'khatovar_contact.controller.contact:createAction' }
-    methods:  [GET, POST]
-
 khatovar_web_contact_new:
     path:     /new
     defaults: { _controller: 'khatovar_contact.controller.contact:newAction' }
 
+khatovar_web_contact_create:
+    path:     /create
+    defaults: { _controller: 'khatovar_contact.controller.contact:createAction' }
+    methods:  [POST]
+
+khatovar_web_contact_show:
+    path:     /{id}/show
+    defaults: { _controller: 'khatovar_contact.controller.contact:showAction' }
+
 khatovar_web_contact_edit:
     path:     /{id}/edit
     defaults: { _controller: 'khatovar_contact.controller.contact:editAction' }
-    requirements:
-        contact: \d+
 
 khatovar_web_contact_update:
-    path:     /{id}/edit
+    path:     /{id}/update
     defaults: { _controller: 'khatovar_contact.controller.contact:updateAction' }
     methods:  [POST, PUT]
-    requirements:
-        contact: \d+
 
 khatovar_web_contact_delete:
     path:     /{id}/delete
     defaults: { _controller: 'khatovar_contact.controller.contact:deleteAction' }
     methods:  [POST, DELETE]
-    requirements:
-        contact: \d+

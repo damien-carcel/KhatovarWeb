@@ -49,7 +49,7 @@ class Photo
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * The alternate text to display.
@@ -60,7 +60,7 @@ class Photo
      * @Assert\NotBlank()
      * @Assert\Length(max="50")
      */
-    private $alt;
+    protected $alt;
 
     /**
      * The CSS class used for resizing.
@@ -70,7 +70,7 @@ class Photo
      * @ORM\Column(name="class", type="string", length=255, nullable=true)
      * @Assert\Length(max="255")
      */
-    private $class;
+    protected $class;
 
     /**
      * The location of the file on the server.
@@ -79,21 +79,21 @@ class Photo
      *
      * @ORM\Column(name="path", type="string", length=255, nullable=true)
      */
-    private $path;
+    protected $path;
 
     /**
      * Temporary attribute to remember the file path when deleting it.
      *
      * @var string
      */
-    private $temp;
+    protected $temp;
 
     /**
      * @var UploadedFile
      *
      * @Assert\File(maxSize="8000000", mimeTypes={"image/jpeg"})
      */
-    private $file;
+    protected $file;
 
     /**
      * The type of page the photo is attached to.
@@ -103,7 +103,7 @@ class Photo
      * @ORM\Column(name="entity", type="string", length=255, nullable=true)
      * @Assert\Length(max="255")
      */
-    private $entity;
+    protected $entity;
 
     /**
      * @ORM\ManyToOne(
@@ -113,7 +113,7 @@ class Photo
      * )
      * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
-    private $homepage;
+    protected $homepage;
 
     /**
      * @ORM\ManyToOne(
@@ -123,7 +123,7 @@ class Photo
      * )
      * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
-    private $member;
+    protected $member;
 
     /**
      * @ORM\ManyToOne(
@@ -133,7 +133,7 @@ class Photo
      * )
      * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
-    private $exaction;
+    protected $exaction;
 
     /**
      * Get file.
