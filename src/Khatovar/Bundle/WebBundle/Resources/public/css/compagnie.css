@@ -343,6 +343,22 @@ article a:visited, footer a:visited, aside a:visited {color: #AC3333;}
 article a:hover, footer a:hover, aside a:hover {color: #936f00;}
 article a:active, footer a:active, aside a:active {color: #AC3333;}
 
+article a.button {
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+    padding: 3px 6px;
+    margin: 2px;
+    text-decoration: none;
+    font-weight: inherit;
+    color: initial;
+}
+
+.button-inline {
+    display: inline-block;
+    margin: 0 1px;
+}
+
 /* ARTICLES LAYOUT */
 
 .container {
@@ -608,6 +624,19 @@ article img {
         max-width: 360px;
         max-height: 240px;
     }
+}
+
+.table-responsive {
+    width: 100%;
+    margin: 15px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+
+.column-center {
+    text-align: center;
 }
 
 /* FORMS */

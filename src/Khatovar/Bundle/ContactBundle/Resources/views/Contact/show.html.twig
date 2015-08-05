@@ -4,7 +4,9 @@
     {% if is_granted('ROLE_EDITOR') %}
         <a href="{{ path('khatovar_web_contact_edit', { 'id': contact.id }) }}">Éditer cette page</a>
         |
-        <a href="{{ path('khatovar_web_contact_list') }}">Liste des pages de contact</a>
+        <a href="{{ path('khatovar_web_contact_new') }}">Créer une nouvelle page</a>
+        |
+        <a href="{{ path('khatovar_web_contact_list') }}">Liste des pages de contact disponibles</a>
         <hr />
     {% endif %}
 

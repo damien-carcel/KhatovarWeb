@@ -21,9 +21,8 @@
         {% if is_granted('ROLE_EDITOR') %}
             {% set delete_form = delete_forms[exaction.id] %}
 
-            <a href="{{ path('khatovar_web_exaction_edit', {'id': exaction.id}) }}">Éditer</a>
-
-            {{ form(delete_form) }}
+            <a class="button" href="{{ path('khatovar_web_exaction_edit', {'id': exaction.id}) }}">Éditer</a>
+            {{ form(delete_form, { 'attr': {'class': 'button-inline'}}) }}
         {% endif %}
 
         <div class="container flex-container">

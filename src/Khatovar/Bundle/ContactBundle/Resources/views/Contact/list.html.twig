@@ -2,17 +2,6 @@
 
 {% block inarticle %}
     <style>
-        .table-responsive {
-            width: 100%;
-            margin: 15px;
-            overflow-x: auto;
-            overflow-y: hidden;
-            -webkit-overflow-scrolling: touch;
-            -ms-overflow-style: -ms-autohiding-scrollbar;
-        }
-        .column-center {
-            text-align: center;
-        }
         td, th {
             padding: 5px 0 5px 0;
         }
@@ -66,11 +55,9 @@
                     {{ contact.title }}
                 </td>
                 <td class="column-center">
-                    <a href="{{ path('khatovar_web_contact_show', { 'id': contact.id }) }}">Visualiser</a>
-                    |
-                    <a href="{{ path('khatovar_web_contact_edit', { 'id': contact.id }) }}">Éditer</a>
-
-                    {{ form(delete_form) }}
+                    <a class="button" href="{{ path('khatovar_web_contact_show', { 'id': contact.id }) }}">Visualiser</a>
+                    <a class="button" href="{{ path('khatovar_web_contact_edit', { 'id': contact.id }) }}">Éditer</a>
+                    {{ form(delete_form, { 'attr': {'class': 'button-inline'}}) }}
                 </td>
             </tr>
         {% endfor %}
