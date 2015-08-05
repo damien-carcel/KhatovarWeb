@@ -171,7 +171,7 @@ class ExactionController extends Controller
                 'La nouvelle exaction a bien été sauvegardée.'
             );
 
-            return $this->redirect($this->generateUrl('khatovar_web_exaction_to_come'));
+            return $this->redirect($this->chooseRedirectionURL($exaction));
         }
 
         return $this->render(
@@ -232,7 +232,7 @@ class ExactionController extends Controller
                 'L\'exaction a bien été mise à jour.'
             );
 
-            return $this->redirect($this->generateUrl('khatovar_web_exaction_to_come'));
+            return $this->redirect($this->chooseRedirectionURL($exaction));
         }
 
         return $this->render(
@@ -256,12 +256,13 @@ class ExactionController extends Controller
      */
     public function deleteAction(Request $request, $id)
     {
+        $exaction = $this->findByIdOr404($id);
+
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $contact = $this->findByIdOr404($id);
-            $this->entityManager->remove($contact);
+            $this->entityManager->remove($exaction);
             $this->entityManager->flush();
 
             $this->get('session')->getFlashBag()->add(
@@ -270,7 +271,7 @@ class ExactionController extends Controller
             );
         }
 
-        return $this->redirect($this->generateUrl('khatovar_web_exaction_to_come'));
+        return $this->redirect($this->chooseRedirectionURL($exaction));
     }
 
     /**
@@ -379,5 +380,27 @@ class ExactionController extends Controller
         }
 
         return $exaction;
+    }
+
+    /**
+     * Generate the correct URL for redirection according to exaction
+     * date (past or to come).
+     *
+     * @param Exaction $exaction
+     *
+     * @return string
+     */
+    protected function chooseRedirectionURL(Exaction $exaction)
+    {
+        $isExactionPassed = $this->exactionManager->isExactionPassed($exaction);
+
+        if ($isExactionPassed) {
+            return $this->generateUrl(
+                'khatovar_web_exaction_list_by_year',
+                array('year' => $exaction->getStart()->format('Y'))
+            );
+        }
+
+        return $this->generateUrl('khatovar_web_exaction_to_come');
     }
 }

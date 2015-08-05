@@ -24,6 +24,7 @@
 namespace Khatovar\Bundle\ExactionBundle\Manager;
 
 use Doctrine\ORM\EntityManager;
+use Khatovar\Bundle\ExactionBundle\Entity\Exaction;
 
 /**
  * Year lister
@@ -58,7 +59,7 @@ class ExactionManager
 
         foreach ($exactions as $exaction) {
             $now = new \DateTime();
-            if ($exaction->getStart() < $now) {
+            if ($exaction->getStart() <= $now) {
                 $year = $exaction->getStart()->format('Y');
                 if (!in_array($year, $yearList)) {
                     $yearList[] = $year;
@@ -69,5 +70,23 @@ class ExactionManager
         arsort($yearList);
 
         return $yearList;
+    }
+
+    /**
+     * Check if the exaction is already passed or still to come.
+     *
+     * @param Exaction $exaction
+     *
+     * @return bool Return true if exaction is passed, false if not.
+     */
+    public function isExactionPassed(Exaction $exaction)
+    {
+        $now = new \DateTime();
+
+        if ($exaction->getStart() > $now) {
+            return false;
+        }
+
+        return true;
     }
 }
