@@ -26,15 +26,15 @@ namespace Khatovar\Bundle\ExactionBundle\Validator\Constraints;
 use Symfony\Component\Validator\Constraint;
 
 /**
- * Check that the exaction "iframe" field indeed contains an iframe.
+ * Class IframeSize
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
  */
-class ContainsIframe extends Constraint
+class IframeSize extends Constraint
 {
     /** @var string */
-    public $messageLength = 'Ce contenu est trop court pour être une carte. Veuillez vérifier le code saisi.';
+    public $noSizeMessage = 'Votre carte ne semble pas avoir de taille définie. Veuillez vérifier le code saisi.';
 
     /** @var string */
-    public $messageContent = 'Ce contenu ne semble pas être une carte. Veuillez vérifier le code saisi.';
+    public $wrongSizeMessage = 'Les cartes doivent faire 300x300. Celle que vous avez saisie fait %width%x%height%.';
 }
