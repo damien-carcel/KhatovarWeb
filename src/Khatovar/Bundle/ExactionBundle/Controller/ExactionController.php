@@ -89,9 +89,14 @@ class ExactionController extends Controller
             ->getRepository('KhatovarExactionBundle:Exaction')
             ->getFutureExactions();
 
+        $deleteForms = $this->createDeleteForms($futureExactions);
+
         return $this->render(
             'KhatovarExactionBundle:Exaction:to_come.html.twig',
-            array('future_exactions' => $futureExactions)
+            array(
+                'future_exactions' => $futureExactions,
+                'delete_forms'     => $deleteForms,
+            )
         );
     }
 
@@ -108,9 +113,36 @@ class ExactionController extends Controller
             ->getRepository('KhatovarExactionBundle:Exaction')
             ->getExactionsByYear($year);
 
+        $deleteForms = $this->createDeleteForms($exactions);
+
         return $this->render(
             'KhatovarExactionBundle:Exaction:view_by_year.html.twig',
-            array('exactions' => $exactions)
+            array(
+                'exactions'    => $exactions,
+                'delete_forms' => $deleteForms,
+            )
+        );
+    }
+
+    /**
+     * Displays a form to create a new Contact entity.
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @Secure(roles="ROLE_EDITOR")
+     */
+    public function newAction()
+    {
+        $exaction = new Exaction();
+
+        $form = $this->createCreateForm($exaction);
+
+        return $this->render(
+            'KhatovarExactionBundle:Exaction:new.html.twig',
+            array(
+                'form'            => $form->createView(),
+                'exaction_exists' => false,
+                )
         );
     }
 
@@ -123,13 +155,13 @@ class ExactionController extends Controller
      *
      * @Secure(roles="ROLE_EDITOR")
      */
-    public function addAction(Request $request)
+    public function createAction(Request $request)
     {
-        $exactionExists = false;
         $exaction = new Exaction();
-        $form = $this->createForm(new ExactionType($exactionExists), $exaction);
 
+        $form = $this->createCreateForm($exaction);
         $form->handleRequest($request);
+
         if ($form->isValid()) {
             $this->entityManager->persist($exaction);
             $this->entityManager->flush();
@@ -143,32 +175,56 @@ class ExactionController extends Controller
         }
 
         return $this->render(
-            'KhatovarExactionBundle:Exaction:edit.html.twig',
+            'KhatovarExactionBundle:Exaction:new.html.twig',
             array(
                 'form'            => $form->createView(),
-                'exaction_exists' => $exactionExists,
+                'exaction_exists' => false,
             )
         );
     }
 
     /**
-     * Edit an exaction.
+     * Displays a form to edit an existing Exaction entity.
      *
-     * @param Exaction $exaction
-     * @param Request  $request
+     * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\Response
      *
      * @Secure(roles="ROLE_EDITOR")
      */
-    public function editAction(Exaction $exaction, Request $request)
+    public function editAction($id)
     {
-        $exactionExists = true;
-        $form = $this->createForm(new ExactionType($exactionExists), $exaction);
+        $exaction = $this->findByIdOr404($id);
 
-        $form->handleRequest($request);
-        if ($form->isValid()) {
-            $this->entityManager->persist($exaction);
+        $editForm = $this->createEditForm($exaction);
+
+        return $this->render(
+            'KhatovarExactionBundle:Exaction:edit.html.twig',
+            array(
+                'edit_form'       => $editForm->createView(),
+                'exaction_exists' => true,
+            )
+        );
+    }
+
+    /**
+     * Update an exaction.
+     *
+     * @param Request $request
+     * @param int     $id
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @Secure(roles="ROLE_EDITOR")
+     */
+    public function updateAction(Request $request, $id)
+    {
+        $exaction = $this->findByIdOr404($id);
+
+        $editForm = $this->createEditForm($exaction);
+        $editForm->handleRequest($request);
+
+        if ($editForm->isValid()) {
             $this->entityManager->flush();
 
             $this->get('session')->getFlashBag()->add(
@@ -182,8 +238,8 @@ class ExactionController extends Controller
         return $this->render(
             'KhatovarExactionBundle:Exaction:edit.html.twig',
             array(
-                'form'            => $form->createView(),
-                'exaction_exists' => $exactionExists,
+                'edit_form'       => $editForm->createView(),
+                'exaction_exists' => true,
             )
         );
     }
@@ -191,38 +247,137 @@ class ExactionController extends Controller
     /**
      * Remove an exaction.
      *
-     * @param Exaction $exaction
-     * @param Request  $request
+     * @param Request $request
+     * @param int     $id
      *
      * @return \Symfony\Component\HttpFoundation\Response
      *
      * @Secure(roles="ROLE_EDITOR")
      */
-    public function removeAction(Exaction $exaction, Request $request)
+    public function deleteAction(Request $request, $id)
     {
-        $form = $this->createFormBuilder()->getForm();
+        $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $this->entityManager->remove($exaction);
+            $contact = $this->findByIdOr404($id);
+            $this->entityManager->remove($contact);
             $this->entityManager->flush();
 
             $this->get('session')->getFlashBag()->add(
                 'notice',
-                'Exaction supprimée'
-            );
-
-            return $this->redirect(
-                $this->generateUrl('khatovar_web_exaction_to_come')
+                'Page de contact supprimée'
             );
         }
 
-        return $this->render(
-            'KhatovarExactionBundle:Exaction:remove.html.twig',
+        return $this->redirect($this->generateUrl('khatovar_web_exaction_to_come'));
+    }
+
+    /**
+     * Creates a form to create a Contact entity.
+     *
+     * @param Exaction $exaction
+     *
+     * @return \Symfony\Component\Form\Form
+     */
+    protected function createCreateForm(Exaction $exaction)
+    {
+        $exactionExists = false;
+
+        $form = $this->createForm(
+            new ExactionType($exactionExists),
+            $exaction,
             array(
-                'exaction' => $exaction,
-                'form'     => $form->createView(),
+                'action' => $this->generateUrl('khatovar_web_exaction_create'),
+                'method' => 'POST',
             )
         );
+
+        $form->add('submit', 'submit', array('label' => 'Créer'));
+
+        return $form;
+    }
+
+    /**
+     * Creates a form to edit a Contact entity.
+     *
+     * @param Exaction $exaction
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    protected function createEditForm(Exaction $exaction)
+    {
+        $exactionExists = true;
+
+        $form = $this->createForm(
+            new ExactionType($exactionExists),
+            $exaction,
+            array(
+                'action' => $this->generateUrl('khatovar_web_exaction_update', array('id' => $exaction->getId())),
+                'method' => 'PUT',
+            )
+        );
+
+        $form->add('submit', 'submit', array('label' => 'Mettre à jour'));
+
+        return $form;
+    }
+
+    /**
+     * Creates a form to delete a Contact entity.
+     *
+     * @param int $id
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    protected function createDeleteForm($id)
+    {
+        return $this
+            ->createFormBuilder()
+            ->setAction($this->generateUrl('khatovar_web_exaction_delete', array('id' => $id)))
+            ->setMethod('DELETE')
+            ->add(
+                'submit',
+                'submit',
+                array(
+                    'label' => 'Effacer',
+                    'attr'  => array('onclick' => 'return confirm("Êtes-vous sûr ?")'),
+                )
+            )
+            ->getForm();
+    }
+
+    /**
+     * Return a list of delete forms for a set of contacts.
+     *
+     * @param Exaction[] $exactions
+     *
+     * @return \Symfony\Component\Form\Form[]
+     */
+    protected function createDeleteForms(array $exactions)
+    {
+        $deleteForms = array();
+
+        foreach ($exactions as $exaction) {
+            $deleteForms[$exaction->getId()] = $this->createDeleteForm($exaction->getId())->createView();
+        }
+
+        return $deleteForms;
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return Exaction
+     */
+    protected function findByIdOr404($id)
+    {
+        $exaction = $this->entityManager->getRepository('KhatovarExactionBundle:Exaction')->find($id);
+
+        if (!$exaction) {
+            throw $this->createNotFoundException('Impossible de trouver l\'exaction.');
+        }
+
+        return $exaction;
     }
 }

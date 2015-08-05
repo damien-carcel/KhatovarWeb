@@ -1,0 +1,78 @@
+<style>
+    article ul {
+        list-style: none;
+    }
+</style>
+
+{{ form_start(form) }}
+<div class="alert">
+    {{ form_errors(form) }}
+</div>
+
+{{ form_row(form.name) }}
+{{ form_row(form.place) }}
+{{ form_row(form.start) }}
+{{ form_row(form.end) }}
+{{ form_row(form.map) }}
+{{ form_row(form.introduction) }}
+
+<div class="form-group form-textarea">
+    {{ form_label(form.links) }}
+    {{ form_errors(form.links) }}
+    <ul id="link-fields-list" data-prototype="{{ form_widget(form.links.vars.prototype) | e }}">
+        {% for linkField in form.links %}
+            <li>
+                {{ form_errors(linkField) }}
+                {{ form_widget(linkField) }}
+                <a href="#" class="remove-closest-link">Remove</a>
+            </li>
+        {% endfor %}
+    </ul>
+    <a href="#" id="add-another-link">Add another link</a>
+</div>
+
+{% if exaction_exists is defined and exaction_exists %}
+    {{ form_row(form.onlyPhotos) }}
+    {{ form_row(form.abstract) }}
+    {{ form_row(form.image) }}
+    {{ form_row(form.imageStory) }}
+{% endif %}
+
+<div class="form-group">
+    {{ form_widget(form.submit, { 'attr': {'class': 'btn btn-default'} }) }}
+</div>
+
+{{ form_rest(form) }}
+{{ form_end(form) }}
+
+<script>
+    var linkCount   = 0;
+    var $linkList   = $('#link-fields-list');
+    var linkKeys    = {{ form.links|keys|json_encode }};
+    var $addLinkTag = $('#add-another-link');
+
+    $(function() {
+        $addLinkTag.click(function(e) {
+            e.preventDefault();
+
+            if (-1 !== $.inArray(linkCount, linkKeys)) {
+                linkCount++;
+            }
+
+            var newWidget = $linkList.attr('data-prototype');
+            newWidget = newWidget.replace(/__name__/g, linkCount);
+
+            var newLink = $('<li></li>').html(newWidget).append('<a href="#" class="remove-closest-link">Remove</a>');
+            newLink.appendTo($linkList);
+
+            linkCount++;
+            return false;
+        });
+
+        $(document).on('click', '.remove-closest-link', function(){
+            $(this).closest('li').remove();
+
+            return false;
+        });
+    });
+</script>

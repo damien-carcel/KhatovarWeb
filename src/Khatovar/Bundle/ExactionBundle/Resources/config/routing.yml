@@ -9,21 +9,26 @@ khatovar_web_exaction_past:
 khatovar_web_exaction_list_by_year:
     path:     /passees/{year}
     defaults: { _controller: 'khatovar_exaction.controller.exaction:viewByYearAction' }
-    requirements:
-        year: \d+
 
-khatovar_web_exaction_add:
-    path:     /add
-    defaults: { _controller: 'khatovar_exaction.controller.exaction:addAction' }
+khatovar_web_exaction_new:
+    path:     /new
+    defaults: { _controller: 'khatovar_exaction.controller.exaction:newAction' }
+
+khatovar_web_exaction_create:
+    path:     /create
+    defaults: { _controller: 'khatovar_exaction.controller.exaction:createAction' }
+    methods:  [POST]
 
 khatovar_web_exaction_edit:
-    path:     /edit/{exaction}
+    path:     /{id}/edit
     defaults: { _controller: 'khatovar_exaction.controller.exaction:editAction' }
-    requirements:
-        exaction: \d+
 
-khatovar_web_exaction_remove:
-    path:     /remove/{exaction}
-    defaults: { _controller: 'khatovar_exaction.controller.exaction:removeAction' }
-    requirements:
-        exaction: \d+
+khatovar_web_exaction_update:
+    path:     /{id}/update
+    defaults: { _controller: 'khatovar_exaction.controller.exaction:updateAction' }
+    methods:  [POST, PUT]
+
+khatovar_web_exaction_delete:
+    path:     /{id}/delete
+    defaults: { _controller: 'khatovar_exaction.controller.exaction:deleteAction' }
+    methods:  [POST, DELETE]

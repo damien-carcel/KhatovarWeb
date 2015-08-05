@@ -2,6 +2,10 @@ khatovar_web_contact:
      path:     /
      defaults: { _controller: 'khatovar_contact.controller.contact:indexAction' }
 
+khatovar_web_contact_show:
+    path:     /{id}/show
+    defaults: { _controller: 'khatovar_contact.controller.contact:showAction' }
+
 khatovar_web_contact_list:
     path:     /list
     defaults: { _controller: 'khatovar_contact.controller.contact:listAction' }
@@ -14,10 +18,6 @@ khatovar_web_contact_create:
     path:     /create
     defaults: { _controller: 'khatovar_contact.controller.contact:createAction' }
     methods:  [POST]
-
-khatovar_web_contact_show:
-    path:     /{id}/show
-    defaults: { _controller: 'khatovar_contact.controller.contact:showAction' }
 
 khatovar_web_contact_edit:
     path:     /{id}/edit

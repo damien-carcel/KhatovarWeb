@@ -77,8 +77,6 @@ class ExactionType extends AbstractType
         if ($this->exactionExists) {
             $this->addEdtionSpecificFields($builder);
         }
-
-        $builder->add('submit', 'submit', array('label' => 'Sauvegarder'));
     }
 
     /**

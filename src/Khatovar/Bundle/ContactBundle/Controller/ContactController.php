@@ -51,6 +51,23 @@ class ContactController extends Controller
     }
 
     /**
+     * Finds and displays a Contact contact.
+     *
+     * @param int $id
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function showAction($id)
+    {
+        $contact = $this->findByIdOr404($id);
+
+        return $this->render(
+            'KhatovarContactBundle:Contact:show.html.twig',
+            array('contact' => $contact)
+        );
+    }
+
+    /**
      * Lists all Contact entities.
      *
      * @param Request $request
@@ -75,12 +92,8 @@ class ContactController extends Controller
             return $this->redirect($this->generateUrl('khatovar_web_contact_list'));
         }
 
-        $contacts = $this->entityManager->getRepository('KhatovarContactBundle:Contact')->findAll();
-
-        $deleteForms = array();
-        foreach ($contacts as $contact) {
-            $deleteForms[$contact->getId()] = $this->createDeleteForm($contact->getId())->createView();
-        }
+        $contacts    = $this->entityManager->getRepository('KhatovarContactBundle:Contact')->findAll();
+        $deleteForms = $this->createDeleteForms($contacts);
 
         return $this->render(
             'KhatovarContactBundle:Contact:list.html.twig',
@@ -107,10 +120,7 @@ class ContactController extends Controller
 
         return $this->render(
             'KhatovarContactBundle:Contact:new.html.twig',
-            array(
-                'contact' => $contact,
-                'form'    => $form->createView(),
-            )
+            array('form' => $form->createView(),)
         );
     }
 
@@ -149,23 +159,6 @@ class ContactController extends Controller
     }
 
     /**
-     * Finds and displays a Contact contact.
-     *
-     * @param int $id
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function showAction($id)
-    {
-        $contact = $this->findByIdOr404($id);
-
-        return $this->render(
-            'KhatovarContactBundle:Contact:show.html.twig',
-            array('contact' => $contact)
-        );
-    }
-
-    /**
      * Displays a form to edit an existing Contact entity.
      *
      * @param int $id
@@ -182,10 +175,7 @@ class ContactController extends Controller
 
         return $this->render(
             'KhatovarContactBundle:Contact:edit.html.twig',
-            array(
-                'contact'   => $contact,
-                'edit_form' => $editForm->createView(),
-            )
+            array('edit_form' => $editForm->createView(),)
         );
     }
 
@@ -219,10 +209,7 @@ class ContactController extends Controller
 
         return $this->render(
             'KhatovarContactBundle:Contact:edit.html.twig',
-            array(
-                'contact'   => $contact,
-                'edit_form' => $editForm->createView(),
-            )
+            array('edit_form' => $editForm->createView(),)
         );
     }
 
@@ -326,6 +313,24 @@ class ContactController extends Controller
     }
 
     /**
+     * Return a list of delete forms for a set of contacts.
+     *
+     * @param Contact[] $contacts
+     *
+     * @return \Symfony\Component\Form\Form[]
+     */
+    protected function createDeleteForms(array $contacts)
+    {
+        $deleteForms = array();
+
+        foreach ($contacts as $contact) {
+            $deleteForms[$contact->getId()] = $this->createDeleteForm($contact->getId())->createView();
+        }
+
+        return $deleteForms;
+    }
+
+    /**
      * @param int $id
      *
      * @return Contact
@@ -335,7 +340,7 @@ class ContactController extends Controller
         $contact = $this->entityManager->getRepository('KhatovarContactBundle:Contact')->find($id);
 
         if (!$contact) {
-            throw $this->createNotFoundException('Unable to find the contact.');
+            throw $this->createNotFoundException('Impossible de trouver le contact.');
         }
 
         return $contact;
