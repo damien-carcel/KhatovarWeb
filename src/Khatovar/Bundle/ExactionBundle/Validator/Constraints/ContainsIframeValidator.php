@@ -23,25 +23,35 @@
 
 namespace Khatovar\Bundle\ExactionBundle\Validator\Constraints;
 
-use Khatovar\Bundle\ExactionBundle\Entity\Exaction;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
 /**
- * Exaction dates validator.
+ * Exaction iframe validator.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
  */
-class DatesValidator extends ConstraintValidator
+class ContainsIframeValidator extends ConstraintValidator
 {
+    /** @staticvar string */
+    const IFRAME_OPENING_TAG = '<iframe src=';
+
+    /** @staticvar string */
+    const IFRAME_CLOSING_TAG = '</iframe>';
+
     /**
      * {@inheritdoc}
      */
-    public function validate($exaction, Constraint $constraint)
+    public function validate($iframe, Constraint $constraint)
     {
-        if ($exaction instanceof Exaction) {
-            if ($exaction->getStart() > $exaction->getEnd()) {
-                $this->context->buildViolation($constraint->message)->addViolation();
+        if (strlen($iframe) < strlen(static::IFRAME_OPENING_TAG . static::IFRAME_CLOSING_TAG)) {
+            $this->context->buildViolation($constraint->messageLength)->addViolation();
+        } else {
+            $iframeOpening = substr($iframe, 0, strlen(static::IFRAME_OPENING_TAG));
+            $iframeClosing = substr($iframe, - strlen(static::IFRAME_CLOSING_TAG));
+
+            if ($iframeOpening !== static::IFRAME_OPENING_TAG || $iframeClosing !== static::IFRAME_CLOSING_TAG) {
+                $this->context->buildViolation($constraint->messageContent)->addViolation();
             }
         }
     }

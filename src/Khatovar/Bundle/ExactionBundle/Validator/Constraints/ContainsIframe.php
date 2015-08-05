@@ -23,26 +23,18 @@
 
 namespace Khatovar\Bundle\ExactionBundle\Validator\Constraints;
 
-use Khatovar\Bundle\ExactionBundle\Entity\Exaction;
 use Symfony\Component\Validator\Constraint;
-use Symfony\Component\Validator\ConstraintValidator;
 
 /**
- * Exaction dates validator.
+ * Check that the exaction "iframe" field indeed contains an iframe.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
  */
-class DatesValidator extends ConstraintValidator
+class ContainsIframe extends Constraint
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function validate($exaction, Constraint $constraint)
-    {
-        if ($exaction instanceof Exaction) {
-            if ($exaction->getStart() > $exaction->getEnd()) {
-                $this->context->buildViolation($constraint->message)->addViolation();
-            }
-        }
-    }
+    /** @var string */
+    public $messageLength = 'Ce contenu est trop court pour être une iframe. Veuillez vérifier le code saisi.';
+
+    /** @var string */
+    public $messageContent = 'Ce contenu ne semble pas être une iframe. Veuillez vérifier le code saisi.';
 }

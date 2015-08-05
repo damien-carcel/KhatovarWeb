@@ -1,11 +1,13 @@
-KhatovarExactionBundle\Entity\Exaction:
+Khatovar\Bundle\ExactionBundle\Entity\Exaction:
     properties:
         name:
             - NotBlank: ~
         place:
             - NotBlank: ~
         links:
+            - Khatovar\Bundle\ExactionBundle\Validator\Constraints\ExactionLink: ~
+        map:
             - NotBlank: ~
-            - KhatovarExactionBundle\Validator\Contraints\ExactionLink: ~
+            - Khatovar\Bundle\ExactionBundle\Validator\Constraints\ContainsIframe: ~
     constraints:
-        - KhatovarExactionBundle\Validator\Contraints\Dates: ~
+        - Khatovar\Bundle\ExactionBundle\Validator\Constraints\Dates: ~

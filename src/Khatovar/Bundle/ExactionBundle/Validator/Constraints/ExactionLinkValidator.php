@@ -27,7 +27,7 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
 /**
- * Class ExactionLinkValidator
+ * Exaction link validator.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
  */

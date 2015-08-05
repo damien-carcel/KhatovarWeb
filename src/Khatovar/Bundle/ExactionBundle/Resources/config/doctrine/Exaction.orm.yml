@@ -30,6 +30,7 @@ Khatovar\Bundle\ExactionBundle\Entity\Exaction:
         map:
             type: text
             column: map
+            nullable: false
         introduction:
             type: text
             column: introduction

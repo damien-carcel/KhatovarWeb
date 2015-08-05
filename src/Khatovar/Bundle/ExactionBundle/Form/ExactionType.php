@@ -60,7 +60,14 @@ class ExactionType extends AbstractType
             ->add('start', 'date', array('label' => 'Date de début'))
             ->add('end', 'date', array('label' => 'Date de fin'))
             ->add('map', 'textarea', array('label' => 'Emplacement (copier le lien depuis Google Map)'))
-            ->add('introduction', 'textarea', array('label' => 'Annonce'))
+            ->add(
+                'introduction',
+                'textarea',
+                array(
+                    'label'    => 'Annonce',
+                    'required' => false,
+                )
+            )
             ->add(
                 'links',
                 'collection',
