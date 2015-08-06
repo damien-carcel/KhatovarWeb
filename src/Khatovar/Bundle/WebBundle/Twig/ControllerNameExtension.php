@@ -21,7 +21,7 @@
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
-namespace Khatovar\Bundle\WebBundle\Services\Twig;
+namespace Khatovar\Bundle\WebBundle\Twig;
 
 use Symfony\Component\HttpFoundation\Request;
 

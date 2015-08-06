@@ -1,0 +1,16 @@
+parameters:
+    khatovar_web.twig.photos.class:          Khatovar\Bundle\WebBundle\Twig\KhatovarPhotosExtension
+    khatovar_web.twig.controller_name.class: Khatovar\Bundle\WebBundle\Twig\ControllerNameExtension
+
+services:
+    khatovar_web.twig.photo:
+        class: %khatovar_web.twig.photos.class%
+        tags:
+            - { name: twig.extension }
+
+    khatovar_web.twig.controller_name:
+        class: %khatovar_web.twig.controller_name.class%
+        calls:
+            - [setRequest, ['@?request=']]
+        tags:
+            - { name: twig.extension }

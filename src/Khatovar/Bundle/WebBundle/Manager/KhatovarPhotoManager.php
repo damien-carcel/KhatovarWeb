@@ -21,30 +21,29 @@
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
-namespace Khatovar\Bundle\WebBundle\Services\Filters;
+namespace Khatovar\Bundle\WebBundle\Manager;
 
 use Doctrine\ORM\EntityManager;
-use Khatovar\Bundle\PhotoBundle\Entity\Photo;
 
 /**
- * Perform some transformations on html code before display or saving.
+ * Class KhatovarImageResize
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
- * @package Khatovar\Bundle\WebBundle\Services\Translation
+ * @package Khatovar\Bundle\WebBundle\Services\Filters
  */
-class KhatovarTranslation
+class KhatovarPhotoManager
 {
     /**
      * @var EntityManager
      */
-    protected $em;
+    protected $entityManager;
 
     /**
      * @param EntityManager $entityManager
      */
     public function __construct(EntityManager $entityManager)
     {
-        $this->em = $entityManager;
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -71,7 +70,7 @@ class KhatovarTranslation
 
         // Then retrieve the corresponding objects and use them to
         // generate the html code.
-        $repository = $this->em->getRepository('KhatovarPhotoBundle:Photo');
+        $repository = $this->entityManager->getRepository('KhatovarPhotoBundle:Photo');
         $photos = array();
 
         foreach ($paths as $path) {
@@ -100,5 +99,43 @@ class KhatovarTranslation
         }
 
         return str_replace($paths, $photos, $text);
+    }
+
+    /**
+     * Resize an jpeg image according to a given height, but only if
+     * the original image is higher.
+     *
+     * @param string $image The path to the original image
+     * @param int $new_height
+     */
+    public function imageResize($image, $new_height)
+    {
+        // We first find the dimensions of the photo and its ratio
+        $original = imagecreatefromjpeg($image);
+        list($width, $height) = getimagesize($image);
+        $ratio = $width / $height;
+
+        // Then define the new dimensions
+        if ($height > $new_height) {
+            $new_width = round($new_height * $ratio);
+
+            // Then resize it with imagecopyresampled()
+            $resized = imagecreatetruecolor($new_width, $new_height);
+            imagecopyresampled($resized, $original, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
+
+            // And finally replace the original by the new one on the server
+            copy($image, $image . '.old');
+            unlink($image);
+
+            if (imagejpeg($resized, $image)) {
+                unlink($image . '.old');
+            } else {
+                copy($image . '.old', $image);
+            }
+
+            imagedestroy($resized);
+        }
+
+        imagedestroy($original);
     }
 }

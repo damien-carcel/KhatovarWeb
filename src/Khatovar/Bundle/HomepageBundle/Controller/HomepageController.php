@@ -68,10 +68,10 @@ class HomepageController extends Controller
             ->getRepository('KhatovarHomepageBundle:Homepage')
             ->findOneBy(array('active' => true));
 
-        $translations = $this->get('khatovar.web.filters.translation');
+        $photoManager = $this->get('khatovar_web.manager.photo');
 
         if ($homepage) {
-            $content = $translations->imageTranslate($homepage->getContent());
+            $content = $photoManager->imageTranslate($homepage->getContent());
             $pageId = $homepage->getId();
         } else {
             $content = '';
