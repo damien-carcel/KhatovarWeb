@@ -47,7 +47,7 @@ class Member
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
@@ -56,19 +56,19 @@ class Member
      * @Assert\NotBlank()
      * @Assert\Length(max="255")
      */
-    private $name;
+    protected $name;
 
     /**
      * @Gedmo\Slug(fields={"name"})
      * @ORM\Column(name="slug", length=128, unique=true)
      */
-    private $slug;
+    protected $slug;
 
     /**
      * @ORM\OneToOne(targetEntity="Khatovar\Bundle\PhotoBundle\Entity\Photo")
      * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
-    private $portrait;
+    protected $portrait;
 
     /**
      * @var string
@@ -76,7 +76,7 @@ class Member
      * @ORM\Column(name="rank", type="string", length=255)
      * @Assert\Length(max="255")
      */
-    private $rank;
+    protected $rank;
 
     /**
      * @var string
@@ -84,7 +84,7 @@ class Member
      * @ORM\Column(name="quote", type="string", length=255)
      * @Assert\Length(max="255")
      */
-    private $quote;
+    protected $quote;
 
     /**
      * @var string
@@ -92,7 +92,7 @@ class Member
      * @ORM\Column(name="skill", type="string", length=255)
      * @Assert\Length(max="255")
      */
-    private $skill;
+    protected $skill;
 
     /**
      * @var string
@@ -100,7 +100,7 @@ class Member
      * @ORM\Column(name="age", type="string", length=255)
      * @Assert\Length(max="255")
      */
-    private $age;
+    protected $age;
 
     /**
      * @var string
@@ -108,7 +108,7 @@ class Member
      * @ORM\Column(name="size", type="string", length=255)
      * @Assert\Length(max="255")
      */
-    private $size;
+    protected $size;
 
     /**
      * @var string
@@ -116,7 +116,7 @@ class Member
      * @ORM\Column(name="weight", type="string", length=255)
      * @Assert\Length(max="255")
      */
-    private $weight;
+    protected $weight;
 
     /**
      * @var string
@@ -124,7 +124,7 @@ class Member
      * @ORM\Column(name="strength", type="string", length=255)
      * @Assert\Length(max="255")
      */
-    private $strength;
+    protected $strength;
 
     /**
      * @var string
@@ -132,7 +132,7 @@ class Member
      * @ORM\Column(name="weakness", type="string", length=255)
      * @Assert\Length(max="255")
      */
-    private $weakness;
+    protected $weakness;
 
     /**
      * @var string
@@ -140,26 +140,26 @@ class Member
      * @ORM\Column(name="story", type="text")
      * @Assert\NotBlank()
      */
-    private $story;
+    protected $story;
 
     /**
      * @ORM\OneToOne(targetEntity="Carcel\UserBundle\Entity\User", cascade={"detach"})
      * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
-    private $owner;
+    protected $owner;
 
     /**
      * @var bool
      *
      * @ORM\Column(name="active", type="boolean", nullable=true)
      */
-    private $active;
+    protected $active;
 
     /**
      * @var ArrayCollection $photos
      * @ORM\OneToMany(targetEntity="Khatovar\Bundle\PhotoBundle\Entity\Photo", mappedBy="member")
      */
-    private $photos;
+    protected $photos;
 
 
     /**

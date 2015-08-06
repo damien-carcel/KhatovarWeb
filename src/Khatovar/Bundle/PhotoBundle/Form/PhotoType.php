@@ -39,7 +39,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class PhotoType extends AbstractType
 {
-    private $currentUser;
+    protected $currentUser;
 
     /**
      * @param User $currentUser
