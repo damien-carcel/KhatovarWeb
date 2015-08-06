@@ -24,10 +24,12 @@
 namespace Khatovar\Bundle\HomepageBundle\Controller;
 
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Khatovar\Bundle\HomepageBundle\Entity\Homepage;
 use Khatovar\Bundle\HomepageBundle\Form\HomepageType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -39,6 +41,22 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class HomepageController extends Controller
 {
+    /** @var ContainerInterface */
+    protected $container;
+
+    /** @var EntityManagerInterface */
+    protected $entityManager;
+
+    /**
+     * @param ContainerInterface     $container
+     * @param EntityManagerInterface $entityManager
+     */
+    public function __construct(ContainerInterface $container, EntityManagerInterface $entityManager)
+    {
+        $this->container     = $container;
+        $this->entityManager = $entityManager;
+    }
+
     /**
      * Display the homepage.
      *
@@ -46,7 +64,7 @@ class HomepageController extends Controller
      */
     public function indexAction()
     {
-        $homepage = $this->getDoctrine()->getManager()
+        $homepage = $this->entityManager
             ->getRepository('KhatovarHomepageBundle:Homepage')
             ->findOneBy(array('active' => true));
 
@@ -87,9 +105,8 @@ class HomepageController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($homepage);
-            $entityManager->flush();
+            $this->entityManager->persist($homepage);
+            $this->entityManager->flush();
 
             $this->get('session')->getFlashBag()
                 ->add('notice', 'Page d\'accueil enregistrée');
@@ -122,9 +139,8 @@ class HomepageController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($homepage);
-            $entityManager->flush();
+            $this->entityManager->persist($homepage);
+            $this->entityManager->flush();
 
             $this->get('session')->getFlashBag()
                 ->add('notice', 'Page d\'accueil modifiée');
@@ -152,18 +168,16 @@ class HomepageController extends Controller
      */
     public function listAction(Request $request)
     {
-        $entityManager = $this->getDoctrine()->getManager();
-        $form          = $this->createActivationForm();
-
+        $form = $this->createActivationForm();
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $this->changeActiveHomepage($entityManager, $form);
+            $this->changeActiveHomepage($form);
 
             return $this->redirect($this->generateUrl('khatovar_web_homepage_list'));
         }
 
-        $list = $entityManager->getRepository('KhatovarHomepageBundle:Homepage')->findAll();
+        $list = $this->entityManager->getRepository('KhatovarHomepageBundle:Homepage')->findAll();
 
         return $this->render(
             'KhatovarHomepageBundle:Homepage:list.html.twig',
@@ -190,9 +204,8 @@ class HomepageController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($homepage);
-            $entityManager->flush();
+            $this->entityManager->remove($homepage);
+            $this->entityManager->flush();
 
             $this->get('session')->getFlashBag()
                 ->add('notice', 'Page d\'accueil supprimée');
@@ -204,7 +217,10 @@ class HomepageController extends Controller
 
         return $this->render(
             'KhatovarHomepageBundle:Homepage:delete.html.twig',
-            array('homepage' => $homepage, 'form' => $form->createView())
+            array(
+                'homepage' => $homepage,
+                'form'     => $form->createView()
+            )
         );
     }
 
@@ -234,23 +250,22 @@ class HomepageController extends Controller
     /**
      * Change the active Homepage.
      *
-     * @param ObjectManager $entityManager
      * @param FormInterface $form
      */
-    protected function changeActiveHomepage(ObjectManager $entityManager, FormInterface $form)
+    protected function changeActiveHomepage(FormInterface $form)
     {
-        $repository  = $entityManager->getRepository('KhatovarHomepageBundle:Homepage');
+        $repository  = $this->entityManager->getRepository('KhatovarHomepageBundle:Homepage');
         $newHomepage = $repository->find($form->get('active')->getData());
         $oldHomepage = $repository->findOneBy(array('active' => true));
 
         if (null !== $oldHomepage) {
             $oldHomepage->setActive(false);
-            $entityManager->persist($oldHomepage);
+            $this->entityManager->persist($oldHomepage);
         }
 
         $newHomepage->setActive(true);
-        $entityManager->persist($newHomepage);
-        $entityManager->flush();
+        $this->entityManager->persist($newHomepage);
+        $this->entityManager->flush();
 
         $this->get('session')->getFlashBag()->add('notice', 'Page d\'accueil activée');
     }

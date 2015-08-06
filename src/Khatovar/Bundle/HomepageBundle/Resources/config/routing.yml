@@ -1,23 +1,23 @@
 khatovar_web_homepage:
     path:       /
-    defaults:   { _controller: KhatovarHomepageBundle:Homepage:index }
+    defaults:   { _controller: 'khatovar_homepage.controller.homepage:indexAction' }
 
 khatovar_web_homepage_create:
     path:       /create
-    defaults:   { _controller: KhatovarHomepageBundle:Homepage:create }
+    defaults:   { _controller: 'khatovar_homepage.controller.homepage:createAction' }
 
 khatovar_web_homepage_edit:
     path:       /edit/{homepage}
-    defaults:   { _controller: KhatovarHomepageBundle:Homepage:edit }
+    defaults:   { _controller: 'khatovar_homepage.controller.homepage:editAction' }
     requirements:
         homepage: \d+
 
 khatovar_web_homepage_list:
-    path:       //list
-    defaults:   { _controller: KhatovarHomepageBundle:Homepage:list }
+    path:       /list
+    defaults:   { _controller: 'khatovar_homepage.controller.homepage:listAction' }
 
 khatovar_web_homepage_delete:
     path:       /delete/{homepage}
-    defaults:   { _controller: KhatovarHomepageBundle:Homepage:delete }
+    defaults:   { _controller: 'khatovar_homepage.controller.homepage:deleteAction' }
     requirements:
         homepage: \d+
