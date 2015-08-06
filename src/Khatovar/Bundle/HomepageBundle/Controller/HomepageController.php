@@ -280,18 +280,26 @@ class HomepageController extends Controller
      */
     public function deleteAction(Request $request, $id)
     {
-        $form = $this->createDeleteForm($id);
-        $form->handleRequest($request);
+        $homepage = $this->findByIdOr404($id);
 
-        if ($form->isValid()) {
-            $homepage = $this->findByIdOr404($id);
-            $this->entityManager->remove($homepage);
-            $this->entityManager->flush();
-
+        if ($homepage->isActive()) {
             $this->session->getFlashBag()->add(
                 'notice',
-                'Page d\'accueil supprimée'
+                'Vous ne pouvez pas supprimer la page d\'accueil active'
             );
+        } else {
+            $form = $this->createDeleteForm($id);
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                $this->entityManager->remove($homepage);
+                $this->entityManager->flush();
+
+                $this->session->getFlashBag()->add(
+                    'notice',
+                    'Page d\'accueil supprimée'
+                );
+            }
         }
 
         return $this->redirect($this->generateUrl('khatovar_web_homepage_list'));

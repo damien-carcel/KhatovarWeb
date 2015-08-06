@@ -244,18 +244,26 @@ class ContactController extends Controller
      */
     public function deleteAction(Request $request, $id)
     {
-        $form = $this->createDeleteForm($id);
-        $form->handleRequest($request);
+        $contact = $this->findByIdOr404($id);
 
-        if ($form->isValid()) {
-            $contact = $this->findByIdOr404($id);
-            $this->entityManager->remove($contact);
-            $this->entityManager->flush();
-
+        if ($contact->isActive()) {
             $this->session->getFlashBag()->add(
                 'notice',
-                'Page de contact supprimée'
+                'Vous ne pouvez pas supprimer la page d\'accueil active'
             );
+        } else {
+            $form = $this->createDeleteForm($id);
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                $this->entityManager->remove($contact);
+                $this->entityManager->flush();
+
+                $this->session->getFlashBag()->add(
+                    'notice',
+                    'Page de contact supprimée'
+                );
+            }
         }
 
         return $this->redirect($this->generateUrl('khatovar_web_contact_list'));
