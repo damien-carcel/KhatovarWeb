@@ -29,7 +29,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
 
 /**
- * Khatovar exaction extensions.
+ * Khatovar Exaction extensions.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
  */

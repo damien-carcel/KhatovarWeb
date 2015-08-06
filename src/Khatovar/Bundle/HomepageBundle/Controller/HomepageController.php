@@ -28,10 +28,12 @@ use Doctrine\ORM\EntityManagerInterface;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Khatovar\Bundle\HomepageBundle\Entity\Homepage;
 use Khatovar\Bundle\HomepageBundle\Form\HomepageType;
+use Khatovar\Bundle\WebBundle\Manager\PhotoManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * Main Controller for Homepage bundle.
@@ -47,14 +49,28 @@ class HomepageController extends Controller
     /** @var EntityManagerInterface */
     protected $entityManager;
 
+    /** @var PhotoManager */
+    protected $photoManager;
+
+    /** @var Session */
+    protected $session;
+
     /**
      * @param ContainerInterface     $container
      * @param EntityManagerInterface $entityManager
+     * @param PhotoManager           $photoManager
+     * @param Session                $session
      */
-    public function __construct(ContainerInterface $container, EntityManagerInterface $entityManager)
-    {
+    public function __construct(
+        ContainerInterface $container,
+        EntityManagerInterface $entityManager,
+        PhotoManager $photoManager,
+        Session $session
+    ) {
         $this->container     = $container;
         $this->entityManager = $entityManager;
+        $this->photoManager  = $photoManager;
+        $this->session       = $session;
     }
 
     /**
@@ -68,11 +84,9 @@ class HomepageController extends Controller
             ->getRepository('KhatovarHomepageBundle:Homepage')
             ->findOneBy(array('active' => true));
 
-        $photoManager = $this->get('khatovar_web.manager.photo');
-
         if ($homepage) {
-            $content = $photoManager->imageTranslate($homepage->getContent());
-            $pageId = $homepage->getId();
+            $content = $this->photoManager->imageTranslate($homepage->getContent());
+            $pageId  = $homepage->getId();
         } else {
             $content = '';
             $pageId = null;
@@ -108,12 +122,9 @@ class HomepageController extends Controller
             $this->entityManager->persist($homepage);
             $this->entityManager->flush();
 
-            $this->get('session')->getFlashBag()
-                ->add('notice', 'Page d\'accueil enregistrée');
+            $this->session->getFlashBag()->add('notice', 'Page d\'accueil enregistrée');
 
-            return $this->redirect(
-                $this->generateUrl('khatovar_web_homepage_list')
-            );
+            return $this->redirect($this->generateUrl('khatovar_web_homepage_list'));
         }
 
         return $this->render(
@@ -142,12 +153,9 @@ class HomepageController extends Controller
             $this->entityManager->persist($homepage);
             $this->entityManager->flush();
 
-            $this->get('session')->getFlashBag()
-                ->add('notice', 'Page d\'accueil modifiée');
+            $this->session->getFlashBag()->add('notice', 'Page d\'accueil modifiée');
 
-            return $this->redirect(
-                $this->generateUrl('khatovar_web_homepage_list')
-            );
+            return $this->redirect($this->generateUrl('khatovar_web_homepage_list'));
         }
 
         return $this->render(
@@ -207,12 +215,9 @@ class HomepageController extends Controller
             $this->entityManager->remove($homepage);
             $this->entityManager->flush();
 
-            $this->get('session')->getFlashBag()
-                ->add('notice', 'Page d\'accueil supprimée');
+            $this->session->getFlashBag()->add('notice', 'Page d\'accueil supprimée');
 
-            return $this->redirect(
-                $this->generateUrl('khatovar_web_homepage_list')
-            );
+            return $this->redirect($this->generateUrl('khatovar_web_homepage_list'));
         }
 
         return $this->render(
@@ -267,6 +272,6 @@ class HomepageController extends Controller
         $this->entityManager->persist($newHomepage);
         $this->entityManager->flush();
 
-        $this->get('session')->getFlashBag()->add('notice', 'Page d\'accueil activée');
+        $this->session->getFlashBag()->add('notice', 'Page d\'accueil activée');
     }
 }

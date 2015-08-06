@@ -1,5 +1,5 @@
 parameters:
-    khatovar_web.twig.photos.class:          Khatovar\Bundle\WebBundle\Twig\KhatovarPhotosExtension
+    khatovar_web.twig.photos.class:          Khatovar\Bundle\WebBundle\Twig\PhotosExtension
     khatovar_web.twig.controller_name.class: Khatovar\Bundle\WebBundle\Twig\ControllerNameExtension
 
 services:

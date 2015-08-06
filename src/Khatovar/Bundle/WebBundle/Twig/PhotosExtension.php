@@ -31,7 +31,7 @@ use Khatovar\Bundle\PhotoBundle\Entity\Photo;
  * @author Damien Carcel (https://github.com/damien-carcel)
  * @package Khatovar\Bundle\WebBundle\Services\Twig
  */
-class KhatovarPhotosExtension extends \Twig_Extension
+class PhotosExtension extends \Twig_Extension
 {
     /**
      * The minimum length between floating photos in a page.

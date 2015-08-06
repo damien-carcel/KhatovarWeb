@@ -31,7 +31,7 @@ use Doctrine\ORM\EntityManager;
  * @author Damien Carcel (https://github.com/damien-carcel)
  * @package Khatovar\Bundle\WebBundle\Services\Filters
  */
-class KhatovarPhotoManager
+class PhotoManager
 {
     /**
      * @var EntityManager

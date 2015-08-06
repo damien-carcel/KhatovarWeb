@@ -1,0 +1,28 @@
+Khatovar\Bundle\HomepageBundle\Entity\Homepage:
+    type: entity
+    table: khatovar_web_homepages
+    repositoryClass: Khatovar\Bundle\HomepageBundle\Entity\HomepageRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+            column: name
+            nullable: false
+        content:
+            type: text
+            column: content
+            nullable: false
+        active:
+            type: boolean
+            column: active
+            nullable: true
+    oneToMany:
+        photos:
+            targetEntity: Khatovar\Bundle\PhotoBundle\Entity\Photo
+            mappedBy: homepage

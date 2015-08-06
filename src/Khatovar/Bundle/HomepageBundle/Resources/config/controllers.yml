@@ -8,3 +8,5 @@ services:
         arguments:
             - '@service_container'
             - '@doctrine.orm.entity_manager'
+            - '@khatovar_web.manager.photo'
+            - '@session'

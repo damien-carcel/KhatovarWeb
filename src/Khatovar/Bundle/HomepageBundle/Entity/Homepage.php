@@ -29,54 +29,26 @@ use Khatovar\Bundle\PhotoBundle\Entity\Photo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Homepage
+ * Homepage entity.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
- * @package Khatovar\Bundle\HomepageBundle\Entity
- *
- * @ORM\Table(name="khatovar_web_homepages")
- * @ORM\Entity(repositoryClass="Khatovar\Bundle\HomepageBundle\Entity\HomepageRepository")
  */
 class Homepage
 {
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
+    /** @var int */
+    protected $id;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="text")
-     * @Assert\NotBlank()
-     */
-    private $name;
+    /** @var string */
+    protected $name;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="content", type="text")
-     * @Assert\NotBlank()
-     */
-    private $content;
+    /** @var string */
+    protected $content;
 
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="active", type="boolean")
-     */
-    private $active;
+    /** @var bool */
+    protected $active;
 
-    /**
-     * @var ArrayCollection $photos
-     * @ORM\OneToMany(targetEntity="Khatovar\Bundle\PhotoBundle\Entity\Photo", mappedBy="homepage")
-     */
-    private $photos;
-
+    /** @var ArrayCollection $photos */
+    protected $photos;
 
     /**
      * Allow to save only the ID the entity in database as a string
@@ -95,7 +67,7 @@ class Homepage
     public function __construct()
     {
         $this->photos = new ArrayCollection();
-        $this->active = 0;
+        $this->active = false;
     }
 
     /**
@@ -135,7 +107,7 @@ class Homepage
     /**
      * Set active
      *
-     * @param boolean $active
+     * @param bool $active
      *
      * @return Homepage
      */
@@ -149,7 +121,7 @@ class Homepage
     /**
      * Get active
      *
-     * @return boolean
+     * @return bool
      */
     public function getActive()
     {

@@ -1,0 +1,6 @@
+Khatovar\Bundle\HomepageBundle\Entity\Homepage:
+    properties:
+        name:
+            - NotBlank: ~
+        content:
+            - NotBlank: ~

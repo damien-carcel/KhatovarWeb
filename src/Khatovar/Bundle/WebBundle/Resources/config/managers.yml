@@ -1,5 +1,5 @@
 parameters:
-    khatovar_web.manager.photo.class:  Khatovar\Bundle\WebBundle\Manager\KhatovarPhotoManager
+    khatovar_web.manager.photo.class:  Khatovar\Bundle\WebBundle\Manager\PhotoManager
 
 services:
     khatovar_web.manager.photo:
