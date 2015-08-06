@@ -31,6 +31,7 @@ use Khatovar\Bundle\ExactionBundle\Manager\ExactionManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * Main Controller for Exaction bundle.
@@ -48,19 +49,25 @@ class ExactionController extends Controller
     /** @var ExactionManager */
     protected $exactionManager;
 
+    /** @var Session */
+    protected $session;
+
     /**
      * @param ContainerInterface     $container
      * @param EntityManagerInterface $entityManager
      * @param ExactionManager        $exactionManager
+     * @param Session                $session
      */
     public function __construct(
         ContainerInterface $container,
         EntityManagerInterface $entityManager,
-        ExactionManager $exactionManager
+        ExactionManager $exactionManager,
+        Session $session
     ) {
         $this->container       = $container;
         $this->entityManager   = $entityManager;
         $this->exactionManager = $exactionManager;
+        $this->session         = $session;
     }
 
     /**
@@ -166,7 +173,7 @@ class ExactionController extends Controller
             $this->entityManager->persist($exaction);
             $this->entityManager->flush();
 
-            $this->get('session')->getFlashBag()->add(
+            $this->session->getFlashBag()->add(
                 'notice',
                 'La nouvelle exaction a bien été sauvegardée.'
             );
@@ -227,7 +234,7 @@ class ExactionController extends Controller
         if ($editForm->isValid()) {
             $this->entityManager->flush();
 
-            $this->get('session')->getFlashBag()->add(
+            $this->session->getFlashBag()->add(
                 'notice',
                 'L\'exaction a bien été mise à jour.'
             );
@@ -265,7 +272,7 @@ class ExactionController extends Controller
             $this->entityManager->remove($exaction);
             $this->entityManager->flush();
 
-            $this->get('session')->getFlashBag()->add(
+            $this->session->getFlashBag()->add(
                 'notice',
                 'Page de contact supprimée'
             );

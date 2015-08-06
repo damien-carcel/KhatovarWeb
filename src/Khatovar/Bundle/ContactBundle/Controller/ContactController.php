@@ -10,6 +10,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -25,14 +26,22 @@ class ContactController extends Controller
     /** @var EntityManagerInterface */
     protected $entityManager;
 
+    protected $session;
+
     /**
      * @param ContainerInterface     $container
      * @param EntityManagerInterface $entityManager
+     * @param Session                $session
      */
-    public function __construct(ContainerInterface $container, EntityManagerInterface $entityManager)
-    {
+    public function __construct(
+        ContainerInterface $container,
+        EntityManagerInterface $entityManager,
+        Session $session
+    ) {
         $this->container     = $container;
         $this->entityManager = $entityManager;
+        $this->session       = $session;
+
     }
 
     /**
@@ -84,7 +93,7 @@ class ContactController extends Controller
         if ($form->isValid()) {
             $this->changeActiveContact($form);
 
-            $this->get('session')->getFlashBag()->add(
+            $this->session->getFlashBag()->add(
                 'notice',
                 'Page de contact activée'
             );
@@ -144,7 +153,7 @@ class ContactController extends Controller
             $this->entityManager->persist($contact);
             $this->entityManager->flush();
 
-            $this->get('session')->getFlashBag()->add(
+            $this->session->getFlashBag()->add(
                 'notice',
                 'Page de contact créée'
             );
@@ -199,7 +208,7 @@ class ContactController extends Controller
         if ($editForm->isValid()) {
             $this->entityManager->flush();
 
-            $this->get('session')->getFlashBag()->add(
+            $this->session->getFlashBag()->add(
                 'notice',
                 'Page de contact mise à jour'
             );
@@ -233,7 +242,7 @@ class ContactController extends Controller
             $this->entityManager->remove($contact);
             $this->entityManager->flush();
 
-            $this->get('session')->getFlashBag()->add(
+            $this->session->getFlashBag()->add(
                 'notice',
                 'Page de contact supprimée'
             );
@@ -405,6 +414,6 @@ class ContactController extends Controller
         $this->entityManager->persist($newContact);
         $this->entityManager->flush();
 
-        $this->get('session')->getFlashBag()->add('notice', 'Page de contact activée');
+        $this->session->getFlashBag()->add('notice', 'Page de contact activée');
     }
 }
