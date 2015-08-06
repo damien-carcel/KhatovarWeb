@@ -1,31 +1,12 @@
 {% extends 'KhatovarWebBundle::layout.html.twig' %}
 
+{% form_theme edit_form 'KhatovarWebBundle:form:fields.html.twig' %}
+
 {% block inarticle %}
-    <p>
-        <a href="{{ path('khatovar_web_homepage_list') }}">
-            Sélectionner une nouvelle page d'accueil
-        </a>
-        |
-        <a href="{{ path('khatovar_web_homepage_create') }}">
-            Créer une nouvelle page d'accueil
-        </a>
-    </p>
+    <a href="{{ path('khatovar_web_homepage_list') }}">Retour à la liste des pages d'accueil</a>
+    <hr />
 
-    {{ form_start(form) }}
-    <div class="form-group">
-        {{ form_label(form.name) }}
-        {{ form_widget(form.name, { 'attr': {'class': 'form-element'} }) }}
-    </div>
-    <div class="form-group form-textarea">
-        {{ form_label(form.content) }}
-        {{ form_widget(form.content, { 'attr': {'class': 'form-element'} }) }}
-    </div>
+    <h1>Édition de la page d'accueil</h1>
 
-    {{ form_rest(form) }}
-
-    <div class="form-group">
-        {{ form_widget(form.submit, { 'attr': {'class': 'btn btn-default'} }) }}
-    </div>
-
-    {{ form_end(form) }}
+    {% include 'KhatovarHomepageBundle:Homepage:_form.html.twig' with {'form': edit_form} %}
 {% endblock %}

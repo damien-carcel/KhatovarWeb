@@ -2,16 +2,15 @@
 
 {% block inarticle %}
     {% if is_granted('ROLE_EDITOR') %}
-        {% if page_id %}
-            <a href="{{ path('khatovar_web_homepage_edit', {'homepage': page_id}) }}">Éditer cette page</a>
-        {% endif %}
+        <a href="{{ path('khatovar_web_homepage_edit', {'id': page_id}) }}">Éditer cette page</a>
         |
-        <a href="{{ path('khatovar_web_homepage_create') }}">Créer une nouvelle page</a>
+        <a href="{{ path('khatovar_web_homepage_new') }}">Créer une nouvelle page</a>
         |
         <a href="{{ path('khatovar_web_homepage_list') }}">Liste des pages d'accueil disponibles</a>
         <hr />
     {% endif %}
+
     {% autoescape false %}
-    {{ content }}
+        {{ content }}
     {% endautoescape %}
 {% endblock %}

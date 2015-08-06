@@ -71,7 +71,7 @@ class ExactionController extends Controller
     }
 
     /**
-     * Display the list of all years of exaction.
+     * Displays the list of all years of exaction.
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -86,7 +86,7 @@ class ExactionController extends Controller
     }
 
     /**
-     * View the schedule of the current year.
+     * Displays the schedule of the current year.
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -108,7 +108,7 @@ class ExactionController extends Controller
     }
 
     /**
-     * View the exactions of a given year.
+     * Displays the exactions of a given year.
      *
      * @param int $year
      *
@@ -132,7 +132,7 @@ class ExactionController extends Controller
     }
 
     /**
-     * Displays a form to create a new Contact entity.
+     * Displays a form to create a new exaction.
      *
      * @return \Symfony\Component\HttpFoundation\Response
      *
@@ -154,7 +154,7 @@ class ExactionController extends Controller
     }
 
     /**
-     * Add a new exaction.
+     * Creates a new exaction.
      *
      * @param Request $request
      *
@@ -175,7 +175,7 @@ class ExactionController extends Controller
 
             $this->session->getFlashBag()->add(
                 'notice',
-                'La nouvelle exaction a bien été sauvegardée.'
+                'Exaction créée'
             );
 
             return $this->redirect($this->chooseRedirectionURL($exaction));
@@ -191,7 +191,7 @@ class ExactionController extends Controller
     }
 
     /**
-     * Displays a form to edit an existing Exaction entity.
+     * Displays a form to edit an existing exaction.
      *
      * @param int $id
      *
@@ -215,7 +215,7 @@ class ExactionController extends Controller
     }
 
     /**
-     * Update an exaction.
+     * Updates an exaction.
      *
      * @param Request $request
      * @param int     $id
@@ -236,7 +236,7 @@ class ExactionController extends Controller
 
             $this->session->getFlashBag()->add(
                 'notice',
-                'L\'exaction a bien été mise à jour.'
+                'Exaction modifiée'
             );
 
             return $this->redirect($this->chooseRedirectionURL($exaction));
@@ -252,7 +252,7 @@ class ExactionController extends Controller
     }
 
     /**
-     * Remove an exaction.
+     * Deletes an exaction.
      *
      * @param Request $request
      * @param int     $id
@@ -274,7 +274,7 @@ class ExactionController extends Controller
 
             $this->session->getFlashBag()->add(
                 'notice',
-                'Page de contact supprimée'
+                'Exaction supprimée'
             );
         }
 

@@ -1,6 +1,14 @@
 {% extends 'KhatovarWebBundle::layout.html.twig' %}
 
 {% block inarticle %}
+    <style>
+        td, th {
+            padding: 5px 0 5px 0;
+        }
+    </style>
+
+    <h1>Liste des pages d'accueil</h1>
+
     <p>
         <a href="{{ path('khatovar_web_homepage_create') }}">Créer une nouvelle page d'accueil</a>
     </p>
@@ -8,35 +16,54 @@
         Veuillez sélectionner la page d'accueil à utiliser :
     </p>
 
-    {{ form_start(form) }}
+    {{ form_start(activation_form) }}
     <div class="form-group">
-        {{ form_label(form.active) }}
-        {{ form_widget(form.active, { 'attr': {'class': 'form-element'} }) }}
+        {{ form_label(activation_form.active) }}
+        {{ form_widget(activation_form.active, { 'attr': {'class': 'form-element'} }) }}
     </div>
 
     <div class="form-group">
-        {{ form_widget(form.submit) }}
+        {{ form_widget(activation_form.submit) }}
     </div>
 
-    {{ form_rest(form) }}
-    {{ form_end(form) }}
+    {{ form_rest(activation_form) }}
+    {{ form_end(activation_form) }}
 
     <p>
         Liste des pages d'accueil disponibles :
     </p>
-    {% for homepage in homepage_list %}
-        <ul>
-            <li>
-                {{ homepage.name }}
-                —
-                <a href="{{ path('khatovar_web_homepage_edit', { 'homepage': homepage.id }) }}">
-                    Éditer
-                </a>
-                |
-                <a href="{{ path('khatovar_web_homepage_delete', { 'homepage': homepage.id }) }}">
-                    Supprimer
-                </a>
-            </li>
-        </ul>
-    {% endfor %}
+    <table class="table-responsive">
+        <thead>
+        <tr>
+            <th class="column-center">
+                Identifiant
+            </th>
+            <th>
+                Nom
+            </th>
+            <th class="column-center">
+                Actions
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for homepage in homepages %}
+            {% set delete_form = delete_forms[homepage.id] %}
+
+            <tr>
+                <td class="column-center">
+                    <a href="{{ path('khatovar_web_homepage_show', { 'id': homepage.id }) }}">{{ homepage.id }}</a>
+                </td>
+                <td>
+                    {{ homepage.name }}
+                </td>
+                <td class="column-center">
+                    <a class="button" href="{{ path('khatovar_web_homepage_show', { 'id': homepage.id }) }}">Visualiser</a>
+                    <a class="button" href="{{ path('khatovar_web_homepage_edit', { 'id': homepage.id }) }}">Éditer</a>
+                    {{ form(delete_form, { 'attr': {'class': 'button-inline'}}) }}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}

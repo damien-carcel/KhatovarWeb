@@ -1,0 +1,16 @@
+{{ form_start(form) }}
+<div class="form-group">
+    {{ form_label(form.name) }}
+    {{ form_widget(form.name, { 'attr': {'class': 'form-element'} }) }}
+</div>
+<div class="form-group form-textarea">
+    {{ form_label(form.content) }}
+    {{ form_widget(form.content, { 'attr': {'class': 'form-element'} }) }}
+</div>
+
+<div class="form-group">
+    {{ form_widget(form.submit, { 'attr': {'class': 'btn btn-default'} }) }}
+</div>
+
+{{ form_rest(form) }}
+{{ form_end(form) }}

@@ -28,30 +28,31 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- * Class HomepageType
+ * Homepage from type.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
- * @package Khatovar\Bundle\HomepageBundle\Form
  */
 class HomepageType extends AbstractType
 {
     /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
+     * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', 'text', array('label' => 'Nom :'))
-            ->add('content', 'ckeditor', array(
-                'label' => false,
-                'config_name' => 'basic_config'
-            ))
-            ->add('submit', 'submit', array('label' => 'Enregistrer'))
-        ;
+        $builder
+            ->add('name', 'text', array('label' => 'Nom :'))
+            ->add(
+                'content',
+                'ckeditor',
+                array(
+                    'label'       => false,
+                    'config_name' => 'basic_config'
+                )
+            );
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * {@inheritdoc}
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
@@ -59,7 +60,7 @@ class HomepageType extends AbstractType
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
     public function getName()
     {

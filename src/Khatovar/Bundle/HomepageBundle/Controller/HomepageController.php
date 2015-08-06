@@ -34,6 +34,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Main Controller for Homepage bundle.
@@ -74,30 +75,97 @@ class HomepageController extends Controller
     }
 
     /**
-     * Display the homepage.
+     * Displays the active homepage.
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction()
     {
-        $homepage = $this->entityManager
-            ->getRepository('KhatovarHomepageBundle:Homepage')
-            ->findOneBy(array('active' => true));
-
-        if ($homepage) {
-            $content = $this->photoManager->imageTranslate($homepage->getContent());
-            $pageId  = $homepage->getId();
-        } else {
-            $content = '';
-            $pageId = null;
-        }
+        $homepage = $this->findActiveOr404();
 
         return $this->render(
-            'KhatovarHomepageBundle:Homepage:index.html.twig',
+            'KhatovarHomepageBundle:Homepage:show.html.twig',
             array(
-                'content' => $content,
-                'page_id' => $pageId
+                'content' => $this->photoManager->imageTranslate($homepage->getContent()),
+                'page_id' => $homepage->getId()
             )
+        );
+    }
+
+    /**
+     * Finds and display a homepage.
+     *
+     * @param int $id
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function showAction($id)
+    {
+        $homepage = $this->findByIdOr404($id);
+
+        return $this->render(
+            'KhatovarHomepageBundle:Homepage:show.html.twig',
+            array(
+                'content' => $this->photoManager->imageTranslate($homepage->getContent()),
+                'page_id' => $homepage->getId()
+            )
+        );
+    }
+
+    /**
+     * List of all homepages, and allow to activate one of them.
+     *
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     *
+     * @Secure(roles="ROLE_EDITOR")
+     */
+    public function listAction(Request $request)
+    {
+        $form = $this->createActivationForm();
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $this->changeActiveHomepage($form);
+
+            $this->session->getFlashBag()->add(
+                'notice',
+                'Page d\'accueil activée'
+            );
+
+            return $this->redirect($this->generateUrl('khatovar_web_homepage_list'));
+        }
+
+        $homepages = $this->entityManager->getRepository('KhatovarHomepageBundle:Homepage')->findAll();
+        $deleteForms = $this->createDeleteForms($homepages);
+
+        return $this->render(
+            'KhatovarHomepageBundle:Homepage:list.html.twig',
+            array(
+                'homepages'       => $homepages,
+                'activation_form' => $form->createView(),
+                'delete_forms'    => $deleteForms,
+            )
+        );
+    }
+
+    /**
+     * Displays a form to create a new homepage.
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @Secure(roles="ROLE_EDITOR")
+     */
+    public function newAction()
+    {
+        $homepage = new Homepage();
+
+        $form = $this->createCreateForm($homepage);
+
+        return $this->render(
+            'KhatovarHomepageBundle:Homepage:new.html.twig',
+            array('form' => $form->createView(),)
         );
     }
 
@@ -114,119 +182,239 @@ class HomepageController extends Controller
     {
         $homepage = new Homepage();
 
-        $form = $this->createForm(new HomepageType(), $homepage);
-
+        $form = $this->createCreateForm($homepage);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $this->entityManager->persist($homepage);
             $this->entityManager->flush();
 
-            $this->session->getFlashBag()->add('notice', 'Page d\'accueil enregistrée');
+            $this->session->getFlashBag()->add(
+                'notice',
+                'Page d\'accueil créée'
+            );
 
-            return $this->redirect($this->generateUrl('khatovar_web_homepage_list'));
+            return $this->redirect(
+                $this->generateUrl(
+                    'khatovar_web_homepage_show',
+                    array('id' => $homepage->getId())
+                )
+            );
         }
 
         return $this->render(
-            'KhatovarHomepageBundle:Homepage:edit.html.twig',
+            'KhatovarHomepageBundle:Homepage:new.html.twig',
             array('form' => $form->createView())
         );
     }
 
     /**
-     * Edit an existing homepage.
+     * Displays a form to edit an existing Homepage entity.
      *
-     * @param Homepage $homepage
-     * @param Request  $request
+     * @param int $id
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      *
      * @Secure(roles="ROLE_EDITOR")
      */
-    public function editAction(Homepage $homepage, Request $request)
+    public function editAction($id)
     {
-        $form = $this->createForm(new HomepageType(), $homepage);
+        $homepage = $this->findByIdOr404($id);
 
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $this->entityManager->persist($homepage);
-            $this->entityManager->flush();
-
-            $this->session->getFlashBag()->add('notice', 'Page d\'accueil modifiée');
-
-            return $this->redirect($this->generateUrl('khatovar_web_homepage_list'));
-        }
+        $editForm = $this->createEditForm($homepage);
 
         return $this->render(
             'KhatovarHomepageBundle:Homepage:edit.html.twig',
-            array('form' => $form->createView())
+            array('edit_form' => $editForm->createView(),)
         );
     }
 
     /**
-     * Return a list of all Homepage stored in database, and allow to
-     * activate one of them.
+     * Edits an existing Homepage entity.
      *
      * @param Request $request
+     * @param int     $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
      * @Secure(roles="ROLE_EDITOR")
      */
-    public function listAction(Request $request)
+    public function updateAction(Request $request, $id)
     {
-        $form = $this->createActivationForm();
+        $homepage = $this->findByIdOr404($id);
+
+        $form = $this->createEditForm($homepage);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $this->changeActiveHomepage($form);
+            $this->entityManager->flush();
 
-            return $this->redirect($this->generateUrl('khatovar_web_homepage_list'));
+            $this->session->getFlashBag()->add(
+                'notice',
+                'Page d\'accueil modifiée'
+            );
+
+            return $this->redirect(
+                $this->generateUrl(
+                    'khatovar_web_homepage_show',
+                    array('id' => $id)
+                )
+            );
         }
 
-        $list = $this->entityManager->getRepository('KhatovarHomepageBundle:Homepage')->findAll();
-
         return $this->render(
-            'KhatovarHomepageBundle:Homepage:list.html.twig',
-            array(
-                'homepage_list' => $list,
-                'form'          => $form->createView()
-            )
+            'KhatovarHomepageBundle:Homepage:edit.html.twig',
+            array('edit_form' => $form->createView())
         );
     }
 
     /**
-     * Delete a homepage.
+     * Deletes a homepage.
      *
-     * @param Homepage $homepage
-     * @param Request  $request
+     * @param Request $request
+     * @param int $id
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @Secure(roles="ROLE_EDITOR")
      */
-    public function deleteAction(Homepage $homepage, Request $request)
+    public function deleteAction(Request $request, $id)
     {
-        $form = $this->createFormBuilder()->getForm();
+        $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+            $homepage = $this->findByIdOr404($id);
             $this->entityManager->remove($homepage);
             $this->entityManager->flush();
 
-            $this->session->getFlashBag()->add('notice', 'Page d\'accueil supprimée');
-
-            return $this->redirect($this->generateUrl('khatovar_web_homepage_list'));
+            $this->session->getFlashBag()->add(
+                'notice',
+                'Page d\'accueil supprimée'
+            );
         }
 
-        return $this->render(
-            'KhatovarHomepageBundle:Homepage:delete.html.twig',
+        return $this->redirect($this->generateUrl('khatovar_web_homepage_list'));
+    }
+
+    /**
+     * Creates a form to create a Homepage entity.
+     *
+     * @param Homepage $homepage
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    protected function createCreateForm(Homepage $homepage)
+    {
+        $form = $this->createForm(
+            new HomepageType(),
+            $homepage,
             array(
-                'homepage' => $homepage,
-                'form'     => $form->createView()
+                'action' => $this->generateUrl('khatovar_web_homepage_create'),
+                'method' => 'POST',
             )
         );
+
+        $form->add('submit', 'submit', array('label' => 'Créer'));
+
+        return $form;
+    }
+
+    /**
+     * Creates a form to edit a Homepage entity.
+     *
+     * @param Homepage $homepage
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    protected function createEditForm(Homepage $homepage)
+    {
+        $form = $this->createForm(
+            new HomepageType(),
+            $homepage,
+            array(
+                'action' => $this->generateUrl('khatovar_web_homepage_update', array('id' => $homepage->getId())),
+                'method' => 'PUT',
+            )
+        );
+
+        $form->add('submit', 'submit', array('label' => 'Mettre à jour'));
+
+        return $form;
+    }
+
+    /**
+     * Creates a form to delete a Homepage entity.
+     *
+     * @param int $id
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    protected function createDeleteForm($id)
+    {
+        return $this
+            ->createFormBuilder()
+            ->setAction($this->generateUrl('khatovar_web_homepage_delete', array('id' => $id)))
+            ->setMethod('DELETE')
+            ->add(
+                'submit',
+                'submit',
+                array(
+                    'label' => 'Effacer',
+                    'attr'  => array('onclick' => 'return confirm("Êtes-vous sûr ?")'),
+                )
+            )
+            ->getForm();
+    }
+
+    /**
+     * Return a list of delete forms for a set of homepages.
+     *
+     * @param Homepage[] $homepages
+     *
+     * @return \Symfony\Component\Form\Form[]
+     */
+    protected function createDeleteForms(array $homepages)
+    {
+        $deleteForms = array();
+
+        foreach ($homepages as $homepage) {
+            $deleteForms[$homepage->getId()] = $this->createDeleteForm($homepage->getId())->createView();
+        }
+
+        return $deleteForms;
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return Homepage
+     */
+    protected function findByIdOr404($id)
+    {
+        $homepage = $this->entityManager->getRepository('KhatovarHomepageBundle:Homepage')->find($id);
+
+        if (!$homepage) {
+            throw $this->createNotFoundException('Impossible de trouver la page d\'accueil.');
+        }
+
+        return $homepage;
+    }
+
+    /**
+     * @return Homepage
+     */
+    protected function findActiveOr404()
+    {
+        $homepage = $this->entityManager
+            ->getRepository('KhatovarHomepageBundle:Homepage')
+            ->findOneBy(array('active' => true));
+
+        if (null === $homepage) {
+            throw new NotFoundHttpException('There is no active Contact entity. You must activate one.');
+        }
+
+        return $homepage;
     }
 
     /**

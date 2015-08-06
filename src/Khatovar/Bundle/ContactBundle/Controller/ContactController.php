@@ -45,7 +45,7 @@ class ContactController extends Controller
     }
 
     /**
-     * Display the default Contact entity.
+     * Displays the active contact page.
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -60,7 +60,7 @@ class ContactController extends Controller
     }
 
     /**
-     * Finds and displays a Contact contact.
+     * Finds and displays a contact page.
      *
      * @param int $id
      *
@@ -77,7 +77,7 @@ class ContactController extends Controller
     }
 
     /**
-     * Lists all Contact entities.
+     * Lists all contact pages, and allow to activate one of them.
      *
      * @param Request $request
      *
@@ -115,7 +115,7 @@ class ContactController extends Controller
     }
 
     /**
-     * Displays a form to create a new Contact entity.
+     * Displays a form to create a new contact page.
      *
      * @return \Symfony\Component\HttpFoundation\Response
      *
@@ -134,7 +134,7 @@ class ContactController extends Controller
     }
 
     /**
-     * Creates a new Contact entity.
+     * Creates a new contact page.
      *
      * @param Request $request
      *
@@ -158,7 +158,12 @@ class ContactController extends Controller
                 'Page de contact créée'
             );
 
-            return $this->redirect($this->generateUrl('khatovar_web_contact_show', array('id' => $contact->getId())));
+            return $this->redirect(
+                $this->generateUrl(
+                    'khatovar_web_contact_show',
+                    array('id' => $contact->getId())
+                )
+            );
         }
 
         return $this->render(
@@ -168,7 +173,7 @@ class ContactController extends Controller
     }
 
     /**
-     * Displays a form to edit an existing Contact entity.
+     * Displays a form to edit an existing contact page.
      *
      * @param int $id
      *
@@ -189,7 +194,7 @@ class ContactController extends Controller
     }
 
     /**
-     * Edits an existing Contact entity.
+     * Updates a contact page.
      *
      * @param Request $request
      * @param int     $id
@@ -210,10 +215,15 @@ class ContactController extends Controller
 
             $this->session->getFlashBag()->add(
                 'notice',
-                'Page de contact mise à jour'
+                'Page de contact modifiée'
             );
 
-            return $this->redirect($this->generateUrl('khatovar_web_contact_edit', array('id' => $id)));
+            return $this->redirect(
+                $this->generateUrl(
+                    'khatovar_web_contact_show',
+                    array('id' => $id)
+                )
+            );
         }
 
         return $this->render(
@@ -414,6 +424,9 @@ class ContactController extends Controller
         $this->entityManager->persist($newContact);
         $this->entityManager->flush();
 
-        $this->session->getFlashBag()->add('notice', 'Page de contact activée');
+        $this->session->getFlashBag()->add(
+            'notice',
+            'Page de contact activée'
+        );
     }
 }
