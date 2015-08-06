@@ -5,34 +5,45 @@ namespace Khatovar\Bundle\ContactBundle\Entity;
 use Khatovar\Bundle\PhotoBundle\Entity\Photo;
 
 /**
- * Contact
+ * Contact entity.
+ *
+ * @author Damien Carcel (https://github.com/damien-carcel)
  */
 class Contact
 {
-    /**
-     * @var integer
-     */
+    /** @var integer */
     protected $id;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $title;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $content;
 
-    /**
-     * @var boolean
-     */
-    protected $active = false;
+    /** @var bool */
+    protected $active;
+
+    /** @var Photo */
+    protected $visitCard;
 
     /**
-     * @var Photo
+     * Allow to save only the ID the entity in database as a string
+     * when using entity type in forms.
+     *
+     * @return string
      */
-    protected $visitCard;
+    public function __toString()
+    {
+        return strval($this->id);
+    }
+
+    /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        $this->active = false;
+    }
 
     /**
      * @return integer
@@ -83,7 +94,7 @@ class Contact
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isActive()
     {
@@ -91,7 +102,7 @@ class Contact
     }
 
     /**
-     * @param boolean $active
+     * @param bool $active
      *
      * @return Contact
      */
