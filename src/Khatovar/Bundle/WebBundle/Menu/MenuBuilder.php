@@ -24,9 +24,7 @@
 namespace Khatovar\Bundle\WebBundle\Menu;
 
 use Khatovar\Bundle\ExactionBundle\Manager\ExactionManager;
-use Khatovar\Bundle\ExactionBundle\Services\Lister\YearLister;
 use Knp\Menu\FactoryInterface;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Build the various application menus.
@@ -76,11 +74,9 @@ class MenuBuilder
     /**
      * Main menu of the application.
      *
-     * @param Request $request
-     *
      * @return \Knp\Menu\ItemInterface
      */
-    public function createMainMenu(Request $request)
+    public function createMainMenu()
     {
         $menu = $this->menuFactory->createItem('root');
 

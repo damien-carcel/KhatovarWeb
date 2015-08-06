@@ -88,7 +88,7 @@ class PhotoType extends AbstractType
             }
         };
 
-        if ($this->currentUser->hasRole('ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_EDITOR')) {
+        if ($this->currentUser->hasRole('ROLE_EDITOR')) {
             $builder->add('entity', 'choice', array(
                     'label' => 'Rattacher la photo à une : ',
                     'choices' => array(

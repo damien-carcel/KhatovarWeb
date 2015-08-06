@@ -68,7 +68,7 @@ class PhotosSide
         }
 
         if (!is_null($currentlyRendered)) {
-            if ($currentUser->hasRole('ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_EDITOR')
+            if ($currentUser->hasRole('ROLE_EDITOR')
                 or ($owner == $currentUser)) {
                 $photos = $currentlyRendered->getPhotos();
             }

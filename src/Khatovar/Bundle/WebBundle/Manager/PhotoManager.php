@@ -24,6 +24,7 @@
 namespace Khatovar\Bundle\WebBundle\Manager;
 
 use Doctrine\ORM\EntityManager;
+use Khatovar\Bundle\PhotoBundle\Entity\Photo;
 
 /**
  * Class KhatovarImageResize
@@ -74,11 +75,8 @@ class PhotoManager
         $photos = array();
 
         foreach ($paths as $path) {
-            /**
-             * @var Photo $photo
-             */
             $photo = $repository->findOneByPath($path);
-            if ($photo) {
+            if ($photo instanceof Photo) {
                 $photos[] = '<a href="/uploaded/photos/'
                     . $photo->getPath()
                     . '" data-lightbox="Photos Khatovar" title="Copyright &copy; '
@@ -106,9 +104,9 @@ class PhotoManager
      * the original image is higher.
      *
      * @param string $image The path to the original image
-     * @param int $new_height
+     * @param int $newHeight
      */
-    public function imageResize($image, $new_height)
+    public function imageResize($image, $newHeight)
     {
         // We first find the dimensions of the photo and its ratio
         $original = imagecreatefromjpeg($image);
@@ -116,12 +114,12 @@ class PhotoManager
         $ratio = $width / $height;
 
         // Then define the new dimensions
-        if ($height > $new_height) {
-            $new_width = round($new_height * $ratio);
+        if ($height > $newHeight) {
+            $new_width = round($newHeight * $ratio);
 
             // Then resize it with imagecopyresampled()
-            $resized = imagecreatetruecolor($new_width, $new_height);
-            imagecopyresampled($resized, $original, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
+            $resized = imagecreatetruecolor($new_width, $newHeight);
+            imagecopyresampled($resized, $original, 0, 0, 0, 0, $new_width, $newHeight, $width, $height);
 
             // And finally replace the original by the new one on the server
             copy($image, $image . '.old');
