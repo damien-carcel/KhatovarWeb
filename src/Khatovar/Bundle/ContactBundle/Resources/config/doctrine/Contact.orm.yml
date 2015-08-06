@@ -1,6 +1,6 @@
 Khatovar\Bundle\ContactBundle\Entity\Contact:
     type: entity
-    table: khatovar_web_contact
+    table: khatovar_web_contacts
     repositoryClass: Khatovar\Bundle\ContactBundle\Entity\ContactRepository
     id:
         id:
@@ -9,10 +9,10 @@ Khatovar\Bundle\ContactBundle\Entity\Contact:
             generator:
                 strategy: AUTO
     fields:
-        title:
+        name:
             type: string
             length: 255
-            column: title
+            column: name
             nullable: false
         content:
             type: text

@@ -1,6 +1,6 @@
 KhatovarContactBundle\Entity\Contact:
     properties:
-        title:
+        name:
             - NotBlank: ~
         content:
             - NotBlank: ~

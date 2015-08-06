@@ -403,7 +403,7 @@ class ContactController extends Controller
                 array(
                     'class'    => 'Khatovar\Bundle\ContactBundle\Entity\Contact',
                     'label'    => false,
-                    'property' => 'title',
+                    'property' => 'name',
                 )
             )
             ->add('submit', 'submit', array('label' => 'Activer'))

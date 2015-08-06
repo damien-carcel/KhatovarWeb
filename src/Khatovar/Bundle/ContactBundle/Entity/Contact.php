@@ -15,7 +15,7 @@ class Contact
     protected $id;
 
     /** @var string */
-    protected $title;
+    protected $name;
 
     /** @var string */
     protected $content;
@@ -54,13 +54,13 @@ class Contact
     }
 
     /**
-     * @param string $title
+     * @param string $name
      *
      * @return Contact
      */
-    public function setTitle($title)
+    public function setName($name)
     {
-        $this->title = $title;
+        $this->name = $name;
 
         return $this;
     }
@@ -68,9 +68,9 @@ class Contact
     /**
      * @return string
      */
-    public function getTitle()
+    public function getName()
     {
-        return $this->title;
+        return $this->name;
     }
 
     /**
