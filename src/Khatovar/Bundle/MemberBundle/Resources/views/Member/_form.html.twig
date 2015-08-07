@@ -1,0 +1,33 @@
+{{ form_start(form) }}
+
+<div class="alert">
+    {{ form_errors(form) }}
+</div>
+
+{{ form_row(form.name) }}
+{{ form_row(form.rank) }}
+{{ form_row(form.quote) }}
+{{ form_row(form.skill) }}
+{{ form_row(form.age) }}
+{{ form_row(form.size) }}
+{{ form_row(form.weight) }}
+{{ form_row(form.strength) }}
+{{ form_row(form.weakness) }}
+{{ form_row(form.story) }}
+{{ form_row(form.active) }}
+{{ form_widget(form.active) }}
+
+{% if edit %}
+    {{ form_row(form.portrait) }}
+{% endif %}
+
+{% if is_granted('ROLE_EDITOR') %}
+    {{ form_row(form.owner) }}
+{% endif %}
+
+<div class="form-group">
+    {{ form_widget(form.submit, { 'attr': {'class': 'btn btn-default'} }) }}
+</div>
+
+{{ form_rest(form) }}
+{{ form_end(form) }}

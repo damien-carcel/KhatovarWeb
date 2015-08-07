@@ -233,7 +233,7 @@ class ContactController extends Controller
     }
 
     /**
-     * Deletes a Contact entity.
+     * Deletes a contact page.
      *
      * @param Request $request
      * @param int     $id
@@ -340,7 +340,7 @@ class ContactController extends Controller
     }
 
     /**
-     * Return a list of delete forms for a set of contacts.
+     * Return a list of delete forms for a set of Contact entities.
      *
      * @param Contact[] $contacts
      *

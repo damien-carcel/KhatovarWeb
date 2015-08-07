@@ -209,7 +209,7 @@ class HomepageController extends Controller
     }
 
     /**
-     * Displays a form to edit an existing Homepage entity.
+     * Displays a form to edit an existing homepage.
      *
      * @param int $id
      *
@@ -230,7 +230,7 @@ class HomepageController extends Controller
     }
 
     /**
-     * Edits an existing Homepage entity.
+     * Edits an existing homepage.
      *
      * @param Request $request
      * @param int     $id
@@ -376,7 +376,7 @@ class HomepageController extends Controller
     }
 
     /**
-     * Return a list of delete forms for a set of homepages.
+     * Return a list of delete forms for a set of Homepage entities.
      *
      * @param Homepage[] $homepages
      *

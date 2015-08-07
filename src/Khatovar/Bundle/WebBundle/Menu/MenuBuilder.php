@@ -139,7 +139,7 @@ class MenuBuilder
 
         $menu->addChild(
             'members',
-            array('label' => 'Les membres', 'route' => 'khatovar_web_members')
+            array('label' => 'Les membres', 'route' => 'khatovar_web_member')
         );
 
         $menu->addChild(

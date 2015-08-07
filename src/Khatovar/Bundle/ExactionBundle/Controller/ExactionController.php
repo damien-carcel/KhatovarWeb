@@ -282,7 +282,7 @@ class ExactionController extends Controller
     }
 
     /**
-     * Creates a form to create a Contact entity.
+     * Creates a form to create a Exaction entity.
      *
      * @param Exaction $exaction
      *
@@ -307,7 +307,7 @@ class ExactionController extends Controller
     }
 
     /**
-     * Creates a form to edit a Contact entity.
+     * Creates a form to edit a Exaction entity.
      *
      * @param Exaction $exaction
      *
@@ -332,7 +332,7 @@ class ExactionController extends Controller
     }
 
     /**
-     * Creates a form to delete a Contact entity.
+     * Creates a form to delete a Exaction entity.
      *
      * @param int $id
      *
@@ -356,7 +356,7 @@ class ExactionController extends Controller
     }
 
     /**
-     * Return a list of delete forms for a set of contacts.
+     * Return a list of delete forms for a set of Exaction entities.
      *
      * @param Exaction[] $exactions
      *
