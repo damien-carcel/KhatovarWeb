@@ -118,7 +118,7 @@ class Exaction
      *
      * @var boolean
      */
-    protected $onlyPhotos = false;
+    protected $onlyPhotos;
 
     /**
      * Allow to save only the entity's ID in database as a string when
@@ -136,7 +136,8 @@ class Exaction
      */
     public function __construct()
     {
-        $this->photos = new ArrayCollection();
+        $this->photos     = new ArrayCollection();
+        $this->onlyPhotos = false;
     }
 
     /**
