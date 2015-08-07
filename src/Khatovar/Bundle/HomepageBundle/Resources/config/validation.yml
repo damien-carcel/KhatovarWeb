@@ -2,5 +2,7 @@ Khatovar\Bundle\HomepageBundle\Entity\Homepage:
     properties:
         name:
             - NotBlank: ~
+            - Length:
+                max: 255
         content:
             - NotBlank: ~
