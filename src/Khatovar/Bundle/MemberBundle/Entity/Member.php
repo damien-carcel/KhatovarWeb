@@ -465,10 +465,14 @@ class Member
      * Remove photos
      *
      * @param Photo $photos
+     *
+     * @return Member
      */
     public function removePhoto(Photo $photos)
     {
         $this->photos->removeElement($photos);
+
+        return $this;
     }
 
     /**

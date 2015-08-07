@@ -57,10 +57,17 @@ Khatovar\Bundle\PhotoBundle\Entity\Photo:
                 name: exaction_id
                 referencedColumnName: id
                 onDelete: 'SET NULL'
+        contact:
+            targetEntity: Khatovar\Bundle\ContactBundle\Entity\Contact
+            cascade:
+                - detach
+            JoinColumn:
+                name: exaction_id
+                referencedColumnName: id
+                onDelete: 'SET NULL'
     lifecycleCallbacks:
         prePersist:  [preUpload]
         preUpdate:   [preUpload]
         postPersist: [upload]
         postUpdate:  [upload]
         postRemove:  [removeUpload]
-

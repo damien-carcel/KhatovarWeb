@@ -360,10 +360,14 @@ class Exaction
      * Remove photo.
      *
      * @param Photo $photo
+     *
+     * @return Exaction
      */
     public function removePhoto(Photo $photo)
     {
         $this->photos->removeElement($photo);
+
+        return $this;
     }
 
     /**

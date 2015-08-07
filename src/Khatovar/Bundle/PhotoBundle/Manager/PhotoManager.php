@@ -64,6 +64,9 @@ class PhotoManager
             'Exactions'         => $this->entityManager
                 ->getRepository('KhatovarExactionBundle:Exaction')
                 ->findAll(),
+            'Pages de contact'  => $this->entityManager
+                ->getRepository('KhatovarContactBundle:Contact')
+                ->findAll(),
         );
     }
 

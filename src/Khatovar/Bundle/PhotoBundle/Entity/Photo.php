@@ -90,6 +90,9 @@ class Photo
     /** @var Photo */
     protected $exaction;
 
+    /** @var Photo */
+    protected $contact;
+
     /**
      * Get file.
      *
@@ -325,6 +328,26 @@ class Photo
     public function getExaction()
     {
         return $this->exaction;
+    }
+
+    /**
+     * @return Photo
+     */
+    public function getContact()
+    {
+        return $this->contact;
+    }
+
+    /**
+     * @param Photo $contact
+     *
+     * @return Photo
+     */
+    public function setContact($contact)
+    {
+        $this->contact = $contact;
+
+        return $this;
     }
 
     /**

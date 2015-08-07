@@ -2,6 +2,7 @@
 
 namespace Khatovar\Bundle\ContactBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Khatovar\Bundle\PhotoBundle\Entity\Photo;
 
 /**
@@ -26,6 +27,9 @@ class Contact
     /** @var Photo */
     protected $visitCard;
 
+    /** @var ArrayCollection */
+    protected $photos;
+
     /**
      * Allow to save only the entity's ID in database as a string when
      * using entity form type.
@@ -43,6 +47,7 @@ class Contact
     public function __construct()
     {
         $this->active = false;
+        $this->photos = new ArrayCollection();
     }
 
     /**
@@ -129,6 +134,42 @@ class Contact
     public function setVisitCard(Photo $visitCard)
     {
         $this->visitCard = $visitCard;
+
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getPhotos()
+    {
+        return $this->photos;
+    }
+
+    /**
+     * Add photo.
+     *
+     * @param Photo $photo
+     *
+     * @return Contact
+     */
+    public function addPhoto(Photo $photo)
+    {
+        $this->photos[] = $photo;
+
+        return $this;
+    }
+
+    /**
+     * Remove photo.
+     *
+     * @param Photo $photo
+     *
+     * @return Contact
+     */
+    public function removePhoto(Photo $photo)
+    {
+        $this->photos->removeElement($photo);
 
         return $this;
     }

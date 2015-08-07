@@ -144,10 +144,14 @@ class Homepage
      * Remove photos
      *
      * @param Photo $photos
+     *
+     * @return Homepage
      */
     public function removePhoto(Photo $photos)
     {
         $this->photos->removeElement($photos);
+
+        return $this;
     }
 
     /**
