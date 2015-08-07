@@ -21,18 +21,17 @@
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
-namespace Khatovar\Bundle\PhotoBundle\Services;
+namespace Khatovar\Bundle\PhotoBundle\Manager;
 
 use Carcel\UserBundle\Entity\User;
 use Doctrine\ORM\EntityManager;
 
 /**
- * Class PhotosSide
+ * Photo manager.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
- * @package Khatovar\Bundle\PhotoBundle\Services
  */
-class PhotosSide
+class PhotoManager
 {
     /** @var EntityManager */
     protected $entityManager;
@@ -46,6 +45,48 @@ class PhotosSide
     }
 
     /**
+     * Get a sorted list of all photos currently uploaded.
+     *
+     * @return array
+     */
+    public function getCompletePhotoList()
+    {
+        return array(
+            'Photos orphelines' => $this->entityManager
+                ->getRepository('KhatovarPhotoBundle:Photo')
+                ->getOrphans(),
+            'Pages d\'accueil'  => $this->entityManager
+                ->getRepository('KhatovarHomepageBundle:Homepage')
+                ->findAll(),
+            'Membres'           => $this->entityManager
+                ->getRepository('KhatovarMemberBundle:Member')
+                ->findAll(),
+            'Exactions'         => $this->entityManager
+                ->getRepository('KhatovarExactionBundle:Exaction')
+                ->findAll(),
+        );
+    }
+
+    /**
+     * Get a member's photos.
+     *
+     * @param User $currentUser
+     *
+     * @return array
+     */
+    public function getUserPhotos(User $currentUser)
+    {
+        $member = $this->entityManager->getRepository('KhatovarMemberBundle:Member')
+            ->findOneBy(array('owner' => $currentUser));
+
+        return array(
+            'Membre :' => array(
+                $member->getId() => $member
+            )
+        );
+    }
+
+    /**
      * Return the list of all photos of the current page that the user
      * can access.
      *
@@ -56,7 +97,7 @@ class PhotosSide
      *
      * @return \Khatovar\Bundle\PhotoBundle\Entity\Photo[]
      */
-    public function get(User $currentUser, $controller, $action, $slugOrId)
+    public function getControllerPhotos(User $currentUser, $controller, $action, $slugOrId)
     {
         $photos = array();
 
@@ -121,6 +162,8 @@ class PhotosSide
      */
     protected function getRepository($controller)
     {
+        // TODO: remove the if once the DefaultController doesn't exist anymore
+
         if ($controller !== 'default') {
             $entity = 'Khatovar' . ucfirst($controller) . 'Bundle:' . ucfirst($controller);
 

@@ -31,17 +31,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Photo controller. Only an user with "ROLE_EDITOR as a minimum
+ * Photo controller. Only a user with "ROLE_EDITOR as a minimum
  * security clearance can see and manipulate photos for all the web
  * site sections. Regular users can only see their own members photos.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
- * @package Khatovar\Bundle\PhotoBundle\Controller
  */
 class PhotoController extends Controller
 {
     /**
      * Maximal height accepted for photo.
+     *
+     * @staticvar string
      */
     const MAX_HEIGHT = 720;
 
@@ -57,12 +58,12 @@ class PhotoController extends Controller
     {
         $currentUser = $this->getUser();
 
-        $entityListService = $this->get('khatovar.photo.entity_list');
+        $photoManager = $this->get('khatovar_photo.manager.photo');
 
         if ($this->isGranted('ROLE_EDITOR')) {
-            $entityList = $entityListService->getEntirePhotoList();
+            $entityList = $photoManager->getCompletePhotoList();
         } else {
-            $entityList = $entityListService->getCurrentMemberPhotos($currentUser);
+            $entityList = $photoManager->getUserPhotos($currentUser);
         }
 
         return $this->render(
@@ -88,8 +89,8 @@ class PhotoController extends Controller
     {
         $currentUser = $this->getUser();
 
-        $photoSide = $this->get('khatovar.photo.photo_side');
-        $photos = $photoSide->get($currentUser, $controller, $action, $slugOrId);
+        $photoManager = $this->get('khatovar_photo.manager.photo');
+        $photos = $photoManager->getControllerPhotos($currentUser, $controller, $action, $slugOrId);
 
         return $this->render(
             'KhatovarPhotoBundle:Photo:side.html.twig',
