@@ -1,4 +1,6 @@
 Khatovar\Bundle\ExactionBundle\Entity\Exaction:
+    constraints:
+        - Khatovar\Bundle\ExactionBundle\Validator\Constraints\Dates: ~
     properties:
         name:
             - NotBlank: ~
@@ -14,5 +16,3 @@ Khatovar\Bundle\ExactionBundle\Entity\Exaction:
             - NotBlank: ~
             - Khatovar\Bundle\ExactionBundle\Validator\Constraints\ContainsIframe: ~
             - Khatovar\Bundle\ExactionBundle\Validator\Constraints\IframeSize: ~
-    constraints:
-        - Khatovar\Bundle\ExactionBundle\Validator\Constraints\Dates: ~

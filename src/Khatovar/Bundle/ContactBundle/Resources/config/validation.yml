@@ -1,4 +1,6 @@
-KhatovarContactBundle\Entity\Contact:
+Khatovar\Bundle\ContactBundle\Entity\Contact:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: name
     properties:
         name:
             - NotBlank: ~
