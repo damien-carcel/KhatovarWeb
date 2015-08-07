@@ -24,9 +24,7 @@
 namespace Khatovar\Bundle\HomepageBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
 use Khatovar\Bundle\PhotoBundle\Entity\Photo;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Homepage entity.
@@ -51,8 +49,8 @@ class Homepage
     protected $photos;
 
     /**
-     * Allow to save only the ID the entity in database as a string
-     * when using entity type in forms.
+     * Allow to save only the entity's ID in database as a string when
+     * using entity form type.
      *
      * @return string
      */

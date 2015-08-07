@@ -1,0 +1,100 @@
+Khatovar\Bundle\MemberBundle\Entity\Member:
+    type: entity
+    table: khatovar_web_members
+    repositoryClass: Khatovar\Bundle\MemberBundle\Entity\MemberRepository
+    indexes:
+        search_idx:
+              columns: slug
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+            column: name
+            nullable: false
+            unique: true
+        slug:
+            type: string
+            length: 128
+            column: slug
+            nullable: false
+            unique: true
+            gedmo:
+                slug:
+                    separator: _
+                    style: camel
+                    fields:
+                        - name
+        rank:
+            type: string
+            length: 255
+            column: rank
+            nullable: true
+        quote:
+            type: string
+            length: 255
+            column: quote
+            nullable: true
+        skill:
+            type: string
+            length: 255
+            column: skill
+            nullable: true
+        age:
+            type: string
+            length: 255
+            column: age
+            nullable: true
+        size:
+            type: string
+            length: 255
+            column: size
+            nullable: true
+        weight:
+            type: string
+            length: 255
+            column: weight
+            nullable: true
+        strength:
+            type: string
+            length: 255
+            column: strength
+            nullable: true
+        weakness:
+            type: string
+            length: 255
+            column: weakness
+            nullable: true
+        story:
+            type: string
+            length: 255
+            column: story
+            nullable: false
+        active:
+            type: boolean
+            column: active
+            nullable: false
+    oneToOne:
+        portrait:
+            targetEntity: Khatovar\Bundle\PhotoBundle\Entity\Photo
+            JoinColumn:
+                name: portrait_id:
+                referencedColumnName: id
+                onDelete: 'SET NULL'
+        owner:
+            targetEntity: Carcel\UserBundle\Entity\User
+            cascade:
+                - detach
+            JoinColumn:
+                name: owner_id:
+                referencedColumnName: id
+                onDelete: 'SET NULL'
+    oneToMany:
+        photos:
+            targetEntity: Khatovar\Bundle\PhotoBundle\Entity\Photo
+            mappedBy: member

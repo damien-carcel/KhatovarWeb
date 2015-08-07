@@ -55,7 +55,8 @@ Khatovar\Bundle\ExactionBundle\Entity\Exaction:
         image:
             targetEntity: Khatovar\Bundle\PhotoBundle\Entity\Photo
             JoinColumn:
-                nullable: true
+                name: image_id
+                referencedColumnName: id
                 onDelete: 'SET NULL'
     oneToMany:
         photos:

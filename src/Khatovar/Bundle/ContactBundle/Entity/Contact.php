@@ -27,8 +27,8 @@ class Contact
     protected $visitCard;
 
     /**
-     * Allow to save only the ID the entity in database as a string
-     * when using entity type in forms.
+     * Allow to save only the entity's ID in database as a string when
+     * using entity form type.
      *
      * @return string
      */

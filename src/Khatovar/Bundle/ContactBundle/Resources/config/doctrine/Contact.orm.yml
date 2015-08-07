@@ -26,7 +26,7 @@ Khatovar\Bundle\ContactBundle\Entity\Contact:
     manyToOne:
         visitCard:
             targetEntity: Khatovar\Bundle\PhotoBundle\Entity\Photo
-            joinColumns:
-                visit_card_id:
-                    referencedColumnName: id
-                    onDelete: 'SET NULL'
+            joinColumn:
+                name: visit_card_id
+                referencedColumnName: id
+                onDelete: 'SET NULL'
