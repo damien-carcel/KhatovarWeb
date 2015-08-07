@@ -1,0 +1,15 @@
+Khatovar\Bundle\PhotoBundle\Entity\Photo:
+    properties:
+        alt:
+            - NotBlank: ~
+            - Length:
+                max: 50
+        class:
+            - Length:
+                max: 255
+        path:
+            - Length:
+                max: 255
+        entity:
+            - Length:
+                max: 255

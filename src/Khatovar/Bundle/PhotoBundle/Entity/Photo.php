@@ -23,7 +23,6 @@
 
 namespace Khatovar\Bundle\PhotoBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Khatovar\Bundle\ExactionBundle\Entity\Exaction;
 use Khatovar\Bundle\HomepageBundle\Entity\Homepage;
 use Khatovar\Bundle\MemberBundle\Entity\Member;
@@ -31,34 +30,19 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Photo
+ * Photo entity.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
- * @package Khatovar\Bundle\PhotoBundle\Entity
- *
- * @ORM\Table(name="khatovar_web_photos")
- * @ORM\Entity(repositoryClass="Khatovar\Bundle\PhotoBundle\Entity\PhotoRepository")
- * @ORM\HasLifecycleCallbacks()
  */
 class Photo
 {
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    /** @var int */
     protected $id;
 
     /**
      * The alternate text to display.
      *
      * @var string
-     *
-     * @ORM\Column(name="alt", type="string", length=50)
-     * @Assert\NotBlank()
-     * @Assert\Length(max="50")
      */
     protected $alt;
 
@@ -66,9 +50,6 @@ class Photo
      * The CSS class used for resizing.
      *
      * @var string
-     *
-     * @ORM\Column(name="class", type="string", length=255, nullable=true)
-     * @Assert\Length(max="255")
      */
     protected $class;
 
@@ -76,8 +57,6 @@ class Photo
      * The location of the file on the server.
      *
      * @var string
-     *
-     * @ORM\Column(name="path", type="string", length=255, nullable=true)
      */
     protected $path;
 
@@ -99,40 +78,16 @@ class Photo
      * The type of page the photo is attached to.
      *
      * @var string
-     *
-     * @ORM\Column(name="entity", type="string", length=255, nullable=true)
-     * @Assert\Length(max="255")
      */
     protected $entity;
 
-    /**
-     * @ORM\ManyToOne(
-     *  targetEntity="Khatovar\Bundle\HomepageBundle\Entity\Homepage",
-     *  cascade={"detach"},
-     *  inversedBy="photos"
-     * )
-     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
-     */
+    /** @var Photo */
     protected $homepage;
 
-    /**
-     * @ORM\ManyToOne(
-     *  targetEntity="Khatovar\Bundle\MemberBundle\Entity\Member",
-     *  cascade={"detach"},
-     *  inversedBy="photos"
-     * )
-     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
-     */
+    /** @var Photo */
     protected $member;
 
-    /**
-     * @ORM\ManyToOne(
-     *  targetEntity="Khatovar\Bundle\ExactionBundle\Entity\Exaction",
-     *  cascade={"detach"},
-     *  inversedBy="photos"
-     * )
-     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
-     */
+    /** @var Photo */
     protected $exaction;
 
     /**
@@ -162,9 +117,6 @@ class Photo
 
     /**
      * Set the name of the file before uploading it.
-     *
-     * @ORM\PrePersist()
-     * @ORM\PreUpdate()
      */
     public function preUpload()
     {
@@ -176,9 +128,6 @@ class Photo
 
     /**
      * Upload the file on the server.
-     *
-     * @ORM\PostPersist()
-     * @ORM\PostUpdate()
      */
     public function upload()
     {
@@ -197,8 +146,6 @@ class Photo
 
     /**
      * Remove the file from the server.
-     *
-     * @ORM\PostRemove()
      */
     public function removeUpload()
     {
@@ -233,6 +180,154 @@ class Photo
     }
 
     /**
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param string $alt
+     *
+     * @return Photo
+     */
+    public function setAlt($alt)
+    {
+        $this->alt = $alt;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAlt()
+    {
+        return $this->alt;
+    }
+
+    /**
+     * @param string $class
+     *
+     * @return Photo
+     */
+    public function setClass($class)
+    {
+        $this->class = $class;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getClass()
+    {
+        return $this->class;
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return Photo
+     */
+    public function setPath($path)
+    {
+        $this->path = $path;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPath()
+    {
+        return $this->path;
+    }
+
+    /**
+     * @param string $entity
+     *
+     * @return Photo
+     */
+    public function setEntity($entity)
+    {
+        $this->entity = $entity;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEntity()
+    {
+        return $this->entity;
+    }
+
+    /**
+     * @param Homepage $homepage
+     *
+     * @return Photo
+     */
+    public function setHomepage(Homepage $homepage = null)
+    {
+        $this->homepage = $homepage;
+
+        return $this;
+    }
+
+    /**
+     * @return Homepage
+     */
+    public function getHomepage()
+    {
+        return $this->homepage;
+    }
+
+    /**
+     * @param Member $member
+     *
+     * @return Photo
+     */
+    public function setMember(Member $member = null)
+    {
+        $this->member = $member;
+
+        return $this;
+    }
+
+    /**
+     * @return Member
+     */
+    public function getMember()
+    {
+        return $this->member;
+    }
+
+    /**
+     * @param Exaction $exaction
+     *
+     * @return Photo
+     */
+    public function setExaction(Exaction $exaction = null)
+    {
+        $this->exaction = $exaction;
+
+        return $this;
+    }
+
+    /**
+     * @return Exaction
+     */
+    public function getExaction()
+    {
+        return $this->exaction;
+    }
+
+    /**
      * Return the absolute path of the directory containing the file.
      *
      * @return string
@@ -251,178 +346,5 @@ class Photo
     protected function getUploadDir()
     {
         return 'uploaded/photos';
-    }
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set alt
-     *
-     * @param string $alt
-     * @return Photo
-     */
-    public function setAlt($alt)
-    {
-        $this->alt = $alt;
-
-        return $this;
-    }
-
-    /**
-     * Get alt
-     *
-     * @return string
-     */
-    public function getAlt()
-    {
-        return $this->alt;
-    }
-
-    /**
-     * Set size
-     *
-     * @param string $class
-     * @return Photo
-     */
-    public function setClass($class)
-    {
-        $this->class = $class;
-
-        return $this;
-    }
-
-    /**
-     * Get size
-     *
-     * @return string
-     */
-    public function getClass()
-    {
-        return $this->class;
-    }
-
-    /**
-     * Set path
-     *
-     * @param string $path
-     * @return Photo
-     */
-    public function setPath($path)
-    {
-        $this->path = $path;
-
-        return $this;
-    }
-
-    /**
-     * Get path
-     *
-     * @return string
-     */
-    public function getPath()
-    {
-        return $this->path;
-    }
-
-    /**
-     * Set entity
-     *
-     * @param string $entity
-     * @return Photo
-     */
-    public function setEntity($entity)
-    {
-        $this->entity = $entity;
-
-        return $this;
-    }
-
-    /**
-     * Get entity
-     *
-     * @return string
-     */
-    public function getEntity()
-    {
-        return $this->entity;
-    }
-
-    /**
-     * Set homepage
-     *
-     * @param Homepage $homepage
-     *
-     * @return Photo
-     */
-    public function setHomepage(Homepage $homepage = null)
-    {
-        $this->homepage = $homepage;
-
-        return $this;
-    }
-
-    /**
-     * Get homepage
-     *
-     * @return Homepage
-     */
-    public function getHomepage()
-    {
-        return $this->homepage;
-    }
-
-    /**
-     * Set member
-     *
-     * @param Member $member
-     * @return Photo
-     */
-    public function setMember(Member $member = null)
-    {
-        $this->member = $member;
-
-        return $this;
-    }
-
-    /**
-     * Get member
-     *
-     * @return Member
-     */
-    public function getMember()
-    {
-        return $this->member;
-    }
-
-    /**
-     * Set exaction
-     *
-     * @param Exaction $exaction
-     *
-     * @return Photo
-     */
-    public function setExaction(Exaction $exaction = null)
-    {
-        $this->exaction = $exaction;
-
-        return $this;
-    }
-
-    /**
-     * Get exaction
-     *
-     * @return Exaction
-     */
-    public function getExaction()
-    {
-        return $this->exaction;
     }
 }

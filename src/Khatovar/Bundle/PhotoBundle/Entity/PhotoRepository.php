@@ -27,10 +27,9 @@ use Doctrine\ORM\EntityRepository;
 use Khatovar\Bundle\MemberBundle\Entity\Member;
 
 /**
- * PhotoRepository
+ * Photo repository.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
- * @package Khatovar\Bundle\PhotoBundle\Entity
  */
 class PhotoRepository extends EntityRepository
 {
@@ -55,6 +54,7 @@ class PhotoRepository extends EntityRepository
      * Return a list of all the photos of a member, except its portrait.
      *
      * @param Member $member
+     *
      * @return array
      */
     public function getAllButPortrait(Member $member)
