@@ -26,7 +26,6 @@ namespace Khatovar\Bundle\ExactionBundle\Controller;
 use Doctrine\ORM\EntityManagerInterface;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Khatovar\Bundle\ExactionBundle\Entity\Exaction;
-use Khatovar\Bundle\ExactionBundle\Form\ExactionType;
 use Khatovar\Bundle\ExactionBundle\Manager\ExactionManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -148,8 +147,8 @@ class ExactionController extends Controller
             'KhatovarExactionBundle:Exaction:new.html.twig',
             array(
                 'form'            => $form->createView(),
-                'exaction_exists' => false,
-                )
+                'exaction_passed' => false,
+            )
         );
     }
 
@@ -185,7 +184,7 @@ class ExactionController extends Controller
             'KhatovarExactionBundle:Exaction:new.html.twig',
             array(
                 'form'            => $form->createView(),
-                'exaction_exists' => false,
+                'exaction_passed' => false,
             )
         );
     }
@@ -203,13 +202,18 @@ class ExactionController extends Controller
     {
         $exaction = $this->findByIdOr404($id);
 
+        $exactionPassed = true;
+        if ($exaction->getStart() >= new \DateTime()) {
+            $exactionPassed = false;
+        }
+
         $editForm = $this->createEditForm($exaction);
 
         return $this->render(
             'KhatovarExactionBundle:Exaction:edit.html.twig',
             array(
                 'edit_form'       => $editForm->createView(),
-                'exaction_exists' => true,
+                'exaction_passed' => $exactionPassed,
             )
         );
     }
@@ -227,6 +231,11 @@ class ExactionController extends Controller
     public function updateAction(Request $request, $id)
     {
         $exaction = $this->findByIdOr404($id);
+
+        $exactionPassed = true;
+        if ($exaction->getStart() >= new \DateTime()) {
+            $exactionPassed = false;
+        }
 
         $editForm = $this->createEditForm($exaction);
         $editForm->handleRequest($request);
@@ -246,7 +255,7 @@ class ExactionController extends Controller
             'KhatovarExactionBundle:Exaction:edit.html.twig',
             array(
                 'edit_form'       => $editForm->createView(),
-                'exaction_exists' => true,
+                'exaction_passed' => $exactionPassed,
             )
         );
     }
@@ -290,10 +299,8 @@ class ExactionController extends Controller
      */
     protected function createCreateForm(Exaction $exaction)
     {
-        $exactionExists = false;
-
         $form = $this->createForm(
-            new ExactionType($exactionExists),
+            'khatovar_exaction_type',
             $exaction,
             array(
                 'action' => $this->generateUrl('khatovar_web_exaction_create'),
@@ -315,10 +322,8 @@ class ExactionController extends Controller
      */
     protected function createEditForm(Exaction $exaction)
     {
-        $exactionExists = true;
-
         $form = $this->createForm(
-            new ExactionType($exactionExists),
+            'khatovar_exaction_type',
             $exaction,
             array(
                 'action' => $this->generateUrl('khatovar_web_exaction_update', array('id' => $exaction->getId())),

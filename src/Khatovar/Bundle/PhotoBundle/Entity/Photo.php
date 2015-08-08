@@ -89,6 +89,14 @@ class Photo
     protected $contact;
 
     /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->alt;
+    }
+
+    /**
      * Get file.
      *
      * @return UploadedFile

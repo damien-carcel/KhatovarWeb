@@ -27,7 +27,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Khatovar\Bundle\MemberBundle\Entity\Member;
-use Khatovar\Bundle\MemberBundle\Form\MemberType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -290,7 +289,7 @@ class MemberController extends Controller
     protected function createCreateForm(Member $member)
     {
         $form = $this->createForm(
-            new MemberType(),
+            'khatovar_member_type',
             $member,
             array(
                 'action' => $this->generateUrl('khatovar_web_member_create'),
@@ -313,7 +312,7 @@ class MemberController extends Controller
     protected function createEditForm(Member $member)
     {
         $form = $this->createForm(
-            new MemberType(),
+            'khatovar_member_type',
             $member,
             array(
                 'action' => $this->generateUrl('khatovar_web_member_update', array('id' => $member->getId())),

@@ -31,7 +31,7 @@
     <a href="#" id="add-another-link">Add another link</a>
 </div>
 
-{% if exaction_exists is defined and exaction_exists %}
+{% if exaction_passed %}
     {{ form_row(form.onlyPhotos) }}
     {{ form_row(form.abstract) }}
     {{ form_row(form.image) }}

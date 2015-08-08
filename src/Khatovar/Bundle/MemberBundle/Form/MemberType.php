@@ -140,6 +140,6 @@ class MemberType extends AbstractType
      */
     public function getName()
     {
-        return 'khatovar_bundle_memberbundle_member';
+        return 'khatovar_member_type';
     }
 }

@@ -5,7 +5,6 @@ namespace Khatovar\Bundle\ContactBundle\Controller;
 use Doctrine\ORM\EntityManagerInterface;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Khatovar\Bundle\ContactBundle\Entity\Contact;
-use Khatovar\Bundle\ContactBundle\Form\ContactType;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -280,7 +279,7 @@ class ContactController extends Controller
     protected function createCreateForm(Contact $contact)
     {
         $form = $this->createForm(
-            new ContactType(),
+            'khatovar_contact_type',
             $contact,
             array(
                 'action' => $this->generateUrl('khatovar_web_contact_create'),
@@ -303,7 +302,7 @@ class ContactController extends Controller
     protected function createEditForm(Contact $contact)
     {
         $form = $this->createForm(
-            new ContactType(),
+            'khatovar_contact_type',
             $contact,
             array(
                 'action' => $this->generateUrl('khatovar_web_contact_update', array('id' => $contact->getId())),

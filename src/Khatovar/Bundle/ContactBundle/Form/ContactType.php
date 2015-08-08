@@ -58,6 +58,6 @@ class ContactType extends AbstractType
      */
     public function getName()
     {
-        return 'khatovar_bundle_contactbundle_contact';
+        return 'khatovar_contact_type';
     }
 }

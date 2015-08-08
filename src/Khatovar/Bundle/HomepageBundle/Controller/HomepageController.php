@@ -26,7 +26,6 @@ namespace Khatovar\Bundle\HomepageBundle\Controller;
 use Doctrine\ORM\EntityManagerInterface;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Khatovar\Bundle\HomepageBundle\Entity\Homepage;
-use Khatovar\Bundle\HomepageBundle\Form\HomepageType;
 use Khatovar\Bundle\PhotoBundle\Manager\PhotoManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -313,7 +312,7 @@ class HomepageController extends Controller
     protected function createCreateForm(Homepage $homepage)
     {
         $form = $this->createForm(
-            new HomepageType(),
+            'khatovar_homepage_type',
             $homepage,
             array(
                 'action' => $this->generateUrl('khatovar_web_homepage_create'),
@@ -336,7 +335,7 @@ class HomepageController extends Controller
     protected function createEditForm(Homepage $homepage)
     {
         $form = $this->createForm(
-            new HomepageType(),
+            'khatovar_homepage_type',
             $homepage,
             array(
                 'action' => $this->generateUrl('khatovar_web_homepage_update', array('id' => $homepage->getId())),

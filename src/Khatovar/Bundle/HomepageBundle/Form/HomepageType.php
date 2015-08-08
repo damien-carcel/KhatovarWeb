@@ -64,6 +64,6 @@ class HomepageType extends AbstractType
      */
     public function getName()
     {
-        return 'khatovar_bundle_homepagebundle_homepage';
+        return 'khatovar_homepage_type';
     }
 }
