@@ -2,8 +2,12 @@
 
 namespace Khatovar\Bundle\ContactBundle\Form;
 
+use Doctrine\ORM\EntityRepository;
+use Khatovar\Bundle\ContactBundle\Entity\Contact;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
@@ -33,16 +37,37 @@ class ContactType extends AbstractType
                     'config_name' => 'basic_config',
                     'label'       => 'Contenu',
                 )
-            )
-            ->add(
-                'visitCard',
-                'entity',
-                array(
-                    'class'    => 'Khatovar\Bundle\PhotoBundle\Entity\Photo',
-                    'property' => 'alt',
-                    'label'    => 'Carte de visite',
-                )
             );
+
+        $builder->addEventListener(
+            FormEvents::PRE_SET_DATA,
+            function (FormEvent $event) {
+                $form = $event->getForm();
+                $contact = $event->getData();
+
+                if ($contact instanceof Contact) {
+                    $form
+                        ->add(
+                            'visitCard',
+                            'entity',
+                            array(
+                                'class' => 'Khatovar\Bundle\PhotoBundle\Entity\Photo',
+                                'property' => 'alt',
+                                'label' => 'Carte de visite',
+                                'required' => false,
+                                'query_builder' => function (
+                                    EntityRepository $repository
+                                ) use ($contact) {
+                                    return $repository
+                                        ->createQueryBuilder('c')
+                                        ->where('c.contact = :contact')
+                                        ->setParameter('contact', $contact);
+                                }
+                            )
+                        );
+                }
+            }
+        );
     }
 
     /**
