@@ -13,3 +13,9 @@ Khatovar\Bundle\PhotoBundle\Entity\Photo:
         entity:
             - Length:
                 max: 255
+        file:
+            - File:
+                maxSize: 8192k
+                maxSizeMessage: Merci de ne téléverser que des images de moins de 8 Mo
+                mimeTypes: [image/jpeg]
+                mimeTypesMessage: Merci de ne téléverser que des images au format jpeg

@@ -27,7 +27,6 @@ use Khatovar\Bundle\ExactionBundle\Entity\Exaction;
 use Khatovar\Bundle\HomepageBundle\Entity\Homepage;
 use Khatovar\Bundle\MemberBundle\Entity\Member;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Photo entity.
@@ -67,11 +66,7 @@ class Photo
      */
     protected $temp;
 
-    /**
-     * @var UploadedFile
-     *
-     * @Assert\File(maxSize="8000000", mimeTypes={"image/jpeg"})
-     */
+    /** @var UploadedFile */
     protected $file;
 
     /**
