@@ -28,7 +28,6 @@ use Doctrine\ORM\EntityRepository;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Khatovar\Bundle\MemberBundle\Entity\Member;
 use Khatovar\Bundle\MemberBundle\Form\MemberType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -48,6 +47,7 @@ class MemberController extends Controller
     /** @var EntityManagerInterface */
     protected $entityManager;
 
+    /** @var Session */
     protected $session;
 
     /**

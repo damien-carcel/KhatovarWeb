@@ -23,15 +23,20 @@
 
 namespace Khatovar\Bundle\PhotoBundle\Controller;
 
-use Carcel\UserBundle\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Khatovar\Bundle\PhotoBundle\Entity\Photo;
 use Khatovar\Bundle\PhotoBundle\Form\PhotoType;
+use Khatovar\Bundle\PhotoBundle\Manager\PhotoManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
- * Photo controller. Only a user with "ROLE_EDITOR as a minimum
+ * Main controller for Photo bundle.
+ *
+ * Only a user with "ROLE_EDITOR as a minimum
  * security clearance can see and manipulate photos for all the web
  * site sections. Regular users can only see their own members photos.
  *
@@ -39,12 +44,39 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class PhotoController extends Controller
 {
+    /** @staticvar string */
+    const MAX_PHOTO_HEIGHT = 720;
+
+    /** @var ContainerInterface */
+    protected $container;
+
+    /** @var EntityManagerInterface */
+    protected $entityManager;
+
+    /** @var PhotoManager */
+    protected $photoManager;
+
+    /** @var Session */
+    protected $session;
+
     /**
-     * Maximal height accepted for photo.
-     *
-     * @staticvar string
+     * @param ContainerInterface     $container
+     * @param EntityManagerInterface $entityManager
+     * @param PhotoManager           $photoManager
+     * @param Session                $session
      */
-    const MAX_HEIGHT = 720;
+    public function __construct(
+        ContainerInterface $container,
+        EntityManagerInterface $entityManager,
+        PhotoManager $photoManager,
+        Session $session
+    ) {
+        $this->container     = $container;
+        $this->entityManager = $entityManager;
+        $this->photoManager  = $photoManager;
+        $this->session       = $session;
+
+    }
 
     /**
      * Return the list of all photos uploaded for the website and
@@ -56,14 +88,10 @@ class PhotoController extends Controller
      */
     public function indexAction()
     {
-        $currentUser = $this->getUser();
-
-        $photoManager = $this->get('khatovar_photo.manager.photo');
-
         if ($this->isGranted('ROLE_EDITOR')) {
-            $entityList = $photoManager->getCompletePhotoList();
+            $entityList = $this->photoManager->getPhotoEntitiesList();
         } else {
-            $entityList = $photoManager->getUserPhotos($currentUser);
+            $entityList = $this->photoManager->getUserPhotos($this->getUser());
         }
 
         return $this->render(
@@ -87,10 +115,7 @@ class PhotoController extends Controller
      */
     public function sideAction($controller, $action, $slugOrId)
     {
-        $currentUser = $this->getUser();
-
-        $photoManager = $this->get('khatovar_photo.manager.photo');
-        $photos = $photoManager->getControllerPhotos($currentUser, $controller, $action, $slugOrId);
+        $photos = $this->photoManager->getControllerPhotos($this->getUser(), $controller, $action, $slugOrId);
 
         return $this->render(
             'KhatovarPhotoBundle:Photo:side.html.twig',
@@ -114,43 +139,38 @@ class PhotoController extends Controller
     {
         $photo = new Photo();
 
-        $currentUser = $this->getUser();
-
         if (!$this->isGranted('ROLE_EDITOR')) {
-            $member = $this->getMember($currentUser);
+            $member = $this->getLoggedMember();
             if (!$member) {
                 return $this->render(
                     'KhatovarPhotoBundle:Photo:add.html.twig',
-                    array(
-                        'not_a_member' => true
-                    )
+                    array('not_a_member' => true)
                 );
             }
 
             // TODO: Is it better to use hidden fields and transformer for Member entity?
             $photo->setClass('none')->setEntity('member')->setMember($member);
 
-            $form = $this->createForm(new PhotoType($currentUser), $photo);
+            $form = $this->createForm(new PhotoType($this->getUser()), $photo);
             $form->remove('class')->remove('entity')->remove('member');
 
             $isEditor = false;
         } else {
-            $form = $this->createForm(new PhotoType($currentUser), $photo);
+            $form = $this->createForm(new PhotoType($this->getUser()), $photo);
             $isEditor = true;
         }
 
         $form->handleRequest($request);
         if ($form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($photo);
-            $entityManager->flush();
+            $this->entityManager->persist($photo);
+            $this->entityManager->flush();
 
-            // We resize the uploaded photo according to the HEIGHT constant
-            $photoManager = $this->get('khatovar_web.manager.photo');
-            $photoManager->imageResize($photo->getAbsolutePath(), self::MAX_HEIGHT);
+            $this->photoManager->imageResize($photo->getAbsolutePath(), static::MAX_PHOTO_HEIGHT);
 
-            $this->get('session')->getFlashBag()
-                ->add('notice', 'Photo ajoutée');
+            $this->get('session')->getFlashBag()->add(
+                'notice',
+                'Photo ajoutée'
+            );
 
             if ($isEditor) {
                 return $this->redirect(
@@ -167,8 +187,8 @@ class PhotoController extends Controller
         return $this->render(
             'KhatovarPhotoBundle:Photo:add.html.twig',
             array(
-                'form' => $form->createView(),
-                'photo' => $photo
+                'form'  => $form->createView(),
+                'photo' => $photo,
             )
         );
     }
@@ -185,20 +205,16 @@ class PhotoController extends Controller
      */
     public function editAction(Photo $photo, Request $request)
     {
-        $entity = $photo->getEntity();
-
+        $entity      = $photo->getEntity();
         $currentUser = $this->getUser();
-        $member = $this->getMember($currentUser);
-
-        $form = $this->createForm(new PhotoType($currentUser), $photo);
+        $member      = $this->getLoggedMember();
+        $form        = $this->createForm(new PhotoType($currentUser), $photo);
 
         if (!$this->isGranted('ROLE_EDITOR')) {
             if (!$member) {
                 return $this->render(
                     'KhatovarPhotoBundle:Photo:add.html.twig',
-                    array(
-                        'not_a_member' => 1
-                    )
+                    array('not_a_member' => 1)
                 );
             }
             $form->remove('class')->remove('entity')->remove('member');
@@ -206,13 +222,11 @@ class PhotoController extends Controller
 
         $form->handleRequest($request);
         if ($form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($photo);
+            $this->entityManager->persist($photo);
 
-            if ($photo->getEntity() != $entity) {
+            if ($photo->getEntity() !== $entity) {
                 $photo->setHomepage(null)->setMember(null);
-
-                $entityManager->flush();
+                $this->entityManager->flush();
 
                 return $this->redirect(
                     $this->generateUrl(
@@ -221,23 +235,23 @@ class PhotoController extends Controller
                     )
                 );
             } else {
-                $this->get('session')->getFlashBag()
-                    ->add('notice', 'Photo modifiée');
+                $this->get('session')->getFlashBag()->add(
+                    'notice',
+                    'Photo modifiée'
+                );
 
-                $entityManager->flush();
+                $this->entityManager->flush();
             }
 
-            return $this->redirect(
-                $this->generateUrl('khatovar_web_photos')
-            );
+            return $this->redirect($this->generateUrl('khatovar_web_photos'));
         }
 
         return $this->render(
             'KhatovarPhotoBundle:Photo:edit.html.twig',
             array(
                 'photo' => $photo,
-                'form' => $form->createView(),
-                'owner' => $member
+                'form'  => $form->createView(),
+                'owner' => $member,
             )
         );
     }
@@ -252,40 +266,35 @@ class PhotoController extends Controller
      */
     public function deleteAction(Photo $photo, Request $request)
     {
-        $form = $this->createFormBuilder()->getForm();
-
-        $currentUser = $this->getUser();
-        $member = $this->getMember($currentUser);
+        $form   = $this->createFormBuilder()->getForm();
+        $member = $this->getLoggedMember();
 
         if (!$this->isGranted('ROLE_EDITOR') and !$member) {
             return $this->render(
                 'KhatovarPhotoBundle:Photo:delete.html.twig',
-                array(
-                    'not_an_editor' => 1
-                )
+                array('not_an_editor' => 1)
             );
         }
 
         $form->handleRequest($request);
         if ($form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($photo);
-            $entityManager->flush();
+            $this->entityManager->remove($photo);
+            $this->entityManager->flush();
 
-            $this->get('session')->getFlashBag()
-                ->add('notice', 'Photo supprimée');
-
-            return $this->redirect(
-                $this->generateUrl('khatovar_web_photos')
+            $this->get('session')->getFlashBag()->add(
+                'notice',
+                'Photo supprimée'
             );
+
+            return $this->redirect($this->generateUrl('khatovar_web_photos'));
         }
 
         return $this->render(
             'KhatovarPhotoBundle:Photo:delete.html.twig',
             array(
                 'photo' => $photo,
-                'form' => $form->createView(),
-                'owner' => $member
+                'form'  => $form->createView(),
+                'owner' => $member,
             )
         );
     }
@@ -293,14 +302,12 @@ class PhotoController extends Controller
     /**
      * Get the member page corresponding to the current user.
      *
-     * @param User $currentUser
-     *
      * @return \Khatovar\Bundle\MemberBundle\Entity\Member
      */
-    protected function getMember(User $currentUser)
+    protected function getLoggedMember()
     {
-        return $this->getDoctrine()->getManager()
+        return $this->entityManager
             ->getRepository('KhatovarMemberBundle:Member')
-            ->findOneBy(array('owner' => $currentUser->getId()));
+            ->findOneBy(array('owner' => $this->getUser()->getId()));
     }
 }

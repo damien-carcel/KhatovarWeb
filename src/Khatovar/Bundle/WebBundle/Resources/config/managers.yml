@@ -1,8 +1,0 @@
-parameters:
-    khatovar_web.manager.photo.class:  Khatovar\Bundle\WebBundle\Manager\PhotoManager
-
-services:
-    khatovar_web.manager.photo:
-        class: %khatovar_web.manager.photo.class%
-        arguments:
-            - '@doctrine.orm.entity_manager'

@@ -1,10 +1,10 @@
 parameters:
-    khatovar_homepage.controller.homepage.class: Khatovar\Bundle\HomepageBundle\Controller\HomepageController
+    khatovar_photo.controller.photo.class: Khatovar\Bundle\PhotoBundle\Controller\PhotoController
 
 services:
-    khatovar_homepage.controller.homepage:
+    khatovar_photo.controller.photo:
         scope: request
-        class: %khatovar_homepage.controller.homepage.class%
+        class: %khatovar_photo.controller.photo.class%
         arguments:
             - '@service_container'
             - '@doctrine.orm.entity_manager'

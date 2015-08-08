@@ -25,6 +25,7 @@ namespace Khatovar\Bundle\PhotoBundle\Manager;
 
 use Carcel\UserBundle\Entity\User;
 use Doctrine\ORM\EntityManager;
+use Khatovar\Bundle\PhotoBundle\Entity\Photo;
 
 /**
  * Photo manager.
@@ -45,11 +46,86 @@ class PhotoManager
     }
 
     /**
+     * Look for special photo insertion tags and transform it in html syntax.
+     *
+     * @param string $text The text to transform.
+     * @return string
+     */
+    public function imageTranslate($text)
+    {
+        $text  = $this->insertTagsInText($text);
+        $paths = $this->getPhotoPaths($text);
+
+        $repository = $this->entityManager->getRepository('KhatovarPhotoBundle:Photo');
+
+        $photos = array();
+
+        foreach ($paths as $path) {
+            $photo = $repository->findOneBy(array('path' => $path));
+            if (null !== $photo) {
+                $photos[] = '<a href="/uploaded/photos/'
+                    . $photo->getPath()
+                    . '" data-lightbox="Photos Khatovar" title="Copyright &copy; '
+                    . date('Y')
+                    . ' association La Compagnie franche du Khatovar"><img class="'
+                    . $photo->getClass()
+                    . ' photo_rest" onmouseover="this.className=\''
+                    . $photo->getClass()
+                    . ' photo_over\'" onmouseout="this.className=\''
+                    . $photo->getClass()
+                    . ' photo_rest\'" src="/uploaded/photos/'
+                    . $photo->getPath()
+                    . '" alt="' . $photo->getAlt()
+                    . '" /></a>';
+            } else {
+                $photos[] = 'Cette photo n\'existe pas';
+            }
+        }
+
+        return str_replace($paths, $photos, $text);
+    }
+
+    /**
+     * Resize an jpeg image according to a given height, but only if
+     * the original image is higher.
+     *
+     * @param string $image The path to the original image
+     * @param int $newHeight
+     */
+    public function imageResize($image, $newHeight)
+    {
+        // We first find the dimensions of the photo and its ratio
+        $original = imagecreatefromjpeg($image);
+        list($width, $height) = getimagesize($image);
+        $ratio = $width / $height;
+
+        if ($height > $newHeight) {
+            $newWidth = round($newHeight * $ratio);
+
+            $resized = imagecreatetruecolor($newWidth, $newHeight);
+            imagecopyresampled($resized, $original, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
+
+            copy($image, $image . '.old');
+            unlink($image);
+
+            if (imagejpeg($resized, $image)) {
+                unlink($image . '.old');
+            } else {
+                copy($image . '.old', $image);
+            }
+
+            imagedestroy($resized);
+        }
+
+        imagedestroy($original);
+    }
+
+    /**
      * Get a sorted list of all photos currently uploaded.
      *
      * @return array
      */
-    public function getCompletePhotoList()
+    public function getPhotoEntitiesList()
     {
         return array(
             'Photos orphelines' => $this->entityManager
@@ -174,5 +250,34 @@ class PhotoManager
         }
 
         return null;
+    }
+
+    /**
+     * @param string $text
+     *
+     * @return array
+     */
+    protected function getPhotoPaths($text)
+    {
+        preg_match_all('/(\w+\-\d+\.jpeg)/', $text, $matches);
+
+        return $matches[0];
+    }
+
+    /**
+     * @param string $text
+     *
+     * @return string
+     */
+    protected function insertTagsInText($text)
+    {
+        $text = str_replace('<p>[', '<div>[', $text);
+        $text = str_replace(']</p>', ']</div>', $text);
+
+        $text = str_replace('<div>[', '<div class="container">', $text);
+        $text = str_replace(']</div>', '</div>', $text);
+        $text = str_replace('][', '', $text);
+
+        return $text;
     }
 }

@@ -26,6 +26,7 @@ class ContactController extends Controller
     /** @var EntityManagerInterface */
     protected $entityManager;
 
+    /** @var Session */
     protected $session;
 
     /**

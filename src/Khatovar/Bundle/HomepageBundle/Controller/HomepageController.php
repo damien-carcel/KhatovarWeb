@@ -23,12 +23,11 @@
 
 namespace Khatovar\Bundle\HomepageBundle\Controller;
 
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManagerInterface;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Khatovar\Bundle\HomepageBundle\Entity\Homepage;
 use Khatovar\Bundle\HomepageBundle\Form\HomepageType;
-use Khatovar\Bundle\WebBundle\Manager\PhotoManager;
+use Khatovar\Bundle\PhotoBundle\Manager\PhotoManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormInterface;
@@ -40,7 +39,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  * Main Controller for Homepage bundle.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
- * @package Khatovar\Bundle\HomepageBundle\Controller
  */
 class HomepageController extends Controller
 {
