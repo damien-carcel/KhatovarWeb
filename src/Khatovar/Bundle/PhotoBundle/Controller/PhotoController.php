@@ -151,12 +151,12 @@ class PhotoController extends Controller
             // TODO: Is it better to use hidden fields and transformer for Member entity?
             $photo->setClass('none')->setEntity('member')->setMember($member);
 
-            $form = $this->createForm(new PhotoType($this->getUser()), $photo);
+            $form = $this->createForm('khatovar_photo_type', $photo);
             $form->remove('class')->remove('entity')->remove('member');
 
             $isEditor = false;
         } else {
-            $form = $this->createForm(new PhotoType($this->getUser()), $photo);
+            $form = $this->createForm('khatovar_photo_type', $photo);
             $isEditor = true;
         }
 
@@ -205,10 +205,9 @@ class PhotoController extends Controller
      */
     public function editAction(Photo $photo, Request $request)
     {
-        $entity      = $photo->getEntity();
-        $currentUser = $this->getUser();
-        $member      = $this->getLoggedMember();
-        $form        = $this->createForm(new PhotoType($currentUser), $photo);
+        $entity = $photo->getEntity();
+        $member = $this->getLoggedMember();
+        $form   = $this->createForm('khatovar_photo_type', $photo);
 
         if (!$this->isGranted('ROLE_EDITOR')) {
             if (!$member) {

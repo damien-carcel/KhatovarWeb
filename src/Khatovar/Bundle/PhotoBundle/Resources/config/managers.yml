@@ -4,4 +4,6 @@ parameters:
 services:
     khatovar_photo.manager.photo:
         class: %khatovar_photo.manager.photo.class%
-        arguments: [ "@doctrine.orm.entity_manager" ]
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@security.authorization_checker'

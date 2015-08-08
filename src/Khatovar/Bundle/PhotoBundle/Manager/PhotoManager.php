@@ -24,8 +24,9 @@
 namespace Khatovar\Bundle\PhotoBundle\Manager;
 
 use Carcel\UserBundle\Entity\User;
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Khatovar\Bundle\PhotoBundle\Entity\Photo;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * Photo manager.
@@ -34,15 +35,22 @@ use Khatovar\Bundle\PhotoBundle\Entity\Photo;
  */
 class PhotoManager
 {
-    /** @var EntityManager */
+    /** @var AuthorizationCheckerInterface */
+    protected $authorizationChecker;
+
+    /** @var EntityManagerInterface */
     protected $entityManager;
 
     /**
-     * @param EntityManager $entityManager
+     * @param EntityManagerInterface        $entityManager
+     * @param AuthorizationCheckerInterface $authorizationChecker
      */
-    public function __construct(EntityManager $entityManager)
-    {
-        $this->entityManager = $entityManager;
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        AuthorizationCheckerInterface $authorizationChecker
+    ) {
+        $this->entityManager        = $entityManager;
+        $this->authorizationChecker = $authorizationChecker;
     }
 
     /**
@@ -160,7 +168,7 @@ class PhotoManager
 
         return array(
             'Membre :' => array(
-                $member->getId() => $member
+                $member->getId() => $member,
             )
         );
     }
@@ -188,8 +196,7 @@ class PhotoManager
         }
 
         if (!is_null($currentlyRendered)) {
-            if ($currentUser->hasRole('ROLE_EDITOR')
-                or ($owner == $currentUser)) {
+            if ($this->authorizationChecker->isGranted('ROLE_EDITOR') || ($owner == $currentUser)) {
                 $photos = $currentlyRendered->getPhotos();
             }
         }

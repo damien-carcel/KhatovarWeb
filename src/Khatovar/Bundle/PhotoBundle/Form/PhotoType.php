@@ -23,13 +23,13 @@
 
 namespace Khatovar\Bundle\PhotoBundle\Form;
 
-use Carcel\UserBundle\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * Class PhotoType
@@ -39,14 +39,15 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class PhotoType extends AbstractType
 {
-    protected $currentUser;
+    /** @var AuthorizationCheckerInterface */
+    protected $authorizationChecker;
 
     /**
-     * @param User $currentUser
+     * @param AuthorizationCheckerInterface $authorizationChecker
      */
-    public function __construct(User $currentUser)
+    public function __construct(AuthorizationCheckerInterface $authorizationChecker)
     {
-        $this->currentUser = $currentUser;
+        $this->authorizationChecker = $authorizationChecker;
     }
 
     /**
@@ -88,15 +89,21 @@ class PhotoType extends AbstractType
             }
         };
 
-        if ($this->currentUser->hasRole('ROLE_EDITOR')) {
-            $builder->add('entity', 'choice', array(
+        if ($this->authorizationChecker->isGranted('ROLE_EDITOR')) {
+            $builder->add(
+                'entity',
+                'choice',
+                array(
                     'label' => 'Rattacher la photo à une : ',
                     'choices' => array(
                         'homepage' => 'Page d\'accueil',
-                        'member' => 'Page de membre'
+                        'member'   => 'Page de membre',
+                        'exaction' => 'Exaction',
+                        'contact'  => 'Page de contact',
                     ),
                     'preferred_choices' => array('homepage')
-                ));
+                )
+            );
 
             $builder->addEventListener(
                 FormEvents::PRE_SET_DATA,
@@ -131,6 +138,6 @@ class PhotoType extends AbstractType
      */
     public function getName()
     {
-        return 'khatovar_bundle_photobundle_photo';
+        return 'khatovar_photo_type';
     }
 }
