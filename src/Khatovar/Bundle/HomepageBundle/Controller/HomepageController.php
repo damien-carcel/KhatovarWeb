@@ -429,14 +429,19 @@ class HomepageController extends Controller
      */
     protected function createActivationForm()
     {
+        $previousHomepage = $this->entityManager
+            ->getRepository('KhatovarHomepageBundle:Homepage')
+            ->findOneBy(array('active' => true));
+
         $form = $this->createFormBuilder()
             ->add(
                 'active',
                 'entity',
                 array(
-                    'class'    => 'Khatovar\Bundle\HomepageBundle\Entity\Homepage',
-                    'label'    => false,
-                    'property' => 'name',
+                    'class'             => 'Khatovar\Bundle\HomepageBundle\Entity\Homepage',
+                    'label'             => false,
+                    'property'          => 'name',
+                    'preferred_choices' => array($previousHomepage)
                 )
             )
             ->add('submit', 'submit', array('label' => 'Activer'))

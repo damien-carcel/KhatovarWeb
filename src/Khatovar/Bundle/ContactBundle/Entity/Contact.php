@@ -131,7 +131,7 @@ class Contact
      *
      * @return Contact
      */
-    public function setVisitCard(Photo $visitCard)
+    public function setVisitCard(Photo $visitCard = null)
     {
         $this->visitCard = $visitCard;
 

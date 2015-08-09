@@ -56,36 +56,68 @@ class PhotoType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->addDefaultFields($builder);
+
+        $this->addEntityField($builder);
+    }
+
+    /**
+     * @param OptionsResolverInterface $resolver
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array('data_class' => 'Khatovar\Bundle\PhotoBundle\Entity\Photo'));
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'khatovar_photo_type';
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     */
+    protected function addDefaultFields(FormBuilderInterface $builder)
+    {
         if (is_null($builder->getData()->getId())) {
             $builder->add('file', 'file', array('label' => false));
         }
 
         $builder->add('alt', 'text', array('label' => 'Nom de substitution : '));
+    }
 
+    /**
+     * @param FormBuilderInterface $builder
+     */
+    protected function addEntityField(FormBuilderInterface $builder)
+    {
         $formModifier = function (FormInterface $form, $entity) {
             if (!is_null($entity)) {
                 if ($entity == 'homepage') {
                     $form->add('class', 'choice', array(
-                            'label' => 'Taille de la photo : ',
-                            'choices' => array(
-                                'photo_small' => 'Petit format',
-                                'photo' => 'Format normal',
-                                'panorama' => 'Panorama'
-                            ),
-                            'preferred_choices' => array('photo'),
-                            'required' => true
-                        ));
+                        'label' => 'Taille de la photo : ',
+                        'choices' => array(
+                            'photo_small' => 'Petit format',
+                            'photo' => 'Format normal',
+                            'panorama' => 'Panorama'
+                        ),
+                        'preferred_choices' => array('photo'),
+                        'required' => true
+                    ));
                 } else {
                     $form->add('class', 'hidden', array(
-                            'data' => 'none'
-                        ));
+                        'data' => 'none'
+                    ));
                 }
 
                 $form->add($entity, 'entity', array(
-                        'class' => 'Khatovar' . ucfirst($entity) . 'Bundle:' . ucfirst($entity),
-                        'property' => 'name',
-                        'label' => 'Page :'
-                    ));
+                    'class' => 'Khatovar' . ucfirst($entity) . 'Bundle:' . ucfirst($entity),
+                    'property' => 'name',
+                    'label' => 'Page :'
+                ));
             }
         };
 
@@ -121,23 +153,5 @@ class PhotoType extends AbstractType
                 }
             );
         }
-
-        $builder->add('submit', 'submit', array('label' => 'Envoyer'));
-    }
-
-    /**
-     * @param OptionsResolverInterface $resolver
-     */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $resolver->setDefaults(array('data_class' => 'Khatovar\Bundle\PhotoBundle\Entity\Photo'));
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'khatovar_photo_type';
     }
 }

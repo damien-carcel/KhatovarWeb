@@ -126,7 +126,10 @@ class ExactionType extends AbstractType
                         ->add(
                             'onlyPhotos',
                             'checkbox',
-                            array('label' => 'Pas de résumé de fête, seulement des photos ?',)
+                            array(
+                                'label'    => 'Pas de résumé de fête, seulement des photos ?',
+                                'required' => false,
+                                )
                         )
                         ->add(
                             'abstract',

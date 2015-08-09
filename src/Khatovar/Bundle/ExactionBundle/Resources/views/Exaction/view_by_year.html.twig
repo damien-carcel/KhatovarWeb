@@ -31,7 +31,7 @@
             <div class="container flex-container">
                 <div class="photo_exactions">
                     {% if exaction.image is not null %}
-                        {% set the_image = exaction.image %}
+                        {% set the_image = exaction.image.webPath %}
                     {% else %}
                         {% set the_image = asset('bundles/khatovarweb/photos/logonoir.jpg') %}
                     {% endif %}

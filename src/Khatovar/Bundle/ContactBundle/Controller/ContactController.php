@@ -396,14 +396,19 @@ class ContactController extends Controller
      */
     protected function createActivationForm()
     {
+        $previousContact = $this->entityManager
+            ->getRepository('KhatovarContactBundle:Contact')
+            ->findOneBy(array('active' => true));
+
         $form = $this->createFormBuilder()
             ->add(
                 'active',
                 'entity',
                 array(
-                    'class'    => 'Khatovar\Bundle\ContactBundle\Entity\Contact',
-                    'label'    => false,
-                    'property' => 'name',
+                    'class'             => 'Khatovar\Bundle\ContactBundle\Entity\Contact',
+                    'label'             => false,
+                    'property'          => 'name',
+                    'preferred_choices' => array($previousContact)
                 )
             )
             ->add('submit', 'submit', array('label' => 'Activer'))

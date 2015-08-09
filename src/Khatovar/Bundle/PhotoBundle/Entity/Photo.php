@@ -23,6 +23,7 @@
 
 namespace Khatovar\Bundle\PhotoBundle\Entity;
 
+use Khatovar\Bundle\ContactBundle\Entity\Contact;
 use Khatovar\Bundle\ExactionBundle\Entity\Exaction;
 use Khatovar\Bundle\HomepageBundle\Entity\Homepage;
 use Khatovar\Bundle\MemberBundle\Entity\Member;
@@ -342,11 +343,11 @@ class Photo
     }
 
     /**
-     * @param Photo $contact
+     * @param Contact $contact
      *
      * @return Photo
      */
-    public function setContact($contact)
+    public function setContact(Contact $contact = null)
     {
         $this->contact = $contact;
 

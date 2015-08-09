@@ -203,7 +203,7 @@ class PhotoManager
             $owner = $currentlyRendered->getOwner();
         }
 
-        if (!is_null($currentlyRendered)) {
+        if (null !== $currentlyRendered) {
             if ($this->authorizationChecker->isGranted('ROLE_EDITOR') ||
                 ($owner === $this->tokenStorage->getToken()->getUser())
             ) {
@@ -229,7 +229,7 @@ class PhotoManager
         $currentlyRendered = null;
         $repo = $this->getRepository($controller);
 
-        if (null === $repo) {
+        if (null === $repo or $controller === 'photo') {
             return null;
         }
 
