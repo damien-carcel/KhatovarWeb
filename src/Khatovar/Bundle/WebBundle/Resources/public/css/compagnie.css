@@ -566,6 +566,16 @@ article img {
     float: left;
 }
 
+.relative-position {
+    position: relative;
+}
+
+.right-corner {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
 .trombi, .aside-photo {
     text-align: center;
     vertical-align: middle;

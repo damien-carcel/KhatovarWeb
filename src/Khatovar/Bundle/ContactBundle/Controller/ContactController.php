@@ -272,9 +272,9 @@ class ContactController extends Controller
     /**
      * Creates a form to create a Contact entity.
      *
-     * @param Contact $contact The entity
+     * @param Contact $contact
      *
-     * @return \Symfony\Component\Form\Form The form
+     * @return \Symfony\Component\Form\Form
      */
     protected function createCreateForm(Contact $contact)
     {
@@ -295,9 +295,9 @@ class ContactController extends Controller
     /**
      * Creates a form to edit a Contact entity.
      *
-     * @param Contact $contact The entity ID
+     * @param Contact $contact
      *
-     * @return \Symfony\Component\Form\Form The form
+     * @return \Symfony\Component\Form\Form
      */
     protected function createEditForm(Contact $contact)
     {

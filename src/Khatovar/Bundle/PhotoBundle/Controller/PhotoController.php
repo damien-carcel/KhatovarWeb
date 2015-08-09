@@ -26,12 +26,13 @@ namespace Khatovar\Bundle\PhotoBundle\Controller;
 use Doctrine\ORM\EntityManagerInterface;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Khatovar\Bundle\PhotoBundle\Entity\Photo;
-use Khatovar\Bundle\PhotoBundle\Form\PhotoType;
+use Khatovar\Bundle\PhotoBundle\Helper\PhotoHelper;
 use Khatovar\Bundle\PhotoBundle\Manager\PhotoManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
  * Main controller for Photo bundle.
@@ -89,14 +90,17 @@ class PhotoController extends Controller
     public function indexAction()
     {
         if ($this->isGranted('ROLE_EDITOR')) {
-            $entityList = $this->photoManager->getPhotoEntitiesList();
+            $photos = $this->photoManager->getPhotosSortedByEntities();
         } else {
-            $entityList = $this->photoManager->getUserPhotos($this->getUser());
+            $photos = $this->photoManager->getMemberPhotos($this->getUser());
         }
 
         return $this->render(
             'KhatovarPhotoBundle:Photo:index.html.twig',
-            array('entity_list' => $entityList)
+            array(
+                'sorted_photos' => $photos,
+                'delete_forms'  => $this->createDeleteForms($photos),
+            )
         );
     }
 
@@ -124,10 +128,41 @@ class PhotoController extends Controller
     }
 
     /**
-     * Add a new photo to the collection.
-     * Editors can add photos every part of the web site, but regular
-     * users can only add photos for their own member page (if they
-     * have one).
+     * Displays a form to upload a new photo.
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @Secure(roles="ROLE_VIEWER")
+     */
+    public function newAction()
+    {
+        $this->userHasEditRights();
+
+        $photo = new Photo();
+
+        if (!$this->isGranted('ROLE_EDITOR')) {
+            $member = $this->getLoggedMember();
+
+            $photo->setClass('none')->setEntity('member')->setMember($member);
+
+            $form = $this->createCreateForm($photo);
+            $form->remove('class')->remove('entity')->remove('member');
+        } else {
+            $form = $this->createCreateForm($photo);
+        }
+
+        return $this->render(
+            'KhatovarPhotoBundle:Photo:new.html.twig',
+            array('form' => $form->createView(),)
+        );
+    }
+
+    /**
+     * Uploads a new photo.
+     *
+     * Editors can add photos to every part of the web site, but
+     * regular users can only add photos to their own member page (if
+     * they have one).
      *
      * @param Request $request
      *
@@ -135,39 +170,34 @@ class PhotoController extends Controller
      *
      * @Secure(roles="ROLE_VIEWER")
      */
-    public function addAction(Request $request)
+    public function createAction(Request $request)
     {
+        $this->userHasEditRights();
+
         $photo = new Photo();
 
         if (!$this->isGranted('ROLE_EDITOR')) {
-            $member = $this->getLoggedMember();
-            if (!$member) {
-                return $this->render(
-                    'KhatovarPhotoBundle:Photo:add.html.twig',
-                    array('not_a_member' => true)
-                );
-            }
+            $isEditor = false;
+            $member   = $this->getLoggedMember();
 
-            // TODO: Is it better to use hidden fields and transformer for Member entity?
             $photo->setClass('none')->setEntity('member')->setMember($member);
 
-            $form = $this->createForm('khatovar_photo_type', $photo);
+            $form = $this->createCreateForm($photo);
             $form->remove('class')->remove('entity')->remove('member');
-
-            $isEditor = false;
         } else {
-            $form = $this->createForm('khatovar_photo_type', $photo);
             $isEditor = true;
+            $form     = $this->createCreateForm($photo);
         }
 
         $form->handleRequest($request);
+
         if ($form->isValid()) {
             $this->entityManager->persist($photo);
             $this->entityManager->flush();
 
             $this->photoManager->imageResize($photo->getAbsolutePath(), static::MAX_PHOTO_HEIGHT);
 
-            $this->get('session')->getFlashBag()->add(
+            $this->session->getFlashBag()->add(
                 'notice',
                 'Photo ajoutée'
             );
@@ -175,127 +205,248 @@ class PhotoController extends Controller
             if ($isEditor) {
                 return $this->redirect(
                     $this->generateUrl(
-                        'khatovar_web_photos_edit',
-                        array('photo'=> $photo->getId())
+                        'khatovar_web_photo_edit',
+                        array('id'=> $photo->getId())
                     )
                 );
             }
 
-            return $this->redirect($this->generateUrl('khatovar_web_photos'));
+            return $this->redirect($this->generateUrl('khatovar_web_photo'));
         }
 
         return $this->render(
-            'KhatovarPhotoBundle:Photo:add.html.twig',
+            'KhatovarPhotoBundle:Photo:new.html.twig',
+            array('form' => $form->createView())
+        );
+    }
+
+    /**
+     * Displays a form to edit an existing photo.
+     *
+     * @param int $id
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @Secure(roles="ROLE_VIEWER")
+     */
+    public function editAction($id)
+    {
+        $photo = $this->findByIdOr404($id);
+
+        $this->userHasEditRights($photo);
+
+        $editForm = $this->createEditForm($photo);
+
+        return $this->render(
+            'KhatovarPhotoBundle:Photo:edit.html.twig',
             array(
-                'form'  => $form->createView(),
-                'photo' => $photo,
+                'edit_form' => $editForm->createView(),
+                'photo'     => $photo,
             )
         );
     }
 
     /**
-     * Edit a photo information.
+     * Updates a photo.
      *
-     * @param Photo   $photo The photo to edit.
      * @param Request $request
+     * @param int     $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
      * @Secure(roles="ROLE_VIEWER")
      */
-    public function editAction(Photo $photo, Request $request)
+    public function updateAction(Request $request, $id)
     {
-        $entity = $photo->getEntity();
-        $member = $this->getLoggedMember();
-        $form   = $this->createForm('khatovar_photo_type', $photo);
+        $photo = $this->findByIdOr404($id);
+
+        $this->userHasEditRights($photo);
+
+        $editForm = $this->createEditForm($photo);
+        $entity   = $photo->getEntity();
 
         if (!$this->isGranted('ROLE_EDITOR')) {
-            if (!$member) {
-                return $this->render(
-                    'KhatovarPhotoBundle:Photo:add.html.twig',
-                    array('not_a_member' => 1)
-                );
-            }
-            $form->remove('class')->remove('entity')->remove('member');
+            $editForm->remove('class')->remove('entity')->remove('member');
         }
 
-        $form->handleRequest($request);
-        if ($form->isValid()) {
+        $editForm->handleRequest($request);
+        if ($editForm->isValid()) {
             $this->entityManager->persist($photo);
 
             if ($photo->getEntity() !== $entity) {
-                $photo->setHomepage(null)->setMember(null);
+                foreach (PhotoHelper::getPhotoEntities() as $code => $label) {
+                    $setter = 'set' . ucfirst($code);
+                    $photo->$setter(null);
+                }
+
                 $this->entityManager->flush();
 
                 return $this->redirect(
                     $this->generateUrl(
-                        'khatovar_web_photos_edit',
-                        array('photo'=> $photo->getId())
+                        'khatovar_web_photo',
+                        array('id' => $photo->getId())
                     )
                 );
             } else {
-                $this->get('session')->getFlashBag()->add(
+                $this->entityManager->flush();
+
+                $this->session->getFlashBag()->add(
                     'notice',
                     'Photo modifiée'
                 );
-
-                $this->entityManager->flush();
             }
 
-            return $this->redirect($this->generateUrl('khatovar_web_photos'));
+            return $this->redirect($this->generateUrl('khatovar_web_photo'));
         }
 
         return $this->render(
             'KhatovarPhotoBundle:Photo:edit.html.twig',
             array(
-                'photo' => $photo,
-                'form'  => $form->createView(),
-                'owner' => $member,
+                'edit_form' => $editForm->createView(),
+                'photo'     => $photo,
             )
         );
     }
 
     /**
-     * Remove a photo from the collection.
+     * Deletes a photo.
      *
-     * @param Photo $photo The photo to delete.
      * @param Request $request
+     * @param int     $id
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     *
      * @Secure(roles="ROLE_VIEWER")
      */
-    public function deleteAction(Photo $photo, Request $request)
+    public function deleteAction(Request $request, $id)
     {
-        $form   = $this->createFormBuilder()->getForm();
-        $member = $this->getLoggedMember();
+        $photo = $this->findByIdOr404($id);
+        $this->userHasEditRights($photo);
 
-        if (!$this->isGranted('ROLE_EDITOR') and !$member) {
-            return $this->render(
-                'KhatovarPhotoBundle:Photo:delete.html.twig',
-                array('not_an_editor' => 1)
-            );
-        }
-
+        $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
+
         if ($form->isValid()) {
             $this->entityManager->remove($photo);
             $this->entityManager->flush();
 
-            $this->get('session')->getFlashBag()->add(
+            $this->session->getFlashBag()->add(
                 'notice',
                 'Photo supprimée'
             );
-
-            return $this->redirect($this->generateUrl('khatovar_web_photos'));
         }
 
-        return $this->render(
-            'KhatovarPhotoBundle:Photo:delete.html.twig',
+        return $this->redirect($this->generateUrl('khatovar_web_photo'));
+    }
+
+    /**
+     * Creates a form to create a Photo entity.
+     *
+     * @param Photo $photo
+     *
+     * @return \Symfony\Component\Form\Form
+     */
+    protected function createCreateForm(Photo $photo)
+    {
+        $form = $this->createForm(
+            'khatovar_photo_type',
+            $photo,
             array(
-                'photo' => $photo,
-                'form'  => $form->createView(),
-                'owner' => $member,
+                'action' => $this->generateUrl('khatovar_web_photo_create'),
+                'method' => 'POST',
             )
         );
+
+        $form->add('submit', 'submit', array('label' => 'Créer'));
+
+        return $form;
+    }
+
+    /**
+     * Creates a form to edit a Photo entity.
+     *
+     * @param Photo $photo
+     *
+     * @return \Symfony\Component\Form\Form
+     */
+    protected function createEditForm(Photo $photo)
+    {
+        $form = $this->createForm(
+            'khatovar_photo_type',
+            $photo,
+            array(
+                'action' => $this->generateUrl('khatovar_web_photo_update', array('id' => $photo->getId())),
+                'method' => 'PUT',
+            )
+        );
+
+        $form->add('submit', 'submit', array('label' => 'Mettre à jour'));
+
+        return $form;
+    }
+
+    /**
+     * Creates a form to delete a Photo entity.
+     *
+     * @param int $id
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    protected function createDeleteForm($id)
+    {
+        return $this
+            ->createFormBuilder()
+            ->setAction($this->generateUrl('khatovar_web_photo_delete', array('id' => $id)))
+            ->setMethod('DELETE')
+            ->add(
+                'submit',
+                'submit',
+                array(
+                    'label' => 'Effacer',
+                    'attr'  => array('onclick' => 'return confirm("Êtes-vous sûr ?")'),
+                )
+            )
+            ->getForm();
+    }
+
+    /**
+     * Return a list of delete forms for a set of sorted Photo entities.
+     *
+     * @param Photo[] $sortedPhotos
+     *
+     * @return \Symfony\Component\Form\Form[]
+     */
+    protected function createDeleteForms(array $sortedPhotos)
+    {
+        $deleteForms = array();
+
+        foreach ($sortedPhotos as $photoLists) {
+            foreach ($photoLists as $photos) {
+                foreach ($photos as $photo) {
+                    if ($photo instanceof Photo) {
+                        $deleteForms[$photo->getId()] = $this->createDeleteForm($photo->getId())->createView();
+                    }
+                }
+            }
+        }
+
+        return $deleteForms;
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return Photo
+     */
+    protected function findByIdOr404($id)
+    {
+        $photo = $this->entityManager->getRepository('KhatovarPhotoBundle:Photo')->find($id);
+
+        if (!$photo) {
+            throw $this->createNotFoundException('Impossible de trouver la photo.');
+        }
+
+        return $photo;
     }
 
     /**
@@ -308,5 +459,41 @@ class PhotoController extends Controller
         return $this->entityManager
             ->getRepository('KhatovarMemberBundle:Member')
             ->findOneBy(array('owner' => $this->getUser()->getId()));
+    }
+
+    /**
+     * Checks if the logged user has the editor role. If he has not,
+     * checks if he has a member page (he can the upload new photos),
+     * and if editing a photo, that it belongs to its member page.
+     *
+     * @param Photo $photo
+     *
+     * @return bool
+     *
+     * @throws AccessDeniedHttpException
+     */
+    protected function userHasEditRights(Photo $photo = null)
+    {
+        $member = $this->getLoggedMember();
+
+        if ($this->isGranted('ROLE_EDITOR')) {
+            return true;
+        }
+
+        if (null === $member) {
+            throw new AccessDeniedHttpException(
+                'Désolé, vous n\'avez pas de page de membre, et ne pouvez donc pas manipuler les photos.'
+            );
+        } else {
+            if (null === $photo->getMember() ||
+                $member->getId() !== $photo->getMember()->getOwner()->getId()
+            ) {
+                throw new AccessDeniedHttpException(
+                    'Désolé, vous n\'avez pas les droits requis pour modifier cette photo.'
+                );
+            }
+        }
+
+        return true;
     }
 }

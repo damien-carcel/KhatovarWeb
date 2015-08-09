@@ -26,6 +26,7 @@ namespace Khatovar\Bundle\PhotoBundle\Manager;
 use Carcel\UserBundle\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Khatovar\Bundle\PhotoBundle\Entity\Photo;
+use Khatovar\Bundle\PhotoBundle\Helper\PhotoHelper;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
@@ -133,25 +134,21 @@ class PhotoManager
      *
      * @return array
      */
-    public function getPhotoEntitiesList()
+    public function getPhotosSortedByEntities()
     {
-        return array(
-            'Photos orphelines' => $this->entityManager
-                ->getRepository('KhatovarPhotoBundle:Photo')
-                ->getOrphans(),
-            'Pages d\'accueil'  => $this->entityManager
-                ->getRepository('KhatovarHomepageBundle:Homepage')
-                ->findAll(),
-            'Membres'           => $this->entityManager
-                ->getRepository('KhatovarMemberBundle:Member')
-                ->findAll(),
-            'Exactions'         => $this->entityManager
-                ->getRepository('KhatovarExactionBundle:Exaction')
-                ->findAll(),
-            'Pages de contact'  => $this->entityManager
-                ->getRepository('KhatovarContactBundle:Contact')
-                ->findAll(),
+        $sortedPhotos = array(
+            'Photos orphelines' => array(
+                'Liste des photos n\'appartenant à aucune page' => $this->entityManager
+                    ->getRepository('KhatovarPhotoBundle:Photo')
+                    ->getOrphans(),
+            ),
         );
+
+        foreach (PhotoHelper::getPhotoEntities() as $code => $label) {
+            $sortedPhotos[$label] = $this->getEntityPhotos($code);
+        }
+
+        return $sortedPhotos;
     }
 
     /**
@@ -159,18 +156,23 @@ class PhotoManager
      *
      * @param User $currentUser
      *
-     * @return array
+     * @return Photo[]
      */
-    public function getUserPhotos(User $currentUser)
+    public function getMemberPhotos(User $currentUser)
     {
-        $member = $this->entityManager->getRepository('KhatovarMemberBundle:Member')
+        $sortedPhotos = array();
+
+        $member = $this->entityManager
+            ->getRepository('KhatovarMemberBundle:Member')
             ->findOneBy(array('owner' => $currentUser));
 
-        return array(
-            'Membre :' => array(
-                $member->getId() => $member,
-            )
-        );
+        $memberPhotos = $member->getPhotos();
+
+        foreach ($memberPhotos as $photo) {
+            $sortedPhotos['Membre'][$member->getName()][] = $photo;
+        }
+
+        return $sortedPhotos;
     }
 
     /**
@@ -286,5 +288,30 @@ class PhotoManager
         $text = str_replace('][', '', $text);
 
         return $text;
+    }
+
+    /**
+     * Get all photos owned by a given entity type.
+     *
+     * @param string $entityCode
+     *
+     * @return Photo[]
+     */
+    protected function getEntityPhotos($entityCode)
+    {
+        $sortedPhotos = array();
+
+        $entities = $this->entityManager
+            ->getRepository('Khatovar' . ucfirst($entityCode) . 'Bundle:' . ucfirst($entityCode))
+            ->findAll();
+
+        foreach ($entities as $entity) {
+            $photos = $entity->getPhotos();
+            foreach ($photos as $photo) {
+                $sortedPhotos[$entity->getName()][] = $photo;
+            }
+        }
+
+        return $sortedPhotos;
     }
 }

@@ -37,7 +37,7 @@ class PhotoRepository extends EntityRepository
      * Return photos ordered by entity and entry to ease the
      * there display when an editor list all photos.
      *
-     * @return array
+     * @return Photo[]
      */
     public function getOrphans()
     {
@@ -45,6 +45,7 @@ class PhotoRepository extends EntityRepository
             ->where('p.homepage IS NULL')
             ->andWhere('p.member IS NULL')
             ->andWhere('p.exaction IS NULL')
+            ->andWhere('p.contact IS NULL')
             ->getQuery();
 
         return $query->getResult();
@@ -55,7 +56,7 @@ class PhotoRepository extends EntityRepository
      *
      * @param Member $member
      *
-     * @return array
+     * @return Photo[]
      */
     public function getAllButPortrait(Member $member)
     {
