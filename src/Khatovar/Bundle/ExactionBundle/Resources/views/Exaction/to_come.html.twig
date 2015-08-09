@@ -2,7 +2,7 @@
 
 {% block inarticle %}
     {% if is_granted('ROLE_EDITOR') %}
-        <a href="{{ path('khatovar_web_exaction_add') }}">Ajouter une nouvelle exaction</a>
+        <a href="{{ path('khatovar_web_exaction_new') }}">Ajouter une nouvelle exaction</a>
         <hr />
     {% endif %}
 
@@ -19,9 +19,10 @@
         </h1>
 
         {% if is_granted('ROLE_EDITOR') %}
-            <a href="{{ path('khatovar_web_exaction_edit', {'exaction': exaction.id}) }}">Éditer</a>
-            |
-            <a href="{{ path('khatovar_web_exaction_remove', {'exaction': exaction.id}) }}">Supprimer</a>
+            {% set delete_form = delete_forms[exaction.id] %}
+
+            <a class="button" href="{{ path('khatovar_web_exaction_edit', {'id': exaction.id}) }}">Éditer</a>
+            {{ form(delete_form, { 'attr': {'class': 'button-inline'}}) }}
         {% endif %}
 
         <div class="container flex-container">

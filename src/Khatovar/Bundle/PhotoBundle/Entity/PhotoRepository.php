@@ -27,10 +27,9 @@ use Doctrine\ORM\EntityRepository;
 use Khatovar\Bundle\MemberBundle\Entity\Member;
 
 /**
- * PhotoRepository
+ * Photo repository.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
- * @package Khatovar\Bundle\PhotoBundle\Entity
  */
 class PhotoRepository extends EntityRepository
 {
@@ -38,7 +37,7 @@ class PhotoRepository extends EntityRepository
      * Return photos ordered by entity and entry to ease the
      * there display when an editor list all photos.
      *
-     * @return array
+     * @return Photo[]
      */
     public function getOrphans()
     {
@@ -46,6 +45,7 @@ class PhotoRepository extends EntityRepository
             ->where('p.homepage IS NULL')
             ->andWhere('p.member IS NULL')
             ->andWhere('p.exaction IS NULL')
+            ->andWhere('p.contact IS NULL')
             ->getQuery();
 
         return $query->getResult();
@@ -55,7 +55,8 @@ class PhotoRepository extends EntityRepository
      * Return a list of all the photos of a member, except its portrait.
      *
      * @param Member $member
-     * @return array
+     *
+     * @return Photo[]
      */
     public function getAllButPortrait(Member $member)
     {

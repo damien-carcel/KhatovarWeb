@@ -1,88 +1,12 @@
 {% extends 'KhatovarWebBundle::layout.html.twig' %}
 
+{% form_theme edit_form 'KhatovarWebBundle:form:fields.html.twig' %}
+
 {% block inarticle %}
-    {% if not_a_member is defined %}
-        <h4>
-            Désolé, ceci n'est pas votre page de membre.<br />
-            Vous ne pouvez donc pas la modifier.
-        </h4>
-        <a href="{{ path('khatovar_web_members') }}">Retour aux pages des membres</a>
-    {% else %}
-        {{ form_start(form) }}
-        <div class="form-group form-textarea">
-            {{ form_label(form.name) }}
-            {{ form_widget(form.name, { 'attr': {'class': 'form-element form-textarea'} }) }}
-        </div>
+    <a href="{{ path('khatovar_web_member') }}">Retour à la liste des pages de membre</a>
+    <hr />
 
-        <div class="form-group form-textarea">
-            {{ form_label(form.rank) }}
-            {{ form_widget(form.rank, { 'attr': {'class': 'form-element form-textarea'} }) }}
-        </div>
+    <h1>Édition de la page de membre</h1>
 
-        <div class="form-group form-textarea">
-            {{ form_label(form.quote) }}
-            {{ form_widget(form.quote, { 'attr': {'class': 'form-element form-textarea'} }) }}
-        </div>
-
-        <div class="form-group form-textarea">
-            {{ form_label(form.skill) }}
-            {{ form_widget(form.skill, { 'attr': {'class': 'form-element form-textarea'} }) }}
-        </div>
-
-        <div class="form-group form-textarea">
-            {{ form_label(form.age) }}
-            {{ form_widget(form.age, { 'attr': {'class': 'form-element form-textarea'} }) }}
-        </div>
-
-        <div class="form-group form-textarea">
-            {{ form_label(form.size) }}
-            {{ form_widget(form.size, { 'attr': {'class': 'form-element form-textarea'} }) }}
-        </div>
-
-        <div class="form-group form-textarea">
-            {{ form_label(form.weight) }}
-            {{ form_widget(form.weight, { 'attr': {'class': 'form-element form-textarea'} }) }}
-        </div>
-
-        <div class="form-group form-textarea">
-            {{ form_label(form.strength) }}
-            {{ form_widget(form.strength, { 'attr': {'class': 'form-element form-textarea'} }) }}
-        </div>
-
-        <div class="form-group form-textarea">
-            {{ form_label(form.weakness) }}
-            {{ form_widget(form.weakness, { 'attr': {'class': 'form-element form-textarea'} }) }}
-        </div>
-
-        <div class="form-group form-textarea">
-            {{ form_label(form.story) }}
-            {{ form_widget(form.story, { 'attr': {'class': 'form-element form-textarea'} }) }}
-        </div>
-
-        <div class="form-group">
-            {{ form_label(form.active) }}
-            {{ form_widget(form.active) }}
-        </div>
-
-        {% if edit is defined %}
-            <div class="form-group">
-                {{ form_label(form.portrait) }}
-                {{ form_widget(form.portrait, { 'attr': {'class': 'form-element'} }) }}
-            </div>
-        {% endif %}
-
-        {% if is_granted('ROLE_EDITOR') %}
-            <div class="form-group">
-                {{ form_label(form.owner) }}
-                {{ form_widget(form.owner, { 'attr': {'class': 'form-element'} }) }}
-            </div>
-        {% endif %}
-
-        <div class="form-group">
-            {{ form_widget(form.submit, { 'attr': {'class': 'btn btn-default'} }) }}
-        </div>
-
-        {{ form_rest(form) }}
-        {{ form_end(form) }}
-    {% endif %}
+    {% include 'KhatovarMemberBundle:Member:_form.html.twig' with {'form': edit_form} %}
 {% endblock %}

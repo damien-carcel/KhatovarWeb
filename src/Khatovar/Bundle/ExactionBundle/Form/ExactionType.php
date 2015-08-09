@@ -24,6 +24,7 @@
 namespace Khatovar\Bundle\ExactionBundle\Form;
 
 use Doctrine\ORM\EntityRepository;
+use Khatovar\Bundle\ExactionBundle\Entity\Exaction;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -37,20 +38,8 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class ExactionType extends AbstractType
 {
-    /** @var bool */
-    protected $exactionExists;
-
     /**
-     * @param bool $exactionExists
-     */
-    public function __construct($exactionExists = false)
-    {
-        $this->exactionExists = $exactionExists;
-    }
-
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
+     * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -60,7 +49,14 @@ class ExactionType extends AbstractType
             ->add('start', 'date', array('label' => 'Date de début'))
             ->add('end', 'date', array('label' => 'Date de fin'))
             ->add('map', 'textarea', array('label' => 'Emplacement (copier le lien depuis Google Map)'))
-            ->add('introduction', 'textarea', array('label' => 'Annonce'))
+            ->add(
+                'introduction',
+                'textarea',
+                array(
+                    'label'    => 'Annonce',
+                    'required' => false,
+                )
+            )
             ->add(
                 'links',
                 'collection',
@@ -74,15 +70,11 @@ class ExactionType extends AbstractType
             )
         ;
 
-        if ($this->exactionExists) {
-            $this->addEdtionSpecificFields($builder);
-        }
-
-        $builder->add('submit', 'submit', array('label' => 'Sauvegarder'));
+        $this->addEdtionSpecificFields($builder);
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * {@inheritdoc}
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
@@ -90,11 +82,11 @@ class ExactionType extends AbstractType
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
     public function getName()
     {
-        return 'khatovar_bundle_exactionbundle_exaction';
+        return 'khatovar_exaction_type';
     }
 
     /**
@@ -111,51 +103,52 @@ class ExactionType extends AbstractType
                 $form = $event->getForm();
                 $exaction = $event->getData();
 
-                if (null !== $exaction) {
-                    $form->add(
-                        'image',
-                        'entity',
-                        array(
-                            'class'         => 'Khatovar\Bundle\PhotoBundle\Entity\Photo',
-                            'label'         => 'L\'image de la fête',
-                            'required'      => false,
-                            'query_builder' => function (EntityRepository $repository) use ($exaction) {
-                                return $repository
-                                    ->createQueryBuilder('e')
-                                    ->where('e.exaction = :exaction')
-                                    ->setParameter('exaction', $exaction);
-                            }
+                if ($exaction instanceof Exaction &&
+                    null !== $exaction->getName() &&
+                    $exaction->getStart() <= new \DateTime()
+                ) {
+                    $form
+                        ->add(
+                            'image',
+                            'entity',
+                            array(
+                                'class'         => 'Khatovar\Bundle\PhotoBundle\Entity\Photo',
+                                'label'         => 'L\'image de la fête',
+                                'required'      => false,
+                                'query_builder' => function (EntityRepository $repository) use ($exaction) {
+                                    return $repository
+                                        ->createQueryBuilder('e')
+                                        ->where('e.exaction = :exaction')
+                                        ->setParameter('exaction', $exaction);
+                                }
+                            )
                         )
-                    );
+                        ->add(
+                            'onlyPhotos',
+                            'checkbox',
+                            array(
+                                'label'    => 'Pas de résumé de fête, seulement des photos ?',
+                                'required' => false,
+                                )
+                        )
+                        ->add(
+                            'abstract',
+                            'textarea',
+                            array(
+                                'label'    => 'Résumé de la fête',
+                                'required' => false,
+                            )
+                        )
+                        ->add(
+                            'imageStory',
+                            'textarea',
+                            array(
+                                'label'    => 'Explication de l\'image de la fête',
+                                'required' => false,
+                            )
+                        );
                 }
             }
         );
-
-        $builder
-            ->add(
-                'onlyPhotos',
-                'checkbox',
-                array(
-                    'label'    => 'Pas de résumé de fête, seulement des photos ?',
-                    'required' => false
-                )
-            )
-            ->add(
-                'abstract',
-                'textarea',
-                array(
-                    'label'    => 'Résumé de la fête',
-                    'required' => false,
-                )
-            )
-            ->add(
-                'imageStory',
-                'textarea',
-                array(
-                    'label'    => 'Explication de l\'image de la fête',
-                    'required' => false,
-                )
-            )
-        ;
     }
 }

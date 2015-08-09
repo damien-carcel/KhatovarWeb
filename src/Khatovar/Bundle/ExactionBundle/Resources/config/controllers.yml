@@ -1,0 +1,12 @@
+parameters:
+    khatovar_exaction.controller.exaction.class: Khatovar\Bundle\ExactionBundle\Controller\ExactionController
+
+services:
+    khatovar_exaction.controller.exaction:
+        scope: request
+        class: %khatovar_exaction.controller.exaction.class%
+        arguments:
+            - '@service_container'
+            - '@doctrine.orm.entity_manager'
+            - '@khatovar_exaction.manager.exaction'
+            - '@session'

@@ -1,0 +1,8 @@
+parameters:
+    khatovar_contact.form.type.contact.class: Khatovar\Bundle\ContactBundle\Form\ContactType
+
+services:
+    khatovar_contact.form.type.contact:
+        class: %khatovar_contact.form.type.contact.class%
+        tags:
+            - { name: form.type, alias: khatovar_contact_type }

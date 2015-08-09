@@ -1,0 +1,74 @@
+Khatovar\Bundle\PhotoBundle\Entity\Photo:
+    type: entity
+    table: khatovar_web_photos
+    repositoryClass: Khatovar\Bundle\PhotoBundle\Entity\PhotoRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        alt:
+            type: string
+            length: 50
+            column: alt
+            nullable: false
+        class:
+            type: string
+            length: 255
+            column: class
+            nullable: true
+        path:
+            type: string
+            length: 255
+            column: path
+            nullable: true
+        entity:
+            type: string
+            length: 255
+            column: entity
+            nullable: true
+    manyToOne:
+        homepage:
+            targetEntity: Khatovar\Bundle\HomepageBundle\Entity\Homepage
+            cascade:
+                - detach
+            inversedBy: photos
+            JoinColumn:
+                name: homepage_id
+                referencedColumnName: id
+                onDelete: 'SET NULL'
+        member:
+            targetEntity: Khatovar\Bundle\MemberBundle\Entity\Member
+            cascade:
+                - detach
+            inversedBy: photos
+            JoinColumn:
+                name: member_id
+                referencedColumnName: id
+                onDelete: 'SET NULL'
+        exaction:
+            targetEntity: Khatovar\Bundle\ExactionBundle\Entity\Exaction
+            cascade:
+                - detach
+            inversedBy: photos
+            JoinColumn:
+                name: exaction_id
+                referencedColumnName: id
+                onDelete: 'SET NULL'
+        contact:
+            targetEntity: Khatovar\Bundle\ContactBundle\Entity\Contact
+            cascade:
+                - detach
+            inversedBy: photos
+            JoinColumn:
+                name: exaction_id
+                referencedColumnName: id
+                onDelete: 'SET NULL'
+    lifecycleCallbacks:
+        prePersist:  [preUpload]
+        preUpdate:   [preUpload]
+        postPersist: [upload]
+        postUpdate:  [upload]
+        postRemove:  [removeUpload]

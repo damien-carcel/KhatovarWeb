@@ -56,14 +56,4 @@ class DefaultController extends Controller
             'KhatovarWebBundle:Default:combat-' . $pratique . '.html.twig'
         );
     }
-
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function contactAction()
-    {
-        return $this->render(
-            'KhatovarWebBundle:Default:contact.html.twig'
-        );
-    }
 }

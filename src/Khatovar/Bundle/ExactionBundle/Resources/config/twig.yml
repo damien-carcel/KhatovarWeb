@@ -1,0 +1,14 @@
+parameters:
+    khatovar_exaction.twig.normalizer.date.class: Khatovar\Bundle\ExactionBundle\Twig\DateNormalizer
+    khatovar_exaction.twig.normalizer.link.class: Khatovar\Bundle\ExactionBundle\Twig\LinkNormalizer
+
+services:
+    khatovar_exaction.twig.normalizer.date:
+        class: %khatovar_exaction.twig.normalizer.date.class%
+        tags:
+            - { name: twig.extension }
+
+    khatovar_exaction.twig.normalizer.link:
+        class: %khatovar_exaction.twig.normalizer.link.class%
+        tags:
+            - { name: twig.extension }

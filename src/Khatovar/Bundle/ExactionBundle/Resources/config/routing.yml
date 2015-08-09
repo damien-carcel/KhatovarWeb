@@ -1,29 +1,34 @@
 khatovar_web_exaction_to_come:
-    path:     /programmation
-    defaults: { _controller: KhatovarExactionBundle:Exaction:toCome }
+    path:     /a_venir
+    defaults: { _controller: 'khatovar_exaction.controller.exaction:toComeAction' }
 
 khatovar_web_exaction_past:
-    path:     /references
-    defaults: { _controller: KhatovarExactionBundle:Exaction:index }
+    path:     /passees
+    defaults: { _controller: 'khatovar_exaction.controller.exaction:indexAction' }
 
 khatovar_web_exaction_list_by_year:
-    path:     /references/{year}
-    defaults: { _controller: KhatovarExactionBundle:Exaction:viewByYear }
-    requirements:
-        year: \d+
+    path:     /passees/{year}
+    defaults: { _controller: 'khatovar_exaction.controller.exaction:viewByYearAction' }
 
-khatovar_web_exaction_add:
-    path:     /exaction/add
-    defaults: { _controller: KhatovarExactionBundle:Exaction:add }
+khatovar_web_exaction_new:
+    path:     /new
+    defaults: { _controller: 'khatovar_exaction.controller.exaction:newAction' }
+
+khatovar_web_exaction_create:
+    path:     /create
+    defaults: { _controller: 'khatovar_exaction.controller.exaction:createAction' }
+    methods:  [POST]
 
 khatovar_web_exaction_edit:
-    path:     /exaction/edit/{exaction}
-    defaults: { _controller: KhatovarExactionBundle:Exaction:edit }
-    requirements:
-        exaction: \d+
+    path:     /{id}/edit
+    defaults: { _controller: 'khatovar_exaction.controller.exaction:editAction' }
 
-khatovar_web_exaction_remove:
-    path:     /exaction/remove/{exaction}
-    defaults: { _controller: KhatovarExactionBundle:Exaction:remove }
-    requirements:
-        exaction: \d+
+khatovar_web_exaction_update:
+    path:     /{id}/update
+    defaults: { _controller: 'khatovar_exaction.controller.exaction:updateAction' }
+    methods:  [POST, PUT]
+
+khatovar_web_exaction_delete:
+    path:     /{id}/delete
+    defaults: { _controller: 'khatovar_exaction.controller.exaction:deleteAction' }
+    methods:  [POST, DELETE]

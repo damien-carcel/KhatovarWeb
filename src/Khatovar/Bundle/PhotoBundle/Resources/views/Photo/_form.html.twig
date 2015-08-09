@@ -1,0 +1,28 @@
+<div class="form-group">
+    {{ form_row(form.alt) }}
+</div>
+{% if form.entity is defined %}
+    {{ form_row(form.entity) }}
+{% endif %}
+
+{% if form.homepage is defined and 'hidden' not in form.homepage.vars.block_prefixes %}
+    {{ form_row(form.homepage) }}
+{% endif %}
+
+{% if form.member is defined and 'hidden' not in form.member.vars.block_prefixes %}
+    {{ form_row(form.member) }}
+{% endif %}
+{% if form.exaction is defined and 'hidden' not in form.exaction.vars.block_prefixes %}
+    {{ form_row(form.exaction) }}
+{% endif %}
+{% if form.contact is defined and 'hidden' not in form.contact.vars.block_prefixes %}
+    {{ form_row(form.contact) }}
+{% endif %}
+
+{% if form.class is defined and 'hidden' not in form.class.vars.block_prefixes %}
+    {{ form_row(form.class) }}
+{% endif %}
+
+<div class="form-group">
+    {{ form_widget(form.submit, { 'attr': {'class': 'btn btn-default'} }) }}
+</div>

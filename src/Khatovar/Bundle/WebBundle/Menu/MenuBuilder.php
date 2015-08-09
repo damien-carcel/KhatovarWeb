@@ -23,9 +23,8 @@
 
 namespace Khatovar\Bundle\WebBundle\Menu;
 
-use Khatovar\Bundle\ExactionBundle\Services\Lister\YearLister;
+use Khatovar\Bundle\ExactionBundle\Manager\ExactionManager;
 use Knp\Menu\FactoryInterface;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Build the various application menus.
@@ -38,21 +37,21 @@ class MenuBuilder
     /** @var array */
     protected $performances = array(
         'introduction' => 'Introduction',
-        'combat' => 'Combat',
-        'campement' => 'Vie de camp',
-        'forge' => 'Forge',
-        'cuir' => 'Cuir',
-        'maille' => 'Maille',
-        'armes' => 'Armes et armures',
-        'herbo' => 'Herboristerie et cuisine',
-        'tissage' => 'Tissage',
+        'combat'       => 'Combat',
+        'campement'    => 'Vie de camp',
+        'forge'        => 'Forge',
+        'cuir'         => 'Cuir',
+        'maille'       => 'Maille',
+        'armes'        => 'Armes et armures',
+        'herbo'        => 'Herboristerie et cuisine',
+        'tissage'      => 'Tissage',
         'calligraphie' => 'Calligraphie'
     );
 
     /** @var array */
     protected $contacts = array(
-        'contact' => 'Qui sommes-nous ?',
-        'allies' => 'Nos alliés',
+        'contact'      => 'Qui sommes-nous ?',
+        'allies'       => 'Nos alliés',
         'fournisseurs' => 'Nos fournisseurs'
     );
 
@@ -60,28 +59,26 @@ class MenuBuilder
     protected $exactionYears;
 
     /** @var FactoryInterface */
-    protected $factoryInterface;
+    protected $menuFactory;
 
     /**
-     * @param FactoryInterface $factoryInterface
-     * @param YearLister       $lister
+     * @param FactoryInterface $menuFactory
+     * @param ExactionManager  $exactionManager
      */
-    public function __construct(FactoryInterface $factoryInterface, YearLister $lister)
+    public function __construct(FactoryInterface $menuFactory, ExactionManager $exactionManager)
     {
-        $this->factoryInterface = $factoryInterface;
-        $this->exactionYears    = $lister->getSortedYears();
+        $this->menuFactory   = $menuFactory;
+        $this->exactionYears = $exactionManager->getSortedYears();
     }
 
     /**
      * Main menu of the application.
      *
-     * @param Request $request
-     *
      * @return \Knp\Menu\ItemInterface
      */
-    public function createMainMenu(Request $request)
+    public function createMainMenu()
     {
-        $menu = $this->factoryInterface->createItem('root');
+        $menu = $this->menuFactory->createItem('root');
 
         $menu->addChild(
             'home',
@@ -142,7 +139,7 @@ class MenuBuilder
 
         $menu->addChild(
             'members',
-            array('label' => 'Les membres', 'route' => 'khatovar_web_members')
+            array('label' => 'Les membres', 'route' => 'khatovar_web_member')
         );
 
         $menu->addChild(

@@ -24,147 +24,68 @@
 namespace Khatovar\Bundle\MemberBundle\Entity;
 
 use Carcel\UserBundle\Entity\User;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
 use Khatovar\Bundle\PhotoBundle\Entity\Photo;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Member
+ * Member entity.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
- *
- * @ORM\Table(name="khatovar_web_members")
- * @ORM\Entity(repositoryClass="Khatovar\Bundle\MemberBundle\Entity\MemberRepository")
  */
 class Member
 {
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
+    /** @var integer */
+    protected $id;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=255, unique=true)
-     * @Assert\NotBlank()
-     * @Assert\Length(max="255")
-     */
-    private $name;
+    /** @var string */
+    protected $name;
 
-    /**
-     * @Gedmo\Slug(fields={"name"})
-     * @ORM\Column(name="slug", length=128, unique=true)
-     */
-    private $slug;
+    /** @var string */
+    protected $slug;
 
-    /**
-     * @ORM\OneToOne(targetEntity="Khatovar\Bundle\PhotoBundle\Entity\Photo")
-     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
-     */
-    private $portrait;
+    /** @var string */
+    protected $rank;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="rank", type="string", length=255)
-     * @Assert\Length(max="255")
-     */
-    private $rank;
+    /** @var string */
+    protected $quote;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="quote", type="string", length=255)
-     * @Assert\Length(max="255")
-     */
-    private $quote;
+    /** @var string */
+    protected $skill;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="skill", type="string", length=255)
-     * @Assert\Length(max="255")
-     */
-    private $skill;
+    /** @var string */
+    protected $age;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="age", type="string", length=255)
-     * @Assert\Length(max="255")
-     */
-    private $age;
+    /** @var string */
+    protected $size;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="size", type="string", length=255)
-     * @Assert\Length(max="255")
-     */
-    private $size;
+    /** @var string */
+    protected $weight;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="weight", type="string", length=255)
-     * @Assert\Length(max="255")
-     */
-    private $weight;
+    /** @var string */
+    protected $strength;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="strength", type="string", length=255)
-     * @Assert\Length(max="255")
-     */
-    private $strength;
+    /** @var string */
+    protected $weakness;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="weakness", type="string", length=255)
-     * @Assert\Length(max="255")
-     */
-    private $weakness;
+    /** @var string */
+    protected $story;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="story", type="text")
-     * @Assert\NotBlank()
-     */
-    private $story;
+    /** @var string */
+    protected $active;
 
-    /**
-     * @ORM\OneToOne(targetEntity="Carcel\UserBundle\Entity\User", cascade={"detach"})
-     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
-     */
-    private $owner;
+    /** @var Photo */
+    protected $portrait;
 
-    /**
-     * @var bool
-     *
-     * @ORM\Column(name="active", type="boolean", nullable=true)
-     */
-    private $active;
+    /** @var User */
+    protected $owner;
 
-    /**
-     * @var ArrayCollection $photos
-     * @ORM\OneToMany(targetEntity="Khatovar\Bundle\PhotoBundle\Entity\Photo", mappedBy="member")
-     */
-    private $photos;
+    /** @var ArrayCollection */
+    protected $photos;
 
 
     /**
-     * Allow to save only the ID the entity in database as a string
-     * when using entity type in forms.
+     * Allow to save only the entity's ID in database as a string when
+     * using entity type in forms.
      *
      * @return string
      */
@@ -178,6 +99,7 @@ class Member
      */
     public function __construct()
     {
+        $this->active = null;
         $this->photos = new ArrayCollection();
     }
 
@@ -543,10 +465,14 @@ class Member
      * Remove photos
      *
      * @param Photo $photos
+     *
+     * @return Member
      */
     public function removePhoto(Photo $photos)
     {
         $this->photos->removeElement($photos);
+
+        return $this;
     }
 
     /**

@@ -23,13 +23,13 @@
 
 namespace Khatovar\Bundle\PhotoBundle\Form;
 
-use Carcel\UserBundle\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * Class PhotoType
@@ -39,14 +39,15 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class PhotoType extends AbstractType
 {
-    private $currentUser;
+    /** @var AuthorizationCheckerInterface */
+    protected $authorizationChecker;
 
     /**
-     * @param User $currentUser
+     * @param AuthorizationCheckerInterface $authorizationChecker
      */
-    public function __construct(User $currentUser)
+    public function __construct(AuthorizationCheckerInterface $authorizationChecker)
     {
-        $this->currentUser = $currentUser;
+        $this->authorizationChecker = $authorizationChecker;
     }
 
     /**
@@ -55,48 +56,86 @@ class PhotoType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->addDefaultFields($builder);
+
+        $this->addEntityField($builder);
+    }
+
+    /**
+     * @param OptionsResolverInterface $resolver
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array('data_class' => 'Khatovar\Bundle\PhotoBundle\Entity\Photo'));
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'khatovar_photo_type';
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     */
+    protected function addDefaultFields(FormBuilderInterface $builder)
+    {
         if (is_null($builder->getData()->getId())) {
             $builder->add('file', 'file', array('label' => false));
         }
 
         $builder->add('alt', 'text', array('label' => 'Nom de substitution : '));
+    }
 
+    /**
+     * @param FormBuilderInterface $builder
+     */
+    protected function addEntityField(FormBuilderInterface $builder)
+    {
         $formModifier = function (FormInterface $form, $entity) {
             if (!is_null($entity)) {
                 if ($entity == 'homepage') {
                     $form->add('class', 'choice', array(
-                            'label' => 'Taille de la photo : ',
-                            'choices' => array(
-                                'photo_small' => 'Petit format',
-                                'photo' => 'Format normal',
-                                'panorama' => 'Panorama'
-                            ),
-                            'preferred_choices' => array('photo'),
-                            'required' => true
-                        ));
+                        'label' => 'Taille de la photo : ',
+                        'choices' => array(
+                            'photo_small' => 'Petit format',
+                            'photo' => 'Format normal',
+                            'panorama' => 'Panorama'
+                        ),
+                        'preferred_choices' => array('photo'),
+                        'required' => true
+                    ));
                 } else {
                     $form->add('class', 'hidden', array(
-                            'data' => 'none'
-                        ));
+                        'data' => 'none'
+                    ));
                 }
 
                 $form->add($entity, 'entity', array(
-                        'class' => 'Khatovar' . ucfirst($entity) . 'Bundle:' . ucfirst($entity),
-                        'property' => 'name',
-                        'label' => 'Page :'
-                    ));
+                    'class' => 'Khatovar' . ucfirst($entity) . 'Bundle:' . ucfirst($entity),
+                    'property' => 'name',
+                    'label' => 'Page :'
+                ));
             }
         };
 
-        if ($this->currentUser->hasRole('ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_EDITOR')) {
-            $builder->add('entity', 'choice', array(
+        if ($this->authorizationChecker->isGranted('ROLE_EDITOR')) {
+            $builder->add(
+                'entity',
+                'choice',
+                array(
                     'label' => 'Rattacher la photo à une : ',
                     'choices' => array(
                         'homepage' => 'Page d\'accueil',
-                        'member' => 'Page de membre'
+                        'member'   => 'Page de membre',
+                        'exaction' => 'Exaction',
+                        'contact'  => 'Page de contact',
                     ),
                     'preferred_choices' => array('homepage')
-                ));
+                )
+            );
 
             $builder->addEventListener(
                 FormEvents::PRE_SET_DATA,
@@ -114,23 +153,5 @@ class PhotoType extends AbstractType
                 }
             );
         }
-
-        $builder->add('submit', 'submit', array('label' => 'Envoyer'));
-    }
-
-    /**
-     * @param OptionsResolverInterface $resolver
-     */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $resolver->setDefaults(array('data_class' => 'Khatovar\Bundle\PhotoBundle\Entity\Photo'));
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'khatovar_bundle_photobundle_photo';
     }
 }

@@ -1,0 +1,29 @@
+{% extends 'KhatovarWebBundle::layout.html.twig' %}
+
+{% block inarticle %}
+    {% if is_granted('ROLE_EDITOR') %}
+        <a href="{{ path('khatovar_web_contact_edit', { 'id': contact.id }) }}">Éditer cette page</a>
+        |
+        <a href="{{ path('khatovar_web_contact_new') }}">Créer une nouvelle page</a>
+        |
+        <a href="{{ path('khatovar_web_contact_list') }}">Liste des pages de contact disponibles</a>
+        <hr />
+    {% endif %}
+
+    <h1>{{ contact.name }}</h1>
+
+    {% autoescape false %}
+        {{ contact.content }}
+    {% endautoescape %}
+
+    <div class="container">
+        <div class="trombi">
+            <div class="carte photo_rest"
+                 onmouseover="this.className='carte photo_over';"
+                 onmouseout="this.className='carte photo_rest';"
+                 onclick="location.href='mailto:contact@compagniefranchedukhatovar.fr';">
+                <img class="trombinoscope" src="{{ asset(contact.visitCard.webPath) }}" alt="" />
+            </div>
+        </div>
+    </div>
+{% endblock %}

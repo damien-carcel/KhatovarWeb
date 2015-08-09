@@ -1,0 +1,30 @@
+Khatovar\Bundle\MemberBundle\Entity\Member:
+    properties:
+        name:
+            - NotBlank: ~
+            - Length:
+                max: 255
+        rank:
+            - Length:
+                max: 255
+        quote:
+            - Length: 255
+        skill:
+            - Length:
+                max: 255
+        age:
+            - Length:
+                max: 255
+        size:
+            - Length: 255
+        weight:
+            - Length:
+                max: 255
+        strength:
+            - Length:
+                max: 255
+        weakness:
+            - Length:
+                max: 255
+        story:
+            - NotBlank: ~

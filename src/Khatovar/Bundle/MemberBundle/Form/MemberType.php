@@ -29,46 +29,106 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- * Class MemberType
+ * Member form type.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
  */
 class MemberType extends AbstractType
 {
     /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
+     * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', 'text', array('label' => 'Nom'))
-            ->add('rank', 'text', array('label' => 'Rang'))
-            ->add('quote', 'text', array('label' => 'Citation'))
-            ->add('skill', 'text', array('label' => 'Compétences'))
-            ->add('age', 'text', array('label' => 'Âge'))
-            ->add('size', 'text', array('label' => 'Taille'))
-            ->add('weight', 'text', array('label' => 'Poids'))
-            ->add('strength', 'text', array('label' => 'Point fort'))
-            ->add('weakness', 'text', array('label' => 'Point faible'))
-            ->add('story', 'textarea', array('label' => 'Histoire personnelle'))
-            ->add('active', 'checkbox', array('label' => 'Membre actif', 'required' => false))
-            ->add('owner', 'entity', array(
-                    'label' => 'Utilisateur lié',
-                    'class' => 'Carcel\UserBundle\Entity\User',
-                    'property' => 'username',
+            ->add(
+                'name',
+                'text',
+                array('label' => 'Nom')
+            )->add(
+                'rank',
+                'text',
+                array(
+                    'label'    => 'Rang',
                     'required' => false,
+                )
+            )->add(
+                'quote',
+                'text',
+                array(
+                    'label'    => 'Citation',
+                    'required' => false,
+                )
+            )->add(
+                'skill',
+                'text',
+                array(
+                    'label'    => 'Compétences',
+                    'required' => false,
+                )
+            )->add(
+                'age',
+                'text',
+                array(
+                    'label'    => 'Âge',
+                    'required' => false,
+                )
+            )->add(
+                'size',
+                'text',
+                array(
+                    'label'    => 'Taille',
+                    'required' => false,
+                )
+            )->add(
+                'weight',
+                'text',
+                array(
+                    'label'    => 'Poids',
+                    'required' => false,
+                )
+            )->add(
+                'strength',
+                'text',
+                array(
+                    'label'    => 'Point fort',
+                    'required' => false,
+                )
+            )->add(
+                'weakness',
+                'text',
+                array(
+                    'label'    => 'Point faible',
+                    'required' => false,
+                )
+            )->add(
+                'story',
+                'textarea',
+                array('label' => 'Histoire personnelle')
+            )->add(
+                'active',
+                'checkbox',
+                array(
+                    'label'    => 'Membre actif',
+                    'required' => false,
+                )
+            )->add(
+                'owner',
+                'entity',
+                array(
+                    'label'         => 'Utilisateur lié',
+                    'class'         => 'Carcel\UserBundle\Entity\User',
+                    'property'      => 'username',
+                    'required'      => false,
                     'query_builder' => function (EntityRepository $er) {
-                        return $er->createQueryBuilder('o')
-                            ->orderBy('o.username');
-                    }
-                ))
-            ->add('submit', 'submit', array('label' => 'Sauvegarder'))
-        ;
+                        return $er->createQueryBuilder('o')->orderBy('o.username');
+                    },
+                )
+            );
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * {@inheritdoc}
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
@@ -76,10 +136,10 @@ class MemberType extends AbstractType
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
     public function getName()
     {
-        return 'khatovar_bundle_memberbundle_member';
+        return 'khatovar_member_type';
     }
 }

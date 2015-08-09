@@ -2,7 +2,7 @@
 
 {% block inarticle %}
     {% if is_granted('ROLE_EDITOR') %}
-        <a href="{{ path('khatovar_web_exaction_add') }}">Ajouter une nouvelle exaction</a>
+        <a href="{{ path('khatovar_web_exaction_new') }}">Ajouter une nouvelle exaction</a>
         <hr />
     {% endif %}
 
@@ -11,9 +11,10 @@
             {{ exaction.name }}, {{ exaction.place }}, {{ khatovar_normalize_date(exaction.start, exaction.end) }}
         </h1>
         {% if is_granted('ROLE_EDITOR') %}
-            <a href="{{ path('khatovar_web_exaction_edit', {'exaction': exaction.id}) }}">Éditer</a>
-            |
-            <a href="{{ path('khatovar_web_exaction_remove', {'exaction': exaction.id}) }}">Supprimer</a>
+            {% set delete_form = delete_forms[exaction.id] %}
+
+            <a class="button" href="{{ path('khatovar_web_exaction_edit', {'id': exaction.id}) }}">Éditer</a>
+            {{ form(delete_form, { 'attr': {'class': 'button-inline'}}) }}
         {% endif %}
 
         {% if exaction.onlyPhotos %}
@@ -21,7 +22,7 @@
                 <div class="cycle-slideshow" data-cycle-slides="> a" data-cycle-center-horz=true data-cycle-center-vert=true>
                     {% autoescape false %}
                     {% for photo in exaction.photos %}
-                        {{ asset(photo)|popup_picture('slide') }}
+                        {{ asset(photo.webPath)|popup_picture('slide') }}
                     {% endfor %}
                     {% endautoescape %}
                 </div>
@@ -30,7 +31,7 @@
             <div class="container flex-container">
                 <div class="photo_exactions">
                     {% if exaction.image is not null %}
-                        {% set the_image = exaction.image %}
+                        {% set the_image = exaction.image.webPath %}
                     {% else %}
                         {% set the_image = asset('bundles/khatovarweb/photos/logonoir.jpg') %}
                     {% endif %}
@@ -47,7 +48,7 @@
                     <div class="photo_exactions">
                         {{ (exaction.image ? exaction.image.webPath : asset('bundles/khatovarweb/photos/logonoir.jpg'))|link_album(asset('bundles/khatovarweb/images/camera.png'), 'album-photo') }}
                         {% for photo in exaction.photos %}
-                            {{ photo|link_picture('', 'album-photo') }}
+                            {{ photo.webPath|link_picture('', 'album-photo') }}
                         {% endfor %}
                     </div>
                 </div>

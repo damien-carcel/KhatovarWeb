@@ -1,0 +1,12 @@
+{% extends 'KhatovarWebBundle::layout.html.twig' %}
+
+{% form_theme edit_form 'KhatovarWebBundle:form:fields.html.twig' %}
+
+{% block inarticle %}
+    <a href="{{ path('khatovar_web_contact_list') }}">Retour à la liste des pages de contact</a>
+    <hr />
+
+    <h1>Édition de la carte de visite</h1>
+
+    {% include 'KhatovarContactBundle:Contact:_form.html.twig' with {'form': edit_form} %}
+{% endblock %}

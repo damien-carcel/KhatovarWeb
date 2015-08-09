@@ -1,0 +1,24 @@
+parameters:
+    khatovar_web.twig.photos.class:          Khatovar\Bundle\WebBundle\Twig\PhotosExtension
+    khatovar_web.twig.controller_name.class: Khatovar\Bundle\WebBundle\Twig\ControllerNameExtension
+    khatovar_web.twig.side_panel.class:      Khatovar\Bundle\WebBundle\Twig\SidePanelExtension
+
+services:
+    khatovar_web.twig.photo:
+        class: %khatovar_web.twig.photos.class%
+        tags:
+            - { name: twig.extension }
+
+    khatovar_web.twig.controller_name:
+        class: %khatovar_web.twig.controller_name.class%
+        calls:
+            - [setRequest, ['@?request=']]
+        tags:
+            - { name: twig.extension }
+
+    khatovar_web.twig.side_panel:
+        class: %khatovar_web.twig.side_panel.class%
+        arguments:
+            - '@khatovar_photo.manager.photo'
+        tags:
+            - { name: twig.extension }

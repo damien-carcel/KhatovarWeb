@@ -24,63 +24,33 @@
 namespace Khatovar\Bundle\HomepageBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
 use Khatovar\Bundle\PhotoBundle\Entity\Photo;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Homepage
+ * Homepage entity.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
- * @package Khatovar\Bundle\HomepageBundle\Entity
- *
- * @ORM\Table(name="khatovar_web_homepages")
- * @ORM\Entity(repositoryClass="Khatovar\Bundle\HomepageBundle\Entity\HomepageRepository")
  */
 class Homepage
 {
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
+    /** @var int */
+    protected $id;
+
+    /** @var string */
+    protected $name;
+
+    /** @var string */
+    protected $content;
+
+    /** @var bool */
+    protected $active;
+
+    /** @var ArrayCollection $photos */
+    protected $photos;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="text")
-     * @Assert\NotBlank()
-     */
-    private $name;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="content", type="text")
-     * @Assert\NotBlank()
-     */
-    private $content;
-
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="active", type="boolean")
-     */
-    private $active;
-
-    /**
-     * @var ArrayCollection $photos
-     * @ORM\OneToMany(targetEntity="Khatovar\Bundle\PhotoBundle\Entity\Photo", mappedBy="homepage")
-     */
-    private $photos;
-
-
-    /**
-     * Allow to save only the ID the entity in database as a string
-     * when using entity type in forms.
+     * Allow to save only the entity's ID in database as a string when
+     * using entity form type.
      *
      * @return string
      */
@@ -95,7 +65,7 @@ class Homepage
     public function __construct()
     {
         $this->photos = new ArrayCollection();
-        $this->active = 0;
+        $this->active = false;
     }
 
     /**
@@ -135,7 +105,7 @@ class Homepage
     /**
      * Set active
      *
-     * @param boolean $active
+     * @param bool $active
      *
      * @return Homepage
      */
@@ -149,9 +119,9 @@ class Homepage
     /**
      * Get active
      *
-     * @return boolean
+     * @return bool
      */
-    public function getActive()
+    public function isActive()
     {
         return $this->active;
     }
@@ -174,10 +144,14 @@ class Homepage
      * Remove photos
      *
      * @param Photo $photos
+     *
+     * @return Homepage
      */
     public function removePhoto(Photo $photos)
     {
         $this->photos->removeElement($photos);
+
+        return $this;
     }
 
     /**

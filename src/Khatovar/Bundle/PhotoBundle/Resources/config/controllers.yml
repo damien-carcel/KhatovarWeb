@@ -1,0 +1,12 @@
+parameters:
+    khatovar_photo.controller.photo.class: Khatovar\Bundle\PhotoBundle\Controller\PhotoController
+
+services:
+    khatovar_photo.controller.photo:
+        scope: request
+        class: %khatovar_photo.controller.photo.class%
+        arguments:
+            - '@service_container'
+            - '@doctrine.orm.entity_manager'
+            - '@khatovar_photo.manager.photo'
+            - '@session'

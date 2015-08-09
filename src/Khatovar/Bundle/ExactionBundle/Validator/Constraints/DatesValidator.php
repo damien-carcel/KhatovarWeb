@@ -28,7 +28,7 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
 /**
- * Class DatesValidator
+ * Exaction dates validator.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
  */

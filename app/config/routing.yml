@@ -1,18 +1,22 @@
+khatovar_contact:
+    resource: "@KhatovarContactBundle/Resources/config/routing.yml"
+    prefix:   /contact
+
 khatovar_exaction:
     resource: "@KhatovarExactionBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /dates
 
 khatovar_member:
     resource: "@KhatovarMemberBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /membres
 
 khatovar_photo:
     resource: "@KhatovarPhotoBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /photos
 
 khatovar_homepage:
     resource: "@KhatovarHomepageBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /accueil
 
 khatovar_web:
     resource: "@KhatovarWebBundle/Resources/config/routing.yml"

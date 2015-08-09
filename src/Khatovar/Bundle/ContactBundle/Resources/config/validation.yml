@@ -1,0 +1,12 @@
+Khatovar\Bundle\ContactBundle\Entity\Contact:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: name
+    properties:
+        name:
+            - NotBlank: ~
+            - Length:
+                max: 255
+        content:
+            - NotBlank: ~
+        visitCard:
+            - NotNull: ~

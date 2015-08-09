@@ -1,0 +1,20 @@
+parameters:
+    khatovar_web.menu.menu_builder.class: Khatovar\Bundle\WebBundle\Menu\MenuBuilder
+    khatovar_web.menu.main.class:         Knp\Menu\MenuItem
+
+services:
+    khatovar_web.menu.menu_builder:
+        class: %khatovar_web.menu.menu_builder.class%
+        arguments:
+            - '@knp_menu.factory'
+            - '@khatovar_exaction.manager.exaction'
+
+    khatovar_web.menu.main:
+        class: %khatovar_web.menu.main.class%
+        factory_service: khatovar_web.menu.menu_builder
+        factory_method: createMainMenu
+        arguments:
+            - '@request'
+        scope: request
+        tags:
+            - { name: knp_menu.menu, alias: main }

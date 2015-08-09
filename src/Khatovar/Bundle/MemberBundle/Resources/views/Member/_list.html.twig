@@ -1,0 +1,11 @@
+{% for member in members %}
+    {% set delete_form = delete_forms[member.id] %}
+
+    <div class="trombi">
+        {{ (member.portrait ? member.portrait.getWebPath() : '')|thumbnail_link(path('khatovar_web_member_show', {'slug': member.slug}), 'portrait', member.name, member.name) }}
+        {% if is_granted('ROLE_EDITOR') %}
+            <a  class="button" href="{{ path('khatovar_web_member_edit', {'id': member.id}) }}">Éditer</a>
+            {{ form(delete_form, { 'attr': {'class': 'button-inline'}}) }}
+        {% endif %}
+    </div>
+{% endfor %}

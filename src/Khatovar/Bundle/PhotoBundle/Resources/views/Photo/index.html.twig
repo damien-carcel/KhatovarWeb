@@ -2,45 +2,37 @@
 
 {% block inarticle %}
     <h1>Liste des photos</h1>
-    {% for key, entities in entity_list %}
-        {% if key == 'Photos orphelines' and entities is not empty %}
-            <h2>{{ key }}</h2>
-            <div class="container orphan">
-                {% for photo in entities %}
-                    <div class="trombi photo_admin">
-                        {{ photo.getWebPath()|thumbnail('landscape', photo.alt) }}
-                        <br />
-                        <a href="{{ path('khatovar_web_photos_edit', {'photo': photo.id}) }}">
-                            Éditer
-                        </a>
-                        |
-                        <a href="{{ path('khatovar_web_photos_delete', {'photo': photo.id}) }}">
-                            Supprimer
-                        </a>
-                    </div>
-                {% endfor %}
-            </div>
-        {% elseif key != 'Photos orphelines' %}
-            <h2>{{ key }}</h2>
-            <div class="container">
-                {% for entity in entities %}
-                    <h3>{{ entity.name }}</h3>
-                    {% for photo in entity.photos %}
+
+    {% for title, photo_lists in sorted_photos %}
+        {% set container = 'container' %}
+        {% if title == 'Photos orphelines' %}
+            {% set container = 'container orphan' %}
+        {% endif %}
+
+        <h2>{{ title }}</h2>
+        <div class="{{ container }}">
+            {% for entity_name, photos in photo_lists %}
+
+                {% if title != 'Photos orphelines' %}
+                    <h3>{{ entity_name }}</h3>
+                {% endif %}
+
+                {% for photo in photos %}
+                    {% if photo is not empty %}
+                        {% set delete_form = delete_forms[photo.id] %}
+
                         <div class="trombi photo_admin">
                             {{ photo.getWebPath()|thumbnail('landscape', photo.alt) }}
                             <br />
-                            <a href="{{ path('khatovar_web_photos_edit', {'photo': photo.id}) }}">
+                            <a class="button" href="{{ path('khatovar_web_photo_edit', {'id': photo.id}) }}">
                                 Éditer
                             </a>
-                            |
-                            <a href="{{ path('khatovar_web_photos_delete', {'photo': photo.id}) }}">
-                                Supprimer
-                            </a>
+                            {{ form(delete_form, { 'attr': {'class': 'button-inline'}}) }}
                         </div>
 
-                    {% endfor %}
+                    {% endif %}
                 {% endfor %}
-            </div>
-        {% endif %}
+            {% endfor %}
+        </div>
     {% endfor %}
 {% endblock %}

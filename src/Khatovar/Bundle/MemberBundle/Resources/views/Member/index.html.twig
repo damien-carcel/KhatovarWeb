@@ -2,7 +2,7 @@
 
 {% block inarticle %}
     {% if is_granted('ROLE_EDITOR') %}
-        <a href="{{ path('khatovar_web_members_add') }}">Ajouter un nouveau membre</a>
+        <a href="{{ path('khatovar_web_member_new') }}">Ajouter un nouveau membre</a>
         <hr />
     {% endif %}
 
@@ -11,34 +11,16 @@
             <b>Voici les membres de notre compagnie&nbsp;:</b>
         </p>
 
-        {% for member in activeMembers %}
-            <div class="trombi">
-                {{ (member.portrait ? member.portrait.getWebPath() : '')|thumbnail_link(path('khatovar_web_members_view', {'member_slug': member.slug}), 'portrait', member.name, member.name) }}
-                {% if is_granted('ROLE_EDITOR') %}
-                    <a href="{{ path('khatovar_web_members_edit', {'member': member.id}) }}">Éditer</a>
-                    |
-                    <a href="{{ path('khatovar_web_members_remove', {'member': member.id}) }}">Supprimer</a>
-                {% endif %}
-            </div>
-        {% endfor %}
+        {% include 'KhatovarMemberBundle:Member:_list.html.twig' with {'members': active_members, 'delete_forms': active_delete_forms} %}
     </div>
 
-    {% if pastMembers %}
+    {% if past_members %}
         <div class="container">
             <p style="text-align: center">
                 <b>Veni, Vidi… mais pas Vici : les anciens</b>
             </p>
 
-            {% for member in pastMembers %}
-                <div class="trombi">
-                    {{ (member.portrait ? member.portrait.getWebPath() : '')|thumbnail_link(path('khatovar_web_members_view', {'member_slug': member.slug}), 'portrait', member.name, member.name) }}
-                    {% if is_granted('ROLE_EDITOR') %}
-                        <a href="{{ path('khatovar_web_members_edit', {'member': member.id}) }}">Éditer</a>
-                        |
-                        <a href="{{ path('khatovar_web_members_remove', {'member': member.id}) }}">Supprimer</a>
-                    {% endif %}
-                </div>
-            {% endfor %}
+            {% include 'KhatovarMemberBundle:Member:_list.html.twig' with {'members': past_members, 'delete_forms': past_delete_forms} %}
         </div>
     {% endif %}
 {% endblock %}

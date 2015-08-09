@@ -26,13 +26,12 @@ namespace Khatovar\Bundle\ExactionBundle\Validator\Constraints;
 use Symfony\Component\Validator\Constraint;
 
 /**
- * Class ExactionLink
+ * Check that exaction links contains between 1 and 3 blocks of text.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
- *
- * @Annotation
  */
 class ExactionLink extends Constraint
 {
+    /** @var string */
     public $message = "Un lien doit contenir 3 blocs maximum, %block_number% détectés dans le lien suivant :\n%link%";
 }

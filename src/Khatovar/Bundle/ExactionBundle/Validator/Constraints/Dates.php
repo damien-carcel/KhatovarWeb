@@ -26,14 +26,14 @@ namespace Khatovar\Bundle\ExactionBundle\Validator\Constraints;
 use Symfony\Component\Validator\Constraint;
 
 /**
- * Class Dates
+ * Check that exaction starting date is older or at least the same than
+ * exaction ending date.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
- *
- * @Annotation
  */
 class Dates extends Constraint
 {
+    /** @var string */
     public $message = 'La date de fin de la fête ne peut pas être plus ancienne que la date de début.';
 
     /**

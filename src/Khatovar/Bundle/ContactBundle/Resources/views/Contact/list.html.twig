@@ -1,0 +1,69 @@
+{% extends 'KhatovarWebBundle::layout.html.twig' %}
+
+{% block inarticle %}
+    <style>
+        td, th {
+            padding: 5px 0 5px 0;
+        }
+    </style>
+
+    <h1>Liste des cartes de visite</h1>
+
+    <p>
+        <a href="{{ path('khatovar_web_contact_new') }}">Créer une nouvelle page de contact</a>
+    </p>
+    <p>
+        Veuillez sélectionner la page de contact à utiliser :
+    </p>
+
+    {{ form_start(activation_form) }}
+    <div class="form-group">
+        {{ form_label(activation_form.active) }}
+        {{ form_widget(activation_form.active, { 'attr': {'class': 'form-element'} }) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_widget(activation_form.submit) }}
+    </div>
+
+    {{ form_rest(activation_form) }}
+    {{ form_end(activation_form) }}
+
+    <p>
+        Liste des pages de contact disponibles :
+    </p>
+    <table class="table-responsive">
+        <thead>
+        <tr>
+            <th class="column-center">
+                Identifiant
+            </th>
+            <th>
+                Titre
+            </th>
+            <th class="column-center">
+                Actions
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for contact in contacts %}
+            {% set delete_form = delete_forms[contact.id] %}
+
+            <tr>
+                <td class="column-center">
+                    <a href="{{ path('khatovar_web_contact_show', { 'id': contact.id }) }}">{{ contact.id }}</a>
+                </td>
+                <td>
+                    {{ contact.name }}
+                </td>
+                <td class="column-center">
+                    <a class="button" href="{{ path('khatovar_web_contact_show', { 'id': contact.id }) }}">Visualiser</a>
+                    <a class="button" href="{{ path('khatovar_web_contact_edit', { 'id': contact.id }) }}">Éditer</a>
+                    {{ form(delete_form, { 'attr': {'class': 'button-inline'}}) }}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
