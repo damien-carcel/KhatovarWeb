@@ -61,6 +61,7 @@ Khatovar\Bundle\PhotoBundle\Entity\Photo:
             targetEntity: Khatovar\Bundle\ContactBundle\Entity\Contact
             cascade:
                 - detach
+            inversedBy: photos
             JoinColumn:
                 name: exaction_id
                 referencedColumnName: id

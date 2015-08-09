@@ -27,6 +27,7 @@ use Carcel\UserBundle\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Khatovar\Bundle\PhotoBundle\Entity\Photo;
 use Khatovar\Bundle\PhotoBundle\Helper\PhotoHelper;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
@@ -42,16 +43,22 @@ class PhotoManager
     /** @var EntityManagerInterface */
     protected $entityManager;
 
+    /** @var TokenStorageInterface */
+    protected $tokenStorage;
+
     /**
      * @param EntityManagerInterface        $entityManager
      * @param AuthorizationCheckerInterface $authorizationChecker
+     * @param TokenStorageInterface         $tokenStorage
      */
     public function __construct(
         EntityManagerInterface $entityManager,
-        AuthorizationCheckerInterface $authorizationChecker
+        AuthorizationCheckerInterface $authorizationChecker,
+        TokenStorageInterface $tokenStorage
     ) {
         $this->entityManager        = $entityManager;
         $this->authorizationChecker = $authorizationChecker;
+        $this->tokenStorage         = $tokenStorage;
     }
 
     /**
@@ -179,26 +186,27 @@ class PhotoManager
      * Return the list of all photos of the current page that the user
      * can access.
      *
-     * @param User   $currentUser
      * @param string $controller
      * @param string $action
      * @param string $slugOrId
      *
      * @return \Khatovar\Bundle\PhotoBundle\Entity\Photo[]
      */
-    public function getControllerPhotos(User $currentUser, $controller, $action, $slugOrId)
+    public function getControllerPhotos($controller, $action, $slugOrId)
     {
         $photos = array();
 
         $currentlyRendered = $this->getCurrentlyRendered($controller, $action, $slugOrId);
 
         $owner = null;
-        if ($controller == 'member' and !is_null($slugOrId)) {
+        if ($controller === 'member' && null != $slugOrId) {
             $owner = $currentlyRendered->getOwner();
         }
 
         if (!is_null($currentlyRendered)) {
-            if ($this->authorizationChecker->isGranted('ROLE_EDITOR') || ($owner == $currentUser)) {
+            if ($this->authorizationChecker->isGranted('ROLE_EDITOR') ||
+                ($owner === $this->tokenStorage->getToken()->getUser())
+            ) {
                 $photos = $currentlyRendered->getPhotos();
             }
         }
@@ -225,12 +233,9 @@ class PhotoManager
             return null;
         }
 
-        if ($controller === 'homepage'
-            and is_null($slugOrId)
-            and $action !== 'create'
-            and $action !== 'list') {
+        if (($controller === 'homepage' || $controller === 'contact') && null == $slugOrId && $action === 'index') {
             $currentlyRendered = $repo->findOneBy(array('active' => true));
-        } elseif (!is_null($slugOrId)) {
+        } elseif (null != $slugOrId) {
             if (is_string($slugOrId)) {
                 $currentlyRendered = $repo->findOneBy(array('slug' => $slugOrId));
             } elseif (is_int($slugOrId)) {

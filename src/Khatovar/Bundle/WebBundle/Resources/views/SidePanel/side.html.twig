@@ -1,0 +1,57 @@
+<button id="aside-close" class="aside-link aside-close" title="Fermer le panneau photo"></button>
+
+<div class="aside-photo">
+    <div class="photo_title">Photos diponibles pour cette page</div>
+
+    <div class="scrolling">
+        <div class="container">
+            {% if photos is empty %}
+                Aucune photo à afficher.
+            {% endif %}
+
+            {% for photo in photos %}
+                <div class="photo_admin">
+                    {% if photo.homepage is not empty %}
+                        {{ photo.getWebPath()|thumbnail('landscape', photo.alt) }}
+                        <br />
+
+                        {% if photo.class == 'photo_small' %}
+                            {% set format = 'Petit format' %}
+                        {% elseif photo.class == 'photo' %}
+                            {%  set format = 'Format normal' %}
+                        {% elseif photo.class == 'panorama' %}
+                            {%  set format = 'Panoramique' %}
+                        {% endif %}
+
+                        <p>
+                            Format : {{ format }}
+                            |
+                            <a href="{{ path('khatovar_web_photo_edit', {'id': photo.id}) }}">
+                                changer
+                            </a>
+                        </p>
+
+                        <form>
+                            <label for="code">Code : </label>
+                            <input name="code" id="code" value="[{{ photo.path }}]" />
+                        </form>
+                        <hr />
+                    {% else %}
+                        {{ photo.getWebPath()|thumbnail('landscape', photo.alt) }}
+                        <br />
+                        {{ photo.alt }}
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<div class="button-group">
+    <a href="{{ path('khatovar_web_photo_new') }}" class="btn btn-default">
+        Ajouter une photo
+    </a>
+    <a href="{{ path('khatovar_web_photo') }}" class="btn btn-default">
+        Éditer la liste complète
+    </a>
+</div>

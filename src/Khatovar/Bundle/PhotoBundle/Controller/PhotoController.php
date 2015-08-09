@@ -105,29 +105,6 @@ class PhotoController extends Controller
     }
 
     /**
-     * Display a list of all photos uploaded for the current page in a
-     * small sidebar. Editors and admin can access all photos, but
-     * regular users can only access photos of their own member page.
-     *
-     * @param string     $controller The controller currently rendered.
-     * @param string     $action     The controller method used for rendering.
-     * @param string|int $slugOrId   The slug or the ID of the object currently rendered.
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     *
-     * @Secure(roles="ROLE_VIEWER")
-     */
-    public function sideAction($controller, $action, $slugOrId)
-    {
-        $photos = $this->photoManager->getControllerPhotos($this->getUser(), $controller, $action, $slugOrId);
-
-        return $this->render(
-            'KhatovarPhotoBundle:Photo:side.html.twig',
-            array('photos' => $photos)
-        );
-    }
-
-    /**
      * Displays a form to upload a new photo.
      *
      * @return \Symfony\Component\HttpFoundation\Response

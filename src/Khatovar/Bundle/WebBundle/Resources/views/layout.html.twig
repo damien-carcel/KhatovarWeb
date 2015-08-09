@@ -3,6 +3,7 @@
 {% block title %}
     La Compagnie Franche du Khatovar, Compagnie médiévale d'Anjou (association d'Angers - Maine et Loire)
 {% endblock %}
+
 {% block stylesheets %}
     {% stylesheets 'bundles/khatovarweb/css/normalize.css'
                    'bundles/khatovarweb/css/compagnie.css'
@@ -11,12 +12,14 @@
                    output='css/compagnie.css' %}
     <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
     {% endstylesheets %}
+
     <!--[if lt IE 9]>
     {% stylesheets 'bundles/khatovarweb/css/ie.css' filter='cssrewrite' output='css/ie.css' %}
     <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
     {% endstylesheets %}
     <![endif]-->
 {% endblock %}
+
 {% block javascript %}
     {{ parent() }}
     {% javascripts 'bundles/khatovarweb/js/lightbox.min.js'
@@ -27,7 +30,9 @@
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
 {% endblock %}
+
 {% block container %}page_block{% endblock %}
+
 {% block header %}
     <header>
         <div id="main_title">
@@ -36,32 +41,38 @@
         </div>
     </header>
 {% endblock %}
+
 {% block insection %}
     <nav>
         <div class="container">
             {{ knp_menu_render('main') }}
         </div>
     </nav>
+
     {% if is_granted('ROLE_VIEWER') %}
         <button id="aside-open" class="aside-link aside-open" title="Afficher le panneau photo">
         </button>
         <aside id="aside">
-            {#{{ render(controller('KhatovarPhotoBundle:Photo:side', {
-                'controller': get_controller_name(),
-                'action': get_action_name(),
-                'slugOrId': get_slug_or_id()
-            })) }}#}
+            {% set controller_name = get_controller_name() %}
+            {% set action_name = get_action_name() %}
+            {% set slug_or_id = get_slug_or_id() %}
+            {% set photos = get_controller_photos(controller_name, action_name, slug_or_id) %}
+
+            {% include 'KhatovarWebBundle:SidePanel:side.html.twig' with {'photos': photos} %}
         </aside>
     {% endif %}
+
     <article>
         {% for message in app.session.flashbag.get('notice') %}
             <div class="alert">
                 {{ message }}
             </div>
         {% endfor %}
+
         {% block inarticle %}{% endblock %}
     </article>
 {% endblock %}
+
 {% block footer %}
     <footer>
         <div class="footer-text">
@@ -81,6 +92,7 @@
             {% endif %}
         </div>
     </footer>
+
     <script type="text/javascript">
         $("#aside-open").click(function() {
             $("aside").addClass("visible");

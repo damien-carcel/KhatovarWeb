@@ -53,7 +53,7 @@ class ControllerNameExtension extends \Twig_Extension
     }
 
     /**
-     * @param \Twig_Environment $environment
+     * {@inheritdoc}
      */
     public function initRuntime(\Twig_Environment $environment)
     {
@@ -61,7 +61,7 @@ class ControllerNameExtension extends \Twig_Extension
     }
 
     /**
-     * @return array
+     * {@inheritdoc}
      */
     public function getFunctions()
     {
@@ -70,6 +70,14 @@ class ControllerNameExtension extends \Twig_Extension
             'get_action_name'     => new \Twig_Function_Method($this, 'getActionName'),
             'get_slug_or_id'      => new \Twig_Function_Method($this, 'getSlugOrId')
         );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getName()
+    {
+        return 'controller_name_extension';
     }
 
     /**
@@ -82,8 +90,7 @@ class ControllerNameExtension extends \Twig_Extension
         $name = null;
 
         if (!is_null($this->request)) {
-            $pattern = '#Controller\\\([a-zA-Z]*)Controller#';
-            $matches = array();
+            $pattern = '#.([a-zA-Z]*):#';
             preg_match($pattern, $this->request->get('_controller'), $matches);
 
             $name = strtolower($matches[1]);
@@ -102,7 +109,7 @@ class ControllerNameExtension extends \Twig_Extension
         $name = null;
 
         if (!is_null($this->request)) {
-            $pattern = "#::([a-zA-Z]*)Action#";
+            $pattern = "#:([a-zA-Z]*)Action#";
             $matches = array();
             preg_match($pattern, $this->request->get('_controller'), $matches);
 
@@ -115,53 +122,16 @@ class ControllerNameExtension extends \Twig_Extension
     /**
      * Return the current slug or ID of the displayed object.
      *
-     * @return string|null
+     * @return int|string|null
      */
     public function getSlugOrId()
     {
-        $slugOrId = null;
+        $slugOrId = $this->request->get('slug');
 
-        if (null === $this->request) {
-            $slugOrId = $this->getSlug();
-
-            if (null === $slugOrId) {
-                $slugOrId = $this->getId();
-            }
+        if (null === $slugOrId) {
+            $slugOrId = (int) $this->request->get('id');
         }
 
         return $slugOrId;
-    }
-
-    /**
-     * Return the name of the extension.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return 'controller_name_extension';
-    }
-
-    /**
-     * @return mixed
-     */
-    protected function getSlug()
-    {
-        return $this->request->get('member_slug');
-    }
-
-    /**
-     * @return int|null
-     */
-    protected function getId()
-    {
-        $id = null;
-
-        $routeParams = $this->request->get('_route_params');
-        foreach ($routeParams as $param) {
-            $id = (int) $param;
-        }
-
-        return $id;
     }
 }
