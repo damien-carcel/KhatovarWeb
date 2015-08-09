@@ -440,7 +440,7 @@ class PhotoController extends Controller
 
     /**
      * Checks if the logged user has the editor role. If he has not,
-     * checks if he has a member page (he can the upload new photos),
+     * checks if he has a member page (he can then upload new photos),
      * and if editing a photo, that it belongs to its member page.
      *
      * @param Photo $photo

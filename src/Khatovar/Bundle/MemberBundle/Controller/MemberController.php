@@ -190,7 +190,7 @@ class MemberController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      *
-     * @Secure(roles="ROLE_EDITOR")
+     * @Secure(roles="ROLE_VIEWER")
      */
     public function editAction($id)
     {
@@ -337,7 +337,7 @@ class MemberController extends Controller
 
         $currentUser = $this->getUser();
         if (!$this->isGranted('ROLE_EDITOR')) {
-            if ($currentUser != $member->getOwner()) {
+            if ($currentUser !== $member->getOwner()) {
                 throw new AccessDeniedHttpException(
                     'Désolé, ceci n\'est pas votre page de membre. Vous ne pouvez donc pas la modifier.'
                 );
