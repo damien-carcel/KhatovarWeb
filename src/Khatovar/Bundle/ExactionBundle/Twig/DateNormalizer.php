@@ -41,7 +41,20 @@ class DateNormalizer extends \Twig_Extension
                 array($this, 'normalize'),
                 array('is_sage' => array('html'))
             ),
+            new \Twig_SimpleFunction(
+                'khatovar_normalize_date_with_year',
+                array($this, 'normalizeWithYear'),
+                array('is_sage' => array('html'))
+            ),
         );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getName()
+    {
+        return 'khatovar_date_normalizer';
     }
 
     /**
@@ -79,11 +92,20 @@ class DateNormalizer extends \Twig_Extension
     }
 
     /**
-     * {@inheritdoc}
+     * Return the formatted date of the exaction with the year.
+     *
+     * @param \DateTime $start
+     * @param \DateTime $end
+     *
+     * @return string
      */
-    public function getName()
+    public function normalizeWithYear(\DateTime $start, \DateTime $end)
     {
-        return 'khatovar_date_normalizer';
+        return sprintf(
+            '%s %s',
+            $this->normalize($start, $end),
+            $end->format('Y')
+        );
     }
 
     /**
