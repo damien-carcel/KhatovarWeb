@@ -22,7 +22,7 @@
                 <div class="cycle-slideshow" data-cycle-slides="> a" data-cycle-center-horz=true data-cycle-center-vert=true>
                     {% autoescape false %}
                     {% for photo in exaction.photos %}
-                        {{ asset(photo)|popup_picture('slide') }}
+                        {{ asset(photo.webPath)|popup_picture('slide') }}
                     {% endfor %}
                     {% endautoescape %}
                 </div>
@@ -48,7 +48,7 @@
                     <div class="photo_exactions">
                         {{ (exaction.image ? exaction.image.webPath : asset('bundles/khatovarweb/photos/logonoir.jpg'))|link_album(asset('bundles/khatovarweb/images/camera.png'), 'album-photo') }}
                         {% for photo in exaction.photos %}
-                            {{ photo|link_picture('', 'album-photo') }}
+                            {{ photo.webPath|link_picture('', 'album-photo') }}
                         {% endfor %}
                     </div>
                 </div>
