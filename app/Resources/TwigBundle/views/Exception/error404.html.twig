@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <title>Erreur 404</title>
+
+    <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame -->
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- pour le référencement -->
+    <meta name="description" content="Page web officielle de la compagnie franche du Khatovar" />
+    <meta name="keywords" lang="fr" content="association,compagnie,médiévale,moyen âge,anjou,maine et loire,angers,pays de la loire,fête,marché,animation,cuir,maille,combat,forge,herboristerie" />
+
+    <meta name="google-site-verification" content="NkCb17QwxepSCbwhx_9frREBH-0WuT7ahuv0om4RLUY" />
+</head>
+<body>
+    <style>
+        .center {
+            text-align: center;
+            margin: 10px;
+        }
+    </style>
+
+    <div class="center">
+        <img src="{{ asset('bundles/khatovarweb/images/logo.png') }}" alt="Logo" id="logo" />
+    </div>
+
+    <div class="center">
+        Il semble que l'élément que vous cherchez n'existe pas.
+    </div>
+
+    <div class="center">
+        <a href="{{ path('khatovar_web_homepage') }}">Retour à l'index du site.</a>
+    </div>
+</body>
+</html>
