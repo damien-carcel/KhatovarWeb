@@ -1,12 +1,14 @@
+/****************/
 /* CUSTOM FONTS */
+/****************/
 
 @font-face {
     font-family: 'DarkCrystal';
     src: url('../fonts/darkcristal-webfont.eot');
     src: url('../fonts/darkcristal-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../fonts/darkcristal-webfont.woff') format('woff'),
-         url('../fonts/darkcristal-webfont.ttf') format('truetype'),
-         url('../fonts/darkcristal-webfont.svg#DarkCrystal') format('svg');
+    url('../fonts/darkcristal-webfont.woff') format('woff'),
+    url('../fonts/darkcristal-webfont.ttf') format('truetype'),
+    url('../fonts/darkcristal-webfont.svg#DarkCrystal') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -15,9 +17,9 @@
     font-family: 'kingthings_light';
     src: url('../fonts/Kingthings_Petrock_light-webfont.eot');
     src: url('../fonts/Kingthings_Petrock_light-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../fonts/Kingthings_Petrock_light-webfont.woff') format('woff'),
-         url('../fonts/Kingthings_Petrock_light-webfont.ttf') format('truetype'),
-         url('../fonts/Kingthings_Petrock_light-webfont.svg#kingthings_light') format('svg');
+    url('../fonts/Kingthings_Petrock_light-webfont.woff') format('woff'),
+    url('../fonts/Kingthings_Petrock_light-webfont.ttf') format('truetype'),
+    url('../fonts/Kingthings_Petrock_light-webfont.svg#kingthings_light') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -26,14 +28,16 @@
     font-family: 'kingthings_regular';
     src: url('../fonts/Kingthings_Petrock-webfont.eot');
     src: url('../fonts/Kingthings_Petrock-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../fonts/Kingthings_Petrock-webfont.woff') format('woff'),
-         url('../fonts/Kingthings_Petrock-webfont.ttf') format('truetype'),
-         url('../fonts/Kingthings_Petrock-webfont.svg#kingthings_regular') format('svg');
+    url('../fonts/Kingthings_Petrock-webfont.woff') format('woff'),
+    url('../fonts/Kingthings_Petrock-webfont.ttf') format('truetype'),
+    url('../fonts/Kingthings_Petrock-webfont.svg#kingthings_regular') format('svg');
     font-weight: normal;
     font-style: normal;
 }
 
+/*****************/
 /* MAIN ELEMENTS */
+/*****************/
 
 body {
     margin-bottom: 20px;
@@ -61,15 +65,9 @@ body {
     }
 }
 
-/* Cookie acknowledge bar */
-#cookie-law-info-bar {
-    background: #f5f1dc !important;
-    opacity: 0.9;
-    top: 0 !important;
-    bottom: auto !important;
-}
-
+/**********/
 /* HEADER */
+/**********/
 
 header {
     background: url("../images/header.png") transparent;
@@ -107,85 +105,143 @@ header h1 {
     }
 }
 
+/**************/
 /* NAVIGATION */
+/**************/
+
+/* Main */
 
 nav {
     background: url("../images/nav.png") transparent;
-    height: 58px;
-    padding-top: 12px;
 }
 
-nav a.button {
-    display: none;
+#menu {
+    margin: 0;
+    padding: 15px 20px 0 20px;
+    list-style: none;
+    display: inline-block;
 }
 
-nav a {
+#menu li {
+    float: left;
+    padding: 0 0 10px 0;
+    position: relative;
+}
+
+#menu a {
     font-size: 1.2em;
-    text-decoration: none;
-    display: block;
-    padding-left: 4px;
-    padding-right: 4px;
     color: white;
+    float: left;
+    height: 25px;
+    padding: 0 25px;
+    text-decoration: none;
 }
 
-nav a:hover {
+#menu li:hover > a {
     color: yellow;
 }
 
-nav ul {
-    display: inline-block;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    vertical-align: middle;
+*html #menu li a:hover { /* IE6 */
+    color: yellow;
 }
 
-nav li {
-    float: left;
-    margin: 0 2px;
-}
-
-nav li ul {
-    position: absolute;
-    display: none;
-    padding-top: 5px;
-}
-
-nav li ul li {
-    position: relative;
-    float: none;
-    text-align: left;
-    padding-left: 1px;
-    padding-right: 1px;
-    background: url("../images/menu.png") transparent;
-    border-bottom: 1px solid white;
-    z-index: 11000;
-}
-
-nav li:hover ul, nav li.sfhover ul {
+#menu li:hover > ul {
     display: block;
 }
+
+/* Sub-menu */
+#menu ul {
+    list-style: none;
+    min-width: 150px;
+    margin: 0;
+    padding: 0;
+    display: none;
+    position: absolute;
+    top: 20px;
+    left: 0;
+    z-index: 99999;
+    background: url("../images/menu.png") transparent;
+}
+
+#menu ul ul {
+    top: 0;
+    left: 150px;
+}
+
+#menu ul li {
+    float: none;
+    margin: 0;
+    padding: 0;
+    display: block;
+    box-shadow: 0 1px 0 #111111,
+    0 2px 0 #777777;
+}
+
+#menu ul li:last-child {
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+#menu ul a {
+    padding: 5px;
+    height: auto;
+    line-height: 1;
+    display: block;
+    white-space: nowrap;
+    float: none;
+    text-transform: none;
+}
+
+*html #menu ul a { /* IE6 */
+    height: 10px;
+    width: 150px;
+}
+
+*:first-child+html #menu ul a { /* IE7 */
+    height: 10px;
+    width: 150px;
+}
+
+/* Clear floated elements */
+#menu:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+}
+
+* html #menu             { zoom: 1; } /* IE6 */
+*:first-child+html #menu { zoom: 1; } /* IE7 */
 
 @media all and (max-width: 990px) {
     nav {
         background: none;
+    }
+
+    #menu {
         padding: 0;
     }
 
-    nav li ul li {
-        display: none;
-    }
-
-    nav a {
+    #menu a {
         color: #AC3333;
+        padding: 10px 5px 0 5px;
     }
 
-    nav a:hover {
+    #menu li:hover > a {
         color: #936f00;
+    }
+
+    #menu ul li {
+        display: none;
     }
 }
 
+/*************/
 /* CORE TEXT */
+/*************/
 
 section {
     padding-bottom: 20px;
@@ -359,7 +415,9 @@ article a.button {
     margin: 0 1px;
 }
 
+/*******************/
 /* ARTICLES LAYOUT */
+/*******************/
 
 .container {
     text-align: center;
@@ -466,7 +524,9 @@ article a.button {
     }
 }
 
+/**********/
 /* FOOTER */
+/**********/
 
 footer {
     height: 144px;
@@ -488,7 +548,9 @@ footer {
     }
 }
 
+/************/
 /* PICTURES */
+/************/
 
 *.clickable {
     cursor: pointer;
@@ -649,7 +711,9 @@ article img {
     text-align: center;
 }
 
+/**********/
 /* FORMS */
+/*********/
 
 .form-group {
     display: table;
@@ -681,7 +745,10 @@ textarea {
     height: 250px;
 }
 
+/***********/
 /* BUTTONS */
+/***********/
+
 /* Mostly from Bootstrap 3.2 */
 
 .btn {
@@ -721,9 +788,9 @@ textarea {
     background-image: none;
     outline: 0;
     -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
-          box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
     -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
-          box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
     background-image: none;
 }
 .btn.disabled,
@@ -733,7 +800,7 @@ fieldset[disabled] .btn {
     cursor: not-allowed;
     filter: alpha(opacity=65);
     -webkit-box-shadow: none;
-          box-shadow: none;
+    box-shadow: none;
     opacity: .65;
 }
 .btn-default {
