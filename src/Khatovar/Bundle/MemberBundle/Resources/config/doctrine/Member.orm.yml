@@ -1,6 +1,6 @@
 Khatovar\Bundle\MemberBundle\Entity\Member:
     type: entity
-    table: khatovar_web_members
+    table: khatovar_web_member
     repositoryClass: Khatovar\Bundle\MemberBundle\Entity\MemberRepository
     indexes:
         search_idx:
