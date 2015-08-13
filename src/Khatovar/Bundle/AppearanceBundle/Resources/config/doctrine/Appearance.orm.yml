@@ -1,0 +1,37 @@
+Khatovar\Bundle\AppearanceBundle\Entity\Appearance:
+    type: entity
+    table: khatovar_web_appearance
+    repositoryClass: Khatovar\Bundle\AppearanceBundle\Entity\AppearanceRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+            column: name
+            nullable: false
+            unique: true
+        slug:
+            type: string
+            length: 128
+            column: slug
+            nullable: false
+            unique: true
+            gedmo:
+                slug:
+                    separator: _
+                    style: camel
+                    fields:
+                        - name
+        content:
+            type: text
+        active:
+            type: boolean
+    oneToMany:
+        photos:
+            targetEntity: Khatovar\Bundle\PhotoBundle\Entity\Photo
+            mappedBy: appearance

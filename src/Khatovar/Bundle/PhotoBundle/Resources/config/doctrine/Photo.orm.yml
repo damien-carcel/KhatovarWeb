@@ -66,6 +66,15 @@ Khatovar\Bundle\PhotoBundle\Entity\Photo:
                 name: exaction_id
                 referencedColumnName: id
                 onDelete: 'SET NULL'
+        appearance:
+            targetEntity: Khatovar\Bundle\AppearanceBundle\Entity\Appearance
+            cascade:
+                - detach
+            inversedBy: photos
+            JoinColumn:
+                name: exaction_id
+                referencedColumnName: id
+                onDelete: 'SET NULL'
     lifecycleCallbacks:
         prePersist:  [preUpload]
         preUpdate:   [preUpload]

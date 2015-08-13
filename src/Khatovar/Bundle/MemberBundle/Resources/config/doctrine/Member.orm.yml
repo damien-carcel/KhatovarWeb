@@ -71,8 +71,7 @@ Khatovar\Bundle\MemberBundle\Entity\Member:
             column: weakness
             nullable: true
         story:
-            type: string
-            length: 255
+            type: text
             column: story
             nullable: false
         active:
