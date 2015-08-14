@@ -107,30 +107,20 @@ class MenuBuilder
             'appearances',
             array(
                 'label' => 'Nos prestations',
-                'route' => 'khatovar_web_homepage',
+                'route' => 'khatovar_web_appearance',
             )
         );
 
-        foreach ($this->performances as $key => $name) {
-            if ($key == 'combat') {
-                $menu['appearances']->addChild(
-                    $key,
-                    array(
-                        'label' => $name,
-                        'route' => 'khatovar_web_homepage',
-                    )
-                );
-            } else {
-                $menu['appearances']->addChild(
-                    $key,
-                    array(
-                        'label' => $name,
-                        'route' => 'khatovar_web_homepage',
-                    )
-                );
-            }
-
-        }
+//        foreach ($this->performances as $key => $name) {
+//            $menu['appearances']->addChild(
+//                $key,
+//                array(
+//                    'label'           => $name,
+//                    'route'           => 'khatovar_web_appearance_show',
+//                    'routeParameters' => array('slug' => $key),
+//                )
+//            );
+//        }
     }
 
     /**

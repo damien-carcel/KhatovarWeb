@@ -21,27 +21,47 @@
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
-namespace Khatovar\Bundle\AppearanceBundle\DependencyInjection;
+namespace Khatovar\Bundle\AppearanceBundle\Form;
 
-use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\Config\FileLocator;
-use Symfony\Component\HttpKernel\DependencyInjection\Extension;
-use Symfony\Component\DependencyInjection\Loader;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- * Khatovar appearance extensions.
+ * Appearance form type.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
  */
-class KhatovarAppearanceExtension extends Extension
+class AppearanceType extends AbstractType
 {
     /**
      * {@inheritdoc}
      */
-    public function load(array $configs, ContainerBuilder $container)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('controllers.yml');
-        $loader->load('form_types.yml');
+        $builder
+            ->add('name')
+            ->add('slug')
+            ->add('content')
+            ->add('active')
+        ;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'data_class' => 'Khatovar\Bundle\AppearanceBundle\Entity\Appearance'
+        ));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getName()
+    {
+        return 'khatovar_appearance_type';
     }
 }

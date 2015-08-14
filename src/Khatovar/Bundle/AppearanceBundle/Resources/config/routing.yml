@@ -1,0 +1,30 @@
+khatovar_web_appearance:
+    path:     /
+    defaults: { _controller: "khatovar_appearance.controller.contact:indexAction" }
+
+khatovar_web_appearance_show:
+    path:     /{id}/show
+    defaults: { _controller: "khatovar_appearance.controller.contact:showAction" }
+
+khatovar_web_appearance_new:
+    path:     /new
+    defaults: { _controller: "khatovar_appearance.controller.contact:newAction" }
+
+khatovar_web_appearance_create:
+    path:     /create
+    defaults: { _controller: "khatovar_appearance.controller.contact:createAction" }
+    methods:  POST
+
+khatovar_web_appearance_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "khatovar_appearance.controller.contact:editAction" }
+
+khatovar_web_appearance_update:
+    path:     /{id}/update
+    defaults: { _controller: "khatovar_appearance.controller.contact:updateAction" }
+    methods:  [POST, PUT]
+
+khatovar_web_appearance_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "khatovar_appearance.controller.contact:deleteAction" }
+    methods:  [POST, DELETE]

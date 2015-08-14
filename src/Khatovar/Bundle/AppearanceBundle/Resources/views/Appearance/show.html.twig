@@ -1,0 +1,43 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Appearance</h1>
+
+    <table class="record_properties">
+        <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ appearance.id }}</td>
+        </tr>
+        <tr>
+            <th>Name</th>
+            <td>{{ appearance.name }}</td>
+        </tr>
+        <tr>
+            <th>Slug</th>
+            <td>{{ appearance.slug }}</td>
+        </tr>
+        <tr>
+            <th>Content</th>
+            <td>{{ appearance.content }}</td>
+        </tr>
+        <tr>
+            <th>Active</th>
+            <td>{{ appearance.active }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <ul class="record_actions">
+        <li>
+            <a href="{{ path('khatovar_web_appearance') }}">
+                Back to the list
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('khatovar_web_appearance_edit', { 'id': appearance.id }) }}">
+                Edit
+            </a>
+        </li>
+    </ul>
+{% endblock %}
