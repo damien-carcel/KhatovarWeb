@@ -27,7 +27,6 @@ Khatovar\Bundle\MemberBundle\Entity\Member:
             gedmo:
                 slug:
                     separator: _
-                    style: camel
                     fields:
                         - name
         rank:

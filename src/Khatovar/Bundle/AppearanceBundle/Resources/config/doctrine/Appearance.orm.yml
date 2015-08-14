@@ -24,7 +24,6 @@ Khatovar\Bundle\AppearanceBundle\Entity\Appearance:
             gedmo:
                 slug:
                     separator: _
-                    style: camel
                     fields:
                         - name
         content:
