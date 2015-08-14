@@ -107,7 +107,7 @@ class MenuBuilder
             'appearances',
             array(
                 'label' => 'Nos prestations',
-                'route' => 'khatovar_web_camp',
+                'route' => 'khatovar_web_homepage',
             )
         );
 
@@ -117,7 +117,7 @@ class MenuBuilder
                     $key,
                     array(
                         'label' => $name,
-                        'route' => 'khatovar_web_fight',
+                        'route' => 'khatovar_web_homepage',
                     )
                 );
             } else {
@@ -125,8 +125,7 @@ class MenuBuilder
                     $key,
                     array(
                         'label' => $name,
-                        'route' => 'khatovar_web_camp',
-                        'routeParameters' => array('atelier' => $key)
+                        'route' => 'khatovar_web_homepage',
                     )
                 );
             }
@@ -143,7 +142,7 @@ class MenuBuilder
             'dates',
             array(
                 'label' => 'Toutes nos dates',
-                'route' => 'khatovar_web_homepage', // TODO: Créer une nouvelle route
+                'route' => 'khatovar_web_homepage', // TODO: New route.
             )
         );
 
@@ -184,7 +183,7 @@ class MenuBuilder
             'camp',
             array(
                 'label' => 'Le camp',
-                'route' => 'khatovar_web_member',
+                'route' => 'khatovar_web_homepage', // TODO: new controller and routes
             )
         );
 
@@ -192,7 +191,7 @@ class MenuBuilder
             'camp_life',
             array(
                 'label' => 'Vie de camp',
-                'route' => 'khatovar_web_camp', // TODO: new controller? Rename the MemberBundle in CampBundle?
+                'route' => 'khatovar_web_homepage', // TODO: new controller and routes
             )
         );
 
