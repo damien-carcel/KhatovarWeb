@@ -86,7 +86,7 @@ class PhotoType extends AbstractType
             $builder->add('file', 'file', array('label' => false));
         }
 
-        $builder->add('alt', 'text', array('label' => 'Nom de substitution : '));
+        $builder->add('alt', 'text', array('label' => 'Nom de substitution'));
     }
 
     /**
@@ -98,7 +98,7 @@ class PhotoType extends AbstractType
             if (!is_null($entity)) {
                 if ($entity == 'homepage') {
                     $form->add('class', 'choice', array(
-                        'label' => 'Taille de la photo : ',
+                        'label' => 'Taille de la photo',
                         'choices' => array(
                             'photo_small' => 'Petit format',
                             'photo' => 'Format normal',
@@ -116,7 +116,7 @@ class PhotoType extends AbstractType
                 $form->add($entity, 'entity', array(
                     'class' => 'Khatovar' . ucfirst($entity) . 'Bundle:' . ucfirst($entity),
                     'property' => 'name',
-                    'label' => 'Page :'
+                    'label' => 'Page'
                 ));
             }
         };
@@ -126,7 +126,7 @@ class PhotoType extends AbstractType
                 'entity',
                 'choice',
                 array(
-                    'label' => 'Rattacher la photo à une : ',
+                    'label' => 'Rattacher la photo à une',
                     'choices' => array(
                         'homepage' => 'Page d\'accueil',
                         'member'   => 'Page de membre',
