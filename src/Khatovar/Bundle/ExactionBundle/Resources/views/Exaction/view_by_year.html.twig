@@ -46,10 +46,7 @@
                         <b>La photo&nbsp;:</b> {{ exaction.imageStory }}
                     </div>
                     <div class="photo_exactions">
-                        {{ (exaction.image ? exaction.image.webPath : asset('bundles/khatovarweb/images/logonoir.jpg'))|link_album(asset('bundles/khatovarweb/images/camera.png'), 'album-photo') }}
-                        {% for photo in exaction.photos %}
-                            {{ photo.webPath|link_picture('', 'album-photo') }}
-                        {% endfor %}
+                        {{ asset('bundles/khatovarweb/images/camera.png')|link_album('album-photo-' ~ exaction.id, exaction.photos, exaction.image) }}
                     </div>
                 </div>
             </div>

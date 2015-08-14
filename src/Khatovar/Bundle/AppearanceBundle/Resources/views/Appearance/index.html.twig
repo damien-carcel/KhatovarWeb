@@ -52,10 +52,11 @@
         </table>
     {% else %}
         <div class="link_list">
+            –
             {% for appearance in appearances %}
-                <td class="column-center">
-                    <a href="{{ path('khatovar_web_appearance_show', { 'slug': appearance.slug }) }}">{{ appearance.name }}</a>
-                </td>
+                {% if appearance.active %}
+                    <a href="{{ path('khatovar_web_appearance_show', { 'slug': appearance.slug }) }}">{{ appearance.name }}</a> –
+                {% endif %}
             {% endfor %}
         </div>
     {% endif %}

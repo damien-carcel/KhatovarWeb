@@ -49,10 +49,7 @@
                 </li>
             </ul>
             <div class="container">
-                {{ (member.portrait ? member.portrait.webPath : asset('bundles/khatovarweb/images/logonoir.jpg'))|link_album(asset('bundles/khatovarweb/images/camera.png'), 'album-photo') }}
-                {% for photo in photos %}
-                    {{ photo.webPath|link_picture('', 'album-photo') }}
-                {% endfor %}
+                {{ asset('bundles/khatovarweb/images/camera.png')|link_album('album-photo', photos, member.portrait) }}
             </div>
         </div>
     </div>

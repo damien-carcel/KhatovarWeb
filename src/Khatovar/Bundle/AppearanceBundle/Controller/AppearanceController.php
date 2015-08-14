@@ -113,9 +113,9 @@ class AppearanceController extends Controller
      */
     public function newAction()
     {
-        $entity = new Appearance();
+        $appearance = new Appearance();
 
-        $form = $this->createCreateForm($entity);
+        $form = $this->createCreateForm($appearance);
 
         return $this->render(
             'KhatovarAppearanceBundle:Appearance:new.html.twig',
@@ -134,13 +134,13 @@ class AppearanceController extends Controller
      */
     public function createAction(Request $request)
     {
-        $entity = new Appearance();
+        $appearance = new Appearance();
 
-        $form = $this->createCreateForm($entity);
+        $form = $this->createCreateForm($appearance);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $this->entityManager->persist($entity);
+            $this->entityManager->persist($appearance);
             $this->entityManager->flush();
 
             $this->get('session')->getFlashBag()->add(
@@ -151,7 +151,7 @@ class AppearanceController extends Controller
             return $this->redirect(
                 $this->generateUrl(
                     'khatovar_web_appearance_show',
-                    array('slug' => $entity->getSlug())
+                    array('slug' => $appearance->getSlug())
                 )
             );
         }
@@ -209,8 +209,8 @@ class AppearanceController extends Controller
 
             return $this->redirect(
                 $this->generateUrl(
-                    'khatovar_web_appearance_edit',
-                    array('id' => $id)
+                    'khatovar_web_appearance_show',
+                    array('slug' => $appearance->getSlug())
                 )
             );
         }

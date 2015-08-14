@@ -21,8 +21,7 @@
             {% endif %}
         </div>
         <div class="navigation nav-center">
-            <a href="http://www.compagniefranchedukhatovar.fr/piwigo/index.php?/category/10" rel="external"><img src="{{ asset('bundles/khatovarweb/images/camera.png') }}" class="photolink" alt="" /><br />
-                Album photo</a>
+            {{ asset('bundles/khatovarweb/images/camera.png')|link_album('album-photo', appearance.photos) }}
         </div>
         <div class="navigation nav-right">
             {% if next_appearance %}
