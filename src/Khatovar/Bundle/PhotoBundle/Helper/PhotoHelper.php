@@ -34,17 +34,18 @@ class PhotoHelper
      * Get a list of all entities that can be linked to photos.
      *
      * When adding a new entity to the list, remember to also add it to
-     * PhotoRepository::getOrphans().
+     * PhotoRepository::getOrphans() and in the _form.html.twig view.
      *
      * @return array
      */
     public static function getPhotoEntities()
     {
         return array(
-            'homepage' => 'Pages d\'accueil',
-            'member'   => 'Membres',
-            'exaction' => 'Exactions',
-            'contact'  => 'Pages de contact',
+            'homepage'   => 'Pages d\'accueil',
+            'appearance' => 'Prestations',
+            'exaction'   => 'Exactions',
+            'member'     => 'Membres',
+            'contact'    => 'Pages de contact',
         );
     }
 }

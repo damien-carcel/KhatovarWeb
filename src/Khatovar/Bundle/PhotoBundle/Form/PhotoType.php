@@ -23,6 +23,7 @@
 
 namespace Khatovar\Bundle\PhotoBundle\Form;
 
+use Khatovar\Bundle\PhotoBundle\Helper\PhotoHelper;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -127,12 +128,7 @@ class PhotoType extends AbstractType
                 'choice',
                 array(
                     'label' => 'Rattacher la photo à une',
-                    'choices' => array(
-                        'homepage' => 'Page d\'accueil',
-                        'member'   => 'Page de membre',
-                        'exaction' => 'Exaction',
-                        'contact'  => 'Page de contact',
-                    ),
+                    'choices' => PhotoHelper::getPhotoEntities(),
                     'preferred_choices' => array('homepage')
                 )
             );

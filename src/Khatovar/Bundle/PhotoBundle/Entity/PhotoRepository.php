@@ -46,6 +46,7 @@ class PhotoRepository extends EntityRepository
             ->andWhere('p.member IS NULL')
             ->andWhere('p.exaction IS NULL')
             ->andWhere('p.contact IS NULL')
+            ->andWhere('p.appearance IS NULL')
             ->getQuery();
 
         return $query->getResult();
