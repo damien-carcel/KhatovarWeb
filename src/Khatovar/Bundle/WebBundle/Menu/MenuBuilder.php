@@ -23,6 +23,7 @@
 
 namespace Khatovar\Bundle\WebBundle\Menu;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Khatovar\Bundle\ExactionBundle\Manager\ExactionManager;
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
@@ -35,19 +36,7 @@ use Knp\Menu\ItemInterface;
  */
 class MenuBuilder
 {
-    /** @var array */
-    protected $performances = array(
-        'introduction' => 'Introduction',
-        'combat'       => 'Combat',
-        'campement'    => 'Vie de camp',
-        'forge'        => 'Forge',
-        'cuir'         => 'Cuir',
-        'maille'       => 'Maille',
-        'armes'        => 'Armes et armures',
-        'herbo'        => 'Herboristerie et cuisine',
-        'tissage'      => 'Tissage',
-        'calligraphie' => 'Calligraphie'
-    );
+    protected $entityManager;
 
     /** @var array */
     protected $exactionYears;
@@ -55,14 +44,26 @@ class MenuBuilder
     /** @var FactoryInterface */
     protected $menuFactory;
 
+    protected $appearances;
+
     /**
-     * @param FactoryInterface $menuFactory
-     * @param ExactionManager  $exactionManager
+     * @param FactoryInterface       $menuFactory
+     * @param ExactionManager        $exactionManager
+     * @param EntityManagerInterface $entityManager
      */
-    public function __construct(FactoryInterface $menuFactory, ExactionManager $exactionManager)
-    {
+    public function __construct(
+        FactoryInterface $menuFactory,
+        EntityManagerInterface $entityManager,
+        ExactionManager $exactionManager
+    ) {
         $this->menuFactory   = $menuFactory;
+        $this->entityManager = $entityManager;
+
         $this->exactionYears = $exactionManager->getSortedYears();
+
+        $this->appearances = $this->entityManager
+            ->getRepository('KhatovarAppearanceBundle:Appearance')
+            ->findBy(array('active' => true));
     }
 
     /**
@@ -111,16 +112,16 @@ class MenuBuilder
             )
         );
 
-//        foreach ($this->performances as $key => $name) {
-//            $menu['appearances']->addChild(
-//                $key,
-//                array(
-//                    'label'           => $name,
-//                    'route'           => 'khatovar_web_appearance_show',
-//                    'routeParameters' => array('slug' => $key),
-//                )
-//            );
-//        }
+        foreach ($this->appearances as $appearance) {
+            $menu['appearances']->addChild(
+                $appearance->getSlug(),
+                array(
+                    'label'           => $appearance->getName(),
+                    'route'           => 'khatovar_web_appearance_show',
+                    'routeParameters' => array('slug' => $appearance->getSlug()),
+                )
+            );
+        }
     }
 
     /**

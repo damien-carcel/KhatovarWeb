@@ -1,43 +1,33 @@
-{% extends '::base.html.twig' %}
+{% extends 'KhatovarWebBundle::layout.html.twig' %}
 
-{% block body -%}
-    <h1>Appearance</h1>
+{% block inarticle %}
+    {% if is_granted('ROLE_EDITOR') %}
+        <a href="{{ path('khatovar_web_appearance_edit', { 'id': appearance.id }) }}">Éditer cette prestation</a>
+        |
+        <a href="{{ path('khatovar_web_appearance_new') }}">Créer une nouvelle prestation</a>
+        |
+        <a href="{{ path('khatovar_web_appearance') }}">Liste des prestations disponibles</a>
+        <hr />
+    {% endif %}
 
-    <table class="record_properties">
-        <tbody>
-        <tr>
-            <th>Id</th>
-            <td>{{ appearance.id }}</td>
-        </tr>
-        <tr>
-            <th>Name</th>
-            <td>{{ appearance.name }}</td>
-        </tr>
-        <tr>
-            <th>Slug</th>
-            <td>{{ appearance.slug }}</td>
-        </tr>
-        <tr>
-            <th>Content</th>
-            <td>{{ appearance.content }}</td>
-        </tr>
-        <tr>
-            <th>Active</th>
-            <td>{{ appearance.active }}</td>
-        </tr>
-        </tbody>
-    </table>
+    <h1>{{ appearance.name }}</h1>
 
-    <ul class="record_actions">
-        <li>
-            <a href="{{ path('khatovar_web_appearance') }}">
-                Back to the list
-            </a>
-        </li>
-        <li>
-            <a href="{{ path('khatovar_web_appearance_edit', { 'id': appearance.id }) }}">
-                Edit
-            </a>
-        </li>
-    </ul>
+    {{ appearance.content|add_paragraph_and_photos(appearance.photos) }}
+
+    <div class="container flex-container-always">
+        <div class="navigation nav-left">
+            {% if previous_appearance %}
+                <a href="{{ path('khatovar_web_appearance_show', { 'slug': previous_appearance.slug }) }}">{{ previous_appearance.name }}</a>
+            {% endif %}
+        </div>
+        <div class="navigation nav-center">
+            <a href="http://www.compagniefranchedukhatovar.fr/piwigo/index.php?/category/10" rel="external"><img src="{{ asset('bundles/khatovarweb/images/camera.png') }}" class="photolink" alt="" /><br />
+                Album photo</a>
+        </div>
+        <div class="navigation nav-right">
+            {% if next_appearance %}
+                <a href="{{ path('khatovar_web_appearance_show', { 'slug': next_appearance.slug }) }}">{{ next_appearance.name }}</a>
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}

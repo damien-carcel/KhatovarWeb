@@ -1,30 +1,32 @@
 khatovar_web_appearance:
     path:     /
-    defaults: { _controller: "khatovar_appearance.controller.contact:indexAction" }
+    defaults: { _controller: "khatovar_appearance.controller.appearance:indexAction" }
 
 khatovar_web_appearance_show:
-    path:     /{id}/show
-    defaults: { _controller: "khatovar_appearance.controller.contact:showAction" }
+    path:     /prestation/{slug}
+    defaults: { _controller: "khatovar_appearance.controller.appearance:showAction" }
+    requirements:
+        slug: "[a-zA-Z0-9-_/]+"
 
 khatovar_web_appearance_new:
     path:     /new
-    defaults: { _controller: "khatovar_appearance.controller.contact:newAction" }
+    defaults: { _controller: "khatovar_appearance.controller.appearance:newAction" }
 
 khatovar_web_appearance_create:
     path:     /create
-    defaults: { _controller: "khatovar_appearance.controller.contact:createAction" }
+    defaults: { _controller: "khatovar_appearance.controller.appearance:createAction" }
     methods:  POST
 
 khatovar_web_appearance_edit:
     path:     /{id}/edit
-    defaults: { _controller: "khatovar_appearance.controller.contact:editAction" }
+    defaults: { _controller: "khatovar_appearance.controller.appearance:editAction" }
 
 khatovar_web_appearance_update:
     path:     /{id}/update
-    defaults: { _controller: "khatovar_appearance.controller.contact:updateAction" }
+    defaults: { _controller: "khatovar_appearance.controller.appearance:updateAction" }
     methods:  [POST, PUT]
 
 khatovar_web_appearance_delete:
     path:     /{id}/delete
-    defaults: { _controller: "khatovar_appearance.controller.contact:deleteAction" }
+    defaults: { _controller: "khatovar_appearance.controller.appearance:deleteAction" }
     methods:  [POST, DELETE]

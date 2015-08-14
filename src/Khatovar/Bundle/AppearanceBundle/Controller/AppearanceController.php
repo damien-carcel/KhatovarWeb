@@ -24,6 +24,7 @@
 namespace Khatovar\Bundle\AppearanceBundle\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
+use JMS\SecurityExtraBundle\Annotation\Secure;
 use Khatovar\Bundle\AppearanceBundle\Entity\Appearance;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -69,10 +70,14 @@ class AppearanceController extends Controller
     public function indexAction()
     {
         $appearances = $this->entityManager->getRepository('KhatovarAppearanceBundle:Appearance')->findAll();
+        $deleteForms = $this->createDeleteForms($appearances);
 
         return $this->render(
             'KhatovarAppearanceBundle:Appearance:index.html.twig',
-            array('appearances' => $appearances)
+            array(
+                'appearances'  => $appearances,
+                'delete_forms' => $deleteForms,
+            )
         );
     }
 
@@ -87,9 +92,15 @@ class AppearanceController extends Controller
     {
         $appearance = $this->findBySlugOr404($slug);
 
+        // TODO: get next and previous appearances
+
         return $this->render(
             'KhatovarAppearanceBundle:Appearance:show.html.twig',
-            array('appearance' => $appearance)
+            array(
+                'appearance'          => $appearance,
+                'previous_appearance' => null,
+                'next_appearance'     => null,
+            )
         );
     }
 
@@ -97,6 +108,8 @@ class AppearanceController extends Controller
      * Displays a form to create a new appearance.
      *
      * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @Secure(roles="ROLE_EDITOR")
      */
     public function newAction()
     {
@@ -116,6 +129,8 @@ class AppearanceController extends Controller
      * @param Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     *
+     * @Secure(roles="ROLE_EDITOR")
      */
     public function createAction(Request $request)
     {
@@ -136,7 +151,7 @@ class AppearanceController extends Controller
             return $this->redirect(
                 $this->generateUrl(
                     'khatovar_web_appearance_show',
-                    array('id' => $entity->getId())
+                    array('slug' => $entity->getSlug())
                 )
             );
         }
@@ -153,6 +168,8 @@ class AppearanceController extends Controller
      * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @Secure(roles="ROLE_EDITOR")
      */
     public function editAction($id)
     {
@@ -172,6 +189,8 @@ class AppearanceController extends Controller
      * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @Secure(roles="ROLE_EDITOR")
      */
     public function updateAction(Request $request, $id)
     {
@@ -205,6 +224,12 @@ class AppearanceController extends Controller
     /**
      * Deletes a Appearance entity.
      *
+     * @param Request $request
+     * @param int     $id
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @Secure(roles="ROLE_EDITOR")
      */
     public function deleteAction(Request $request, $id)
     {
@@ -294,6 +319,24 @@ class AppearanceController extends Controller
             )
             ->getForm()
         ;
+    }
+
+    /**
+     * Return a list of delete forms for a set of Exaction entities.
+     *
+     * @param Appearance[] $appearances
+     *
+     * @return \Symfony\Component\Form\Form[]
+     */
+    protected function createDeleteForms(array $appearances)
+    {
+        $deleteForms = array();
+
+        foreach ($appearances as $appearance) {
+            $deleteForms[$appearance->getId()] = $this->createDeleteForm($appearance->getId())->createView();
+        }
+
+        return $deleteForms;
     }
 
     /**

@@ -1,10 +1,10 @@
 parameters:
-    khatovar_appearance.controller.contact.class: Khatovar\Bundle\AppearanceBundle\Controller\AppearanceController
+    khatovar_appearance.controller.appearance.class: Khatovar\Bundle\AppearanceBundle\Controller\AppearanceController
 
 services:
-    khatovar_appearance.controller.contact:
+    khatovar_appearance.controller.appearance:
         scope: request
-        class: %khatovar_appearance.controller.contact.class%
+        class: %khatovar_appearance.controller.appearance.class%
         arguments:
             - '@service_container'
             - '@doctrine.orm.entity_manager'

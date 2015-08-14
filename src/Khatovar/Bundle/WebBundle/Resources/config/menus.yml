@@ -7,6 +7,7 @@ services:
         class: %khatovar_web.menu.menu_builder.class%
         arguments:
             - '@knp_menu.factory'
+            - '@doctrine.orm.entity_manager'
             - '@khatovar_exaction.manager.exaction'
 
     khatovar_web.menu.main:

@@ -1,15 +1,12 @@
-{% extends '::base.html.twig' %}
+{% extends 'KhatovarWebBundle::layout.html.twig' %}
 
-{% block body -%}
-    <h1>Appearance creation</h1>
+{% form_theme form 'KhatovarWebBundle:form:fields.html.twig' %}
 
-    {{ form(form) }}
+{% block inarticle %}
+    <a href="{{ path('khatovar_web_appearance') }}">Retour à la liste des prestation</a>
+    <hr />
 
-    <ul class="record_actions">
-        <li>
-            <a href="{{ path('khatovar_web_appearance') }}">
-                Back to the list
-            </a>
-        </li>
-    </ul>
+    <h1>Création d'une nouvelle prestation</h1>
+
+    {% include 'KhatovarAppearanceBundle:Appearance:_form.html.twig' with {'form': form} %}
 {% endblock %}
