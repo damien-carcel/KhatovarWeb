@@ -36,19 +36,19 @@ use Khatovar\Bundle\PhotoBundle\Entity\Photo;
 class Appearance
 {
     /** @var integer */
-    private $id;
+    protected $id;
 
     /** @var string */
-    private $name;
+    protected $name;
 
     /** @var string */
-    private $slug;
+    protected $slug;
 
     /** @var string */
-    private $content;
+    protected $content;
 
     /** @var boolean */
-    private $active;
+    protected $active;
 
     /** @var Collection */
     protected $photos;

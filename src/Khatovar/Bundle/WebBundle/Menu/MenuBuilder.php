@@ -63,7 +63,7 @@ class MenuBuilder
 
         $this->appearances = $this->entityManager
             ->getRepository('KhatovarAppearanceBundle:Appearance')
-            ->findBy(array('active' => true));
+            ->findActiveSortedBySlug();
     }
 
     /**

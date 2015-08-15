@@ -9,3 +9,4 @@ services:
             - '@service_container'
             - '@doctrine.orm.entity_manager'
             - '@session'
+            - '@khatovar_appearance.manager.appearance'

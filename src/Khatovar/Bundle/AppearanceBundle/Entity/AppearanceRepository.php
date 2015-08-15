@@ -33,4 +33,16 @@ use Doctrine\ORM\EntityRepository;
  */
 class AppearanceRepository extends EntityRepository
 {
+    /**
+     * @return Appearance[]
+     */
+    public function findActiveSortedBySlug()
+    {
+        $query = $this->createQueryBuilder('a')
+            ->orderBy('a.slug', 'ASC')
+            ->where('a.active = true')
+            ->getQuery();
+
+        return $query->getResult();
+    }
 }
