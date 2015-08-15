@@ -72,7 +72,7 @@ class Contact
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getId()
     {

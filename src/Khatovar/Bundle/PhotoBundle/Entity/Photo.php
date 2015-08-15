@@ -37,7 +37,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 class Photo
 {
-    /** @var int */
+    /** @var integer */
     protected $id;
 
     /**
@@ -191,7 +191,7 @@ class Photo
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getId()
     {

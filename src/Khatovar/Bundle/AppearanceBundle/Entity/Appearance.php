@@ -47,7 +47,7 @@ class Appearance
     /** @var string */
     protected $content;
 
-    /** @var boolean */
+    /** @var bool */
     protected $active;
 
     /** @var Collection */
@@ -71,7 +71,7 @@ class Appearance
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -139,7 +139,7 @@ class Appearance
     }
 
     /**
-     * @param boolean $active
+     * @param bool $active
      *
      * @return Appearance
      */
@@ -151,7 +151,7 @@ class Appearance
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isActive()
     {

@@ -106,7 +106,7 @@ class Member
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -380,7 +380,7 @@ class Member
     /**
      * Set active
      *
-     * @param boolean $active
+     * @param bool $active
      *
      * @return Member
      */
@@ -394,7 +394,7 @@ class Member
     /**
      * Get active
      *
-     * @return boolean
+     * @return bool
      */
     public function isActive()
     {
