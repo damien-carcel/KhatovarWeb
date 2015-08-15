@@ -25,6 +25,7 @@ namespace Khatovar\Bundle\AppearanceBundle\Manager;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Khatovar\Bundle\AppearanceBundle\Entity\Appearance;
+use Khatovar\Bundle\AppearanceBundle\Helper\AppearanceHelper;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -34,20 +35,21 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class AppearanceManager
 {
-    /** @var EntityManagerInterface */
-    protected $entityManager;
+    /** @var \Khatovar\Bundle\AppearanceBundle\Entity\AppearanceRepository */
+    protected $appareanceRepository;
 
     /**
      * @param EntityManagerInterface $entityManager
      */
     public function __construct(EntityManagerInterface $entityManager)
     {
-        $this->entityManager = $entityManager;
+        $this->appareanceRepository = $entityManager->getRepository('KhatovarAppearanceBundle:Appearance');
     }
 
     /**
      * Find an appearance, alongside its alphabetically next and
-     * previous appearances.
+     * previous active appearances. If appearance is a camp, it will
+     * not have any previous and next ones.
      *
      * The 3 appearances are returned as an array, identified by the
      * keys "previous", "current", and "next". If previous and/or next
@@ -56,38 +58,33 @@ class AppearanceManager
      * @param string $slug
      *
      * @return Appearance[]
-     *
-     * @throws NotFoundHttpException
      */
     public function findWithNextAndPreviousOr404($slug)
     {
-        $sortedAppearances = $this->entityManager
-            ->getRepository('KhatovarAppearanceBundle:Appearance')
-            ->findActiveSortedBySlug();
-
-        $appearances = array();
-
-        for ($position = 0; $position < count($sortedAppearances); $position++) {
-            if ($slug === $sortedAppearances[$position]->getSlug()) {
-                $appearances['current'] = $sortedAppearances[$position];
-
-                if (isset($sortedAppearances[$position - 1])) {
-                    $appearances['previous'] = $sortedAppearances[$position - 1];
-                } else {
-                    $appearances['previous'] = null;
-                }
-
-                if (isset($sortedAppearances[$position + 1])) {
-                    $appearances['next'] = $sortedAppearances[$position + 1];
-                } else {
-                    $appearances['next'] = null;
-                }
-
-                break;
-            }
+        if ($this->isPageType(AppearanceHelper::CAMP_TYPE_CODE, $slug)) {
+            $appearances = $this->getCamp($slug);
+        } else {
+            $appearances = $this->getAppearances($slug);
         }
 
-        if (empty($appearances)) {
+        return $appearances;
+    }
+
+    /**
+     * Check if an appearance is a given type or not.
+     *
+     * @param string $pageType
+     * @param string $slug
+     *
+     * @return bool
+     *
+     * @throws NotFoundHttpException
+     */
+    protected function isPageType($pageType, $slug)
+    {
+        $appearance = $this->appareanceRepository->findOneBy(array('slug' => $slug));
+
+        if (!($appearance instanceof Appearance)) {
             throw new NotFoundHttpException(
                 sprintf(
                     'Impossible de trouver la prestation ayant pour code %s.',
@@ -96,6 +93,88 @@ class AppearanceManager
             );
         }
 
+        return $pageType === $appearance->getPageType();
+    }
+
+    /**
+     * Return the camp page.
+     *
+     * @param string $slug
+     *
+     * @return array
+     */
+    protected function getCamp($slug)
+    {
+        $camp = $this->appareanceRepository->findOneBy(array('slug' => $slug));
+
+        return array(
+            'previous' => null,
+            'current'  => $camp,
+            'next'     => null,
+        );
+    }
+
+    /**
+     * Return a programme or an workshop with next and previous ones.
+     *
+     * @param string $slug
+     *
+     * @return array
+     */
+    protected function getAppearances($slug)
+    {
+        if ($this->isPageType(AppearanceHelper::PROGRAMME_TYPE_CODE, $slug)) {
+            $sortedAppearances = $this->appareanceRepository->findAllProgrammesSortedBySlug();
+        } else {
+            $sortedAppearances = $this->appareanceRepository->findAllAppearancesSortedBySlug();
+        }
+
+        $appearances = array();
+
+        for ($position = 0; $position < count($sortedAppearances); $position++) {
+            if ($slug === $sortedAppearances[$position]->getSlug()) {
+                $appearances['previous'] = $this->getPreviousActiveAppearance($sortedAppearances, $position);
+                $appearances['current']  = $sortedAppearances[$position];
+                $appearances['next']     = $this->getNextActiveAppearance($sortedAppearances, $position);
+
+                break;
+            }
+        }
+
         return $appearances;
+    }
+
+    /**
+     * @param Appearance[] $sortedAppearances
+     * @param int          $currentPosition
+     *
+     * @return Appearance|null
+     */
+    protected function getPreviousActiveAppearance(array $sortedAppearances, $currentPosition)
+    {
+        for ($position = $currentPosition -1; $position >= 0; $position--) {
+            if (isset($sortedAppearances[$position]) && $sortedAppearances[$position]->isActive()) {
+                return $sortedAppearances[$position];
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param Appearance[] $sortedAppearances
+     * @param int          $currentPosition
+     *
+     * @return Appearance|null
+     */
+    protected function getNextActiveAppearance(array $sortedAppearances, $currentPosition)
+    {
+        for ($position = $currentPosition +1; $position < count($sortedAppearances); $position++) {
+            if (isset($sortedAppearances[$position]) && $sortedAppearances[$position]->isActive()) {
+                return $sortedAppearances[$position];
+            }
+        }
+
+        return null;
     }
 }

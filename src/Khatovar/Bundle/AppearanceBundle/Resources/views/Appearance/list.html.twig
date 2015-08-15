@@ -1,0 +1,58 @@
+{% extends 'KhatovarWebBundle::layout.html.twig' %}
+
+{% block inarticle %}
+    <style>
+        td, th {
+            padding: 5px 0 5px 0;
+        }
+    </style>
+
+    <h1>Liste des prestations</h1>
+
+    <p>
+        <a href="{{ path('khatovar_web_appearance_new') }}">Créer une nouvelle prestation</a>
+    </p>
+    <p>
+        Liste des prestations :
+    </p>
+    <table class="table-responsive">
+        <thead>
+        <tr>
+            <th class="column-center">
+                Identifiant
+            </th>
+            <th>
+                Titre
+            </th>
+            <th>
+                Type de page
+            </th>
+            <th class="column-center">
+                Actions
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for appearance in appearances %}
+            {% set delete_form = delete_forms[appearance.id] %}
+
+            <tr>
+                <td class="column-center">
+                    <a href="{{ path('khatovar_web_appearance_show', { 'slug': appearance.slug }) }}">{{ appearance.id }}</a>
+                </td>
+                <td>
+                    {{ appearance.name }}
+                </td>
+                <td>
+                    {{ helper[appearance.pageType] }}
+                </td>
+                <td class="column-center">
+                    <a class="button" href="{{ path('khatovar_web_appearance_show', { 'slug': appearance.slug }) }}">Visualiser</a>
+                    <a class="button" href="{{ path('khatovar_web_appearance_edit', { 'id': appearance.id }) }}">Éditer</a>
+                    {{ form(delete_form, { 'attr': {'class': 'button-inline'}}) }}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

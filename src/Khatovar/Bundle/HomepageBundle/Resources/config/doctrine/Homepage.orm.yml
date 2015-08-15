@@ -22,7 +22,7 @@ Khatovar\Bundle\HomepageBundle\Entity\Homepage:
         active:
             type: boolean
             column: active
-            nullable: true
+            nullable: false
     oneToMany:
         photos:
             targetEntity: Khatovar\Bundle\PhotoBundle\Entity\Photo

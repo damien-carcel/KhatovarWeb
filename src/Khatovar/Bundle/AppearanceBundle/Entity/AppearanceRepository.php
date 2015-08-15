@@ -24,6 +24,7 @@
 namespace Khatovar\Bundle\AppearanceBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Khatovar\Bundle\AppearanceBundle\Helper\AppearanceHelper;
 
 /**
  * AppearanceRepository
@@ -36,13 +37,72 @@ class AppearanceRepository extends EntityRepository
     /**
      * @return Appearance[]
      */
-    public function findActiveSortedBySlug()
+    public function findAllAppearancesSortedBySlug()
+    {
+        $query = $this->createQueryBuilder('a')
+            ->orderBy('a.slug', 'ASC')
+            ->where('a.pageType = :pageType')
+            ->setParameter('pageType', AppearanceHelper::APPEARANCE_TYPE_CODE)
+            ->getQuery();
+
+        return $query->getResult();
+    }
+
+    /**
+     * @return Appearance[]
+     */
+    public function findActiveAppearancesSortedBySlug()
     {
         $query = $this->createQueryBuilder('a')
             ->orderBy('a.slug', 'ASC')
             ->where('a.active = true')
+            ->where('a.pageType = :pageType')
+            ->setParameter('pageType', AppearanceHelper::APPEARANCE_TYPE_CODE)
             ->getQuery();
 
         return $query->getResult();
+    }
+
+    /**
+     * @return Appearance[]
+     */
+    public function findAllProgrammesSortedBySlug()
+    {
+        $query = $this->createQueryBuilder('a')
+            ->orderBy('a.slug', 'ASC')
+            ->where('a.pageType = :pageType')
+            ->setParameter('pageType', AppearanceHelper::PROGRAMME_TYPE_CODE)
+            ->getQuery();
+
+        return $query->getResult();
+    }
+
+    /**
+     * @return Appearance[]
+     */
+    public function findActiveProgrammesSortedBySlug()
+    {
+        $query = $this->createQueryBuilder('a')
+            ->orderBy('a.slug', 'ASC')
+            ->where('a.active = true')
+            ->andWhere('a.pageType = :pageType')
+            ->setParameter('pageType', AppearanceHelper::PROGRAMME_TYPE_CODE)
+            ->getQuery();
+
+        return $query->getResult();
+    }
+
+    /**
+     * @return Appearance
+     */
+    public function findActiveCamp()
+    {
+        $query = $this->createQueryBuilder('a')
+            ->where('a.active = true')
+            ->andWhere('a.pageType = :pageType')
+            ->setParameter('pageType', AppearanceHelper::CAMP_TYPE_CODE)
+            ->getQuery();
+
+        return $query->getOneOrNullResult();
     }
 }

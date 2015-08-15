@@ -36,7 +36,8 @@ use Knp\Menu\ItemInterface;
  */
 class MenuBuilder
 {
-    protected $entityManager;
+    /** @var \Khatovar\Bundle\AppearanceBundle\Entity\Appearance[] */
+    protected $appearances;
 
     /** @var array */
     protected $exactionYears;
@@ -44,7 +45,8 @@ class MenuBuilder
     /** @var FactoryInterface */
     protected $menuFactory;
 
-    protected $appearances;
+    /** @var \Khatovar\Bundle\AppearanceBundle\Entity\Appearance[] */
+    protected $programmes;
 
     /**
      * @param FactoryInterface       $menuFactory
@@ -56,14 +58,12 @@ class MenuBuilder
         EntityManagerInterface $entityManager,
         ExactionManager $exactionManager
     ) {
-        $this->menuFactory   = $menuFactory;
-        $this->entityManager = $entityManager;
+        $this->menuFactory    = $menuFactory;
+        $appearanceRepository = $entityManager->getRepository('KhatovarAppearanceBundle:Appearance');
 
         $this->exactionYears = $exactionManager->getSortedYears();
-
-        $this->appearances = $this->entityManager
-            ->getRepository('KhatovarAppearanceBundle:Appearance')
-            ->findActiveSortedBySlug();
+        $this->appearances   = $appearanceRepository->findActiveAppearancesSortedBySlug();
+        $this->programmes    = $appearanceRepository->findActiveProgrammesSortedBySlug();
     }
 
     /**
@@ -105,15 +105,34 @@ class MenuBuilder
     protected function addAppearances(ItemInterface $menu)
     {
         $menu->addChild(
-            'appearances',
+            'programmes',
             array(
                 'label' => 'Nos prestations',
                 'route' => 'khatovar_web_appearance',
             )
         );
 
+        foreach ($this->programmes as $programme) {
+            $menu['programmes']->addChild(
+                $programme->getSlug(),
+                array(
+                    'label'           => $programme->getName(),
+                    'route'           => 'khatovar_web_appearance_show',
+                    'routeParameters' => array('slug' => $programme->getSlug()),
+                )
+            );
+        }
+
+        $menu['programmes']->addChild(
+            'appearances',
+            array(
+                'label' => 'Nos différents ateliers',
+                'route' => 'khatovar_web_appearance_workshop',
+            )
+        );
+
         foreach ($this->appearances as $appearance) {
-            $menu['appearances']->addChild(
+            $menu['programmes']['appearances']->addChild(
                 $appearance->getSlug(),
                 array(
                     'label'           => $appearance->getName(),
@@ -174,7 +193,7 @@ class MenuBuilder
             'camp',
             array(
                 'label' => 'Le camp',
-                'route' => 'khatovar_web_homepage', // TODO: new controller and routes
+                'route' => 'khatovar_web_homepage',
             )
         );
 
@@ -182,7 +201,7 @@ class MenuBuilder
             'camp_life',
             array(
                 'label' => 'Vie de camp',
-                'route' => 'khatovar_web_homepage', // TODO: new controller and routes
+                'route' => 'khatovar_web_appearance_camp',
             )
         );
 

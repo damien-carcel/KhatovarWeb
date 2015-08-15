@@ -99,7 +99,7 @@ class Member
      */
     public function __construct()
     {
-        $this->active = null;
+        $this->active = false;
         $this->photos = new ArrayCollection();
     }
 

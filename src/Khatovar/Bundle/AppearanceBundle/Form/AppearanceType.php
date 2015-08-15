@@ -23,6 +23,7 @@
 
 namespace Khatovar\Bundle\AppearanceBundle\Form;
 
+use Khatovar\Bundle\AppearanceBundle\Helper\AppearanceHelper;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -54,6 +55,13 @@ class AppearanceType extends AbstractType
                 array(
                     'label'    => 'Prestation proposée',
                     'required' => false,
+                )
+            )->add(
+                'pageType',
+                'choice',
+                array(
+                    'label'   => 'Type de page',
+                    'choices' => AppearanceHelper::getAppearancePageTypes(),
                 )
             );
     }

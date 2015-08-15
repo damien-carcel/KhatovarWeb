@@ -50,6 +50,9 @@ class Appearance
     /** @var bool */
     protected $active;
 
+    /** @var string */
+    protected $pageType;
+
     /** @var Collection */
     protected $photos;
 
@@ -66,7 +69,7 @@ class Appearance
      */
     public function __construct()
     {
-        $this->active = null;
+        $this->active = false;
         $this->photos = new ArrayCollection();
     }
 
@@ -156,6 +159,26 @@ class Appearance
     public function isActive()
     {
         return $this->active;
+    }
+
+    /**
+     * @param string $pageType
+     *
+     * @return Appearance
+     */
+    public function setPageType($pageType)
+    {
+        $this->pageType = $pageType;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPageType()
+    {
+        return $this->pageType;
     }
 
     /**

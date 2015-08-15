@@ -2,6 +2,18 @@ khatovar_web_appearance:
     path:     /
     defaults: { _controller: "khatovar_appearance.controller.appearance:indexAction" }
 
+khatovar_web_appearance_workshop:
+    path:     /ateliers
+    defaults: { _controller: "khatovar_appearance.controller.appearance:workshopAction" }
+
+khatovar_web_appearance_camp:
+    path:     /campement
+    defaults: { _controller: "khatovar_appearance.controller.appearance:campAction" }
+
+khatovar_web_appearance_list:
+    path:     /list
+    defaults: { _controller: "khatovar_appearance.controller.appearance:listAction" }
+
 khatovar_web_appearance_show:
     path:     /prestation/{slug}
     defaults: { _controller: "khatovar_appearance.controller.appearance:showAction" }

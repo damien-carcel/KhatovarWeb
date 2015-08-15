@@ -26,6 +26,7 @@ namespace Khatovar\Bundle\AppearanceBundle\Controller;
 use Doctrine\ORM\EntityManagerInterface;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Khatovar\Bundle\AppearanceBundle\Entity\Appearance;
+use Khatovar\Bundle\AppearanceBundle\Helper\AppearanceHelper;
 use Khatovar\Bundle\AppearanceBundle\Manager\AppearanceManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -70,20 +71,60 @@ class AppearanceController extends Controller
     }
 
     /**
-     * Lists all appearances.
+     * Lists all programmes.
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction()
     {
-        $appearances = $this->entityManager->getRepository('KhatovarAppearanceBundle:Appearance')->findAll();
-        $deleteForms = $this->createDeleteForms($appearances);
+        $appearances = $this->entityManager
+            ->getRepository('KhatovarAppearanceBundle:Appearance')
+            ->findActiveProgrammesSortedBySlug();
 
         return $this->render(
             'KhatovarAppearanceBundle:Appearance:index.html.twig',
+            array('appearances' => $appearances)
+        );
+    }
+
+    /**
+     * Lists all workshops.
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function workshopAction()
+    {
+        $appearances = $this->entityManager
+            ->getRepository('KhatovarAppearanceBundle:Appearance')
+            ->findActiveAppearancesSortedBySlug();
+
+        return $this->render(
+            'KhatovarAppearanceBundle:Appearance:index.html.twig',
+            array('appearances' => $appearances)
+        );
+    }
+
+    /**
+     * Displays the camp page.
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
+    public function campAction()
+    {
+        $camp = $this->entityManager->getRepository('KhatovarAppearanceBundle:Appearance')->findActiveCamp();
+
+        if (null === $camp) {
+            throw $this->createNotFoundException('Impossible de trouver une page de camp active.');
+        }
+
+        return $this->render(
+            'KhatovarAppearanceBundle:Appearance:show.html.twig',
             array(
-                'appearances'  => $appearances,
-                'delete_forms' => $deleteForms,
+                'previous'   => null,
+                'appearance' => $camp,
+                'next'       => null,
             )
         );
     }
@@ -97,14 +138,36 @@ class AppearanceController extends Controller
      */
     public function showAction($slug)
     {
-        $appearance = $this->appearanceManager->findWithNextAndPreviousOr404($slug);
+        $appearances = $this->appearanceManager->findWithNextAndPreviousOr404($slug);
 
         return $this->render(
             'KhatovarAppearanceBundle:Appearance:show.html.twig',
             array(
-                'previous'   => $appearance['previous'],
-                'appearance' => $appearance['current'],
-                'next'       => $appearance['next'],
+                'previous'   => $appearances['previous'],
+                'appearance' => $appearances['current'],
+                'next'       => $appearances['next'],
+            )
+        );
+    }
+
+    /**
+     * Lists all appearances.
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @Secure(roles="ROLE_EDITOR")
+     */
+    public function listAction()
+    {
+        $appearances = $this->entityManager->getRepository('KhatovarAppearanceBundle:Appearance')->findAll();
+        $deleteForms = $this->createDeleteForms($appearances);
+
+        return $this->render(
+            'KhatovarAppearanceBundle:Appearance:list.html.twig',
+            array(
+                'appearances'  => $appearances,
+                'delete_forms' => $deleteForms,
+                'helper'       => AppearanceHelper::getAppearancePageTypes(),
             )
         );
     }
@@ -253,7 +316,7 @@ class AppearanceController extends Controller
             );
         }
 
-        return $this->redirect($this->generateUrl('khatovar_web_appearance'));
+        return $this->redirect($this->generateUrl('khatovar_web_appearance_list'));
     }
 
     /**
@@ -318,12 +381,11 @@ class AppearanceController extends Controller
                 'submit',
                 'submit',
                 array(
-                    'label' => 'Delete',
+                    'label' => 'Effacer',
                     'attr'  => array('onclick' => 'return confirm("Êtes-vous sûr ?")'),
                 )
             )
-            ->getForm()
-        ;
+            ->getForm();
     }
 
     /**
@@ -348,6 +410,8 @@ class AppearanceController extends Controller
      * @param int $id
      *
      * @return Appearance
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     protected function findByIdOr404($id)
     {
