@@ -31,10 +31,10 @@ namespace Khatovar\Bundle\AppearanceBundle\Helper;
 class AppearanceHelper
 {
     /** @staticvar string */
-    const APPEARANCE_TYPE_CODE = 'appearance';
+    const WORKSHOP_TYPE_CODE = 'appearance';
 
     /** @staticvar string */
-    const APPEARANCE_TYPE_LABEL = 'Atelier';
+    const WORKSHOP_TYPE_LABEL = 'Atelier';
 
     /** @staticvar string */
     const PROGRAMME_TYPE_CODE = 'programme';
@@ -54,9 +54,9 @@ class AppearanceHelper
     public static function getAppearancePageTypes()
     {
         return array(
-            static::APPEARANCE_TYPE_CODE => static::APPEARANCE_TYPE_LABEL,
-            static::PROGRAMME_TYPE_CODE  => static::PROGRAMME_TYPE_LABEL,
-            static::CAMP_TYPE_CODE       => static::CAMP_TYPE_LABEL,
+            static::WORKSHOP_TYPE_CODE  => static::WORKSHOP_TYPE_LABEL,
+            static::PROGRAMME_TYPE_CODE => static::PROGRAMME_TYPE_LABEL,
+            static::CAMP_TYPE_CODE      => static::CAMP_TYPE_LABEL,
         );
     }
 }

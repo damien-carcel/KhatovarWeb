@@ -27,6 +27,9 @@
             <th>
                 Type de page
             </th>
+            <th>
+                Active
+            </th>
             <th class="column-center">
                 Actions
             </th>
@@ -45,6 +48,13 @@
                 </td>
                 <td>
                     {{ helper[appearance.pageType] }}
+                </td>
+                <td>
+                    {% if appearance.active %}
+                        Oui
+                    {% else %}
+                        Non
+                    {% endif %}
                 </td>
                 <td class="column-center">
                     <a class="button" href="{{ path('khatovar_web_appearance_show', { 'slug': appearance.slug }) }}">Visualiser</a>

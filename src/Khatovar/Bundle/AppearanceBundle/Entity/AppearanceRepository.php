@@ -42,7 +42,7 @@ class AppearanceRepository extends EntityRepository
         $query = $this->createQueryBuilder('a')
             ->orderBy('a.slug', 'ASC')
             ->where('a.pageType = :pageType')
-            ->setParameter('pageType', AppearanceHelper::APPEARANCE_TYPE_CODE)
+            ->setParameter('pageType', AppearanceHelper::WORKSHOP_TYPE_CODE)
             ->getQuery();
 
         return $query->getResult();
@@ -56,8 +56,8 @@ class AppearanceRepository extends EntityRepository
         $query = $this->createQueryBuilder('a')
             ->orderBy('a.slug', 'ASC')
             ->where('a.active = true')
-            ->where('a.pageType = :pageType')
-            ->setParameter('pageType', AppearanceHelper::APPEARANCE_TYPE_CODE)
+            ->andWhere('a.pageType = :pageType')
+            ->setParameter('pageType', AppearanceHelper::WORKSHOP_TYPE_CODE)
             ->getQuery();
 
         return $query->getResult();
