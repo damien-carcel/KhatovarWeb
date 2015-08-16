@@ -152,7 +152,7 @@ class MenuBuilder
             'dates',
             array(
                 'label' => 'Toutes nos dates',
-                'route' => 'khatovar_web_homepage', // TODO: New route.
+                'route' => 'khatovar_web_exaction',
             )
         );
 

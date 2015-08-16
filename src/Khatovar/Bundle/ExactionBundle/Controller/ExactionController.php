@@ -70,7 +70,7 @@ class ExactionController extends Controller
     }
 
     /**
-     * Displays the list of all years of exaction.
+     * Displays a generalist exaction page.
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -80,6 +80,21 @@ class ExactionController extends Controller
 
         return $this->render(
             'KhatovarExactionBundle:Exaction:index.html.twig',
+            array('active_years' => $activeYears)
+        );
+    }
+
+    /**
+     * Displays the list of all years of exaction.
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function pastAction()
+    {
+        $activeYears = $this->exactionManager->getSortedYears();
+
+        return $this->render(
+            'KhatovarExactionBundle:Exaction:past.html.twig',
             array('active_years' => $activeYears)
         );
     }

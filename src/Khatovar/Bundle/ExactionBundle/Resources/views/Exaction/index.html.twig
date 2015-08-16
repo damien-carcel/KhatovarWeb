@@ -7,18 +7,15 @@
     {% endif %}
 
     <p>
-        Vous trouverez ici toutes les fêtes médiévales auxquelles nous avons participé ces dernières années.
+        Retrouvez <a href="{{ path('khatovar_web_exaction_to_come') }}" title="Nos futures apparitions">nos futures apparitions</a>, ainsi que toutes les fêtes médiévales auxquelles nous avons participé ces dernières années :
     </p>
 
-    <table width="100%">
-        <tr>
-            <td>
-                <div style="text-align:center; font-weight: bold;">
-                    {% for year in active_years %}
-                        <a href="{{ path('khatovar_web_exaction_list_by_year', {'year': year}) }}" title="{{ year }}">{{ year }}</a>
-                    {% endfor %}
-                </div>
-            </td>
-        </tr>
-    </table>
+    <br />
+
+    <div style="text-align:center; font-weight: bold;">
+        –
+        {% for year in active_years %}
+            <a href="{{ path('khatovar_web_exaction_list_by_year', {'year': year}) }}" title="{{ year }}">{{ year }}</a> –
+        {% endfor %}
+    </div>
 {% endblock %}
