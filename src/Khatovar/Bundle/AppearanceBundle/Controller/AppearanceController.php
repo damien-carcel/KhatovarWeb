@@ -43,9 +43,6 @@ class AppearanceController extends Controller
     /** @var AppearanceManager */
     protected $appearanceManager;
 
-    /** @var ContainerInterface */
-    protected $container;
-
     /** @var EntityManagerInterface */
     protected $entityManager;
 

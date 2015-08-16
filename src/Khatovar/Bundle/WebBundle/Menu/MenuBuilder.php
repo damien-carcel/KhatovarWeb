@@ -193,7 +193,7 @@ class MenuBuilder
             'camp',
             array(
                 'label' => 'Le camp',
-                'route' => 'khatovar_web_homepage',
+                'route' => 'khatovar_web_camp',
             )
         );
 

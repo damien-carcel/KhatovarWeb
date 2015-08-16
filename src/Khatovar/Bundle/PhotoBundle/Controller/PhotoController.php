@@ -48,9 +48,6 @@ class PhotoController extends Controller
     /** @staticvar string */
     const MAX_PHOTO_HEIGHT = 720;
 
-    /** @var ContainerInterface */
-    protected $container;
-
     /** @var EntityManagerInterface */
     protected $entityManager;
 

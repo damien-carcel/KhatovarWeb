@@ -39,9 +39,6 @@ use Symfony\Component\HttpFoundation\Session\Session;
  */
 class ExactionController extends Controller
 {
-    /** @var ContainerInterface */
-    protected $container;
-
     /** @var EntityManagerInterface */
     protected $entityManager;
 

@@ -196,10 +196,14 @@ class PhotoManager
     {
         $photos = array();
 
+        if ('web' === $controller) {
+            return $photos;
+        }
+
         $currentlyRendered = $this->getCurrentlyRendered($controller, $action, $slugOrId);
 
         $owner = null;
-        if ($controller === 'member' && null != $slugOrId) {
+        if ('member' === $controller && null != $slugOrId) {
             $owner = $currentlyRendered->getOwner();
         }
 

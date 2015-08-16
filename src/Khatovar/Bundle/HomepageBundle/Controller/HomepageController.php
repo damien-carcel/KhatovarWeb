@@ -41,9 +41,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class HomepageController extends Controller
 {
-    /** @var ContainerInterface */
-    protected $container;
-
     /** @var EntityManagerInterface */
     protected $entityManager;
 

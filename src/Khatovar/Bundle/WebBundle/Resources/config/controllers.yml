@@ -1,0 +1,9 @@
+parameters:
+    khatovar_web.controller.web.class: Khatovar\Bundle\WebBundle\Controller\WebController
+
+services:
+    khatovar_web.controller.web:
+        scope: request
+        class: %khatovar_web.controller.web.class%
+        arguments:
+            - '@service_container'

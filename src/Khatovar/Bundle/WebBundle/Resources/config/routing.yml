@@ -1,0 +1,3 @@
+khatovar_web_camp:
+    path:     /camp
+    defaults: { _controller: 'khatovar_web.controller.web:campAction' }

@@ -40,9 +40,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class ContactController extends Controller
 {
-    /** @var ContainerInterface */
-    protected $container;
-
     /** @var EntityManagerInterface */
     protected $entityManager;
 

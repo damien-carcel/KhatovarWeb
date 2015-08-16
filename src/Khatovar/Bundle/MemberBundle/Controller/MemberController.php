@@ -40,9 +40,6 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
  */
 class MemberController extends Controller
 {
-    /** @var ContainerInterface */
-    protected $container;
-
     /** @var EntityManagerInterface */
     protected $entityManager;
 

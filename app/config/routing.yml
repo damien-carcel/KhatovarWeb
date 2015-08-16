@@ -22,13 +22,17 @@ khatovar_homepage:
     resource: "@KhatovarHomepageBundle/Resources/config/routing.yml"
     prefix:   /accueil
 
+khatovar_web:
+    resource: "@KhatovarWebBundle/Resources/config/routing.yml"
+    prefix:   /
+
 carcel_documents:
     resource: "@CarcelDocumentsBundle/Resources/config/routing.yml"
-    prefix: /documents
+    prefix:   /documents
 
 carcel_user:
     resource: "@CarcelUserBundle/Resources/config/routing.yml"
-    prefix: /
+    prefix:   /
 
 # redirecting the root
 root:
