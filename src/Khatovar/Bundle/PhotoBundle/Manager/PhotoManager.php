@@ -259,15 +259,9 @@ class PhotoManager
      */
     protected function getRepository($controller)
     {
-        // TODO: remove the if once the DefaultController doesn't exist anymore
+        $entity = 'Khatovar' . ucfirst($controller) . 'Bundle:' . ucfirst($controller);
 
-        if ($controller !== 'default') {
-            $entity = 'Khatovar' . ucfirst($controller) . 'Bundle:' . ucfirst($controller);
-
-            return $this->entityManager->getRepository($entity);
-        }
-
-        return null;
+        return $this->entityManager->getRepository($entity);
     }
 
     /**
@@ -277,7 +271,7 @@ class PhotoManager
      */
     protected function getPhotoPaths($text)
     {
-        preg_match_all('/(\w+\-\d+\.jpeg)/', $text, $matches);
+        preg_match_all('#(\w+\-\d+\.jpeg)#', $text, $matches);
 
         return $matches[0];
     }

@@ -126,7 +126,7 @@ class AppearanceManager
         if ($this->isPageType(AppearanceHelper::PROGRAMME_TYPE_CODE, $slug)) {
             $sortedAppearances = $this->appareanceRepository->findAllProgrammesSortedBySlug();
         } else {
-            $sortedAppearances = $this->appareanceRepository->findAllAppearancesSortedBySlug();
+            $sortedAppearances = $this->appareanceRepository->findAllWorkshopsSortedBySlug();
         }
 
         $appearances = array();

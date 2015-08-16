@@ -3,10 +3,46 @@
 {% form_theme edit_form 'KhatovarWebBundle:form:fields.html.twig' %}
 
 {% block inarticle %}
+    <style>
+        .readonly-input-form {
+            width: 250px;
+        }
+    </style>
+
     <a href="{{ path('khatovar_web_appearance_list') }}">Retour à la liste des prestation</a>
     <hr />
 
     <h1>Édition de la prestation</h1>
+
+    {% if workshops is not empty %}
+        <table  class="table-responsive">
+            <thead>
+            <tr>
+                <th>
+                    Atelier
+                </th>
+                <th>
+                    Code à copier dans le texte (replacez « votre texte » par ce que vous voulez)
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for workshop in workshops %}
+                <tr>
+                    <td>
+                        {{ workshop.name }}
+                    </td>
+                    <td>
+                        <form>
+                            <label for="copy_code"></label>
+                            <input class="readonly-input-form" name="copy_code" id="copy_code" value="[{{ workshop.slug }}|« votre texte »]" readonly="readonly" />
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
 
     {% include 'KhatovarAppearanceBundle:Appearance:_form.html.twig' with {'form': edit_form} %}
 {% endblock %}

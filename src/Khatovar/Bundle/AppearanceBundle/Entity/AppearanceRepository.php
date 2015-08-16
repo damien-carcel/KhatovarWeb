@@ -37,7 +37,7 @@ class AppearanceRepository extends EntityRepository
     /**
      * @return Appearance[]
      */
-    public function findAllAppearancesSortedBySlug()
+    public function findAllWorkshopsSortedBySlug()
     {
         $query = $this->createQueryBuilder('a')
             ->orderBy('a.slug', 'ASC')
@@ -51,7 +51,7 @@ class AppearanceRepository extends EntityRepository
     /**
      * @return Appearance[]
      */
-    public function findActiveAppearancesSortedBySlug()
+    public function findActiveWorkshopsSortedBySlug()
     {
         $query = $this->createQueryBuilder('a')
             ->orderBy('a.slug', 'ASC')

@@ -62,7 +62,7 @@ class MenuBuilder
         $appearanceRepository = $entityManager->getRepository('KhatovarAppearanceBundle:Appearance');
 
         $this->exactionYears = $exactionManager->getSortedYears();
-        $this->appearances   = $appearanceRepository->findActiveAppearancesSortedBySlug();
+        $this->appearances   = $appearanceRepository->findActiveWorkshopsSortedBySlug();
         $this->programmes    = $appearanceRepository->findActiveProgrammesSortedBySlug();
     }
 

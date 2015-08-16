@@ -12,7 +12,7 @@
 
     <h1>{{ appearance.name }}</h1>
 
-    {{ appearance.content|add_paragraph_and_photos(appearance.photos) }}
+    {{ appearance.content|khatovar_normalize_appearance_links|add_paragraph_and_photos(appearance.photos) }}
 
     <div class="container flex-container-always">
         <div class="navigation nav-left">

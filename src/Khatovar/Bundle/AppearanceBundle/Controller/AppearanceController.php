@@ -93,7 +93,7 @@ class AppearanceController extends Controller
     {
         $appearances = $this->entityManager
             ->getRepository('KhatovarAppearanceBundle:Appearance')
-            ->findActiveAppearancesSortedBySlug();
+            ->findActiveWorkshopsSortedBySlug();
 
         return $this->render(
             'KhatovarAppearanceBundle:Appearance:index.html.twig',
@@ -184,7 +184,7 @@ class AppearanceController extends Controller
 
         return $this->render(
             'KhatovarAppearanceBundle:Appearance:new.html.twig',
-            array('form' => $form->createView(),)
+            array('form' => $form->createView())
         );
     }
 
@@ -239,12 +239,16 @@ class AppearanceController extends Controller
     public function editAction($id)
     {
         $appearance = $this->findByIdOr404($id);
+        $workshops  = $this->findActiveWorkshopsIfIsProgramme($appearance);
 
         $editForm = $this->createEditForm($appearance);
 
         return $this->render(
             'KhatovarAppearanceBundle:Appearance:edit.html.twig',
-            array('edit_form' => $editForm->createView(),)
+            array(
+                'edit_form' => $editForm->createView(),
+                'workshops' => $workshops,
+            )
         );
     }
 
@@ -260,6 +264,7 @@ class AppearanceController extends Controller
     public function updateAction(Request $request, $id)
     {
         $appearance = $this->findByIdOr404($id);
+        $workshops  = $this->findActiveWorkshopsIfIsProgramme($appearance);
 
         $editForm = $this->createEditForm($appearance);
         $editForm->handleRequest($request);
@@ -282,7 +287,10 @@ class AppearanceController extends Controller
 
         return $this->render(
             'KhatovarAppearanceBundle:Appearance:edit.html.twig',
-            array('edit_form' => $editForm->createView(),)
+            array(
+                'edit_form' => $editForm->createView(),
+                'workshops' => $workshops,
+                )
         );
     }
 
@@ -419,5 +427,25 @@ class AppearanceController extends Controller
         }
 
         return $appearance;
+    }
+
+    /**
+     * Get active workshops if given appearance is a programme.
+     *
+     * @param Appearance $appearance
+     *
+     * @return \Khatovar\Bundle\AppearanceBundle\Entity\Appearance[]
+     */
+    protected function findActiveWorkshopsIfIsProgramme(Appearance $appearance)
+    {
+        $workshops = array();
+
+        if (AppearanceHelper::PROGRAMME_TYPE_CODE === $appearance->getPageType()) {
+            $workshops = $this->entityManager
+                ->getRepository('KhatovarAppearanceBundle:Appearance')
+                ->findActiveWorkshopsSortedBySlug();
+        }
+
+        return $workshops;
     }
 }
