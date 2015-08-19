@@ -399,20 +399,8 @@ article a:visited, footer a:visited, aside a:visited {color: #AC3333;}
 article a:hover, footer a:hover, aside a:hover {color: #936f00;}
 article a:active, footer a:active, aside a:active {color: #AC3333;}
 
-article a.button {
-    -webkit-appearance: button;
-    -moz-appearance: button;
-    appearance: button;
-    padding: 3px 6px;
-    margin: 2px;
-    text-decoration: none;
-    font-weight: inherit;
-    color: initial;
-}
-
 .button-inline {
     display: inline-block;
-    margin: 0 1px;
 }
 
 /*******************/
@@ -751,7 +739,7 @@ textarea {
 
 /* Mostly from Bootstrap 3.2 */
 
-.btn {
+article button, .btn {
     display: inline-block;
     padding: 6px 12px;
     margin-bottom: 0;
@@ -771,6 +759,7 @@ textarea {
     border-radius: 4px;
     text-decoration: none;
 }
+article button:focus,
 .btn:focus,
 .btn:active:focus,
 .btn.active:focus {
@@ -778,11 +767,13 @@ textarea {
     outline: 5px auto -webkit-focus-ring-color;
     outline-offset: -2px;
 }
+article button:hover,
 .btn:hover,
 .btn:focus {
     color: #333;
     text-decoration: none;
 }
+article button:active,
 .btn:active,
 .btn.active {
     background-image: none;
@@ -793,6 +784,7 @@ textarea {
     box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
     background-image: none;
 }
+article button.disabled,
 .btn.disabled,
 .btn[disabled],
 fieldset[disabled] .btn {
@@ -803,6 +795,7 @@ fieldset[disabled] .btn {
     box-shadow: none;
     opacity: .65;
 }
+article button,
 .btn-default {
     color: #333;
     background-color: #fff;
@@ -821,6 +814,10 @@ fieldset[disabled] .btn {
     border-color: #dbdbdb;
     border-color: #ccc;
 }
+article button:hover,
+article button:focus,
+article button:active,
+article button.active,
 .btn-default:hover,
 .btn-default:focus,
 .btn-default:active,
@@ -830,6 +827,8 @@ fieldset[disabled] .btn {
     background-color: #e6e6e6;
     border-color: #adadad;
 }
+article button:active,
+article button.active,
 .btn-default:active,
 .btn-default.active,
 .open > .dropdown-toggle.btn-default {
@@ -857,16 +856,22 @@ fieldset[disabled] .btn-default.active {
     color: #fff;
     background-color: #333;
 }
+article button:hover,
+article button:focus,
 .btn-default:hover,
 .btn-default:focus {
     background-color: #e0e0e0;
     background-position: 0 -15px;
 }
+article button:active,
+article button.active,
 .btn-default:active,
 .btn-default.active {
     background-color: #e0e0e0;
     border-color: #dbdbdb;
 }
+article button:disabled,
+article button[disabled],
 .btn-default:disabled,
 .btn-default[disabled] {
     background-color: #e0e0e0;
@@ -895,4 +900,12 @@ a:link.btn, a:visited.btn, a:hover.btn, a:active.btn {
 .form-text {
     width: 40%;
     min-width: 200px;
+}
+
+article button,
+.btn-sm,
+.btn-group-sm > .btn {
+    padding: 1px 5px;
+    line-height: 1.5;
+    border-radius: 3px;
 }

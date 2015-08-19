@@ -24,7 +24,7 @@
                         <div class="trombi photo_admin">
                             {{ photo.getWebPath()|thumbnail('landscape', photo.alt) }}
                             <br />
-                            <a class="button" href="{{ path('khatovar_web_photo_edit', {'id': photo.id}) }}">
+                            <a class="btn btn-sm btn-default" href="{{ path('khatovar_web_photo_edit', {'id': photo.id}) }}">
                                 Éditer
                             </a>
                             {{ form(delete_form, { 'attr': {'class': 'button-inline'}}) }}

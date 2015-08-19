@@ -58,8 +58,8 @@
                     {{ homepage.name }}
                 </td>
                 <td class="column-center">
-                    <a class="button" href="{{ path('khatovar_web_homepage_show', { 'id': homepage.id }) }}">Visualiser</a>
-                    <a class="button" href="{{ path('khatovar_web_homepage_edit', { 'id': homepage.id }) }}">Éditer</a>
+                    <a class="btn btn-sm btn-default" href="{{ path('khatovar_web_homepage_show', { 'id': homepage.id }) }}">Visualiser</a>
+                    <a class="btn btn-sm btn-default" href="{{ path('khatovar_web_homepage_edit', { 'id': homepage.id }) }}">Éditer</a>
                     {{ form(delete_form, { 'attr': {'class': 'button-inline'}}) }}
                 </td>
             </tr>
