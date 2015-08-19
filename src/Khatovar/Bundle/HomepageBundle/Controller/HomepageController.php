@@ -28,7 +28,6 @@ use JMS\SecurityExtraBundle\Annotation\Secure;
 use Khatovar\Bundle\HomepageBundle\Entity\Homepage;
 use Khatovar\Bundle\PhotoBundle\Manager\PhotoManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -51,21 +50,18 @@ class HomepageController extends Controller
     protected $session;
 
     /**
-     * @param ContainerInterface     $container
      * @param EntityManagerInterface $entityManager
-     * @param PhotoManager           $photoManager
      * @param Session                $session
+     * @param PhotoManager           $photoManager
      */
     public function __construct(
-        ContainerInterface $container,
         EntityManagerInterface $entityManager,
-        PhotoManager $photoManager,
-        Session $session
+        Session $session,
+        PhotoManager $photoManager
     ) {
-        $this->container     = $container;
         $this->entityManager = $entityManager;
-        $this->photoManager  = $photoManager;
         $this->session       = $session;
+        $this->photoManager  = $photoManager;
     }
 
     /**

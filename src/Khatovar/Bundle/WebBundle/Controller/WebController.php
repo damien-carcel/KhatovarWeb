@@ -34,14 +34,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class WebController extends Controller
 {
     /**
-     * @param ContainerInterface $container
-     */
-    public function __construct(ContainerInterface $container)
-    {
-        $this->container = $container;
-    }
-
-    /**
      * Displays a page with links for redirection.
      *
      * @return \Symfony\Component\HttpFoundation\Response

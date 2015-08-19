@@ -29,7 +29,6 @@ use Khatovar\Bundle\AppearanceBundle\Entity\Appearance;
 use Khatovar\Bundle\AppearanceBundle\Helper\AppearanceHelper;
 use Khatovar\Bundle\AppearanceBundle\Manager\AppearanceManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -50,18 +49,15 @@ class AppearanceController extends Controller
     protected $session;
 
     /**
-     * @param ContainerInterface     $container
      * @param EntityManagerInterface $entityManager
      * @param Session                $session
      * @param AppearanceManager      $appearanceManager
      */
     public function __construct(
-        ContainerInterface $container,
         EntityManagerInterface $entityManager,
         Session $session,
         AppearanceManager $appearanceManager
     ) {
-        $this->container         = $container;
         $this->entityManager     = $entityManager;
         $this->session           = $session;
         $this->appearanceManager = $appearanceManager;

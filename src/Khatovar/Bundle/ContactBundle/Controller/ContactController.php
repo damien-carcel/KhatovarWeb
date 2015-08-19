@@ -26,7 +26,6 @@ namespace Khatovar\Bundle\ContactBundle\Controller;
 use Doctrine\ORM\EntityManagerInterface;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Khatovar\Bundle\ContactBundle\Entity\Contact;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -47,16 +46,11 @@ class ContactController extends Controller
     protected $session;
 
     /**
-     * @param ContainerInterface     $container
      * @param EntityManagerInterface $entityManager
      * @param Session                $session
      */
-    public function __construct(
-        ContainerInterface $container,
-        EntityManagerInterface $entityManager,
-        Session $session
-    ) {
-        $this->container     = $container;
+    public function __construct(EntityManagerInterface $entityManager, Session $session)
+    {
         $this->entityManager = $entityManager;
         $this->session       = $session;
 

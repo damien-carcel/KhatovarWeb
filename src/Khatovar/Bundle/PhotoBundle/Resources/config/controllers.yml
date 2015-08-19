@@ -6,7 +6,8 @@ services:
         scope: request
         class: %khatovar_photo.controller.photo.class%
         arguments:
-            - '@service_container'
             - '@doctrine.orm.entity_manager'
-            - '@khatovar_photo.manager.photo'
             - '@session'
+            - '@khatovar_photo.manager.photo'
+        calls:
+            - [ setContainer, ['@service_container']]

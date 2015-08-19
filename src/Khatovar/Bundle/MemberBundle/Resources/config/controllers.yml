@@ -6,6 +6,7 @@ services:
         scope: request
         class: %khatovar_member.controller.member.class%
         arguments:
-            - '@service_container'
             - '@doctrine.orm.entity_manager'
             - '@session'
+        calls:
+            - [ setContainer, ['@service_container']]

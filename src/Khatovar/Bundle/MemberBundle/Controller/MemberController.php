@@ -28,7 +28,6 @@ use Doctrine\ORM\EntityRepository;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Khatovar\Bundle\MemberBundle\Entity\Member;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -47,16 +46,11 @@ class MemberController extends Controller
     protected $session;
 
     /**
-     * @param ContainerInterface     $container
      * @param EntityManagerInterface $entityManager
      * @param Session                $session
      */
-    public function __construct(
-        ContainerInterface $container,
-        EntityManagerInterface $entityManager,
-        Session $session
-    ) {
-        $this->container     = $container;
+    public function __construct(EntityManagerInterface $entityManager, Session $session)
+    {
         $this->entityManager = $entityManager;
         $this->session       = $session;
 

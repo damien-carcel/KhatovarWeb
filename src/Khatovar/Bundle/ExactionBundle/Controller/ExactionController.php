@@ -28,7 +28,6 @@ use JMS\SecurityExtraBundle\Annotation\Secure;
 use Khatovar\Bundle\ExactionBundle\Entity\Exaction;
 use Khatovar\Bundle\ExactionBundle\Manager\ExactionManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -49,21 +48,18 @@ class ExactionController extends Controller
     protected $session;
 
     /**
-     * @param ContainerInterface     $container
      * @param EntityManagerInterface $entityManager
-     * @param ExactionManager        $exactionManager
      * @param Session                $session
+     * @param ExactionManager        $exactionManager
      */
     public function __construct(
-        ContainerInterface $container,
         EntityManagerInterface $entityManager,
-        ExactionManager $exactionManager,
-        Session $session
+        Session $session,
+        ExactionManager $exactionManager
     ) {
-        $this->container       = $container;
         $this->entityManager   = $entityManager;
-        $this->exactionManager = $exactionManager;
         $this->session         = $session;
+        $this->exactionManager = $exactionManager;
     }
 
     /**

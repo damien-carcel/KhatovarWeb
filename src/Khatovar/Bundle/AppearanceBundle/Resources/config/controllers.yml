@@ -6,7 +6,8 @@ services:
         scope: request
         class: %khatovar_appearance.controller.appearance.class%
         arguments:
-            - '@service_container'
             - '@doctrine.orm.entity_manager'
             - '@session'
             - '@khatovar_appearance.manager.appearance'
+        calls:
+            - [ setContainer, ['@service_container']]
