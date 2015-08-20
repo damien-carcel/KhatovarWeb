@@ -105,4 +105,18 @@ class AppearanceRepository extends EntityRepository
 
         return $query->getOneOrNullResult();
     }
+
+    /**
+     * @return Appearance[]
+     */
+    public function findActiveCamps()
+    {
+        $query = $this->createQueryBuilder('a')
+            ->where('a.active = true')
+            ->andWhere('a.pageType = :pageType')
+            ->setParameter('pageType', AppearanceHelper::CAMP_TYPE_CODE)
+            ->getQuery();
+
+        return $query->getResult();
+    }
 }

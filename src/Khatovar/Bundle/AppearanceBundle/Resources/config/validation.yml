@@ -1,6 +1,7 @@
 Khatovar\Bundle\AppearanceBundle\Entity\Appearance:
     constraints:
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: name
+        - Khatovar\Bundle\AppearanceBundle\Validator\Constraints\UniqueActiveCamp: ~
     properties:
         name:
             - NotBlank: ~

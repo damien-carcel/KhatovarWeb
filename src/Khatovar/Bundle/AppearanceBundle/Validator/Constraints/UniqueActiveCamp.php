@@ -21,30 +21,32 @@
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
-namespace Khatovar\Bundle\AppearanceBundle\DependencyInjection;
+namespace Khatovar\Bundle\AppearanceBundle\Validator\Constraints;
 
-use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\Config\FileLocator;
-use Symfony\Component\HttpKernel\DependencyInjection\Extension;
-use Symfony\Component\DependencyInjection\Loader;
+use Symfony\Component\Validator\Constraint;
 
 /**
- * Khatovar appearance extensions.
+ * Checks that only one camp description is active at a time.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
  */
-class KhatovarAppearanceExtension extends Extension
+class UniqueActiveCamp extends Constraint
 {
+    public $message = 'La page de camp « %name% » est déjà active. Désactivez-là avant d\'activer celle-ci.';
+
     /**
      * {@inheritdoc}
      */
-    public function load(array $configs, ContainerBuilder $container)
+    public function getTargets()
     {
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('controllers.yml');
-        $loader->load('form_types.yml');
-        $loader->load('managers.yml');
-        $loader->load('twig.yml');
-        $loader->load('validators.yml');
+        return self::CLASS_CONSTRAINT;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function validatedBy()
+    {
+        return 'khatovar_unique_active_camp_validator';
     }
 }
