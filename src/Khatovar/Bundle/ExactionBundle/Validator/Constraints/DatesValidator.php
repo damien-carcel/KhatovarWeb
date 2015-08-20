@@ -28,7 +28,8 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
 /**
- * Exaction dates validator.
+ * Checks that exaction starting date is older or at least the same than
+ * exaction ending date.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
  */

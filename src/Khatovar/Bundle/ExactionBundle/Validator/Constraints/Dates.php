@@ -26,7 +26,7 @@ namespace Khatovar\Bundle\ExactionBundle\Validator\Constraints;
 use Symfony\Component\Validator\Constraint;
 
 /**
- * Check that exaction starting date is older or at least the same than
+ * Checks that exaction starting date is older or at least the same than
  * exaction ending date.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)

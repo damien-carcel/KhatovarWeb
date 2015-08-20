@@ -26,7 +26,7 @@ namespace Khatovar\Bundle\ExactionBundle\Validator\Constraints;
 use Symfony\Component\Validator\Constraint;
 
 /**
- * Check that exaction links contains between 1 and 3 blocks of text.
+ * Checks that exaction links contains between 1 and 3 blocks of text.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
  */
