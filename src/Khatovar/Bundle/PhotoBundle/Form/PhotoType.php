@@ -97,7 +97,7 @@ class PhotoType extends AbstractType
     {
         $formModifier = function (FormInterface $form, $entity) {
             if (!is_null($entity)) {
-                if ($entity == 'homepage') {
+                if ($entity === 'homepage') {
                     $form->add('class', 'choice', array(
                         'label' => 'Taille de la photo',
                         'choices' => array(
