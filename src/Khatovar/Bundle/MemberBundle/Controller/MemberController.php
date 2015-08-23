@@ -149,7 +149,7 @@ class MemberController extends Controller
             $this->entityManager->persist($member);
             $this->entityManager->flush();
 
-            $this->get('session')->getFlashBag()->add(
+            $this->session->getFlashBag()->add(
                 'notice',
                 sprintf(
                     'La page du membre %s a bien été créée. Vous pouvez maintenant ajouter une photo de profil.',
@@ -218,7 +218,7 @@ class MemberController extends Controller
         if ($editForm->isValid()) {
             $this->entityManager->flush();
 
-            $this->get('session')->getFlashBag()->add(
+            $this->session->getFlashBag()->add(
                 'notice',
                 'Page de membre modifiée'
             );
@@ -261,7 +261,7 @@ class MemberController extends Controller
             $this->entityManager->remove($member);
             $this->entityManager->flush();
 
-            $this->get('session')->getFlashBag()->add(
+            $this->session->getFlashBag()->add(
                 'notice',
                 'Page de membre supprimée'
             );

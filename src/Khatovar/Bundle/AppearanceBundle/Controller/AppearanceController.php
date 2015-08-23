@@ -204,7 +204,7 @@ class AppearanceController extends Controller
             $this->entityManager->persist($appearance);
             $this->entityManager->flush();
 
-            $this->get('session')->getFlashBag()->add(
+            $this->session->getFlashBag()->add(
                 'notice',
                 'Prestation créée'
             );
@@ -268,7 +268,7 @@ class AppearanceController extends Controller
         if ($editForm->isValid()) {
             $this->entityManager->flush();
 
-            $this->get('session')->getFlashBag()->add(
+            $this->session->getFlashBag()->add(
                 'notice',
                 'Prestation modifiée'
             );
@@ -311,7 +311,7 @@ class AppearanceController extends Controller
             $this->entityManager->remove($appearance);
             $this->entityManager->flush();
 
-            $this->get('session')->getFlashBag()->add(
+            $this->session->getFlashBag()->add(
                 'notice',
                 'Prestation supprimée'
             );
