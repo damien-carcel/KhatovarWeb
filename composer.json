@@ -13,16 +13,14 @@
         "psr-4": { "": "src/", "SymfonyStandard\\": "app/SymfonyStandard/" }
     },
     "require": {
-        "jms/security-extra-bundle": "dev-master",
+        "carcel/documents": "~0.3",
         "egeloen/ckeditor-bundle": "~2.0",
         "stof/doctrine-extensions-bundle": "~1.1@dev",
-        "carcel/documents": "dev-master",
         "knplabs/knp-menu-bundle": "~2.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",
-        "coresphere/console-bundle": "dev-master",
-        "phpspec/phpspec": "~2.0"
+        "coresphere/console-bundle": "dev-master"
     },
     "scripts": {
         "post-root-package-install": [
@@ -50,6 +48,7 @@
     "config": {
         "bin-dir": "bin"
     },
+    "minimum-stability": "stable",
     "extra": {
         "symfony-app-dir": "app",
         "symfony-web-dir": "www",
