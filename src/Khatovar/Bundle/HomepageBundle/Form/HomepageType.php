@@ -40,14 +40,14 @@ class HomepageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', 'text', array('label' => 'Nom'))
+            ->add('name', 'text', ['label' => 'Nom'])
             ->add(
                 'content',
                 'ckeditor',
-                array(
+                [
                     'label'       => false,
-                    'config_name' => 'basic_config'
-                )
+                    'config_name' => 'basic_config',
+                ]
             );
     }
 
@@ -56,7 +56,7 @@ class HomepageType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array('data_class' => 'Khatovar\Bundle\HomepageBundle\Entity\Homepage'));
+        $resolver->setDefaults(['data_class' => 'Khatovar\Bundle\HomepageBundle\Entity\Homepage']);
     }
 
     /**

@@ -40,12 +40,12 @@ class PhotoHelper
      */
     public static function getPhotoEntities()
     {
-        return array(
+        return [
             'homepage'   => 'Pages d\'accueil',
             'appearance' => 'Prestations',
             'exaction'   => 'Exactions',
             'member'     => 'Membres',
             'contact'    => 'Pages de contact',
-        );
+        ];
     }
 }

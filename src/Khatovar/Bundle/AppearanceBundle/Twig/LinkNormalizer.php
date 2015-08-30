@@ -48,13 +48,13 @@ class LinkNormalizer extends \Twig_Extension
      */
     public function getFilters()
     {
-        return array(
+        return [
             new \Twig_SimpleFilter(
                 'khatovar_normalize_appearance_links',
-                array($this, 'formatText'),
-                array('is_sage' => array('html'))
+                [$this, 'formatText'],
+                ['is_sage' => ['html']]
             )
-        );
+        ];
     }
 
     /**
@@ -67,7 +67,7 @@ class LinkNormalizer extends \Twig_Extension
      */
     public function formatText($text)
     {
-        $formattedLinks = array();
+        $formattedLinks = [];
 
         $links = $this->getLinks($text);
 
@@ -111,7 +111,7 @@ class LinkNormalizer extends \Twig_Extension
 
         $href = $this->router->generate(
             'khatovar_web_appearance_show',
-            array('slug' => $explodedLink[0])
+            ['slug' => $explodedLink[0]]
         );
 
         return sprintf($format, $href, $explodedLink[1], $explodedLink[1]);

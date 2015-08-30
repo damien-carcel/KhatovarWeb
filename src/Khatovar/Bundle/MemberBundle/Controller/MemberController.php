@@ -64,19 +64,19 @@ class MemberController extends Controller
     public function indexAction()
     {
         $memberRepository  = $this->entityManager->getRepository('KhatovarMemberBundle:Member');
-        $activeMembers     = $memberRepository->findBy(array('active' => true));
-        $pastMembers       = $memberRepository->findBy(array('active' => false));
+        $activeMembers     = $memberRepository->findBy(['active' => true]);
+        $pastMembers       = $memberRepository->findBy(['active' => false]);
         $activeDeleteForms = $this->createDeleteForms($activeMembers);
         $pastDeleteForms   = $this->createDeleteForms($pastMembers);
 
         return $this->render(
             'KhatovarMemberBundle:Member:index.html.twig',
-            array(
+            [
                 'active_members'      => $activeMembers,
                 'past_members'        => $pastMembers,
                 'active_delete_forms' => $activeDeleteForms,
                 'past_delete_forms'   => $pastDeleteForms,
-            )
+            ]
         );
     }
 
@@ -99,11 +99,11 @@ class MemberController extends Controller
 
         return $this->render(
             'KhatovarMemberBundle:Member:show.html.twig',
-            array(
+            [
                 'member'       => $member,
                 'current_user' => $currentUser,
                 'photos'       => $photos,
-            )
+            ]
         );
     }
 
@@ -122,10 +122,10 @@ class MemberController extends Controller
 
         return $this->render(
             'KhatovarMemberBundle:Member:new.html.twig',
-            array(
+            [
                 'form' => $form->createView(),
                 'edit' => false,
-            )
+            ]
         );
     }
 
@@ -160,17 +160,17 @@ class MemberController extends Controller
             return $this->redirect(
                 $this->generateUrl(
                     'khatovar_web_member_show',
-                    array('slug' => $member->getSlug())
+                    ['slug' => $member->getSlug()]
                 )
             );
         }
 
         return $this->render(
             'KhatovarMemberBundle:Member:new.html.twig',
-            array(
+            [
                 'form' => $form->createView(),
                 'edit' => false,
-            )
+            ]
         );
     }
 
@@ -191,10 +191,10 @@ class MemberController extends Controller
 
         return $this->render(
             'KhatovarMemberBundle:Member:edit.html.twig',
-            array(
+            [
                 'edit_form' => $editForm->createView(),
                 'edit'      => true,
-            )
+            ]
         );
     }
 
@@ -226,17 +226,17 @@ class MemberController extends Controller
             return $this->redirect(
                 $this->generateUrl(
                     'khatovar_web_member_show',
-                    array('slug' => $member->getSlug())
+                    ['slug' => $member->getSlug()]
                 )
             );
         }
 
         return $this->render(
             'KhatovarMemberBundle:Member:edit.html.twig',
-            array(
+            [
                 'edit_form' => $editForm->createView(),
                 'edit'      => true,
-            )
+            ]
         );
     }
 
@@ -282,13 +282,13 @@ class MemberController extends Controller
         $form = $this->createForm(
             'khatovar_member_type',
             $member,
-            array(
+            [
                 'action' => $this->generateUrl('khatovar_web_member_create'),
                 'method' => 'POST',
-            )
+            ]
         );
 
-        $form->add('submit', 'submit', array('label' => 'Créer'));
+        $form->add('submit', 'submit', ['label' => 'Créer']);
 
         return $form;
     }
@@ -305,16 +305,16 @@ class MemberController extends Controller
         $form = $this->createForm(
             'khatovar_member_type',
             $member,
-            array(
-                'action' => $this->generateUrl('khatovar_web_member_update', array('id' => $member->getId())),
+            [
+                'action' => $this->generateUrl('khatovar_web_member_update', ['id' => $member->getId()]),
                 'method' => 'PUT',
-            )
+            ]
         );
 
         $form->add(
             'portrait',
             'entity',
-            array(
+            [
                 'label' => 'Photo de profil',
                 'class' => 'Khatovar\Bundle\PhotoBundle\Entity\Photo',
                 'property' => 'alt',
@@ -323,7 +323,7 @@ class MemberController extends Controller
                         ->where('p.member = ?1')
                         ->setParameter(1, $member);
                 }
-            )
+            ]
         );
 
         $currentUser = $this->getUser();
@@ -337,7 +337,7 @@ class MemberController extends Controller
             $form->remove('owner');
         }
 
-        $form->add('submit', 'submit', array('label' => 'Mettre à jour'));
+        $form->add('submit', 'submit', ['label' => 'Mettre à jour']);
 
         return $form;
     }
@@ -353,15 +353,15 @@ class MemberController extends Controller
     {
         return $this
             ->createFormBuilder()
-            ->setAction($this->generateUrl('khatovar_web_member_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('khatovar_web_member_delete', ['id' => $id]))
             ->setMethod('DELETE')
             ->add(
                 'submit',
                 'submit',
-                array(
+                [
                     'label' => 'Effacer',
-                    'attr'  => array('onclick' => 'return confirm("Êtes-vous sûr ?")'),
-                )
+                    'attr'  => ['onclick' => 'return confirm("Êtes-vous sûr ?")'],
+                ]
             )
             ->getForm();
     }
@@ -375,7 +375,7 @@ class MemberController extends Controller
      */
     protected function createDeleteForms(array $members)
     {
-        $deleteForms = array();
+        $deleteForms = [];
 
         foreach ($members as $member) {
             $deleteForms[$member->getId()] = $this->createDeleteForm($member->getId())->createView();
@@ -409,7 +409,7 @@ class MemberController extends Controller
     {
         $contact = $this->entityManager
             ->getRepository('KhatovarMemberBundle:Member')
-            ->findOneBy(array('slug' => $slug));
+            ->findOneBy(['slug' => $slug]);
 
         if (!$contact) {
             throw $this->createNotFoundException('Impossible de trouver le membre.');

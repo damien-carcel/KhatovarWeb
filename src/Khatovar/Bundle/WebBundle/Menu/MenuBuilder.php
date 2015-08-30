@@ -92,10 +92,10 @@ class MenuBuilder
     {
         $menu->addChild(
             'home',
-            array(
+            [
                 'label' => 'Homepage',
                 'route' => 'khatovar_web_homepage',
-            )
+            ]
         );
     }
 
@@ -106,39 +106,39 @@ class MenuBuilder
     {
         $menu->addChild(
             'programmes',
-            array(
+            [
                 'label' => 'Nos prestations',
                 'route' => 'khatovar_web_appearance',
-            )
+            ]
         );
 
         foreach ($this->programmes as $programme) {
             $menu['programmes']->addChild(
                 $programme->getSlug(),
-                array(
+                [
                     'label'           => $programme->getName(),
                     'route'           => 'khatovar_web_appearance_show',
-                    'routeParameters' => array('slug' => $programme->getSlug()),
-                )
+                    'routeParameters' => ['slug' => $programme->getSlug()],
+                ]
             );
         }
 
         $menu['programmes']->addChild(
             'appearances',
-            array(
+            [
                 'label' => 'Nos différents ateliers',
                 'route' => 'khatovar_web_appearance_workshop',
-            )
+            ]
         );
 
         foreach ($this->appearances as $appearance) {
             $menu['programmes']['appearances']->addChild(
                 $appearance->getSlug(),
-                array(
+                [
                     'label'           => $appearance->getName(),
                     'route'           => 'khatovar_web_appearance_show',
-                    'routeParameters' => array('slug' => $appearance->getSlug()),
-                )
+                    'routeParameters' => ['slug' => $appearance->getSlug()],
+                ]
             );
         }
     }
@@ -150,36 +150,36 @@ class MenuBuilder
     {
         $menu->addChild(
             'dates',
-            array(
+            [
                 'label' => 'Toutes nos dates',
                 'route' => 'khatovar_web_exaction',
-            )
+            ]
         );
 
         $menu['dates']->addChild(
             'schedule',
-            array(
+            [
                 'label' => 'À venir',
                 'route' => 'khatovar_web_exaction_to_come',
-            )
+            ]
         );
 
         $menu['dates']->addChild(
             'references',
-            array(
+            [
                 'label' => 'Passées',
                 'route' => 'khatovar_web_exaction_past',
-            )
+            ]
         );
 
         foreach ($this->exactionYears as $year) {
             $menu['dates']['references']->addChild(
                 $year,
-                array(
+                [
                     'label'           => 'Saison ' . $year,
                     'route'           => 'khatovar_web_exaction_list_by_year',
-                    'routeParameters' => array('year' => $year),
-                )
+                    'routeParameters' => ['year' => $year],
+                ]
             );
         }
     }
@@ -191,26 +191,26 @@ class MenuBuilder
     {
         $menu->addChild(
             'camp',
-            array(
+            [
                 'label' => 'Le camp',
                 'route' => 'khatovar_web_camp',
-            )
+            ]
         );
 
         $menu['camp']->addChild(
             'camp_life',
-            array(
+            [
                 'label' => 'Vie de camp',
                 'route' => 'khatovar_web_appearance_camp',
-            )
+            ]
         );
 
         $menu['camp']->addChild(
             'members',
-            array(
+            [
                 'label' => 'Les membres',
                 'route' => 'khatovar_web_member',
-            )
+            ]
         );
     }
 
@@ -221,10 +221,10 @@ class MenuBuilder
     {
         $menu->addChild(
             'links',
-            array(
+            [
                 'label' => 'Contact',
                 'route' => 'khatovar_web_contact',
-            )
+            ]
         );
     }
 }

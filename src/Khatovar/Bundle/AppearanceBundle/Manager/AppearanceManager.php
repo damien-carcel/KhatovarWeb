@@ -82,7 +82,7 @@ class AppearanceManager
      */
     protected function isPageType($pageType, $slug)
     {
-        $appearance = $this->appareanceRepository->findOneBy(array('slug' => $slug));
+        $appearance = $this->appareanceRepository->findOneBy(['slug' => $slug]);
 
         if (!($appearance instanceof Appearance)) {
             throw new NotFoundHttpException(
@@ -105,13 +105,13 @@ class AppearanceManager
      */
     protected function getCamp($slug)
     {
-        $camp = $this->appareanceRepository->findOneBy(array('slug' => $slug));
+        $camp = $this->appareanceRepository->findOneBy(['slug' => $slug]);
 
-        return array(
+        return [
             'previous' => null,
             'current'  => $camp,
             'next'     => null,
-        );
+        ];
     }
 
     /**
@@ -129,7 +129,7 @@ class AppearanceManager
             $sortedAppearances = $this->appareanceRepository->findAllWorkshopsSortedBySlug();
         }
 
-        $appearances = array();
+        $appearances = [];
 
         for ($position = 0; $position < count($sortedAppearances); $position++) {
             if ($slug === $sortedAppearances[$position]->getSlug()) {

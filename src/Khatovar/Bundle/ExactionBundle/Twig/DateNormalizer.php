@@ -35,18 +35,18 @@ class DateNormalizer extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
+        return [
             new \Twig_SimpleFunction(
                 'khatovar_normalize_date',
-                array($this, 'normalize'),
-                array('is_sage' => array('html'))
+                [$this, 'normalize'],
+                ['is_sage' => ['html']]
             ),
             new \Twig_SimpleFunction(
                 'khatovar_normalize_date_with_year',
-                array($this, 'normalizeWithYear'),
-                array('is_sage' => array('html'))
+                [$this, 'normalizeWithYear'],
+                ['is_sage' => ['html']]
             ),
-        );
+        ];
     }
 
     /**
@@ -133,7 +133,7 @@ class DateNormalizer extends \Twig_Extension
      */
     protected function translateMonth(\DateTime $date)
     {
-        $frenchMonths = array(
+        $frenchMonths = [
             'janvier',
             'février',
             'mars',
@@ -145,8 +145,8 @@ class DateNormalizer extends \Twig_Extension
             'septembre',
             'octobre',
             'novembre',
-            'décembre'
-        );
+            'décembre',
+        ];
 
         return $frenchMonths[((int) $date->format('m')) - 1];
     }

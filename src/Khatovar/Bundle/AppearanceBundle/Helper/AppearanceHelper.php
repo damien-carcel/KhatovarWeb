@@ -53,10 +53,10 @@ class AppearanceHelper
      */
     public static function getAppearancePageTypes()
     {
-        return array(
+        return [
             static::WORKSHOP_TYPE_CODE  => static::WORKSHOP_TYPE_LABEL,
             static::PROGRAMME_TYPE_CODE => static::PROGRAMME_TYPE_LABEL,
             static::CAMP_TYPE_CODE      => static::CAMP_TYPE_LABEL,
-        );
+        ];
     }
 }

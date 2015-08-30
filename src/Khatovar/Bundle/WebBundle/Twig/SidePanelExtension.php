@@ -48,9 +48,9 @@ class SidePanelExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
-            'get_controller_photos' => new \Twig_Function_Method($this, 'getControllerPhotos'),
-        );
+        return [
+            'get_controller_photos' => new \Twig_Function_Method($this, 'getControllerPhotos')
+        ];
     }
 
     /**

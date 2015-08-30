@@ -64,10 +64,12 @@ class PhotoRepository extends EntityRepository
         $query = $this->createQueryBuilder('p')
             ->where('p.member = :member')
             ->andWhere('p.id != :portrait')
-            ->setParameters(array(
-                    'member' => $member,
-                    'portrait' => $member->getPortrait()
-                ))
+            ->setParameters(
+                [
+                    'member'   => $member,
+                    'portrait' => $member->getPortrait(),
+                ]
+            )
             ->getQuery();
 
         return $query->getResult();

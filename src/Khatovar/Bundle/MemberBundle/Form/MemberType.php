@@ -41,81 +41,84 @@ class MemberType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('name', 'text', ['label' => 'Nom'])
             ->add(
-                'name',
-                'text',
-                array('label' => 'Nom')
-            )->add(
                 'rank',
                 'text',
-                array(
+                [
                     'label'    => 'Rang',
                     'required' => false,
-                )
-            )->add(
+                ]
+            )
+            ->add(
                 'quote',
                 'text',
-                array(
+                [
                     'label'    => 'Citation',
                     'required' => false,
-                )
-            )->add(
+                ]
+            )
+            ->add(
                 'skill',
                 'text',
-                array(
+                [
                     'label'    => 'Compétences',
                     'required' => false,
-                )
-            )->add(
+                ]
+            )
+            ->add(
                 'age',
                 'text',
-                array(
+                [
                     'label'    => 'Âge',
                     'required' => false,
-                )
-            )->add(
+                ]
+            )
+            ->add(
                 'size',
                 'text',
-                array(
+                [
                     'label'    => 'Taille',
                     'required' => false,
-                )
-            )->add(
+                ]
+            )
+            ->add(
                 'weight',
                 'text',
-                array(
+                [
                     'label'    => 'Poids',
                     'required' => false,
-                )
-            )->add(
+                ]
+            )
+            ->add(
                 'strength',
                 'text',
-                array(
+                [
                     'label'    => 'Point fort',
                     'required' => false,
-                )
-            )->add(
+                ]
+            )
+            ->add(
                 'weakness',
                 'text',
-                array(
+                [
                     'label'    => 'Point faible',
                     'required' => false,
-                )
-            )->add(
-                'story',
-                'textarea',
-                array('label' => 'Histoire personnelle')
-            )->add(
+                ]
+            )
+            ->add('story', 'textarea', ['label' => 'Histoire personnelle'])
+            ->add(
                 'active',
                 'checkbox',
-                array(
+                [
                     'label'    => 'Membre actif',
                     'required' => false,
-                )
-            )->add(
+                ]
+            )
+            ->add(
                 'owner',
                 'entity',
-                array(
+                [
                     'label'         => 'Utilisateur lié',
                     'class'         => 'Carcel\UserBundle\Entity\User',
                     'property'      => 'username',
@@ -123,7 +126,7 @@ class MemberType extends AbstractType
                     'query_builder' => function (EntityRepository $er) {
                         return $er->createQueryBuilder('o')->orderBy('o.username');
                     },
-                )
+                ]
             );
     }
 
@@ -132,7 +135,7 @@ class MemberType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array('data_class' => 'Khatovar\Bundle\MemberBundle\Entity\Member'));
+        $resolver->setDefaults(['data_class' => 'Khatovar\Bundle\MemberBundle\Entity\Member']);
     }
 
     /**

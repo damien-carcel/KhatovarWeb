@@ -74,10 +74,10 @@ class PhotoManager
 
         $repository = $this->entityManager->getRepository('KhatovarPhotoBundle:Photo');
 
-        $photos = array();
+        $photos = [];
 
         foreach ($paths as $path) {
-            $photo = $repository->findOneBy(array('path' => $path));
+            $photo = $repository->findOneBy(['path' => $path]);
             if (null !== $photo) {
                 $photos[] = '<a href="/uploaded/photos/'
                     . $photo->getPath()
@@ -143,13 +143,13 @@ class PhotoManager
      */
     public function getPhotosSortedByEntities()
     {
-        $sortedPhotos = array(
-            'Photos orphelines' => array(
+        $sortedPhotos = [
+            'Photos orphelines' => [
                 'Liste des photos n\'appartenant à aucune page' => $this->entityManager
                     ->getRepository('KhatovarPhotoBundle:Photo')
                     ->getOrphans(),
-            ),
-        );
+            ],
+        ];
 
         foreach (PhotoHelper::getPhotoEntities() as $code => $label) {
             $sortedPhotos[$label] = $this->getEntityPhotos($code);
@@ -167,11 +167,11 @@ class PhotoManager
      */
     public function getMemberPhotos(User $currentUser)
     {
-        $sortedPhotos = array();
+        $sortedPhotos = [];
 
         $member = $this->entityManager
             ->getRepository('KhatovarMemberBundle:Member')
-            ->findOneBy(array('owner' => $currentUser));
+            ->findOneBy(['owner' => $currentUser]);
 
         $memberPhotos = $member->getPhotos();
 
@@ -194,7 +194,7 @@ class PhotoManager
      */
     public function getControllerPhotos($controller, $action, $slugOrId)
     {
-        $photos = array();
+        $photos = [];
 
         if ('web' === $controller) {
             return $photos;
@@ -238,10 +238,10 @@ class PhotoManager
         }
 
         if (($controller === 'homepage' || $controller === 'contact') && null == $slugOrId && $action === 'index') {
-            $currentlyRendered = $repo->findOneBy(array('active' => true));
+            $currentlyRendered = $repo->findOneBy(['active' => true]);
         } elseif (null != $slugOrId) {
             if (is_string($slugOrId)) {
-                $currentlyRendered = $repo->findOneBy(array('slug' => $slugOrId));
+                $currentlyRendered = $repo->findOneBy(['slug' => $slugOrId]);
             } elseif (is_int($slugOrId)) {
                 $currentlyRendered = $repo->find($slugOrId);
             }
@@ -302,7 +302,7 @@ class PhotoManager
      */
     protected function getEntityPhotos($entityCode)
     {
-        $sortedPhotos = array();
+        $sortedPhotos = [];
 
         $entities = $this->entityManager
             ->getRepository('Khatovar' . ucfirst($entityCode) . 'Bundle:' . ucfirst($entityCode))

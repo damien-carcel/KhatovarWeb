@@ -51,7 +51,7 @@ class ExactionManager
      */
     public function getSortedYears()
     {
-        $yearList = array();
+        $yearList = [];
 
         $exactions = $this->entityManager
             ->getRepository('KhatovarExactionBundle:Exaction')

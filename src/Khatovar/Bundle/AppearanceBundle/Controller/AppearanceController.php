@@ -76,7 +76,7 @@ class AppearanceController extends Controller
 
         return $this->render(
             'KhatovarAppearanceBundle:Appearance:index.html.twig',
-            array('appearances' => $appearances)
+            ['appearances' => $appearances]
         );
     }
 
@@ -93,7 +93,7 @@ class AppearanceController extends Controller
 
         return $this->render(
             'KhatovarAppearanceBundle:Appearance:index.html.twig',
-            array('appearances' => $appearances)
+            ['appearances' => $appearances]
         );
     }
 
@@ -114,11 +114,11 @@ class AppearanceController extends Controller
 
         return $this->render(
             'KhatovarAppearanceBundle:Appearance:show.html.twig',
-            array(
+            [
                 'previous'   => null,
                 'appearance' => $camp,
                 'next'       => null,
-            )
+            ]
         );
     }
 
@@ -135,11 +135,11 @@ class AppearanceController extends Controller
 
         return $this->render(
             'KhatovarAppearanceBundle:Appearance:show.html.twig',
-            array(
+            [
                 'previous'   => $appearances['previous'],
                 'appearance' => $appearances['current'],
                 'next'       => $appearances['next'],
-            )
+            ]
         );
     }
 
@@ -157,11 +157,11 @@ class AppearanceController extends Controller
 
         return $this->render(
             'KhatovarAppearanceBundle:Appearance:list.html.twig',
-            array(
+            [
                 'appearances'  => $appearances,
                 'delete_forms' => $deleteForms,
                 'helper'       => AppearanceHelper::getAppearancePageTypes(),
-            )
+            ]
         );
     }
 
@@ -180,7 +180,7 @@ class AppearanceController extends Controller
 
         return $this->render(
             'KhatovarAppearanceBundle:Appearance:new.html.twig',
-            array('form' => $form->createView())
+            ['form' => $form->createView()]
         );
     }
 
@@ -212,14 +212,14 @@ class AppearanceController extends Controller
             return $this->redirect(
                 $this->generateUrl(
                     'khatovar_web_appearance_show',
-                    array('slug' => $appearance->getSlug())
+                    ['slug' => $appearance->getSlug()]
                 )
             );
         }
 
         return $this->render(
             'KhatovarAppearanceBundle:Appearance:new.html.twig',
-            array('form' => $form->createView())
+            ['form' => $form->createView()]
         );
     }
 
@@ -241,17 +241,18 @@ class AppearanceController extends Controller
 
         return $this->render(
             'KhatovarAppearanceBundle:Appearance:edit.html.twig',
-            array(
+            [
                 'edit_form' => $editForm->createView(),
                 'workshops' => $workshops,
-            )
+            ]
         );
     }
 
     /**
      * Edits an existing Appearance entity.
      *
-     * @param int $id
+     * @param Request $request
+     * @param int     $id
      *
      * @return \Symfony\Component\HttpFoundation\Response
      *
@@ -276,17 +277,17 @@ class AppearanceController extends Controller
             return $this->redirect(
                 $this->generateUrl(
                     'khatovar_web_appearance_show',
-                    array('slug' => $appearance->getSlug())
+                    ['slug' => $appearance->getSlug()]
                 )
             );
         }
 
         return $this->render(
             'KhatovarAppearanceBundle:Appearance:edit.html.twig',
-            array(
+            [
                 'edit_form' => $editForm->createView(),
                 'workshops' => $workshops,
-                )
+            ]
         );
     }
 
@@ -332,13 +333,13 @@ class AppearanceController extends Controller
         $form = $this->createForm(
             'khatovar_appearance_type',
             $entity,
-            array(
+            [
                 'action' => $this->generateUrl('khatovar_web_appearance_create'),
                 'method' => 'POST',
-            )
+            ]
         );
 
-        $form->add('submit', 'submit', array('label' => 'Créer'));
+        $form->add('submit', 'submit', ['label' => 'Créer']);
 
         return $form;
     }
@@ -355,13 +356,13 @@ class AppearanceController extends Controller
         $form = $this->createForm(
             'khatovar_appearance_type',
             $entity,
-            array(
-                'action' => $this->generateUrl('khatovar_web_appearance_update', array('id' => $entity->getId())),
+            [
+                'action' => $this->generateUrl('khatovar_web_appearance_update', ['id' => $entity->getId()]),
                 'method' => 'PUT',
-            )
+            ]
         );
 
-        $form->add('submit', 'submit', array('label' => 'Mettre à jour'));
+        $form->add('submit', 'submit', ['label' => 'Mettre à jour']);
 
         return $form;
     }
@@ -376,15 +377,15 @@ class AppearanceController extends Controller
     protected function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('khatovar_web_appearance_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('khatovar_web_appearance_delete', ['id' => $id]))
             ->setMethod('DELETE')
             ->add(
                 'submit',
                 'submit',
-                array(
+                [
                     'label' => 'Effacer',
-                    'attr'  => array('onclick' => 'return confirm("Êtes-vous sûr ?")'),
-                )
+                    'attr'  => ['onclick' => 'return confirm("Êtes-vous sûr ?")'],
+                ]
             )
             ->getForm();
     }
@@ -398,7 +399,7 @@ class AppearanceController extends Controller
      */
     protected function createDeleteForms(array $appearances)
     {
-        $deleteForms = array();
+        $deleteForms = [];
 
         foreach ($appearances as $appearance) {
             $deleteForms[$appearance->getId()] = $this->createDeleteForm($appearance->getId())->createView();
@@ -434,7 +435,7 @@ class AppearanceController extends Controller
      */
     protected function findActiveWorkshopsIfIsProgramme(Appearance $appearance)
     {
-        $workshops = array();
+        $workshops = [];
 
         if (AppearanceHelper::PROGRAMME_TYPE_CODE === $appearance->getPageType()) {
             $workshops = $this->entityManager

@@ -73,7 +73,7 @@ class ExactionController extends Controller
 
         return $this->render(
             'KhatovarExactionBundle:Exaction:index.html.twig',
-            array('active_years' => $activeYears)
+            ['active_years' => $activeYears]
         );
     }
 
@@ -88,7 +88,7 @@ class ExactionController extends Controller
 
         return $this->render(
             'KhatovarExactionBundle:Exaction:past.html.twig',
-            array('active_years' => $activeYears)
+            ['active_years' => $activeYears]
         );
     }
 
@@ -107,10 +107,10 @@ class ExactionController extends Controller
 
         return $this->render(
             'KhatovarExactionBundle:Exaction:to_come.html.twig',
-            array(
+            [
                 'future_exactions' => $futureExactions,
                 'delete_forms'     => $deleteForms,
-            )
+            ]
         );
     }
 
@@ -131,10 +131,10 @@ class ExactionController extends Controller
 
         return $this->render(
             'KhatovarExactionBundle:Exaction:view_by_year.html.twig',
-            array(
+            [
                 'exactions'    => $exactions,
                 'delete_forms' => $deleteForms,
-            )
+            ]
         );
     }
 
@@ -153,10 +153,10 @@ class ExactionController extends Controller
 
         return $this->render(
             'KhatovarExactionBundle:Exaction:new.html.twig',
-            array(
+            [
                 'form'            => $form->createView(),
                 'exaction_passed' => false,
-            )
+            ]
         );
     }
 
@@ -190,10 +190,10 @@ class ExactionController extends Controller
 
         return $this->render(
             'KhatovarExactionBundle:Exaction:new.html.twig',
-            array(
+            [
                 'form'            => $form->createView(),
                 'exaction_passed' => false,
-            )
+            ]
         );
     }
 
@@ -219,10 +219,10 @@ class ExactionController extends Controller
 
         return $this->render(
             'KhatovarExactionBundle:Exaction:edit.html.twig',
-            array(
+            [
                 'edit_form'       => $editForm->createView(),
                 'exaction_passed' => $exactionPassed,
-            )
+            ]
         );
     }
 
@@ -261,10 +261,10 @@ class ExactionController extends Controller
 
         return $this->render(
             'KhatovarExactionBundle:Exaction:edit.html.twig',
-            array(
+            [
                 'edit_form'       => $editForm->createView(),
                 'exaction_passed' => $exactionPassed,
-            )
+            ]
         );
     }
 
@@ -310,13 +310,13 @@ class ExactionController extends Controller
         $form = $this->createForm(
             'khatovar_exaction_type',
             $exaction,
-            array(
+            [
                 'action' => $this->generateUrl('khatovar_web_exaction_create'),
                 'method' => 'POST',
-            )
+            ]
         );
 
-        $form->add('submit', 'submit', array('label' => 'Créer'));
+        $form->add('submit', 'submit', ['label' => 'Créer']);
 
         return $form;
     }
@@ -333,13 +333,13 @@ class ExactionController extends Controller
         $form = $this->createForm(
             'khatovar_exaction_type',
             $exaction,
-            array(
-                'action' => $this->generateUrl('khatovar_web_exaction_update', array('id' => $exaction->getId())),
+            [
+                'action' => $this->generateUrl('khatovar_web_exaction_update', ['id' => $exaction->getId()]),
                 'method' => 'PUT',
-            )
+            ]
         );
 
-        $form->add('submit', 'submit', array('label' => 'Mettre à jour'));
+        $form->add('submit', 'submit', ['label' => 'Mettre à jour']);
 
         return $form;
     }
@@ -355,15 +355,15 @@ class ExactionController extends Controller
     {
         return $this
             ->createFormBuilder()
-            ->setAction($this->generateUrl('khatovar_web_exaction_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('khatovar_web_exaction_delete', ['id' => $id]))
             ->setMethod('DELETE')
             ->add(
                 'submit',
                 'submit',
-                array(
+                [
                     'label' => 'Effacer',
-                    'attr'  => array('onclick' => 'return confirm("Êtes-vous sûr ?")'),
-                )
+                    'attr'  => ['onclick' => 'return confirm("Êtes-vous sûr ?")'],
+                ]
             )
             ->getForm();
     }
@@ -377,7 +377,7 @@ class ExactionController extends Controller
      */
     protected function createDeleteForms(array $exactions)
     {
-        $deleteForms = array();
+        $deleteForms = [];
 
         foreach ($exactions as $exaction) {
             $deleteForms[$exaction->getId()] = $this->createDeleteForm($exaction->getId())->createView();
@@ -417,7 +417,7 @@ class ExactionController extends Controller
         if ($isExactionPassed) {
             return $this->generateUrl(
                 'khatovar_web_exaction_list_by_year',
-                array('year' => $exaction->getStart()->format('Y'))
+                ['year' => $exaction->getStart()->format('Y')]
             );
         }
 

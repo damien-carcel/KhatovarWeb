@@ -65,11 +65,11 @@ class ControllerNameExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
+        return [
             'get_controller_name' => new \Twig_Function_Method($this, 'getControllerName'),
             'get_action_name'     => new \Twig_Function_Method($this, 'getActionName'),
             'get_slug_or_id'      => new \Twig_Function_Method($this, 'getSlugOrId')
-        );
+        ];
     }
 
     /**
@@ -110,7 +110,7 @@ class ControllerNameExtension extends \Twig_Extension
 
         if (!is_null($this->request)) {
             $pattern = "#:([a-zA-Z]*)Action#";
-            $matches = array();
+            $matches = [];
             preg_match($pattern, $this->request->get('_controller'), $matches);
 
             $name =  $matches[1];

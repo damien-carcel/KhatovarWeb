@@ -41,28 +41,28 @@ class AppearanceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', 'text', array('label' => 'Nom'))
+            ->add('name', 'text', ['label' => 'Nom'])
             ->add(
                 'content',
                 'ckeditor',
-                array(
+                [
                     'label'       => false,
-                    'config_name' => 'basic_config'
-                )
+                    'config_name' => 'basic_config',
+                ]
             )->add(
                 'active',
                 'checkbox',
-                array(
+                [
                     'label'    => 'Prestation proposée',
                     'required' => false,
-                )
+                ]
             )->add(
                 'pageType',
                 'choice',
-                array(
+                [
                     'label'   => 'Type de page',
                     'choices' => AppearanceHelper::getAppearancePageTypes(),
-                )
+                ]
             );
     }
 
@@ -71,7 +71,7 @@ class AppearanceType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array('data_class' => 'Khatovar\Bundle\AppearanceBundle\Entity\Appearance'));
+        $resolver->setDefaults(['data_class' => 'Khatovar\Bundle\AppearanceBundle\Entity\Appearance']);
     }
 
     /**

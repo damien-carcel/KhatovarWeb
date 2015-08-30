@@ -44,20 +44,14 @@ class ContactType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add(
-                'name',
-                'text',
-                array(
-                    'label' => 'Titre',
-                )
-            )
+            ->add('name', 'text', ['label' => 'Titre'])
             ->add(
                 'content',
                 'ckeditor',
-                array(
+                [
                     'config_name' => 'basic_config',
                     'label'       => 'Contenu',
-                )
+                ]
             );
 
         $builder->addEventListener(
@@ -71,7 +65,7 @@ class ContactType extends AbstractType
                         ->add(
                             'visitCard',
                             'entity',
-                            array(
+                            [
                                 'class' => 'Khatovar\Bundle\PhotoBundle\Entity\Photo',
                                 'property' => 'alt',
                                 'label' => 'Carte de visite',
@@ -84,7 +78,7 @@ class ContactType extends AbstractType
                                         ->where('c.contact = :contact')
                                         ->setParameter('contact', $contact);
                                 }
-                            )
+                            ]
                         );
                 }
             }
@@ -96,7 +90,7 @@ class ContactType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array('data_class' => 'Khatovar\Bundle\ContactBundle\Entity\Contact'));
+        $resolver->setDefaults(['data_class' => 'Khatovar\Bundle\ContactBundle\Entity\Contact']);
     }
 
     /**

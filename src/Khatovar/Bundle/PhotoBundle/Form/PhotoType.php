@@ -33,7 +33,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
- * Class PhotoType
+ * Form type for the Photo entity.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
  * @package Khatovar\Bundle\PhotoBundle\Form
@@ -52,8 +52,7 @@ class PhotoType extends AbstractType
     }
 
     /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
+     * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -67,7 +66,7 @@ class PhotoType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array('data_class' => 'Khatovar\Bundle\PhotoBundle\Entity\Photo'));
+        $resolver->setDefaults(['data_class' => 'Khatovar\Bundle\PhotoBundle\Entity\Photo']);
     }
 
     /**
@@ -84,10 +83,10 @@ class PhotoType extends AbstractType
     protected function addDefaultFields(FormBuilderInterface $builder)
     {
         if (is_null($builder->getData()->getId())) {
-            $builder->add('file', 'file', array('label' => false));
+            $builder->add('file', 'file', ['label' => false]);
         }
 
-        $builder->add('alt', 'text', array('label' => 'Nom de substitution'));
+        $builder->add('alt', 'text', ['label' => 'Nom de substitution']);
     }
 
     /**
@@ -96,29 +95,35 @@ class PhotoType extends AbstractType
     protected function addEntityField(FormBuilderInterface $builder)
     {
         $formModifier = function (FormInterface $form, $entity) {
-            if (!is_null($entity)) {
+            if (null !== $entity) {
                 if ($entity === 'homepage') {
-                    $form->add('class', 'choice', array(
-                        'label' => 'Taille de la photo',
-                        'choices' => array(
-                            'photo_small' => 'Petit format',
-                            'photo' => 'Format normal',
-                            'panorama' => 'Panorama'
-                        ),
-                        'preferred_choices' => array('photo'),
-                        'required' => true
-                    ));
+                    $form->add(
+                        'class',
+                        'choice',
+                        [
+                            'label'             => 'Taille de la photo',
+                            'choices'           => [
+                                'photo_small' => 'Petit format',
+                                'photo'       => 'Format normal',
+                                'panorama'    => 'Panorama',
+                            ],
+                            'preferred_choices' => ['photo'],
+                            'required'          => true,
+                        ]
+                    );
                 } else {
-                    $form->add('class', 'hidden', array(
-                        'data' => 'none'
-                    ));
+                    $form->add('class', 'hidden', ['data' => 'none']);
                 }
 
-                $form->add($entity, 'entity', array(
-                    'class' => 'Khatovar' . ucfirst($entity) . 'Bundle:' . ucfirst($entity),
-                    'property' => 'name',
-                    'label' => 'Page'
-                ));
+                $form->add(
+                    $entity,
+                    'entity',
+                    [
+                        'class'    => 'Khatovar' . ucfirst($entity) . 'Bundle:' . ucfirst($entity),
+                        'property' => 'name',
+                        'label'    => 'Page',
+                    ]
+                );
             }
         };
 
@@ -126,11 +131,11 @@ class PhotoType extends AbstractType
             $builder->add(
                 'entity',
                 'choice',
-                array(
+                [
                     'label' => 'Rattacher la photo à une',
                     'choices' => PhotoHelper::getPhotoEntities(),
-                    'preferred_choices' => array('homepage')
-                )
+                    'preferred_choices' => ['homepage'],
+                ]
             );
 
             $builder->addEventListener(

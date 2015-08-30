@@ -46,38 +46,38 @@ class PhotosExtension extends \Twig_Extension
      */
     public function getFilters()
     {
-        return array(
+        return [
             new \Twig_SimpleFilter(
                 'popup_picture',
-                array($this, 'popupPicture'),
-                array('is_safe' => array('html'))
+                [$this, 'popupPicture'],
+                ['is_safe' => ['html']]
             ),
             new \Twig_SimpleFilter(
                 'link_picture',
-                array($this, 'linkPicture'),
-                array('is_safe' => array('html'))
+                [$this, 'linkPicture'],
+                ['is_safe' => ['html']]
             ),
             new \Twig_SimpleFilter(
                 'link_album',
-                array($this, 'linkAlbum'),
-                array('is_safe' => array('html'))
+                [$this, 'linkAlbum'],
+                ['is_safe' => ['html']]
             ),
             new \Twig_SimpleFilter(
                 'thumbnail',
-                array($this, 'thumbnail'),
-                array('is_safe' => array('html'))
+                [$this, 'thumbnail'],
+                ['is_safe' => ['html']]
             ),
             new \Twig_SimpleFilter(
                 'thumbnail_link',
-                array($this, 'thumbnailLink'),
-                array('is_safe' => array('html'))
+                [$this, 'thumbnailLink'],
+                ['is_safe' => ['html']]
             ),
             new \Twig_SimpleFilter(
                 'add_paragraph_and_photos',
-                array($this, 'addParagraphAndPhotos'),
-                array('is_safe' => array('html'))
-            )
-        );
+                [$this, 'addParagraphAndPhotos'],
+                ['is_safe' => ['html']]
+            ),
+        ];
     }
 
     /**
@@ -114,7 +114,8 @@ class PhotosExtension extends \Twig_Extension
     public function linkPicture($path, $text = '', $data = '')
     {
         $link = sprintf(
-            '<a href="%s" data-lightbox="%s" title="Copyright &copy; %s association La Compagnie franche du Khatovar">%s</a>',
+            '<a href="%s" data-lightbox="%s" ' .
+            'title="Copyright &copy; %s association La Compagnie franche du Khatovar">%s</a>',
             $path,
             $data ? $data : $path,
             date('Y'),

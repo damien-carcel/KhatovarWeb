@@ -67,7 +67,7 @@ class ContactController extends Controller
 
         return $this->render(
             'KhatovarContactBundle:Contact:show.html.twig',
-            array('contact' => $activeContact,)
+            ['contact' => $activeContact]
         );
     }
 
@@ -84,7 +84,7 @@ class ContactController extends Controller
 
         return $this->render(
             'KhatovarContactBundle:Contact:show.html.twig',
-            array('contact' => $contact)
+            ['contact' => $contact]
         );
     }
 
@@ -118,11 +118,11 @@ class ContactController extends Controller
 
         return $this->render(
             'KhatovarContactBundle:Contact:list.html.twig',
-            array(
+            [
                 'contacts'        => $contacts,
                 'activation_form' => $form->createView(),
                 'delete_forms'    => $deleteForms,
-            )
+            ]
         );
     }
 
@@ -141,7 +141,7 @@ class ContactController extends Controller
 
         return $this->render(
             'KhatovarContactBundle:Contact:new.html.twig',
-            array('form' => $form->createView(),)
+            ['form' => $form->createView()]
         );
     }
 
@@ -173,14 +173,14 @@ class ContactController extends Controller
             return $this->redirect(
                 $this->generateUrl(
                     'khatovar_web_contact_show',
-                    array('id' => $contact->getId())
+                    ['id' => $contact->getId()]
                 )
             );
         }
 
         return $this->render(
             'KhatovarContactBundle:Contact:new.html.twig',
-            array('form' => $form->createView())
+            ['form' => $form->createView()]
         );
     }
 
@@ -201,7 +201,7 @@ class ContactController extends Controller
 
         return $this->render(
             'KhatovarContactBundle:Contact:edit.html.twig',
-            array('edit_form' => $editForm->createView(),)
+            ['edit_form' => $editForm->createView()]
         );
     }
 
@@ -233,14 +233,14 @@ class ContactController extends Controller
             return $this->redirect(
                 $this->generateUrl(
                     'khatovar_web_contact_show',
-                    array('id' => $id)
+                    ['id' => $id]
                 )
             );
         }
 
         return $this->render(
             'KhatovarContactBundle:Contact:edit.html.twig',
-            array('edit_form' => $editForm->createView(),)
+            ['edit_form' => $editForm->createView()]
         );
     }
 
@@ -293,13 +293,13 @@ class ContactController extends Controller
         $form = $this->createForm(
             'khatovar_contact_type',
             $contact,
-            array(
+            [
                 'action' => $this->generateUrl('khatovar_web_contact_create'),
                 'method' => 'POST',
-            )
+            ]
         );
 
-        $form->add('submit', 'submit', array('label' => 'Créer'));
+        $form->add('submit', 'submit', ['label' => 'Créer']);
 
         return $form;
     }
@@ -316,13 +316,13 @@ class ContactController extends Controller
         $form = $this->createForm(
             'khatovar_contact_type',
             $contact,
-            array(
-                'action' => $this->generateUrl('khatovar_web_contact_update', array('id' => $contact->getId())),
+            [
+                'action' => $this->generateUrl('khatovar_web_contact_update', ['id' => $contact->getId()]),
                 'method' => 'PUT',
-            )
+            ]
         );
 
-        $form->add('submit', 'submit', array('label' => 'Mettre à jour'));
+        $form->add('submit', 'submit', ['label' => 'Mettre à jour']);
 
         return $form;
     }
@@ -338,15 +338,15 @@ class ContactController extends Controller
     {
         return $this
             ->createFormBuilder()
-            ->setAction($this->generateUrl('khatovar_web_contact_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('khatovar_web_contact_delete', ['id' => $id]))
             ->setMethod('DELETE')
             ->add(
                 'submit',
                 'submit',
-                array(
+                [
                     'label' => 'Effacer',
-                    'attr'  => array('onclick' => 'return confirm("Êtes-vous sûr ?")'),
-                )
+                    'attr'  => ['onclick' => 'return confirm("Êtes-vous sûr ?")'],
+                ]
             )
             ->getForm();
     }
@@ -360,7 +360,7 @@ class ContactController extends Controller
      */
     protected function createDeleteForms(array $contacts)
     {
-        $deleteForms = array();
+        $deleteForms = [];
 
         foreach ($contacts as $contact) {
             $deleteForms[$contact->getId()] = $this->createDeleteForm($contact->getId())->createView();
@@ -392,7 +392,7 @@ class ContactController extends Controller
     {
         $contact = $this->entityManager
             ->getRepository('KhatovarContactBundle:Contact')
-            ->findOneBy(array('active' => true));
+            ->findOneBy(['active' => true]);
 
         if (null === $contact) {
             throw new NotFoundHttpException('There is no active Contact entity. You must activate one.');
@@ -410,20 +410,20 @@ class ContactController extends Controller
     {
         $previousContact = $this->entityManager
             ->getRepository('KhatovarContactBundle:Contact')
-            ->findOneBy(array('active' => true));
+            ->findOneBy(['active' => true]);
 
         $form = $this->createFormBuilder()
             ->add(
                 'active',
                 'entity',
-                array(
+                [
                     'class'             => 'Khatovar\Bundle\ContactBundle\Entity\Contact',
                     'label'             => false,
                     'property'          => 'name',
-                    'preferred_choices' => array($previousContact)
-                )
+                    'preferred_choices' => [$previousContact],
+                ]
             )
-            ->add('submit', 'submit', array('label' => 'Activer'))
+            ->add('submit', 'submit', ['label' => 'Activer'])
             ->getForm();
 
         return $form;
@@ -438,7 +438,7 @@ class ContactController extends Controller
     {
         $repository = $this->entityManager->getRepository('KhatovarContactBundle:Contact');
         $newContact = $repository->find($form->get('active')->getData());
-        $oldContact = $repository->findOneBy(array('active' => true));
+        $oldContact = $repository->findOneBy(['active' => true]);
 
         if (null !== $oldContact) {
             $oldContact->setActive(false);

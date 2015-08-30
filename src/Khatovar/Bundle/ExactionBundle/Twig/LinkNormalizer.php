@@ -35,13 +35,13 @@ class LinkNormalizer extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
+        return [
             new \Twig_SimpleFunction(
                 'khatovar_normalize_link',
-                array($this, 'normalize'),
-                array('is_sage' => array('html'))
+                [$this, 'normalize'],
+                ['is_sage' => ['html']]
             )
-        );
+        ];
     }
 
     /**
