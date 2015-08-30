@@ -26,7 +26,7 @@ namespace Khatovar\Bundle\WebBundle\Twig;
 use Khatovar\Bundle\PhotoBundle\Manager\PhotoManager;
 
 /**
- * Class SidePanelExtension
+ * Twig extension for the side panel.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
  */

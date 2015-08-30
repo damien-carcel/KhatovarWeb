@@ -29,7 +29,7 @@ use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
 
 /**
- * Build the various application menus.
+ * Build the web site menu.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
  * @package Khatovar\Bundle\WebBundle\Menu

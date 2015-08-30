@@ -27,7 +27,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Khatovar\Bundle\ExactionBundle\Entity\Exaction;
 
 /**
- * Year lister
+ * Exaction manager.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
  */

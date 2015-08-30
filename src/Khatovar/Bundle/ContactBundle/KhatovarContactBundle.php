@@ -26,7 +26,7 @@ namespace Khatovar\Bundle\ContactBundle;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- * Khatovar contact bundle.
+ * Main class of the khatovar contact bundle.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
  */

@@ -26,7 +26,7 @@ namespace Khatovar\Bundle\AppearanceBundle\Twig;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
- * Class LinkNormalizer
+ * Twig extension that normalizes links written in appearances content.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
  */

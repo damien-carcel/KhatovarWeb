@@ -24,7 +24,7 @@
 namespace Khatovar\Bundle\AppearanceBundle\Helper;
 
 /**
- * Helper for choices fields of Appearance entity.
+ * Helper for choice fields of Appearance entity.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
  */

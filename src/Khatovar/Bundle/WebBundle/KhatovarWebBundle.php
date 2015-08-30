@@ -26,7 +26,7 @@ namespace Khatovar\Bundle\WebBundle;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- * Khatovar web bundle.
+ * Main class of the khatovar web bundle.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
  */

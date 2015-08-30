@@ -26,7 +26,7 @@ namespace Khatovar\Bundle\AppearanceBundle;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- * Khatovar appearance bundle.
+ * Main class of the khatovar appearance bundle.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
  */

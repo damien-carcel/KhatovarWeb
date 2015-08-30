@@ -26,7 +26,7 @@ namespace Khatovar\Bundle\WebBundle\Twig;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * An twig extension to return the name of the current controller and
+ * Twig extension that return the name of the current controller and
  * the action executed.
  * Thanks to Dani Sancas for it: http://stackoverflow.com/a/17544023
  *

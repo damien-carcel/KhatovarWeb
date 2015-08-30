@@ -24,7 +24,7 @@
 namespace Khatovar\Bundle\ExactionBundle\Twig;
 
 /**
- * Date normalizer.
+ * Twig extension that normalizes dates.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
  */

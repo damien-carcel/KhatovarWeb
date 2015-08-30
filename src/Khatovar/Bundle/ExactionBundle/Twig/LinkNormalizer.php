@@ -24,7 +24,7 @@
 namespace Khatovar\Bundle\ExactionBundle\Twig;
 
 /**
- * Link normalizer
+ * Twig extension that normalizes links stored in the Exaction entity.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
  */
@@ -45,7 +45,7 @@ class LinkNormalizer extends \Twig_Extension
     }
 
     /**
-     * Return an html link.
+     * Returns an html link.
      *
      * @param string $link
      *
@@ -75,7 +75,7 @@ class LinkNormalizer extends \Twig_Extension
     }
 
     /**
-     * Format a web link.
+     * Formats a web link.
      *
      * @param string $link
      * @param string $text

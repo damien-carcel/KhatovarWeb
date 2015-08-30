@@ -49,14 +49,16 @@ class AppearanceType extends AbstractType
                     'label'       => false,
                     'config_name' => 'basic_config',
                 ]
-            )->add(
+            )
+            ->add(
                 'active',
                 'checkbox',
                 [
                     'label'    => 'Prestation proposée',
                     'required' => false,
                 ]
-            )->add(
+            )
+            ->add(
                 'pageType',
                 'choice',
                 [

@@ -26,7 +26,7 @@ namespace Khatovar\Bundle\ExactionBundle;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- * Khatovar exaction bundle
+ * Main class of the khatovar exaction bundle.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
  */
