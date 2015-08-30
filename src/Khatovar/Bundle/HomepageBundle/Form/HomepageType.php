@@ -25,7 +25,7 @@ namespace Khatovar\Bundle\HomepageBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Homepage from type.
@@ -54,7 +54,7 @@ class HomepageType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(['data_class' => 'Khatovar\Bundle\HomepageBundle\Entity\Homepage']);
     }
