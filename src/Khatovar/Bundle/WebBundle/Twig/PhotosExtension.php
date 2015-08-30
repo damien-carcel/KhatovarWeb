@@ -220,7 +220,7 @@ class PhotosExtension extends \Twig_Extension
         $text = preg_replace('`[\r\n]+`', "\n", $text);
         $text = '<p>' . $text . '</p>';
 
-        if (strlen($text) < self::PARAGRAPH_LENGTH or $photos->isEmpty()) {
+        if (strlen($text) < self::PARAGRAPH_LENGTH || $photos->isEmpty()) {
             return str_replace("\n", "</p>\n<p>", $text);
         }
 
@@ -278,7 +278,7 @@ class PhotosExtension extends \Twig_Extension
                 $textWithPhotos .= $exploded[$p];
 
                 $remain = strlen(implode(' ', array_slice($exploded, $p+1)));
-                if ($currentPhoto < $photosCount and $remain > $photoLimit + 600) {
+                if ($currentPhoto < $photosCount && $remain > $photoLimit + 600) {
                     $textWithPhotos .= $this->addFloat(
                         $photos[$currentPhoto],
                         $currentPhoto % 2 ? 'left' : 'right'
