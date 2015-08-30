@@ -28,7 +28,6 @@ use JMS\SecurityExtraBundle\Annotation\Secure;
 use Khatovar\Bundle\HomepageBundle\Entity\Homepage;
 use Khatovar\Bundle\PhotoBundle\Manager\PhotoManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -41,9 +40,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class HomepageController extends Controller
 {
-    /** @var ContainerInterface */
-    protected $container;
-
     /** @var EntityManagerInterface */
     protected $entityManager;
 
@@ -54,21 +50,18 @@ class HomepageController extends Controller
     protected $session;
 
     /**
-     * @param ContainerInterface     $container
      * @param EntityManagerInterface $entityManager
-     * @param PhotoManager           $photoManager
      * @param Session                $session
+     * @param PhotoManager           $photoManager
      */
     public function __construct(
-        ContainerInterface $container,
         EntityManagerInterface $entityManager,
-        PhotoManager $photoManager,
-        Session $session
+        Session $session,
+        PhotoManager $photoManager
     ) {
-        $this->container     = $container;
         $this->entityManager = $entityManager;
-        $this->photoManager  = $photoManager;
         $this->session       = $session;
+        $this->photoManager  = $photoManager;
     }
 
     /**
@@ -82,10 +75,10 @@ class HomepageController extends Controller
 
         return $this->render(
             'KhatovarHomepageBundle:Homepage:show.html.twig',
-            array(
+            [
                 'content' => $this->photoManager->imageTranslate($homepage->getContent()),
                 'page_id' => $homepage->getId()
-            )
+            ]
         );
     }
 
@@ -102,10 +95,10 @@ class HomepageController extends Controller
 
         return $this->render(
             'KhatovarHomepageBundle:Homepage:show.html.twig',
-            array(
+            [
                 'content' => $this->photoManager->imageTranslate($homepage->getContent()),
                 'page_id' => $homepage->getId()
-            )
+            ]
         );
     }
 
@@ -139,11 +132,11 @@ class HomepageController extends Controller
 
         return $this->render(
             'KhatovarHomepageBundle:Homepage:list.html.twig',
-            array(
+            [
                 'homepages'       => $homepages,
                 'activation_form' => $form->createView(),
                 'delete_forms'    => $deleteForms,
-            )
+            ]
         );
     }
 
@@ -162,7 +155,7 @@ class HomepageController extends Controller
 
         return $this->render(
             'KhatovarHomepageBundle:Homepage:new.html.twig',
-            array('form' => $form->createView(),)
+            ['form' => $form->createView()]
         );
     }
 
@@ -194,14 +187,14 @@ class HomepageController extends Controller
             return $this->redirect(
                 $this->generateUrl(
                     'khatovar_web_homepage_show',
-                    array('id' => $homepage->getId())
+                    ['id' => $homepage->getId()]
                 )
             );
         }
 
         return $this->render(
             'KhatovarHomepageBundle:Homepage:new.html.twig',
-            array('form' => $form->createView())
+            ['form' => $form->createView()]
         );
     }
 
@@ -222,7 +215,7 @@ class HomepageController extends Controller
 
         return $this->render(
             'KhatovarHomepageBundle:Homepage:edit.html.twig',
-            array('edit_form' => $editForm->createView(),)
+            ['edit_form' => $editForm->createView()]
         );
     }
 
@@ -254,14 +247,14 @@ class HomepageController extends Controller
             return $this->redirect(
                 $this->generateUrl(
                     'khatovar_web_homepage_show',
-                    array('id' => $id)
+                    ['id' => $id]
                 )
             );
         }
 
         return $this->render(
             'KhatovarHomepageBundle:Homepage:edit.html.twig',
-            array('edit_form' => $form->createView())
+            ['edit_form' => $form->createView()]
         );
     }
 
@@ -314,13 +307,13 @@ class HomepageController extends Controller
         $form = $this->createForm(
             'khatovar_homepage_type',
             $homepage,
-            array(
+            [
                 'action' => $this->generateUrl('khatovar_web_homepage_create'),
                 'method' => 'POST',
-            )
+            ]
         );
 
-        $form->add('submit', 'submit', array('label' => 'Créer'));
+        $form->add('submit', 'submit', ['label' => 'Créer']);
 
         return $form;
     }
@@ -337,13 +330,13 @@ class HomepageController extends Controller
         $form = $this->createForm(
             'khatovar_homepage_type',
             $homepage,
-            array(
-                'action' => $this->generateUrl('khatovar_web_homepage_update', array('id' => $homepage->getId())),
+            [
+                'action' => $this->generateUrl('khatovar_web_homepage_update', ['id' => $homepage->getId()]),
                 'method' => 'PUT',
-            )
+            ]
         );
 
-        $form->add('submit', 'submit', array('label' => 'Mettre à jour'));
+        $form->add('submit', 'submit', ['label' => 'Mettre à jour']);
 
         return $form;
     }
@@ -359,15 +352,15 @@ class HomepageController extends Controller
     {
         return $this
             ->createFormBuilder()
-            ->setAction($this->generateUrl('khatovar_web_homepage_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('khatovar_web_homepage_delete', ['id' => $id]))
             ->setMethod('DELETE')
             ->add(
                 'submit',
                 'submit',
-                array(
+                [
                     'label' => 'Effacer',
-                    'attr'  => array('onclick' => 'return confirm("Êtes-vous sûr ?")'),
-                )
+                    'attr'  => ['onclick' => 'return confirm("Êtes-vous sûr ?")'],
+                ]
             )
             ->getForm();
     }
@@ -381,7 +374,7 @@ class HomepageController extends Controller
      */
     protected function createDeleteForms(array $homepages)
     {
-        $deleteForms = array();
+        $deleteForms = [];
 
         foreach ($homepages as $homepage) {
             $deleteForms[$homepage->getId()] = $this->createDeleteForm($homepage->getId())->createView();
@@ -413,7 +406,7 @@ class HomepageController extends Controller
     {
         $homepage = $this->entityManager
             ->getRepository('KhatovarHomepageBundle:Homepage')
-            ->findOneBy(array('active' => true));
+            ->findOneBy(['active' => true]);
 
         if (null === $homepage) {
             throw new NotFoundHttpException('There is no active Contact entity. You must activate one.');
@@ -431,20 +424,20 @@ class HomepageController extends Controller
     {
         $previousHomepage = $this->entityManager
             ->getRepository('KhatovarHomepageBundle:Homepage')
-            ->findOneBy(array('active' => true));
+            ->findOneBy(['active' => true]);
 
         $form = $this->createFormBuilder()
             ->add(
                 'active',
                 'entity',
-                array(
+                [
                     'class'             => 'Khatovar\Bundle\HomepageBundle\Entity\Homepage',
                     'label'             => false,
                     'property'          => 'name',
-                    'preferred_choices' => array($previousHomepage)
-                )
+                    'preferred_choices' => [$previousHomepage],
+                ]
             )
-            ->add('submit', 'submit', array('label' => 'Activer'))
+            ->add('submit', 'submit', ['label' => 'Activer'])
             ->getForm();
 
         return $form;
@@ -459,7 +452,7 @@ class HomepageController extends Controller
     {
         $repository  = $this->entityManager->getRepository('KhatovarHomepageBundle:Homepage');
         $newHomepage = $repository->find($form->get('active')->getData());
-        $oldHomepage = $repository->findOneBy(array('active' => true));
+        $oldHomepage = $repository->findOneBy(['active' => true]);
 
         if (null !== $oldHomepage) {
             $oldHomepage->setActive(false);

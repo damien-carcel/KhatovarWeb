@@ -1,6 +1,6 @@
 Khatovar\Bundle\PhotoBundle\Entity\Photo:
     type: entity
-    table: khatovar_web_photos
+    table: khatovar_web_photo
     repositoryClass: Khatovar\Bundle\PhotoBundle\Entity\PhotoRepository
     id:
         id:
@@ -59,6 +59,15 @@ Khatovar\Bundle\PhotoBundle\Entity\Photo:
                 onDelete: 'SET NULL'
         contact:
             targetEntity: Khatovar\Bundle\ContactBundle\Entity\Contact
+            cascade:
+                - detach
+            inversedBy: photos
+            JoinColumn:
+                name: exaction_id
+                referencedColumnName: id
+                onDelete: 'SET NULL'
+        appearance:
+            targetEntity: Khatovar\Bundle\AppearanceBundle\Entity\Appearance
             cascade:
                 - detach
             inversedBy: photos

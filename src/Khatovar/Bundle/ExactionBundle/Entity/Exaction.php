@@ -33,7 +33,7 @@ use Khatovar\Bundle\PhotoBundle\Entity\Photo;
  */
 class Exaction
 {
-    /** @var int */
+    /** @var integer */
     protected $id;
 
     /**
@@ -67,7 +67,7 @@ class Exaction
     /**
      * Photos of the festival.
      *
-     * @var ArrayCollection $photos
+     * @var \Doctrine\Common\Collections\Collection $photos
      */
     protected $photos;
 
@@ -116,7 +116,7 @@ class Exaction
     /**
      * Is there an abstract or only photos?
      *
-     * @var boolean
+     * @var bool
      */
     protected $onlyPhotos;
 
@@ -143,7 +143,7 @@ class Exaction
     /**
      * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -321,7 +321,7 @@ class Exaction
     /**
      * Set onlyPhotos.
      *
-     * @param boolean $onlyPhotos
+     * @param bool $onlyPhotos
      *
      * @return Exaction
      */
@@ -335,7 +335,7 @@ class Exaction
     /**
      * Get onlyPhotos.
      *
-     * @return boolean
+     * @return bool
      */
     public function isOnlyPhotos()
     {

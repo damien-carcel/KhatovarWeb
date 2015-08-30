@@ -1,3 +1,7 @@
+khatovar_appearance:
+    resource: "@KhatovarAppearanceBundle/Resources/config/routing.yml"
+    prefix:   /prestations
+
 khatovar_contact:
     resource: "@KhatovarContactBundle/Resources/config/routing.yml"
     prefix:   /contact
@@ -24,11 +28,11 @@ khatovar_web:
 
 carcel_documents:
     resource: "@CarcelDocumentsBundle/Resources/config/routing.yml"
-    prefix: /documents
+    prefix:   /documents
 
 carcel_user:
     resource: "@CarcelUserBundle/Resources/config/routing.yml"
-    prefix: /
+    prefix:   /
 
 # redirecting the root
 root:

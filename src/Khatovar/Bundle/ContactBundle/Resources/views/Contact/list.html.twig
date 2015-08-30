@@ -58,8 +58,8 @@
                     {{ contact.name }}
                 </td>
                 <td class="column-center">
-                    <a class="button" href="{{ path('khatovar_web_contact_show', { 'id': contact.id }) }}">Visualiser</a>
-                    <a class="button" href="{{ path('khatovar_web_contact_edit', { 'id': contact.id }) }}">Éditer</a>
+                    <a class="btn btn-sm btn-default" href="{{ path('khatovar_web_contact_show', { 'id': contact.id }) }}">Visualiser</a>
+                    <a class="btn btn-sm btn-default" href="{{ path('khatovar_web_contact_edit', { 'id': contact.id }) }}">Éditer</a>
                     {{ form(delete_form, { 'attr': {'class': 'button-inline'}}) }}
                 </td>
             </tr>

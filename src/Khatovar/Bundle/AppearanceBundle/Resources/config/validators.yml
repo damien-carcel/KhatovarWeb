@@ -1,0 +1,10 @@
+parameters:
+    khatovar_appearance.validator.constraint.unique_active_camp.class: Khatovar\Bundle\AppearanceBundle\Validator\Constraints\UniqueActiveCampValidator
+
+services:
+    khatovar_appearance.validator.constraint.unique_active_camp:
+        class: %khatovar_appearance.validator.constraint.unique_active_camp.class%
+        arguments:
+            - '@doctrine.orm.entity_manager'
+        tags:
+            - { name: validator.constraint_validator, alias: khatovar_unique_active_camp_validator }

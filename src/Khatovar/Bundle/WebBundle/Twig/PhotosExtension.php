@@ -23,6 +23,7 @@
 
 namespace Khatovar\Bundle\WebBundle\Twig;
 
+use Doctrine\Common\Collections\Collection;
 use Khatovar\Bundle\PhotoBundle\Entity\Photo;
 
 /**
@@ -45,38 +46,38 @@ class PhotosExtension extends \Twig_Extension
      */
     public function getFilters()
     {
-        return array(
+        return [
             new \Twig_SimpleFilter(
                 'popup_picture',
-                array($this, 'popupPicture'),
-                array('is_safe' => array('html'))
+                [$this, 'popupPicture'],
+                ['is_safe' => ['html']]
             ),
             new \Twig_SimpleFilter(
                 'link_picture',
-                array($this, 'linkPicture'),
-                array('is_safe' => array('html'))
+                [$this, 'linkPicture'],
+                ['is_safe' => ['html']]
             ),
             new \Twig_SimpleFilter(
                 'link_album',
-                array($this, 'linkAlbum'),
-                array('is_safe' => array('html'))
+                [$this, 'linkAlbum'],
+                ['is_safe' => ['html']]
             ),
             new \Twig_SimpleFilter(
                 'thumbnail',
-                array($this, 'thumbnail'),
-                array('is_safe' => array('html'))
+                [$this, 'thumbnail'],
+                ['is_safe' => ['html']]
             ),
             new \Twig_SimpleFilter(
                 'thumbnail_link',
-                array($this, 'thumbnailLink'),
-                array('is_safe' => array('html'))
+                [$this, 'thumbnailLink'],
+                ['is_safe' => ['html']]
             ),
             new \Twig_SimpleFilter(
                 'add_paragraph_and_photos',
-                array($this, 'addParagraphAndPhotos'),
-                array('is_safe' => array('html'))
-            )
-        );
+                [$this, 'addParagraphAndPhotos'],
+                ['is_safe' => ['html']]
+            ),
+        ];
     }
 
     /**
@@ -112,28 +113,56 @@ class PhotosExtension extends \Twig_Extension
      */
     public function linkPicture($path, $text = '', $data = '')
     {
-        $link = '<a href="' . $path . '" data-lightbox="' . ($data ? $data : $path)
-            . '" title="Copyright &copy; ' . date('Y')
-            . ' association La Compagnie franche du Khatovar">' . $text . '</a>';
+        $link = sprintf(
+            '<a href="%s" data-lightbox="%s" ' .
+            'title="Copyright &copy; %s association La Compagnie franche du Khatovar">%s</a>',
+            $path,
+            $data ? $data : $path,
+            date('Y'),
+            $text
+        );
 
         return $link;
     }
 
     /**
-     * Return
+     * Return a lightbox photo album.
      *
-     * @param string $path The path to the picture.
-     * @param string $icon The photo album icon.
-     * @param string $data The data-lightbox attribute.
+     * @param string     $icon       The photo album icon.
+     * @param string     $data       The data-lightbox attribute.
+     * @param Collection $photos     The rest of the photos to display as an album.
+     * @param Photo      $firstPhoto The first photo of the album..
      *
      * @return string
      */
-    public function linkAlbum($path, $icon, $data)
+    public function linkAlbum($icon, $data, Collection $photos, Photo $firstPhoto = null)
     {
-        $text = '<img src=' . '"' . $icon . '" class="photolink" '
-            . 'alt="Album photo" /><br />Album photo';
+        $link  = '';
+        $first = true;
+        $text  = sprintf(
+            '<img src="%s" class="photolink" alt="Album photo" /><br />Album photo',
+            $icon
+        );
 
-        $link = $this->linkPicture($path, $text, $data);
+        if (null === $firstPhoto && $photos->isEmpty()) {
+            $link  = $this->linkPicture('/bundles/khatovarweb/images/logonoir.jpg', $text, $data);
+        }
+
+        if (null !== $firstPhoto) {
+            $link  = $this->linkPicture($firstPhoto->getWebPath(), $text, $data);
+            $first = false;
+        }
+
+        foreach ($photos as $photo) {
+            if ($first) {
+                $link  = $this->linkPicture($photo->getWebPath(), $text, $data);
+                $first = false;
+            } else {
+                if (null !== $firstPhoto && $photo->getWebPath() !== $firstPhoto->getWebPath()) {
+                    $link .= $this->linkPicture($photo->getWebPath(), '', $data);
+                }
+            }
+        }
 
         return $link;
     }
@@ -181,24 +210,24 @@ class PhotosExtension extends \Twig_Extension
      * Replace line breaks, and remove useless ones, by paragraphs and
      * insert floatings between paragraphs.
      *
-     * @param string $text   The text to transform.
-     * @param array  $photos A list of photos to insert in the text.
+     * @param string      $text   The text to transform.
+     * @param Collection  $photos A list of photos to insert in the text.
      *
      * @return string
      */
-    public function addParagraphAndPhotos($text, $photos = array())
+    public function addParagraphAndPhotos($text, Collection $photos = null)
     {
         $text = preg_replace('`[\r\n]+`', "\n", $text);
         $text = '<p>' . $text . '</p>';
 
-        if (strlen($text) < self::PARAGRAPH_LENGTH or empty($photos)) {
+        if (strlen($text) < self::PARAGRAPH_LENGTH || $photos->isEmpty()) {
             return str_replace("\n", "</p>\n<p>", $text);
         }
 
         $text = str_replace("\n", "</p>\n[break]<p>", $text);
 
-        if (!empty($photos)) {
-            $text = $this->addPhotos($text, $photos);
+        if (!$photos->isEmpty()) {
+            $text = $this->addPhotos($text, $photos->toArray());
         }
 
         return $text;
@@ -249,7 +278,7 @@ class PhotosExtension extends \Twig_Extension
                 $textWithPhotos .= $exploded[$p];
 
                 $remain = strlen(implode(' ', array_slice($exploded, $p+1)));
-                if ($currentPhoto < $photosCount and $remain > $photoLimit + 600) {
+                if ($currentPhoto < $photosCount && $remain > $photoLimit + 600) {
                     $textWithPhotos .= $this->addFloat(
                         $photos[$currentPhoto],
                         $currentPhoto % 2 ? 'left' : 'right'

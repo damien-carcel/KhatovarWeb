@@ -23,16 +23,17 @@
 
 namespace Khatovar\Bundle\PhotoBundle\Form;
 
+use Khatovar\Bundle\PhotoBundle\Helper\PhotoHelper;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
- * Class PhotoType
+ * Form type for the Photo entity.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
  * @package Khatovar\Bundle\PhotoBundle\Form
@@ -51,8 +52,7 @@ class PhotoType extends AbstractType
     }
 
     /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
+     * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -62,11 +62,11 @@ class PhotoType extends AbstractType
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * {@inheritdoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array('data_class' => 'Khatovar\Bundle\PhotoBundle\Entity\Photo'));
+        $resolver->setDefaults(['data_class' => 'Khatovar\Bundle\PhotoBundle\Entity\Photo']);
     }
 
     /**
@@ -82,11 +82,11 @@ class PhotoType extends AbstractType
      */
     protected function addDefaultFields(FormBuilderInterface $builder)
     {
-        if (is_null($builder->getData()->getId())) {
-            $builder->add('file', 'file', array('label' => false));
+        if (null === $builder->getData()->getId()) {
+            $builder->add('file', 'file', ['label' => false]);
         }
 
-        $builder->add('alt', 'text', array('label' => 'Nom de substitution : '));
+        $builder->add('alt', 'text', ['label' => 'Nom de substitution']);
     }
 
     /**
@@ -95,29 +95,35 @@ class PhotoType extends AbstractType
     protected function addEntityField(FormBuilderInterface $builder)
     {
         $formModifier = function (FormInterface $form, $entity) {
-            if (!is_null($entity)) {
-                if ($entity == 'homepage') {
-                    $form->add('class', 'choice', array(
-                        'label' => 'Taille de la photo : ',
-                        'choices' => array(
-                            'photo_small' => 'Petit format',
-                            'photo' => 'Format normal',
-                            'panorama' => 'Panorama'
-                        ),
-                        'preferred_choices' => array('photo'),
-                        'required' => true
-                    ));
+            if (null !== $entity) {
+                if ($entity === 'homepage') {
+                    $form->add(
+                        'class',
+                        'choice',
+                        [
+                            'label'             => 'Taille de la photo',
+                            'choices'           => [
+                                'photo_small' => 'Petit format',
+                                'photo'       => 'Format normal',
+                                'panorama'    => 'Panorama',
+                            ],
+                            'preferred_choices' => ['photo'],
+                            'required'          => true,
+                        ]
+                    );
                 } else {
-                    $form->add('class', 'hidden', array(
-                        'data' => 'none'
-                    ));
+                    $form->add('class', 'hidden', ['data' => 'none']);
                 }
 
-                $form->add($entity, 'entity', array(
-                    'class' => 'Khatovar' . ucfirst($entity) . 'Bundle:' . ucfirst($entity),
-                    'property' => 'name',
-                    'label' => 'Page :'
-                ));
+                $form->add(
+                    $entity,
+                    'entity',
+                    [
+                        'class'    => 'Khatovar' . ucfirst($entity) . 'Bundle:' . ucfirst($entity),
+                        'property' => 'name',
+                        'label'    => 'Page',
+                    ]
+                );
             }
         };
 
@@ -125,16 +131,11 @@ class PhotoType extends AbstractType
             $builder->add(
                 'entity',
                 'choice',
-                array(
-                    'label' => 'Rattacher la photo à une : ',
-                    'choices' => array(
-                        'homepage' => 'Page d\'accueil',
-                        'member'   => 'Page de membre',
-                        'exaction' => 'Exaction',
-                        'contact'  => 'Page de contact',
-                    ),
-                    'preferred_choices' => array('homepage')
-                )
+                [
+                    'label' => 'Rattacher la photo à une',
+                    'choices' => PhotoHelper::getPhotoEntities(),
+                    'preferred_choices' => ['homepage'],
+                ]
             );
 
             $builder->addEventListener(

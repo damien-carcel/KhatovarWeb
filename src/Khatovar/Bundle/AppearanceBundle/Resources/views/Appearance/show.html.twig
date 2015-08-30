@@ -1,0 +1,40 @@
+{% extends 'KhatovarWebBundle::layout.html.twig' %}
+
+{% block inarticle %}
+    {% if is_granted('ROLE_EDITOR') %}
+        <a href="{{ path('khatovar_web_appearance_edit', { 'id': appearance.id }) }}">Éditer cette prestation</a>
+        |
+        <a href="{{ path('khatovar_web_appearance_new') }}">Créer une nouvelle prestation</a>
+        |
+        <a href="{{ path('khatovar_web_appearance_list') }}">Liste des prestations disponibles</a>
+        <hr />
+    {% endif %}
+
+    <h1>{{ appearance.name }}</h1>
+
+    {{ appearance.content|khatovar_normalize_appearance_links|add_paragraph_and_photos(appearance.photos) }}
+
+    <div class="container flex-container-always">
+        <div class="navigation nav-left">
+            {% if previous %}
+                <a href="{{ path('khatovar_web_appearance_show', { 'slug': previous.slug }) }}">
+                    <img src="{{ asset('bundles/khatovarweb/images/hache_gauche.png') }}" class="photolink" alt="" />
+                    <br />
+                    {{ previous.name }}
+                </a>
+            {% endif %}
+        </div>
+        <div class="navigation nav-center">
+            {{ asset('bundles/khatovarweb/images/camera.png')|link_album('album-photo', appearance.photos) }}
+        </div>
+        <div class="navigation nav-right">
+            {% if next %}
+                <a href="{{ path('khatovar_web_appearance_show', { 'slug': next.slug }) }}">
+                    <img src="{{ asset('bundles/khatovarweb/images/hache_droite.png') }}" class="photolink" alt="" />
+                    <br />
+                    {{ next.name }}
+                </a>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'KhatovarWebBundle::layout.html.twig' %}
+
+{% block inarticle %}
+    {% if is_granted('ROLE_EDITOR') %}
+        <a href="{{ path('khatovar_web_exaction_new') }}">Ajouter une nouvelle exaction</a>
+        <hr />
+    {% endif %}
+
+    <p>
+        Vous trouverez ici toutes les fêtes médiévales auxquelles nous avons participé ces dernières années.
+    </p>
+
+    <table width="100%">
+        <tr>
+            <td>
+                <div style="text-align:center; font-weight: bold;">
+                    –
+                    {% for year in active_years %}
+                        <a href="{{ path('khatovar_web_exaction_list_by_year', {'year': year}) }}" title="{{ year }}">{{ year }}</a> –
+                    {% endfor %}
+                </div>
+            </td>
+        </tr>
+    </table>
+{% endblock %}

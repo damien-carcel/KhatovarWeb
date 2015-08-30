@@ -26,7 +26,7 @@ namespace Khatovar\Bundle\WebBundle\Twig;
 use Khatovar\Bundle\PhotoBundle\Manager\PhotoManager;
 
 /**
- * Class SidePanelExtension
+ * Twig extension for the side panel.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
  */
@@ -48,9 +48,9 @@ class SidePanelExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
-            'get_controller_photos' => new \Twig_Function_Method($this, 'getControllerPhotos'),
-        );
+        return [
+            'get_controller_photos' => new \Twig_Function_Method($this, 'getControllerPhotos')
+        ];
     }
 
     /**

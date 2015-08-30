@@ -1,12 +1,3 @@
-
 khatovar_web_camp:
-    path:       /camp/{atelier}
-    defaults:   { _controller: KhatovarWebBundle:Default:camp, atelier: 'introduction' }
-    requirements:
-        atelier: \w*
-
-khatovar_web_fight:
-    path:       /combat/{pratique}
-    defaults:   { _controller: KhatovarWebBundle:Default:fight, pratique: 'introduction' }
-    requirements:
-        pratique: \w*
+    path:     /camp
+    defaults: { _controller: 'khatovar_web.controller.web:campAction' }

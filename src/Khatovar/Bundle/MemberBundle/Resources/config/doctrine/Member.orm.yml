@@ -1,6 +1,6 @@
 Khatovar\Bundle\MemberBundle\Entity\Member:
     type: entity
-    table: khatovar_web_members
+    table: khatovar_web_member
     repositoryClass: Khatovar\Bundle\MemberBundle\Entity\MemberRepository
     indexes:
         search_idx:
@@ -27,7 +27,6 @@ Khatovar\Bundle\MemberBundle\Entity\Member:
             gedmo:
                 slug:
                     separator: _
-                    style: camel
                     fields:
                         - name
         rank:
@@ -71,8 +70,7 @@ Khatovar\Bundle\MemberBundle\Entity\Member:
             column: weakness
             nullable: true
         story:
-            type: string
-            length: 255
+            type: text
             column: story
             nullable: false
         active:

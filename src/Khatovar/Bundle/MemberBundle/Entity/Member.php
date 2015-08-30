@@ -79,7 +79,7 @@ class Member
     /** @var User */
     protected $owner;
 
-    /** @var ArrayCollection */
+    /** @var \Doctrine\Common\Collections\Collection */
     protected $photos;
 
 
@@ -99,14 +99,14 @@ class Member
      */
     public function __construct()
     {
-        $this->active = null;
+        $this->active = false;
         $this->photos = new ArrayCollection();
     }
 
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -380,7 +380,7 @@ class Member
     /**
      * Set active
      *
-     * @param boolean $active
+     * @param bool $active
      *
      * @return Member
      */
@@ -394,7 +394,7 @@ class Member
     /**
      * Get active
      *
-     * @return boolean
+     * @return bool
      */
     public function isActive()
     {

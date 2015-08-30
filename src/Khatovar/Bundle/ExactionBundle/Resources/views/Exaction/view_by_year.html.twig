@@ -13,7 +13,7 @@
         {% if is_granted('ROLE_EDITOR') %}
             {% set delete_form = delete_forms[exaction.id] %}
 
-            <a class="button" href="{{ path('khatovar_web_exaction_edit', {'id': exaction.id}) }}">Éditer</a>
+            <a class="btn btn-sm btn-default" href="{{ path('khatovar_web_exaction_edit', {'id': exaction.id}) }}">Éditer</a>
             {{ form(delete_form, { 'attr': {'class': 'button-inline'}}) }}
         {% endif %}
 
@@ -33,7 +33,7 @@
                     {% if exaction.image is not null %}
                         {% set the_image = exaction.image.webPath %}
                     {% else %}
-                        {% set the_image = asset('bundles/khatovarweb/photos/logonoir.jpg') %}
+                        {% set the_image = asset('bundles/khatovarweb/images/logonoir.jpg') %}
                     {% endif %}
 
                     {% autoescape false %}
@@ -46,10 +46,7 @@
                         <b>La photo&nbsp;:</b> {{ exaction.imageStory }}
                     </div>
                     <div class="photo_exactions">
-                        {{ (exaction.image ? exaction.image.webPath : asset('bundles/khatovarweb/photos/logonoir.jpg'))|link_album(asset('bundles/khatovarweb/images/camera.png'), 'album-photo') }}
-                        {% for photo in exaction.photos %}
-                            {{ photo.webPath|link_picture('', 'album-photo') }}
-                        {% endfor %}
+                        {{ asset('bundles/khatovarweb/images/camera.png')|link_album('album-photo-' ~ exaction.id, exaction.photos, exaction.image) }}
                     </div>
                 </div>
             </div>

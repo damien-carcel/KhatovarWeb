@@ -27,7 +27,7 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
 /**
- * Exaction iframe validator.
+ * Checks that the exaction "iframe" field indeed contains an iframe.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
  */

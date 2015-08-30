@@ -23,22 +23,23 @@
 
 namespace Khatovar\Bundle\ExactionBundle\Manager;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Khatovar\Bundle\ExactionBundle\Entity\Exaction;
 
 /**
- * Year lister
+ * Exaction manager.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
  */
 class ExactionManager
 {
+    /** @var EntityManagerInterface */
     protected $entityManager;
 
     /**
-     * @param EntityManager $entityManager
+     * @param EntityManagerInterface $entityManager
      */
-    public function __construct(EntityManager $entityManager)
+    public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
     }
@@ -51,7 +52,7 @@ class ExactionManager
      */
     public function getSortedYears()
     {
-        $yearList = array();
+        $yearList = [];
 
         $exactions = $this->entityManager
             ->getRepository('KhatovarExactionBundle:Exaction')

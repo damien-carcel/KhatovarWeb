@@ -1,6 +1,6 @@
 Khatovar\Bundle\ContactBundle\Entity\Contact:
     type: entity
-    table: khatovar_web_contacts
+    table: khatovar_web_contact
     repositoryClass: Khatovar\Bundle\ContactBundle\Entity\ContactRepository
     id:
         id:
@@ -22,7 +22,7 @@ Khatovar\Bundle\ContactBundle\Entity\Contact:
         active:
             type: boolean
             column: active
-            nullable: true
+            nullable: false
     manyToOne:
         visitCard:
             targetEntity: Khatovar\Bundle\PhotoBundle\Entity\Photo

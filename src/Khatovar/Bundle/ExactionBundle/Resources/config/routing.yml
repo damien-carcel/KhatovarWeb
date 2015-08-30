@@ -1,10 +1,14 @@
+khatovar_web_exaction:
+    path:     /
+    defaults: { _controller: 'khatovar_exaction.controller.exaction:indexAction' }
+
 khatovar_web_exaction_to_come:
     path:     /a_venir
     defaults: { _controller: 'khatovar_exaction.controller.exaction:toComeAction' }
 
 khatovar_web_exaction_past:
     path:     /passees
-    defaults: { _controller: 'khatovar_exaction.controller.exaction:indexAction' }
+    defaults: { _controller: 'khatovar_exaction.controller.exaction:pastAction' }
 
 khatovar_web_exaction_list_by_year:
     path:     /passees/{year}

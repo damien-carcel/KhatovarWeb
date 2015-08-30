@@ -26,7 +26,7 @@ namespace Khatovar\Bundle\ExactionBundle\Validator\Constraints;
 use Symfony\Component\Validator\Constraint;
 
 /**
- * Class IframeSize
+ * Checks that the size set in the iframe is 300x300.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
  */

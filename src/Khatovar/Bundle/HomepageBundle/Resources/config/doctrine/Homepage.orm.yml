@@ -1,6 +1,6 @@
 Khatovar\Bundle\HomepageBundle\Entity\Homepage:
     type: entity
-    table: khatovar_web_homepages
+    table: khatovar_web_homepage
     repositoryClass: Khatovar\Bundle\HomepageBundle\Entity\HomepageRepository
     id:
         id:
@@ -22,7 +22,7 @@ Khatovar\Bundle\HomepageBundle\Entity\Homepage:
         active:
             type: boolean
             column: active
-            nullable: true
+            nullable: false
     oneToMany:
         photos:
             targetEntity: Khatovar\Bundle\PhotoBundle\Entity\Photo

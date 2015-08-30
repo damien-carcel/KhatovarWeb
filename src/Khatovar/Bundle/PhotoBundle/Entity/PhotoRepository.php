@@ -46,6 +46,7 @@ class PhotoRepository extends EntityRepository
             ->andWhere('p.member IS NULL')
             ->andWhere('p.exaction IS NULL')
             ->andWhere('p.contact IS NULL')
+            ->andWhere('p.appearance IS NULL')
             ->getQuery();
 
         return $query->getResult();
@@ -63,10 +64,12 @@ class PhotoRepository extends EntityRepository
         $query = $this->createQueryBuilder('p')
             ->where('p.member = :member')
             ->andWhere('p.id != :portrait')
-            ->setParameters(array(
-                    'member' => $member,
-                    'portrait' => $member->getPortrait()
-                ))
+            ->setParameters(
+                [
+                    'member'   => $member,
+                    'portrait' => $member->getPortrait(),
+                ]
+            )
             ->getQuery();
 
         return $query->getResult();

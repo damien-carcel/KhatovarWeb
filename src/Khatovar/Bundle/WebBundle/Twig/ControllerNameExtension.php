@@ -26,9 +26,9 @@ namespace Khatovar\Bundle\WebBundle\Twig;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * An twig extension to return the name of the current controller and
+ * Twig extension that return the name of the current controller and
  * the action executed.
- * Thanks to Dani Sancas for it : http://stackoverflow.com/a/17544023
+ * Thanks to Dani Sancas for it: http://stackoverflow.com/a/17544023
  *
  * @package Khatovar\Bundle\WebBundle\Services\Twig
  */
@@ -65,11 +65,11 @@ class ControllerNameExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
+        return [
             'get_controller_name' => new \Twig_Function_Method($this, 'getControllerName'),
             'get_action_name'     => new \Twig_Function_Method($this, 'getActionName'),
             'get_slug_or_id'      => new \Twig_Function_Method($this, 'getSlugOrId')
-        );
+        ];
     }
 
     /**
@@ -89,7 +89,7 @@ class ControllerNameExtension extends \Twig_Extension
     {
         $name = null;
 
-        if (!is_null($this->request)) {
+        if (null !== $this->request) {
             $pattern = '#.([a-zA-Z]*):#';
             preg_match($pattern, $this->request->get('_controller'), $matches);
 
@@ -108,9 +108,9 @@ class ControllerNameExtension extends \Twig_Extension
     {
         $name = null;
 
-        if (!is_null($this->request)) {
+        if (null !== $this->request) {
             $pattern = "#:([a-zA-Z]*)Action#";
-            $matches = array();
+            $matches = [];
             preg_match($pattern, $this->request->get('_controller'), $matches);
 
             $name =  $matches[1];

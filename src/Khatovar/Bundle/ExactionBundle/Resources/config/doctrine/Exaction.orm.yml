@@ -1,6 +1,6 @@
 Khatovar\Bundle\ExactionBundle\Entity\Exaction:
     type: entity
-    table: khatovar_web_exactions
+    table: khatovar_web_exaction
     repositoryClass: Khatovar\Bundle\ExactionBundle\Entity\ExactionRepository
     id:
         id:

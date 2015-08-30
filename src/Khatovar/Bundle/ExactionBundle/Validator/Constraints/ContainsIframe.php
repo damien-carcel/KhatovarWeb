@@ -26,7 +26,7 @@ namespace Khatovar\Bundle\ExactionBundle\Validator\Constraints;
 use Symfony\Component\Validator\Constraint;
 
 /**
- * Check that the exaction "iframe" field indeed contains an iframe.
+ * Checks that the exaction "iframe" field indeed contains an iframe.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
  */

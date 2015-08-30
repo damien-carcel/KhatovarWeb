@@ -29,7 +29,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Exaction form type.
@@ -44,29 +44,29 @@ class ExactionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', 'text', array('label' => 'Nom'))
-            ->add('place', 'text', array('label' => 'Lieu'))
-            ->add('start', 'date', array('label' => 'Date de début'))
-            ->add('end', 'date', array('label' => 'Date de fin'))
-            ->add('map', 'textarea', array('label' => 'Emplacement (copier le lien depuis Google Map)'))
+            ->add('name', 'text', ['label' => 'Nom'])
+            ->add('place', 'text', ['label' => 'Lieu'])
+            ->add('start', 'date', ['label' => 'Date de début'])
+            ->add('end', 'date', ['label' => 'Date de fin'])
+            ->add('map', 'textarea', ['label' => 'Emplacement (copier le lien depuis Google Map)'])
             ->add(
                 'introduction',
                 'textarea',
-                array(
+                [
                     'label'    => 'Annonce',
                     'required' => false,
-                )
+                ]
             )
             ->add(
                 'links',
                 'collection',
-                array(
+                [
                     'label'              => 'Liens utiles',
                     'type'               => 'text',
                     'allow_add'          => true,
                     'allow_delete'       => true,
                     'cascade_validation' => true,
-                )
+                ]
             )
         ;
 
@@ -76,9 +76,9 @@ class ExactionType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array('data_class' => 'Khatovar\Bundle\ExactionBundle\Entity\Exaction'));
+        $resolver->setDefaults(['data_class' => 'Khatovar\Bundle\ExactionBundle\Entity\Exaction']);
     }
 
     /**
@@ -111,7 +111,7 @@ class ExactionType extends AbstractType
                         ->add(
                             'image',
                             'entity',
-                            array(
+                            [
                                 'class'         => 'Khatovar\Bundle\PhotoBundle\Entity\Photo',
                                 'label'         => 'L\'image de la fête',
                                 'required'      => false,
@@ -121,31 +121,31 @@ class ExactionType extends AbstractType
                                         ->where('e.exaction = :exaction')
                                         ->setParameter('exaction', $exaction);
                                 }
-                            )
+                            ]
                         )
                         ->add(
                             'onlyPhotos',
                             'checkbox',
-                            array(
+                            [
                                 'label'    => 'Pas de résumé de fête, seulement des photos ?',
                                 'required' => false,
-                                )
+                            ]
                         )
                         ->add(
                             'abstract',
                             'textarea',
-                            array(
+                            [
                                 'label'    => 'Résumé de la fête',
                                 'required' => false,
-                            )
+                            ]
                         )
                         ->add(
                             'imageStory',
                             'textarea',
-                            array(
+                            [
                                 'label'    => 'Explication de l\'image de la fête',
                                 'required' => false,
-                            )
+                            ]
                         );
                 }
             }

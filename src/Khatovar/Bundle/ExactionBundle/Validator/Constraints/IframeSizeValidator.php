@@ -27,7 +27,7 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
 /**
- * Class IframeSizeValidator
+ * Checks that the size set in the iframe is 300x300.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
  */

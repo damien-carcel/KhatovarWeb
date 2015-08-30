@@ -33,7 +33,7 @@ use Khatovar\Bundle\PhotoBundle\Entity\Photo;
  */
 class Homepage
 {
-    /** @var int */
+    /** @var integer */
     protected $id;
 
     /** @var string */
@@ -45,7 +45,7 @@ class Homepage
     /** @var bool */
     protected $active;
 
-    /** @var ArrayCollection $photos */
+    /** @var \Doctrine\Common\Collections\Collection $photos */
     protected $photos;
 
     /**
@@ -71,7 +71,7 @@ class Homepage
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {

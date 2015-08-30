@@ -24,7 +24,7 @@
 namespace Khatovar\Bundle\ExactionBundle\Twig;
 
 /**
- * Date normalizer.
+ * Twig extension that normalizes dates.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
  */
@@ -35,13 +35,26 @@ class DateNormalizer extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
+        return [
             new \Twig_SimpleFunction(
                 'khatovar_normalize_date',
-                array($this, 'normalize'),
-                array('is_sage' => array('html'))
+                [$this, 'normalize'],
+                ['is_sage' => ['html']]
             ),
-        );
+            new \Twig_SimpleFunction(
+                'khatovar_normalize_date_with_year',
+                [$this, 'normalizeWithYear'],
+                ['is_sage' => ['html']]
+            ),
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getName()
+    {
+        return 'khatovar_date_normalizer';
     }
 
     /**
@@ -79,11 +92,20 @@ class DateNormalizer extends \Twig_Extension
     }
 
     /**
-     * {@inheritdoc}
+     * Return the formatted date of the exaction with the year.
+     *
+     * @param \DateTime $start
+     * @param \DateTime $end
+     *
+     * @return string
      */
-    public function getName()
+    public function normalizeWithYear(\DateTime $start, \DateTime $end)
     {
-        return 'khatovar_date_normalizer';
+        return sprintf(
+            '%s %s',
+            $this->normalize($start, $end),
+            $end->format('Y')
+        );
     }
 
     /**
@@ -95,7 +117,7 @@ class DateNormalizer extends \Twig_Extension
      */
     protected function getDay(\DateTime $date)
     {
-        if ($date->format('d') == '1') {
+        if ($date->format('d') === '1') {
             return '1er';
         } else {
             return $date->format('d');
@@ -111,7 +133,7 @@ class DateNormalizer extends \Twig_Extension
      */
     protected function translateMonth(\DateTime $date)
     {
-        $frenchMonths = array(
+        $frenchMonths = [
             'janvier',
             'février',
             'mars',
@@ -123,8 +145,8 @@ class DateNormalizer extends \Twig_Extension
             'septembre',
             'octobre',
             'novembre',
-            'décembre'
-        );
+            'décembre',
+        ];
 
         return $frenchMonths[((int) $date->format('m')) - 1];
     }

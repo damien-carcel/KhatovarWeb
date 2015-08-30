@@ -15,13 +15,13 @@
 
     {% for exaction in future_exactions %}
         <h1>
-            {{ exaction.name }}, {{ exaction.place }}, {{ khatovar_normalize_date(exaction.start, exaction.end) }}
+            {{ exaction.name }}, {{ exaction.place }}, {{ khatovar_normalize_date_with_year(exaction.start, exaction.end) }}
         </h1>
 
         {% if is_granted('ROLE_EDITOR') %}
             {% set delete_form = delete_forms[exaction.id] %}
 
-            <a class="button" href="{{ path('khatovar_web_exaction_edit', {'id': exaction.id}) }}">Éditer</a>
+            <a class="btn btn-sm btn-default" href="{{ path('khatovar_web_exaction_edit', {'id': exaction.id}) }}">Éditer</a>
             {{ form(delete_form, { 'attr': {'class': 'button-inline'}}) }}
         {% endif %}
 

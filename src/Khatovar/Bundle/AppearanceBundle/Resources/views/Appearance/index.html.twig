@@ -1,0 +1,19 @@
+{% extends 'KhatovarWebBundle::layout.html.twig' %}
+
+{% block inarticle %}
+    {% if is_granted('ROLE_EDITOR') %}
+        <a href="{{ path('khatovar_web_appearance_new') }}">Créer une nouvelle prestation</a>
+        |
+        <a href="{{ path('khatovar_web_appearance_list') }}">Liste des prestations disponibles</a>
+        <hr />
+    {% endif %}
+
+    <div class="link_list">
+        –
+        {% for appearance in appearances %}
+            {% if appearance.active %}
+                <a href="{{ path('khatovar_web_appearance_show', { 'slug': appearance.slug }) }}">{{ appearance.name }}</a> –
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endblock %}

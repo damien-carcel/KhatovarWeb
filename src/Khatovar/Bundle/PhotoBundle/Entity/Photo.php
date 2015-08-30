@@ -23,6 +23,7 @@
 
 namespace Khatovar\Bundle\PhotoBundle\Entity;
 
+use Khatovar\Bundle\AppearanceBundle\Entity\Appearance;
 use Khatovar\Bundle\ContactBundle\Entity\Contact;
 use Khatovar\Bundle\ExactionBundle\Entity\Exaction;
 use Khatovar\Bundle\HomepageBundle\Entity\Homepage;
@@ -36,7 +37,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 class Photo
 {
-    /** @var int */
+    /** @var integer */
     protected $id;
 
     /**
@@ -77,17 +78,20 @@ class Photo
      */
     protected $entity;
 
-    /** @var Photo */
+    /** @var Homepage */
     protected $homepage;
 
-    /** @var Photo */
+    /** @var Member */
     protected $member;
 
-    /** @var Photo */
+    /** @var Exaction */
     protected $exaction;
 
-    /** @var Photo */
+    /** @var Contact */
     protected $contact;
+
+    /** @var Appearance */
+    protected $appearance;
 
     /**
      * @return string
@@ -127,7 +131,7 @@ class Photo
      */
     public function preUpload()
     {
-        if (!is_null($this->file)) {
+        if (null !== $this->file) {
             $this->path = 'photo-' . time() . '.'
                 . $this->getFile()->guessExtension();
         }
@@ -138,7 +142,7 @@ class Photo
      */
     public function upload()
     {
-        if (is_null($this->file)) {
+        if (null === $this->file) {
             return;
         }
 
@@ -169,9 +173,7 @@ class Photo
      */
     public function getAbsolutePath()
     {
-        return is_null($this->path)
-            ? null
-            : $this->getUploadRootDir() . '/' . $this->path;
+        return null === $this->path ? null : $this->getUploadRootDir() . '/' . $this->path;
     }
 
     /**
@@ -181,13 +183,11 @@ class Photo
      */
     public function getWebPath()
     {
-        return is_null($this->path)
-            ? null
-            : '/' . $this->getUploadDir() . '/' . $this->path;
+        return null === $this->path ? null : '/' . $this->getUploadDir() . '/' . $this->path;
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -350,6 +350,26 @@ class Photo
     public function setContact(Contact $contact = null)
     {
         $this->contact = $contact;
+
+        return $this;
+    }
+
+    /**
+     * @return Appearance
+     */
+    public function getAppearance()
+    {
+        return $this->appearance;
+    }
+
+    /**
+     * @param Appearance $appearance
+     *
+     * @return Photo
+     */
+    public function setAppearance(Appearance $appearance)
+    {
+        $this->appearance = $appearance;
 
         return $this;
     }

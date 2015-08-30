@@ -29,7 +29,6 @@ use Khatovar\Bundle\PhotoBundle\Entity\Photo;
 use Khatovar\Bundle\PhotoBundle\Helper\PhotoHelper;
 use Khatovar\Bundle\PhotoBundle\Manager\PhotoManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -48,9 +47,6 @@ class PhotoController extends Controller
     /** @staticvar string */
     const MAX_PHOTO_HEIGHT = 720;
 
-    /** @var ContainerInterface */
-    protected $container;
-
     /** @var EntityManagerInterface */
     protected $entityManager;
 
@@ -61,21 +57,18 @@ class PhotoController extends Controller
     protected $session;
 
     /**
-     * @param ContainerInterface     $container
      * @param EntityManagerInterface $entityManager
-     * @param PhotoManager           $photoManager
      * @param Session                $session
+     * @param PhotoManager           $photoManager
      */
     public function __construct(
-        ContainerInterface $container,
         EntityManagerInterface $entityManager,
-        PhotoManager $photoManager,
-        Session $session
+        Session $session,
+        PhotoManager $photoManager
     ) {
-        $this->container     = $container;
         $this->entityManager = $entityManager;
-        $this->photoManager  = $photoManager;
         $this->session       = $session;
+        $this->photoManager  = $photoManager;
 
     }
 
@@ -97,10 +90,10 @@ class PhotoController extends Controller
 
         return $this->render(
             'KhatovarPhotoBundle:Photo:index.html.twig',
-            array(
+            [
                 'sorted_photos' => $photos,
                 'delete_forms'  => $this->createDeleteForms($photos),
-            )
+            ]
         );
     }
 
@@ -130,7 +123,7 @@ class PhotoController extends Controller
 
         return $this->render(
             'KhatovarPhotoBundle:Photo:new.html.twig',
-            array('form' => $form->createView(),)
+            ['form' => $form->createView()]
         );
     }
 
@@ -183,7 +176,7 @@ class PhotoController extends Controller
                 return $this->redirect(
                     $this->generateUrl(
                         'khatovar_web_photo_edit',
-                        array('id'=> $photo->getId())
+                        ['id'=> $photo->getId()]
                     )
                 );
             }
@@ -193,7 +186,7 @@ class PhotoController extends Controller
 
         return $this->render(
             'KhatovarPhotoBundle:Photo:new.html.twig',
-            array('form' => $form->createView())
+            ['form' => $form->createView()]
         );
     }
 
@@ -216,10 +209,10 @@ class PhotoController extends Controller
 
         return $this->render(
             'KhatovarPhotoBundle:Photo:edit.html.twig',
-            array(
+            [
                 'edit_form' => $editForm->createView(),
                 'photo'     => $photo,
-            )
+            ]
         );
     }
 
@@ -261,7 +254,7 @@ class PhotoController extends Controller
                 return $this->redirect(
                     $this->generateUrl(
                         'khatovar_web_photo',
-                        array('id' => $photo->getId())
+                        ['id' => $photo->getId()]
                     )
                 );
             } else {
@@ -278,10 +271,10 @@ class PhotoController extends Controller
 
         return $this->render(
             'KhatovarPhotoBundle:Photo:edit.html.twig',
-            array(
+            [
                 'edit_form' => $editForm->createView(),
                 'photo'     => $photo,
-            )
+            ]
         );
     }
 
@@ -328,13 +321,13 @@ class PhotoController extends Controller
         $form = $this->createForm(
             'khatovar_photo_type',
             $photo,
-            array(
+            [
                 'action' => $this->generateUrl('khatovar_web_photo_create'),
                 'method' => 'POST',
-            )
+            ]
         );
 
-        $form->add('submit', 'submit', array('label' => 'Créer'));
+        $form->add('submit', 'submit', ['label' => 'Créer']);
 
         return $form;
     }
@@ -351,13 +344,13 @@ class PhotoController extends Controller
         $form = $this->createForm(
             'khatovar_photo_type',
             $photo,
-            array(
-                'action' => $this->generateUrl('khatovar_web_photo_update', array('id' => $photo->getId())),
+            [
+                'action' => $this->generateUrl('khatovar_web_photo_update', ['id' => $photo->getId()]),
                 'method' => 'PUT',
-            )
+            ]
         );
 
-        $form->add('submit', 'submit', array('label' => 'Mettre à jour'));
+        $form->add('submit', 'submit', ['label' => 'Mettre à jour']);
 
         return $form;
     }
@@ -373,15 +366,15 @@ class PhotoController extends Controller
     {
         return $this
             ->createFormBuilder()
-            ->setAction($this->generateUrl('khatovar_web_photo_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('khatovar_web_photo_delete', ['id' => $id]))
             ->setMethod('DELETE')
             ->add(
                 'submit',
                 'submit',
-                array(
+                [
                     'label' => 'Effacer',
-                    'attr'  => array('onclick' => 'return confirm("Êtes-vous sûr ?")'),
-                )
+                    'attr'  => ['onclick' => 'return confirm("Êtes-vous sûr ?")'],
+                ]
             )
             ->getForm();
     }
@@ -395,7 +388,7 @@ class PhotoController extends Controller
      */
     protected function createDeleteForms(array $sortedPhotos)
     {
-        $deleteForms = array();
+        $deleteForms = [];
 
         foreach ($sortedPhotos as $photoLists) {
             foreach ($photoLists as $photos) {
@@ -435,7 +428,7 @@ class PhotoController extends Controller
     {
         return $this->entityManager
             ->getRepository('KhatovarMemberBundle:Member')
-            ->findOneBy(array('owner' => $this->getUser()->getId()));
+            ->findOneBy(['owner' => $this->getUser()->getId()]);
     }
 
     /**

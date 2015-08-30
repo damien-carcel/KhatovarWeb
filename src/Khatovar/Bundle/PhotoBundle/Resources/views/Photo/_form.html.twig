@@ -18,6 +18,9 @@
 {% if form.contact is defined and 'hidden' not in form.contact.vars.block_prefixes %}
     {{ form_row(form.contact) }}
 {% endif %}
+{% if form.appearance is defined and 'hidden' not in form.appearance.vars.block_prefixes %}
+    {{ form_row(form.appearance) }}
+{% endif %}
 
 {% if form.class is defined and 'hidden' not in form.class.vars.block_prefixes %}
     {{ form_row(form.class) }}

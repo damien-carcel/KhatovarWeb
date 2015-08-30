@@ -23,37 +23,21 @@
 
 namespace Khatovar\Bundle\WebBundle\Menu;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Khatovar\Bundle\ExactionBundle\Manager\ExactionManager;
 use Knp\Menu\FactoryInterface;
+use Knp\Menu\ItemInterface;
 
 /**
- * Build the various application menus.
+ * Build the web site menu.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
  * @package Khatovar\Bundle\WebBundle\Menu
  */
 class MenuBuilder
 {
-    /** @var array */
-    protected $performances = array(
-        'introduction' => 'Introduction',
-        'combat'       => 'Combat',
-        'campement'    => 'Vie de camp',
-        'forge'        => 'Forge',
-        'cuir'         => 'Cuir',
-        'maille'       => 'Maille',
-        'armes'        => 'Armes et armures',
-        'herbo'        => 'Herboristerie et cuisine',
-        'tissage'      => 'Tissage',
-        'calligraphie' => 'Calligraphie'
-    );
-
-    /** @var array */
-    protected $contacts = array(
-        'contact'      => 'Qui sommes-nous ?',
-        'allies'       => 'Nos alliés',
-        'fournisseurs' => 'Nos fournisseurs'
-    );
+    /** @var \Khatovar\Bundle\AppearanceBundle\Entity\Appearance[] */
+    protected $appearances;
 
     /** @var array */
     protected $exactionYears;
@@ -61,14 +45,25 @@ class MenuBuilder
     /** @var FactoryInterface */
     protected $menuFactory;
 
+    /** @var \Khatovar\Bundle\AppearanceBundle\Entity\Appearance[] */
+    protected $programmes;
+
     /**
-     * @param FactoryInterface $menuFactory
-     * @param ExactionManager  $exactionManager
+     * @param FactoryInterface       $menuFactory
+     * @param ExactionManager        $exactionManager
+     * @param EntityManagerInterface $entityManager
      */
-    public function __construct(FactoryInterface $menuFactory, ExactionManager $exactionManager)
-    {
-        $this->menuFactory   = $menuFactory;
+    public function __construct(
+        FactoryInterface $menuFactory,
+        EntityManagerInterface $entityManager,
+        ExactionManager $exactionManager
+    ) {
+        $this->menuFactory    = $menuFactory;
+        $appearanceRepository = $entityManager->getRepository('KhatovarAppearanceBundle:Appearance');
+
         $this->exactionYears = $exactionManager->getSortedYears();
+        $this->appearances   = $appearanceRepository->findActiveWorkshopsSortedBySlug();
+        $this->programmes    = $appearanceRepository->findActiveProgrammesSortedBySlug();
     }
 
     /**
@@ -79,74 +74,157 @@ class MenuBuilder
     public function createMainMenu()
     {
         $menu = $this->menuFactory->createItem('root');
+        $menu->setChildrenAttribute('id', 'menu');
 
+        $this->addHome($menu);
+        $this->addAppearances($menu);
+        $this->addDates($menu);
+        $this->addCamp($menu);
+        $this->addContact($menu);
+
+        return $menu;
+    }
+
+    /**
+     * @param ItemInterface $menu
+     */
+    protected function addHome(ItemInterface $menu)
+    {
         $menu->addChild(
             'home',
-            array('label' => 'Homepage', 'route' => 'khatovar_web_homepage')
+            [
+                'label' => 'Homepage',
+                'route' => 'khatovar_web_homepage',
+            ]
         );
+    }
 
+    /**
+     * @param ItemInterface $menu
+     */
+    protected function addAppearances(ItemInterface $menu)
+    {
         $menu->addChild(
-            'camp',
-            array('label' => 'Nos prestations', 'route' => 'khatovar_web_camp')
-        );
-        foreach ($this->performances as $key => $name) {
-            if ($key == 'combat') {
-                $menu['camp']->addChild(
-                    $key,
-                    array(
-                        'label' => $name,
-                        'route' => 'khatovar_web_fight',
-                    )
-                );
-            } else {
-                $menu['camp']->addChild(
-                    $key,
-                    array(
-                        'label' => $name,
-                        'route' => 'khatovar_web_camp',
-                        'routeParameters' => array('atelier' => $key)
-                    )
-                );
-            }
-        }
-
-        $menu->addChild(
-            'schedule',
-            array(
-                'label' => 'Exactions à venir',
-                'route' => 'khatovar_web_exaction_to_come'
-            )
+            'programmes',
+            [
+                'label' => 'Nos prestations',
+                'route' => 'khatovar_web_appearance',
+            ]
         );
 
-        $menu->addChild(
-            'references',
-            array(
-                'label' => 'Exactions passées',
-                'route' => 'khatovar_web_exaction_past'
-            )
-        );
-
-        foreach ($this->exactionYears as $year) {
-            $menu['references']->addChild(
-                $year,
-                array(
-                    'label' => 'Saison ' . $year,
-                    'route' => 'khatovar_web_exaction_list_by_year',
-                    'routeParameters' => array('year' => $year)
-                )
+        foreach ($this->programmes as $programme) {
+            $menu['programmes']->addChild(
+                $programme->getSlug(),
+                [
+                    'label'           => $programme->getName(),
+                    'route'           => 'khatovar_web_appearance_show',
+                    'routeParameters' => ['slug' => $programme->getSlug()],
+                ]
             );
         }
 
-        $menu->addChild(
-            'members',
-            array('label' => 'Les membres', 'route' => 'khatovar_web_member')
+        $menu['programmes']->addChild(
+            'appearances',
+            [
+                'label' => 'Nos différents ateliers',
+                'route' => 'khatovar_web_appearance_workshop',
+            ]
         );
 
+        foreach ($this->appearances as $appearance) {
+            $menu['programmes']['appearances']->addChild(
+                $appearance->getSlug(),
+                [
+                    'label'           => $appearance->getName(),
+                    'route'           => 'khatovar_web_appearance_show',
+                    'routeParameters' => ['slug' => $appearance->getSlug()],
+                ]
+            );
+        }
+    }
+
+    /**
+     * @param ItemInterface $menu
+     */
+    protected function addDates(ItemInterface $menu)
+    {
+        $menu->addChild(
+            'dates',
+            [
+                'label' => 'Toutes nos dates',
+                'route' => 'khatovar_web_exaction',
+            ]
+        );
+
+        $menu['dates']->addChild(
+            'schedule',
+            [
+                'label' => 'À venir',
+                'route' => 'khatovar_web_exaction_to_come',
+            ]
+        );
+
+        $menu['dates']->addChild(
+            'references',
+            [
+                'label' => 'Passées',
+                'route' => 'khatovar_web_exaction_past',
+            ]
+        );
+
+        foreach ($this->exactionYears as $year) {
+            $menu['dates']['references']->addChild(
+                $year,
+                [
+                    'label'           => 'Saison ' . $year,
+                    'route'           => 'khatovar_web_exaction_list_by_year',
+                    'routeParameters' => ['year' => $year],
+                ]
+            );
+        }
+    }
+
+    /**
+     * @param ItemInterface $menu
+     */
+    protected function addCamp(ItemInterface $menu)
+    {
+        $menu->addChild(
+            'camp',
+            [
+                'label' => 'Le camp',
+                'route' => 'khatovar_web_camp',
+            ]
+        );
+
+        $menu['camp']->addChild(
+            'camp_life',
+            [
+                'label' => 'Vie de camp',
+                'route' => 'khatovar_web_appearance_camp',
+            ]
+        );
+
+        $menu['camp']->addChild(
+            'members',
+            [
+                'label' => 'Les membres',
+                'route' => 'khatovar_web_member',
+            ]
+        );
+    }
+
+    /**
+     * @param ItemInterface $menu
+     */
+    protected function addContact(ItemInterface $menu)
+    {
         $menu->addChild(
             'links',
-            array('label' => 'Contact', 'route' => 'khatovar_web_contact')
+            [
+                'label' => 'Contact',
+                'route' => 'khatovar_web_contact',
+            ]
         );
-
-        return $menu;
     }
 }

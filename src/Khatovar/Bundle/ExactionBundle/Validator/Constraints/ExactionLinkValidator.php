@@ -27,7 +27,7 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
 /**
- * Exaction link validator.
+ * Checks that exaction links contains between 1 and 3 blocks of text.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
  */
