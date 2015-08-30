@@ -131,7 +131,7 @@ class Photo
      */
     public function preUpload()
     {
-        if (!is_null($this->file)) {
+        if (null !== $this->file) {
             $this->path = 'photo-' . time() . '.'
                 . $this->getFile()->guessExtension();
         }
@@ -142,7 +142,7 @@ class Photo
      */
     public function upload()
     {
-        if (is_null($this->file)) {
+        if (null === $this->file) {
             return;
         }
 
@@ -173,9 +173,7 @@ class Photo
      */
     public function getAbsolutePath()
     {
-        return is_null($this->path)
-            ? null
-            : $this->getUploadRootDir() . '/' . $this->path;
+        return null === $this->path ? null : $this->getUploadRootDir() . '/' . $this->path;
     }
 
     /**
@@ -185,9 +183,7 @@ class Photo
      */
     public function getWebPath()
     {
-        return is_null($this->path)
-            ? null
-            : '/' . $this->getUploadDir() . '/' . $this->path;
+        return null === $this->path ? null : '/' . $this->getUploadDir() . '/' . $this->path;
     }
 
     /**

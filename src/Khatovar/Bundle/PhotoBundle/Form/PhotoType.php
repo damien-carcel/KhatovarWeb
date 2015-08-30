@@ -82,7 +82,7 @@ class PhotoType extends AbstractType
      */
     protected function addDefaultFields(FormBuilderInterface $builder)
     {
-        if (is_null($builder->getData()->getId())) {
+        if (null === $builder->getData()->getId()) {
             $builder->add('file', 'file', ['label' => false]);
         }
 

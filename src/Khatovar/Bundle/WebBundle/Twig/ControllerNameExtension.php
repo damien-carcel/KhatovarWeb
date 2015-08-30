@@ -89,7 +89,7 @@ class ControllerNameExtension extends \Twig_Extension
     {
         $name = null;
 
-        if (!is_null($this->request)) {
+        if (null !== $this->request) {
             $pattern = '#.([a-zA-Z]*):#';
             preg_match($pattern, $this->request->get('_controller'), $matches);
 
@@ -108,7 +108,7 @@ class ControllerNameExtension extends \Twig_Extension
     {
         $name = null;
 
-        if (!is_null($this->request)) {
+        if (null !== $this->request) {
             $pattern = "#:([a-zA-Z]*)Action#";
             $matches = [];
             preg_match($pattern, $this->request->get('_controller'), $matches);
