@@ -23,7 +23,7 @@
 
 namespace Khatovar\Bundle\ExactionBundle\Manager;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Khatovar\Bundle\ExactionBundle\Entity\Exaction;
 
 /**
@@ -33,12 +33,13 @@ use Khatovar\Bundle\ExactionBundle\Entity\Exaction;
  */
 class ExactionManager
 {
+    /** @var EntityManagerInterface */
     protected $entityManager;
 
     /**
-     * @param EntityManager $entityManager
+     * @param EntityManagerInterface $entityManager
      */
-    public function __construct(EntityManager $entityManager)
+    public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
     }

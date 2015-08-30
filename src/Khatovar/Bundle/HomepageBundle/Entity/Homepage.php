@@ -45,7 +45,7 @@ class Homepage
     /** @var bool */
     protected $active;
 
-    /** @var ArrayCollection $photos */
+    /** @var \Doctrine\Common\Collections\Collection $photos */
     protected $photos;
 
     /**

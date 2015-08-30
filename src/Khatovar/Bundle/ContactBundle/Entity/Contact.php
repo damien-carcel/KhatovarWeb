@@ -48,7 +48,7 @@ class Contact
     /** @var Photo */
     protected $visitCard;
 
-    /** @var ArrayCollection */
+    /** @var \Doctrine\Common\Collections\Collection */
     protected $photos;
 
     /**
@@ -160,7 +160,7 @@ class Contact
     }
 
     /**
-     * @return ArrayCollection
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getPhotos()
     {

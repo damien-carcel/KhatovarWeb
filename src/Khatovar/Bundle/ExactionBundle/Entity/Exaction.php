@@ -67,7 +67,7 @@ class Exaction
     /**
      * Photos of the festival.
      *
-     * @var ArrayCollection $photos
+     * @var \Doctrine\Common\Collections\Collection $photos
      */
     protected $photos;
 

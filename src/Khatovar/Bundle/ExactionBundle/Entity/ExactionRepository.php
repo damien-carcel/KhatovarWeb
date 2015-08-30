@@ -23,7 +23,6 @@
 
 namespace Khatovar\Bundle\ExactionBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityRepository;
 
 /**

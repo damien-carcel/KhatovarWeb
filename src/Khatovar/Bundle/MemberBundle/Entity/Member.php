@@ -79,7 +79,7 @@ class Member
     /** @var User */
     protected $owner;
 
-    /** @var ArrayCollection */
+    /** @var \Doctrine\Common\Collections\Collection */
     protected $photos;
 
 
