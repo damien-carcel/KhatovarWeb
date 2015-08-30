@@ -2,13 +2,22 @@
 
 This repository contain the source code of the CMS handling the web site of the medieval association : [“La compagnie franche du Khatovar”](http://www.compagniefranchedukhatovar.fr/)
 
-#TODO
+# TODO
 
-* Optimize presentation on the photo admin page.
+## Features
+- Optimize presentation on the photo admin page (accordion)
+- Optimize mobile theme (especially the menu)
+- Use photos instead of links in listing/index pages
+- Customize login page using the Khatovar theme
+- Make it possible to edit/organize the menu
+- RSS feeds
+- Connection to the facebook page and the blog for automatic posts when adding a new appearance
 
-* Appearance, contacts and future show pages
-* RSS feeds
-* Connection to the facebook page for automatic posts when adding a new show
+## Technical
+- Use SASS
+- Use bootstrap (already provided by Documents dependency) for the forms, buttons and accordion
+- Add memos alongside the form fields, so explanation will not be needed in the documentation anymore
+- Form fields that depends from one another must be dynamic (for example: hidding a field as long as an other one has not the correct value for it to be display)
 
 # License
 
