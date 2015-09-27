@@ -61,8 +61,10 @@ class AppearanceManager
      */
     public function findWithNextAndPreviousOr404($slug)
     {
-        if ($this->isPageType(AppearanceHelper::CAMP_TYPE_CODE, $slug)) {
-            $appearances = $this->getCamp($slug);
+        if ($this->isPageType(AppearanceHelper::CAMP_TYPE_CODE, $slug) ||
+            $this->isPageType(AppearanceHelper::INTRO_TYPE_CODE, $slug)
+        ) {
+            $appearances = $this->getCampOrIntro($slug);
         } else {
             $appearances = $this->getAppearances($slug);
         }
@@ -103,7 +105,7 @@ class AppearanceManager
      *
      * @return array
      */
-    protected function getCamp($slug)
+    protected function getCampOrIntro($slug)
     {
         $camp = $this->appareanceRepository->findOneBy(['slug' => $slug]);
 

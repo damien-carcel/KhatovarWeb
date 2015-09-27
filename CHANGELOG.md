@@ -4,5 +4,8 @@
 - Correct a bug preventing to create a new contact page
 - Correct a bug preventing to create and activate a camp description at the same time
 
+##New feature
+- Add a intro page to the Appearance bundle
+
 #0.9 (2015-09-26)
 - First complete release, making the entire web site editable by its members

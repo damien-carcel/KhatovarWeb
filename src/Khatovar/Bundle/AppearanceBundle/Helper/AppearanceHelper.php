@@ -48,6 +48,12 @@ class AppearanceHelper
     /** @staticvar string */
     const CAMP_TYPE_LABEL = 'Description du campement';
 
+    /** @staticvar string */
+    const INTRO_TYPE_CODE = 'introduction';
+
+    /** @staticvar string */
+    const Intro_TYPE_LABEL = 'Introduction à nos activités';
+
     /**
      * @return array
      */
@@ -57,6 +63,7 @@ class AppearanceHelper
             static::WORKSHOP_TYPE_CODE  => static::WORKSHOP_TYPE_LABEL,
             static::PROGRAMME_TYPE_CODE => static::PROGRAMME_TYPE_LABEL,
             static::CAMP_TYPE_CODE      => static::CAMP_TYPE_LABEL,
+            static::INTRO_TYPE_CODE      => static::Intro_TYPE_LABEL,
         ];
     }
 }
