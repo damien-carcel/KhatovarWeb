@@ -56,7 +56,7 @@ class UniqueActiveCampValidator extends ConstraintValidator
         if (AppearanceHelper::CAMP_TYPE_CODE === $appearance->getPageType() && true === $appearance->isActive()) {
             $activeCamp = $this->appearanceRepository->findActiveCamp();
 
-            if ($activeCamp->getId() !== $appearance->getId()) {
+            if (null !== $activeCamp && $activeCamp->getId() !== $appearance->getId()) {
                 $this->context->buildViolation($constraint->message)
                     ->setParameter('%name%', $activeCamp->getName())
                     ->addViolation();
