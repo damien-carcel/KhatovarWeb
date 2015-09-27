@@ -21,9 +21,13 @@
             <div class="container">
                 <div class="cycle-slideshow" data-cycle-slides="> a" data-cycle-center-horz=true data-cycle-center-vert=true>
                     {% autoescape false %}
-                    {% for photo in exaction.photos %}
-                        {{ asset(photo.webPath)|popup_picture('slide') }}
-                    {% endfor %}
+                        {% if exaction.photos is empty %}
+                            {{ asset('bundles/khatovarweb/images/logonoir.jpg')|popup_picture('slide') }}
+                        {% else %}
+                            {% for photo in exaction.photos %}
+                                {{ asset(photo.webPath)|popup_picture('slide') }}
+                            {% endfor %}
+                        {% endif %}
                     {% endautoescape %}
                 </div>
             </div>

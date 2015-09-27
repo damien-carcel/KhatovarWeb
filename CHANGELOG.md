@@ -3,6 +3,7 @@
 - Adding a missing doctrine parameter
 - Correct a bug preventing to create a new contact page
 - Correct a bug preventing to create and activate a camp description at the same time
+- Display the khatovar log for past exactions if no photo have been uploaded
 
 ##New feature
 - Add a intro page to the Appearance bundle
