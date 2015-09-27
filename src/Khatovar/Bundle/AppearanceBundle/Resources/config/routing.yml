@@ -29,6 +29,10 @@ khatovar_web_appearance_create:
     defaults: { _controller: "khatovar_appearance.controller.appearance:createAction" }
     methods:  POST
 
+khatovar_web_appearance_edit_index:
+    path:     /index/edit
+    defaults: { _controller: "khatovar_appearance.controller.appearance:editIndexAction" }
+
 khatovar_web_appearance_edit:
     path:     /{id}/edit
     defaults: { _controller: "khatovar_appearance.controller.appearance:editAction" }

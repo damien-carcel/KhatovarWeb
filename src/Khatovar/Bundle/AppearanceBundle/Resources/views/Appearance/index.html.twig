@@ -2,6 +2,8 @@
 
 {% block inarticle %}
     {% if is_granted('ROLE_EDITOR') %}
+        <a href="{{ path('khatovar_web_appearance_edit_index') }}">Éditer l'introduction</a>
+        |
         <a href="{{ path('khatovar_web_appearance_new') }}">Créer une nouvelle prestation</a>
         |
         <a href="{{ path('khatovar_web_appearance_list') }}">Liste des prestations disponibles</a>

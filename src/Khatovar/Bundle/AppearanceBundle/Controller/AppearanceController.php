@@ -234,6 +234,19 @@ class AppearanceController extends Controller
         );
     }
 
+    public function editIndexAction()
+    {
+        $introduction = $this->entityManager
+            ->getRepository('KhatovarAppearanceBundle:Appearance')
+            ->findActiveIntroduction();
+
+        if (null === $introduction) {
+            throw $this->createNotFoundException('Impossible de trouver une page d\'introduction active.');
+        }
+
+        return $this->editAction($introduction->getId());
+    }
+
     /**
      * Displays a form to edit an existing Appearance entity.
      *
