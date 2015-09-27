@@ -65,7 +65,14 @@ class ExactionType extends AbstractType
                     'years' => $this->getYearslist(),
                 ]
             )
-            ->add('map', 'textarea', ['label' => 'Emplacement (copier le lien depuis Google Map)'])
+            ->add(
+                'map',
+                'textarea',
+                [
+                    'label' => 'Emplacement (copier le lien depuis Google Map)',
+                    'required' => false,
+                ]
+            )
             ->add(
                 'introduction',
                 'textarea',

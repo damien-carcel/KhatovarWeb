@@ -44,14 +44,24 @@ class ContainsIframeValidator extends ConstraintValidator
      */
     public function validate($iframe, Constraint $constraint)
     {
-        if (strlen($iframe) < strlen(static::IFRAME_OPENING_TAG . static::IFRAME_CLOSING_TAG)) {
-            $this->context->buildViolation($constraint->messageLength)->addViolation();
-        } else {
-            $iframeOpening = substr($iframe, 0, strlen(static::IFRAME_OPENING_TAG));
-            $iframeClosing = substr($iframe, - strlen(static::IFRAME_CLOSING_TAG));
 
-            if ($iframeOpening !== static::IFRAME_OPENING_TAG || $iframeClosing !== static::IFRAME_CLOSING_TAG) {
-                $this->context->buildViolation($constraint->messageContent)->addViolation();
+        if (null != $iframe) {
+            if (strlen($iframe) < strlen(static::IFRAME_OPENING_TAG . static::IFRAME_CLOSING_TAG)) {
+                $this->context->buildViolation($constraint->messageLength)->addViolation();
+            } else {
+                $iframeOpening = substr(
+                    $iframe,
+                    0,
+                    strlen(static::IFRAME_OPENING_TAG)
+                );
+                $iframeClosing = substr(
+                    $iframe,
+                    -strlen(static::IFRAME_CLOSING_TAG)
+                );
+
+                if ($iframeOpening !== static::IFRAME_OPENING_TAG || $iframeClosing !== static::IFRAME_CLOSING_TAG) {
+                    $this->context->buildViolation($constraint->messageContent)->addViolation();
+                }
             }
         }
     }
