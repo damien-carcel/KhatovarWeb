@@ -8,5 +8,19 @@
 
     <h1>Création d'une nouvelle carte de visite</h1>
 
-    {% include 'KhatovarContactBundle:Contact:_form.html.twig' with {'form': form} %}
+    {{ form_start(form) }}
+    <div class="alert">
+        {{ form_errors(form) }}
+    </div>
+
+    {{ form_row(form.name) }}
+    {{ form_row(form.content) }}
+
+    <div class="form-group">
+        {{ form_widget(form.submit, { 'attr': {'class': 'btn btn-default'} }) }}
+    </div>
+
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+
 {% endblock %}

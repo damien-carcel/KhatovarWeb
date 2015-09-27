@@ -10,20 +10,20 @@
         <hr />
     {% endif %}
 
-    <h1>{{ contact.name }}</h1>
-
     {% autoescape false %}
         {{ contact.content }}
     {% endautoescape %}
 
-    <div class="container">
-        <div class="trombi">
-            <div class="carte photo_rest"
-                 onmouseover="this.className='carte photo_over';"
-                 onmouseout="this.className='carte photo_rest';"
-                 onclick="location.href='mailto:contact@compagniefranchedukhatovar.fr';">
-                <img class="trombinoscope" src="{{ asset(contact.visitCard.webPath) }}" alt="" />
+    {% if null != contact.visitCard %}
+        <div class="container">
+            <div class="trombi">
+                <div class="carte photo_rest"
+                     onmouseover="this.className='carte photo_over';"
+                     onmouseout="this.className='carte photo_rest';"
+                     onclick="location.href='mailto:contact@compagniefranchedukhatovar.fr';">
+                    <img class="trombinoscope" src="{{ asset(contact.visitCard.webPath) }}" alt="" />
+                </div>
             </div>
         </div>
-    </div>
+    {% endif %}
 {% endblock %}

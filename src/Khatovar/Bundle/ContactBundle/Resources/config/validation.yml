@@ -8,5 +8,3 @@ Khatovar\Bundle\ContactBundle\Entity\Contact:
                 max: 255
         content:
             - NotBlank: ~
-        visitCard:
-            - NotNull: ~

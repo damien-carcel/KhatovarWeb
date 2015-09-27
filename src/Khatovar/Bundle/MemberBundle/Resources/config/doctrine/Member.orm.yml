@@ -81,7 +81,7 @@ Khatovar\Bundle\MemberBundle\Entity\Member:
         portrait:
             targetEntity: Khatovar\Bundle\PhotoBundle\Entity\Photo
             JoinColumn:
-                name: portrait_id:
+                name: portrait_id
                 referencedColumnName: id
                 onDelete: 'SET NULL'
         owner:
@@ -89,7 +89,7 @@ Khatovar\Bundle\MemberBundle\Entity\Member:
             cascade:
                 - detach
             JoinColumn:
-                name: owner_id:
+                name: owner_id
                 referencedColumnName: id
                 onDelete: 'SET NULL'
     oneToMany:
