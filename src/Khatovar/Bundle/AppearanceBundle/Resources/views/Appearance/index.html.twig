@@ -8,8 +8,6 @@
         <hr />
     {% endif %}
 
-    <h1>{{ introduction.name }}</h1>
-
     {{ introduction.content|khatovar_normalize_appearance_links|add_paragraph_and_photos(introduction.photos) }}
 
     <div class="link_list">
