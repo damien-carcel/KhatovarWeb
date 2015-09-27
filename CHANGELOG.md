@@ -4,6 +4,7 @@
 - Correct a bug preventing to create a new contact page
 - Correct a bug preventing to create and activate a camp description at the same time
 - Display the khatovar log for past exactions if no photo have been uploaded
+- Correct a bug that prevent a photo album to appear
 
 ##New feature
 - Add a intro page to the Appearance bundle

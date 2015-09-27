@@ -158,7 +158,7 @@ class PhotosExtension extends \Twig_Extension
                 $link  = $this->linkPicture($photo->getWebPath(), $text, $data);
                 $first = false;
             } else {
-                if (null !== $firstPhoto && $photo->getWebPath() !== $firstPhoto->getWebPath()) {
+                if (null === $firstPhoto || $photo->getWebPath() !== $firstPhoto->getWebPath()) {
                     $link .= $this->linkPicture($photo->getWebPath(), '', $data);
                 }
             }
