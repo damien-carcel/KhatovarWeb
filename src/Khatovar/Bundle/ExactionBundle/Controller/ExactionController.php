@@ -177,6 +177,8 @@ class ExactionController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+            $exaction->setOnlyPhotos(true);
+
             $this->entityManager->persist($exaction);
             $this->entityManager->flush();
 

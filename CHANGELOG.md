@@ -8,6 +8,7 @@
 ##New feature
 - Add a intro page to the Appearance bundle
 - Display past exaction in decreasing order
+- New exaction are "photo only" by default
 
 #0.9 (2015-09-26)
 - First complete release, making the entire web site editable by its members
