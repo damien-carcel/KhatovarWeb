@@ -74,9 +74,20 @@ class AppearanceController extends Controller
             ->getRepository('KhatovarAppearanceBundle:Appearance')
             ->findActiveProgrammesSortedBySlug();
 
+        $introduction = $this->entityManager
+            ->getRepository('KhatovarAppearanceBundle:Appearance')
+            ->findActiveIntroduction();
+
+        if (null === $introduction) {
+            throw $this->createNotFoundException('Impossible de trouver une page d\'introduction active.');
+        }
+
         return $this->render(
             'KhatovarAppearanceBundle:Appearance:index.html.twig',
-            ['appearances' => $appearances]
+            [
+                'appearances'  => $appearances,
+                'introduction' => $introduction,
+            ]
         );
     }
 
@@ -221,6 +232,19 @@ class AppearanceController extends Controller
             'KhatovarAppearanceBundle:Appearance:new.html.twig',
             ['form' => $form->createView()]
         );
+    }
+
+    public function editIndexAction()
+    {
+        $introduction = $this->entityManager
+            ->getRepository('KhatovarAppearanceBundle:Appearance')
+            ->findActiveIntroduction();
+
+        if (null === $introduction) {
+            throw $this->createNotFoundException('Impossible de trouver une page d\'introduction active.');
+        }
+
+        return $this->editAction($introduction->getId());
     }
 
     /**

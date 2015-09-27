@@ -38,6 +38,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ExactionType extends AbstractType
 {
+    /** @staticvar int */
+    const KHATOVAR_CREATION = 2008;
+
     /**
      * {@inheritdoc}
      */
@@ -46,9 +49,30 @@ class ExactionType extends AbstractType
         $builder
             ->add('name', 'text', ['label' => 'Nom'])
             ->add('place', 'text', ['label' => 'Lieu'])
-            ->add('start', 'date', ['label' => 'Date de début'])
-            ->add('end', 'date', ['label' => 'Date de fin'])
-            ->add('map', 'textarea', ['label' => 'Emplacement (copier le lien depuis Google Map)'])
+            ->add(
+                'start',
+                'date',
+                [
+                    'label' => 'Date de début',
+                    'years' => $this->getYearslist(),
+                ]
+            )
+            ->add(
+                'end',
+                'date',
+                [
+                    'label' => 'Date de fin',
+                    'years' => $this->getYearslist(),
+                ]
+            )
+            ->add(
+                'map',
+                'textarea',
+                [
+                    'label' => 'Emplacement (copier le lien depuis Google Map)',
+                    'required' => false,
+                ]
+            )
             ->add(
                 'introduction',
                 'textarea',
@@ -150,5 +174,24 @@ class ExactionType extends AbstractType
                 }
             }
         );
+    }
+
+    /**
+     * Return the list of years since the creation of the compagnie.
+     *
+     * @return array
+     */
+    protected function getYearslist()
+    {
+        $currentYear = new \DateTime();
+        $startYear   = static::KHATOVAR_CREATION;
+        $endYear     = ((int) $currentYear->format('Y')) + 3;
+        $yearList    = [];
+
+        for ($year = $startYear; $year <= $endYear; $year++) {
+            $yearList[] = $year;
+        }
+
+        return $yearList;
     }
 }

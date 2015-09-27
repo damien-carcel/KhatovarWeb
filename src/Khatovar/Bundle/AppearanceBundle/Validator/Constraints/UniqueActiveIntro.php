@@ -21,48 +21,32 @@
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
-namespace Khatovar\Bundle\ExactionBundle\Entity;
+namespace Khatovar\Bundle\AppearanceBundle\Validator\Constraints;
 
-use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Validator\Constraint;
 
 /**
- * Exaction repository
+ * Checks that only one camp description is active at a time.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
  */
-class ExactionRepository extends EntityRepository
+class UniqueActiveIntro extends Constraint
 {
-    /**
-     * Get exactions by year.
-     *
-     * @param int $year
-     *
-     * @return Exaction[]
-     */
-    public function getExactionsByYear($year)
-    {
-        $query = $this->createQueryBuilder('pe')
-            ->orderBy('pe.start', 'DESC')
-            ->where('pe.start >= :start AND pe.start <= :end')
-            ->setParameter('start', new \DateTime($year . '-01-01'))
-            ->setParameter('end', new \DateTime($year . '-12-31'))
-            ->getQuery();
+    public $message = 'La page de d\'introduction « %name% » est déjà active. Désactivez-là avant d\'activer celle-ci.';
 
-        return $query->getResult();
+    /**
+     * {@inheritdoc}
+     */
+    public function getTargets()
+    {
+        return self::CLASS_CONSTRAINT;
     }
 
     /**
-     * Get all exactions to come.
-     *
-     * @return Exaction[]
+     * {@inheritdoc}
      */
-    public function getFutureExactions()
+    public function validatedBy()
     {
-        $query = $this->createQueryBuilder('pf')
-            ->where('pf.start > :start')
-            ->setParameter('start', new \DateTime())
-            ->getQuery();
-
-        return $query->getResult();
+        return 'khatovar_unique_active_intro_validator';
     }
 }

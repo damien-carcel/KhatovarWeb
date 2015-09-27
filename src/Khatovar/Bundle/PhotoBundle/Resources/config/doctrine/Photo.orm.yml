@@ -63,7 +63,7 @@ Khatovar\Bundle\PhotoBundle\Entity\Photo:
                 - detach
             inversedBy: photos
             JoinColumn:
-                name: exaction_id
+                name: contact_id
                 referencedColumnName: id
                 onDelete: 'SET NULL'
         appearance:

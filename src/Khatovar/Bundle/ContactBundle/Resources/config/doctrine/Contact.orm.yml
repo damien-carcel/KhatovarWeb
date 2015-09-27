@@ -23,7 +23,7 @@ Khatovar\Bundle\ContactBundle\Entity\Contact:
             type: boolean
             column: active
             nullable: false
-    manyToOne:
+    oneToOne:
         visitCard:
             targetEntity: Khatovar\Bundle\PhotoBundle\Entity\Photo
             joinColumn:

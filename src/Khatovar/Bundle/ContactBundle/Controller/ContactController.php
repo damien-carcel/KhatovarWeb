@@ -24,6 +24,7 @@
 namespace Khatovar\Bundle\ContactBundle\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Khatovar\Bundle\ContactBundle\Entity\Contact;
 use Symfony\Component\Form\FormInterface;
@@ -319,6 +320,22 @@ class ContactController extends Controller
             [
                 'action' => $this->generateUrl('khatovar_web_contact_update', ['id' => $contact->getId()]),
                 'method' => 'PUT',
+            ]
+        );
+
+        $form->add(
+            'visitCard',
+            'entity',
+            [
+                'label' => 'Carte de visite',
+                'class' => 'Khatovar\Bundle\PhotoBundle\Entity\Photo',
+                'property' => 'alt',
+                'query_builder' => function (EntityRepository $repository) use ($contact) {
+                    return $repository
+                        ->createQueryBuilder('c')
+                        ->where('c.contact = :contact')
+                        ->setParameter('contact', $contact);
+                }
             ]
         );
 

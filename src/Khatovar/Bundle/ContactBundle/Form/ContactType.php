@@ -53,36 +53,6 @@ class ContactType extends AbstractType
                     'label'       => 'Contenu',
                 ]
             );
-
-        $builder->addEventListener(
-            FormEvents::PRE_SET_DATA,
-            function (FormEvent $event) {
-                $form = $event->getForm();
-                $contact = $event->getData();
-
-                if ($contact instanceof Contact) {
-                    $form
-                        ->add(
-                            'visitCard',
-                            'entity',
-                            [
-                                'class' => 'Khatovar\Bundle\PhotoBundle\Entity\Photo',
-                                'property' => 'alt',
-                                'label' => 'Carte de visite',
-                                'required' => false,
-                                'query_builder' => function (
-                                    EntityRepository $repository
-                                ) use ($contact) {
-                                    return $repository
-                                        ->createQueryBuilder('c')
-                                        ->where('c.contact = :contact')
-                                        ->setParameter('contact', $contact);
-                                }
-                            ]
-                        );
-                }
-            }
-        );
     }
 
     /**

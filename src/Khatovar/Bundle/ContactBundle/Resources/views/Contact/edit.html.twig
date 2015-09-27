@@ -8,5 +8,19 @@
 
     <h1>Édition de la carte de visite</h1>
 
-    {% include 'KhatovarContactBundle:Contact:_form.html.twig' with {'form': edit_form} %}
+    {{ form_start(edit_form) }}
+    <div class="alert">
+        {{ form_errors(edit_form) }}
+    </div>
+
+    {{ form_row(edit_form.name) }}
+    {{ form_row(edit_form.content) }}
+    {{ form_row(edit_form.visitCard) }}
+
+    <div class="form-group">
+        {{ form_widget(edit_form.submit, { 'attr': {'class': 'btn btn-default'} }) }}
+    </div>
+
+    {{ form_rest(edit_form) }}
+    {{ form_end(edit_form) }}
 {% endblock %}

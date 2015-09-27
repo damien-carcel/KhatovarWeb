@@ -18,6 +18,7 @@ This repository contain the source code of the CMS handling the web site of the 
 - Use Foundation for the forms, buttons and accordion
 - Add memos alongside the form fields, so explanation will not be needed in the documentation anymore
 - Form fields that depends from one another must be dynamic (for example: hidding a field as long as an other one has not the correct value for it to be display)
+- Add behat tests
 
 # License
 

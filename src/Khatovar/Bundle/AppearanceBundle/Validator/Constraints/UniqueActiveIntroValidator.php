@@ -35,7 +35,7 @@ use Symfony\Component\Validator\ConstraintValidator;
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
  */
-class UniqueActiveCampValidator extends ConstraintValidator
+class UniqueActiveIntroValidator extends ConstraintValidator
 {
     /** @var AppearanceRepository */
     protected $appearanceRepository;
@@ -53,12 +53,12 @@ class UniqueActiveCampValidator extends ConstraintValidator
      */
     public function validate($appearance, Constraint $constraint)
     {
-        if (AppearanceHelper::CAMP_TYPE_CODE === $appearance->getPageType() && true === $appearance->isActive()) {
-            $activeCamp = $this->appearanceRepository->findActiveCamp();
+        if (AppearanceHelper::INTRO_TYPE_CODE === $appearance->getPageType() && true === $appearance->isActive()) {
+            $activeIntro = $this->appearanceRepository->findActiveIntroduction();
 
-            if (null !== $activeCamp && $activeCamp->getId() !== $appearance->getId()) {
+            if (null !== $activeIntro && $activeIntro->getId() !== $appearance->getId()) {
                 $this->context->buildViolation($constraint->message)
-                    ->setParameter('%name%', $activeCamp->getName())
+                    ->setParameter('%name%', $activeIntro->getName())
                     ->addViolation();
             }
         }

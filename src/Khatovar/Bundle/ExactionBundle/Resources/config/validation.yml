@@ -13,6 +13,5 @@ Khatovar\Bundle\ExactionBundle\Entity\Exaction:
         links:
             - Khatovar\Bundle\ExactionBundle\Validator\Constraints\ExactionLink: ~
         map:
-            - NotBlank: ~
             - Khatovar\Bundle\ExactionBundle\Validator\Constraints\ContainsIframe: ~
             - Khatovar\Bundle\ExactionBundle\Validator\Constraints\IframeSize: ~
