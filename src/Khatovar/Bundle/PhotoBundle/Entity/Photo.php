@@ -367,7 +367,7 @@ class Photo
      *
      * @return Photo
      */
-    public function setAppearance(Appearance $appearance)
+    public function setAppearance(Appearance $appearance = null)
     {
         $this->appearance = $appearance;
 

@@ -5,6 +5,8 @@ This repository contain the source code of the CMS handling the web site of the 
 # TODO
 
 ## Features
+- Synchronize ending date with starting date when creating a new exaction
+- Make time switch between exaction photos random
 - Optimize presentation on the photo admin page (accordion)
 - Optimize mobile theme (especially the menu)
 - Use photos instead of links in listing/index pages

@@ -1,12 +1,15 @@
 #0.9.2 (2015-10-03)
+##Bug-fix
+- Correct a bug that prevents to attach a photo already uploaded to an exaction
+
 ##Enhancement
 - Display complete name for appearances in photo form and index
 
 #0.9.1 (2015-09-27)
-##Bug-fix
+##Bug-fixes
 - Adding a missing doctrine parameter
-- Correct a bug preventing to create a new contact page
-- Correct a bug preventing to create and activate a camp description at the same time
+- Correct a bug that prevents to create a new contact page
+- Correct a bug that prevents to create and activate a camp description at the same time
 - Display the khatovar logo for past exactions if no photo have been uploaded
 - Correct a bug that prevent a photo album to appear
 
