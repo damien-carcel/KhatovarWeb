@@ -21,33 +21,42 @@
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
-namespace Khatovar\Bundle\PhotoBundle\Helper;
-
-use Khatovar\Bundle\WebBundle\Helper\EntityHelper;
+namespace Khatovar\Bundle\WebBundle\Helper;
 
 /**
- * Photo helper.
+ * Class EntityHelper
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
  */
-class PhotoHelper
+class EntityHelper
 {
-    /**
-     * Get a list of all entities that can be linked to photos.
-     *
-     * When adding a new entity to the list, remember to also add it to
-     * PhotoRepository::getOrphans() and in the _form.html.twig view.
-     *
-     * @return array
-     */
-    public static function getPhotoEntities()
-    {
-        return [
-            EntityHelper::HOMEPAGE_CODE   => EntityHelper::HOMEPAGE_CODE,
-            EntityHelper::APPEARANCE_CODE => EntityHelper::APPEARANCE_LABEL,
-            EntityHelper::EXACTION_CODE   => EntityHelper::EXACTION_LABEL,
-            EntityHelper::MEMBER_CODE     => EntityHelper::MEMBER_LABEL,
-            EntityHelper::CONTACT_CODE    => EntityHelper::CONTACT_LABEL,
-        ];
-    }
+    /** @staticvar string */
+    const HOMEPAGE_CODE = 'homepage';
+
+    /** @staticvar string */
+    const HOMEPAGE_LABEL = 'Pages d\'accueil';
+
+    /** @staticvar string */
+    const APPEARANCE_CODE = 'appearance';
+
+    /** @staticvar string */
+    const APPEARANCE_LABEL = 'Prestations';
+
+    /** @staticvar string */
+    const EXACTION_CODE = 'exaction';
+
+    /** @staticvar string */
+    const EXACTION_LABEL = 'Exactions';
+
+    /** @staticvar string */
+    const MEMBER_CODE = 'member';
+
+    /** @staticvar string */
+    const MEMBER_LABEL = 'Membres';
+
+    /** @staticvar string */
+    const CONTACT_CODE = 'contact';
+
+    /** @staticvar string */
+    const CONTACT_LABEL = 'Pages de contact';
 }
