@@ -93,7 +93,7 @@ class MenuBuilder
         $menu->addChild(
             'home',
             [
-                'label' => 'Homepage',
+                'label' => 'Accueil',
                 'route' => 'khatovar_web_homepage',
             ]
         );

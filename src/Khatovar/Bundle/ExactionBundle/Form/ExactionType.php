@@ -25,6 +25,7 @@ namespace Khatovar\Bundle\ExactionBundle\Form;
 
 use Doctrine\ORM\EntityRepository;
 use Khatovar\Bundle\ExactionBundle\Entity\Exaction;
+use Khatovar\Bundle\WebBundle\Helper\EntityHelper;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -143,7 +144,7 @@ class ExactionType extends AbstractType
                                     return $repository
                                         ->createQueryBuilder('e')
                                         ->where('e.exaction = :exaction')
-                                        ->setParameter('exaction', $exaction);
+                                        ->setParameter(EntityHelper::EXACTION_CODE, $exaction);
                                 }
                             ]
                         )

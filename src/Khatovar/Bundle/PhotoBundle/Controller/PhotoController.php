@@ -28,6 +28,7 @@ use JMS\SecurityExtraBundle\Annotation\Secure;
 use Khatovar\Bundle\PhotoBundle\Entity\Photo;
 use Khatovar\Bundle\PhotoBundle\Helper\PhotoHelper;
 use Khatovar\Bundle\PhotoBundle\Manager\PhotoManager;
+use Khatovar\Bundle\WebBundle\Helper\EntityHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -113,10 +114,10 @@ class PhotoController extends Controller
         if (!$this->isGranted('ROLE_EDITOR')) {
             $member = $this->getLoggedMember();
 
-            $photo->setClass('none')->setEntity('member')->setMember($member);
+            $photo->setClass('none')->setEntity(EntityHelper::MEMBER_CODE)->setMember($member);
 
             $form = $this->createCreateForm($photo);
-            $form->remove('class')->remove('entity')->remove('member');
+            $form->remove('class')->remove('entity')->remove(EntityHelper::MEMBER_CODE);
         } else {
             $form = $this->createCreateForm($photo);
         }
@@ -150,10 +151,10 @@ class PhotoController extends Controller
             $isEditor = false;
             $member   = $this->getLoggedMember();
 
-            $photo->setClass('none')->setEntity('member')->setMember($member);
+            $photo->setClass('none')->setEntity(EntityHelper::MEMBER_CODE)->setMember($member);
 
             $form = $this->createCreateForm($photo);
-            $form->remove('class')->remove('entity')->remove('member');
+            $form->remove('class')->remove('entity')->remove(EntityHelper::MEMBER_CODE);
         } else {
             $isEditor = true;
             $form     = $this->createCreateForm($photo);
@@ -236,7 +237,7 @@ class PhotoController extends Controller
         $entity   = $photo->getEntity();
 
         if (!$this->isGranted('ROLE_EDITOR')) {
-            $editForm->remove('class')->remove('entity')->remove('member');
+            $editForm->remove('class')->remove('entity')->remove(EntityHelper::MEMBER_CODE);
         }
 
         $editForm->handleRequest($request);
