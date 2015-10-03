@@ -9,11 +9,7 @@
 /build/
 /vendor/
 /bin/
-/composer.phar
 
 /www/css/
 /www/js/
 /www/uploaded/
-composer.lock
-/src/Khatovar/Bundle/WebBundle/Resources/public/photos/*
-!/src/Khatovar/Bundle/WebBundle/Resources/public/photos/logonoir.jpg
