@@ -27,6 +27,7 @@ use Carcel\UserBundle\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Khatovar\Bundle\PhotoBundle\Entity\Photo;
 use Khatovar\Bundle\PhotoBundle\Helper\PhotoHelper;
+use Khatovar\Bundle\WebBundle\Helper\EntityHelper;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
@@ -203,7 +204,7 @@ class PhotoManager
         $currentlyRendered = $this->getCurrentlyRendered($controller, $action, $slugOrId);
 
         $owner = null;
-        if ('member' === $controller && null != $slugOrId) {
+        if (EntityHelper::MEMBER_CODE === $controller && null != $slugOrId) {
             $owner = $currentlyRendered->getOwner();
         }
 
@@ -237,7 +238,7 @@ class PhotoManager
             return null;
         }
 
-        if (($controller === 'homepage' || $controller === 'contact') &&
+        if (($controller === EntityHelper::HOMEPAGE_CODE || $controller === EntityHelper::CONTACT_CODE) &&
             null == $slugOrId &&
             $action === 'index'
         ) {
@@ -314,7 +315,13 @@ class PhotoManager
         foreach ($entities as $entity) {
             $photos = $entity->getPhotos();
             foreach ($photos as $photo) {
-                $sortedPhotos[$entity->getName()][] = $photo;
+                if (EntityHelper::EXACTION_CODE === $entityCode) {
+                    $name = $entity->getCompleteName();
+                } else {
+                    $name = $entity->getName();
+                }
+
+                $sortedPhotos[$name][] = $photo;
             }
         }
 

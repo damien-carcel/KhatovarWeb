@@ -24,6 +24,7 @@
 namespace Khatovar\Bundle\PhotoBundle\Form;
 
 use Khatovar\Bundle\PhotoBundle\Helper\PhotoHelper;
+use Khatovar\Bundle\WebBundle\Helper\EntityHelper;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -96,7 +97,7 @@ class PhotoType extends AbstractType
     {
         $formModifier = function (FormInterface $form, $entity) {
             if (null !== $entity) {
-                if ($entity === 'homepage') {
+                if ($entity === EntityHelper::HOMEPAGE_CODE) {
                     $form->add(
                         'class',
                         'choice',
@@ -120,7 +121,7 @@ class PhotoType extends AbstractType
                     'entity',
                     [
                         'class'    => 'Khatovar' . ucfirst($entity) . 'Bundle:' . ucfirst($entity),
-                        'property' => 'name',
+                        'property' => $entity === EntityHelper::EXACTION_CODE ? 'completeName' : 'name',
                         'label'    => 'Page',
                     ]
                 );
@@ -134,7 +135,7 @@ class PhotoType extends AbstractType
                 [
                     'label' => 'Rattacher la photo à une',
                     'choices' => PhotoHelper::getPhotoEntities(),
-                    'preferred_choices' => ['homepage'],
+                    'preferred_choices' => [EntityHelper::HOMEPAGE_CODE],
                 ]
             );
 

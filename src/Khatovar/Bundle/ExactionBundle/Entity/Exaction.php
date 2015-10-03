@@ -141,6 +141,19 @@ class Exaction
     }
 
     /**
+     * @return string
+     */
+    public function getCompleteName()
+    {
+        return sprintf(
+            '%s, %s, %s',
+            $this->name,
+            $this->place,
+            $this->start->format('Y')
+        );
+    }
+
+    /**
      * Get id.
      *
      * @return int
