@@ -220,7 +220,7 @@ class PhotosExtension extends \Twig_Extension
         $text = preg_replace('`[\r\n]+`', "\n", $text);
         $text = '<p>' . $text . '</p>';
 
-        if (strlen($text) < self::PARAGRAPH_LENGTH || $photos->isEmpty()) {
+        if (strlen($text) < self::PARAGRAPH_LENGTH || null === $photos || $photos->isEmpty()) {
             return str_replace("\n", "</p>\n<p>", $text);
         }
 

@@ -1,6 +1,7 @@
 #0.9.2 (2015-10-03)
 ##Bug-fix
 - Correct a bug that prevents to attach a photo already uploaded to an exaction
+- Correct a bug when no photo is attached to an exaction that is not in photo only mode
 
 ##Enhancement
 - Display complete name for appearances in photo form and index
