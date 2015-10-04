@@ -77,9 +77,16 @@ class DateNormalizer extends \Twig_Extension
                     $this->translateMonth($end)
                 );
             } else {
+                if (1 === ((int) $this->getDay($end)) - ((int) $this->getDay($start))) {
+                    $linkWord = 'et';
+                } else {
+                    $linkWord = 'au';
+                }
+
                 $normalizedDate = sprintf(
-                    '%s au %s %s',
+                    '%s %s %s %s',
                     $this->getDay($start),
+                    $linkWord,
                     $this->getDay($end),
                     $this->translateMonth($end)
                 );

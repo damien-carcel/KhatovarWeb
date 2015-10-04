@@ -132,8 +132,13 @@ class Photo
     public function preUpload()
     {
         if (null !== $this->file) {
-            $this->path = 'photo-' . time() . '.'
-                . $this->getFile()->guessExtension();
+            $this->path = 'photo-' . time() . '.' . $this->file->guessExtension();
+
+            $name      = $this->file->getClientOriginalName();
+            $exploded  = explode('.', $name);
+            $cleanName = $exploded[0];
+
+            $this->alt  = $cleanName;
         }
     }
 

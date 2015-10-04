@@ -57,44 +57,6 @@ class PhotoType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addDefaultFields($builder);
-
-        $this->addEntityField($builder);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(['data_class' => 'Khatovar\Bundle\PhotoBundle\Entity\Photo']);
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'khatovar_photo_type';
-    }
-
-    /**
-     * @param FormBuilderInterface $builder
-     */
-    protected function addDefaultFields(FormBuilderInterface $builder)
-    {
-        if (null === $builder->getData()->getId()) {
-            $builder->add('file', 'file', ['label' => false]);
-        }
-
-        $builder->add('alt', 'text', ['label' => 'Nom de substitution']);
-    }
-
-    /**
-     * @param FormBuilderInterface $builder
-     */
-    protected function addEntityField(FormBuilderInterface $builder)
-    {
         $formModifier = function (FormInterface $form, $entity) {
             if (null !== $entity) {
                 if ($entity === EntityHelper::HOMEPAGE_CODE) {
@@ -155,5 +117,21 @@ class PhotoType extends AbstractType
                 }
             );
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(['data_class' => 'Khatovar\Bundle\PhotoBundle\Entity\Photo']);
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'khatovar_photo_type';
     }
 }
