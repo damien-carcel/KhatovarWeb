@@ -1,6 +1,7 @@
 #0.9.3 (2015-10-04)
 ##Enhancement
 - Photo substitution name is automatically set at upload accordingly to file name
+- Enhance exaction date display
 
 #0.9.2 (2015-10-03)
 ##Bug-fixes
