@@ -1,5 +1,10 @@
+#0.9.3 (2015-10-04)
+##Enhancement
+- Photo substitution name is automatically set at upload accordingly to file name
+- Enhance exaction date display
+
 #0.9.2 (2015-10-03)
-##Bug-fix
+##Bug-fixes
 - Correct a bug that prevents to attach a photo already uploaded to an exaction
 - Correct a bug when no photo is attached to an exaction that is not in photo only mode
 
@@ -14,7 +19,7 @@
 - Display the khatovar logo for past exactions if no photo have been uploaded
 - Correct a bug that prevent a photo album to appear
 
-##Enhancement
+##Enhancements
 - Add an intro page to the Appearance bundle
 - Display past exactions in decreasing order
 - New exaction are "photo only" by default
