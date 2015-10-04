@@ -1,6 +1,7 @@
-<div class="form-group">
+{% if form.alt is defined %}
     {{ form_row(form.alt) }}
-</div>
+{% endif %}
+
 {% if form.entity is defined %}
     {{ form_row(form.entity) }}
 {% endif %}

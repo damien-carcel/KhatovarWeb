@@ -328,7 +328,9 @@ class PhotoController extends Controller
             ]
         );
 
-        $form->add('submit', 'submit', ['label' => 'Créer']);
+        $form
+            ->add('file', 'file', ['label' => false])
+            ->add('submit', 'submit', ['label' => 'Créer']);
 
         return $form;
     }
@@ -351,7 +353,9 @@ class PhotoController extends Controller
             ]
         );
 
-        $form->add('submit', 'submit', ['label' => 'Mettre à jour']);
+        $form
+            ->add('alt', 'text', ['label' => 'Nom de substitution'])
+            ->add('submit', 'submit', ['label' => 'Mettre à jour']);
 
         return $form;
     }

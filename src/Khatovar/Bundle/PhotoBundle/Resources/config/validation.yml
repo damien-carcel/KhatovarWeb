@@ -1,7 +1,6 @@
 Khatovar\Bundle\PhotoBundle\Entity\Photo:
     properties:
         alt:
-            - NotBlank: ~
             - Length:
                 max: 50
         class:
