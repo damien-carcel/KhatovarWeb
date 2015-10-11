@@ -3,10 +3,10 @@
     {{ form_errors(form) }}
 </div>
 
-{{ form_row(form.name) }}
-{{ form_row(form.content) }}
-{{ form_row(form.active) }}
-{{ form_row(form.pageType) }}
+{{ form_row(form.name, { tip: 'khatovar_appearance.tips.name'|trans }) }}
+{{ form_row(form.content, { tip: 'khatovar_appearance.tips.content'|trans }) }}
+{{ form_row(form.active, { tip: 'khatovar_appearance.tips.active'|trans }) }}
+{{ form_row(form.pageType, { tip: 'khatovar_appearance.tips.page_type'|trans }) }}
 
 <div class="form-group">
     {{ form_widget(form.submit, { 'attr': {'class': 'btn btn-default'} }) }}

@@ -1,30 +1,33 @@
 {% if form.alt is defined %}
-    {{ form_row(form.alt) }}
+    {{ form_row(form.alt, { tip: 'khatovar_photo.tips.file'|trans }) }}
 {% endif %}
 
 {% if form.entity is defined %}
-    {{ form_row(form.entity) }}
+    {{ form_row(form.entity, { tip: 'khatovar_photo.tips.entity'|trans }) }}
 {% endif %}
 
 {% if form.homepage is defined and 'hidden' not in form.homepage.vars.block_prefixes %}
-    {{ form_row(form.homepage) }}
+    {{ form_row(form.homepage, { tip: 'khatovar_photo.tips.homepage'|trans }) }}
 {% endif %}
 
 {% if form.member is defined and 'hidden' not in form.member.vars.block_prefixes %}
-    {{ form_row(form.member) }}
+    {{ form_row(form.member, { tip: 'khatovar_photo.tips.member'|trans }) }}
 {% endif %}
+
 {% if form.exaction is defined and 'hidden' not in form.exaction.vars.block_prefixes %}
-    {{ form_row(form.exaction) }}
+    {{ form_row(form.exaction, { tip: 'khatovar_photo.tips.exaction'|trans }) }}
 {% endif %}
+
 {% if form.contact is defined and 'hidden' not in form.contact.vars.block_prefixes %}
-    {{ form_row(form.contact) }}
+    {{ form_row(form.contact, { tip: 'khatovar_photo.tips.contact'|trans }) }}
 {% endif %}
+
 {% if form.appearance is defined and 'hidden' not in form.appearance.vars.block_prefixes %}
-    {{ form_row(form.appearance) }}
+    {{ form_row(form.appearance, { tip: 'khatovar_photo.tips.appearance'|trans }) }}
 {% endif %}
 
 {% if form.class is defined and 'hidden' not in form.class.vars.block_prefixes %}
-    {{ form_row(form.class) }}
+    {{ form_row(form.class, { tip: 'khatovar_photo.tips.class'|trans }) }}
 {% endif %}
 
 <div class="form-group">

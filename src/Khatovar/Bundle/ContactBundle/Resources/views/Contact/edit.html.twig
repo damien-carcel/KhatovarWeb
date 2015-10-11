@@ -13,9 +13,9 @@
         {{ form_errors(edit_form) }}
     </div>
 
-    {{ form_row(edit_form.name) }}
-    {{ form_row(edit_form.content) }}
-    {{ form_row(edit_form.visitCard) }}
+    {{ form_row(edit_form.name, { tip: 'khatovar_contact.tips.name'|trans }) }}
+    {{ form_row(edit_form.content, { tip: 'khatovar_contact.tips.content'|trans }) }}
+    {{ form_row(edit_form.visitCard, { tip: 'khatovar_contact.tips.visit_card'|trans }) }}
 
     <div class="form-group">
         {{ form_widget(edit_form.submit, { 'attr': {'class': 'btn btn-default'} }) }}

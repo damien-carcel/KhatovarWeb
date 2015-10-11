@@ -4,25 +4,24 @@
     {{ form_errors(form) }}
 </div>
 
-{{ form_row(form.name) }}
-{{ form_row(form.rank) }}
-{{ form_row(form.quote) }}
-{{ form_row(form.skill) }}
-{{ form_row(form.age) }}
-{{ form_row(form.size) }}
-{{ form_row(form.weight) }}
-{{ form_row(form.strength) }}
-{{ form_row(form.weakness) }}
-{{ form_row(form.story) }}
-{{ form_row(form.active) }}
-{{ form_widget(form.active) }}
+{{ form_row(form.name, { tip: 'khatovar_member.tips.name'|trans }) }}
+{{ form_row(form.rank, { tip: 'khatovar_member.tips.rank'|trans }) }}
+{{ form_row(form.quote, { tip: 'khatovar_member.tips.quote'|trans }) }}
+{{ form_row(form.skill, { tip: 'khatovar_member.tips.skill'|trans }) }}
+{{ form_row(form.age, { tip: 'khatovar_member.tips.age'|trans }) }}
+{{ form_row(form.size, { tip: 'khatovar_member.tips.size'|trans }) }}
+{{ form_row(form.weight, { tip: 'khatovar_member.tips.weight'|trans }) }}
+{{ form_row(form.strength, { tip: 'khatovar_member.tips.strength'|trans }) }}
+{{ form_row(form.weakness, { tip: 'khatovar_member.tips.weakness'|trans }) }}
+{{ form_row(form.story, { tip: 'khatovar_member.tips.story'|trans }) }}
+{{ form_row(form.active, { tip: 'khatovar_member.tips.active'|trans }) }}
 
 {% if edit %}
-    {{ form_row(form.portrait) }}
+    {{ form_row(form.portrait, { tip: 'khatovar_member.tips.portrait'|trans }) }}
 {% endif %}
 
 {% if is_granted('ROLE_EDITOR') %}
-    {{ form_row(form.owner) }}
+    {{ form_row(form.owner, { tip: 'khatovar_member.tips.owner'|trans }) }}
 {% endif %}
 
 <div class="form-group">

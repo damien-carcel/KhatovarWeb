@@ -1,6 +1,7 @@
 #0.9.4 (2015-10-11)
 ##New feature
-- Tooltips for every form fields
+- Foundation tooltips for every form fields
+- Tip messages are using the translation module
 
 #0.9.3 (2015-10-04)
 ##Enhancement

@@ -43,6 +43,7 @@ meta.foundation-data-attribute-namespace {
 /* Tooltips */
 .has-tip {
   display: table-cell;
+  vertical-align: middle;
   padding-right: 5px;
   color: #333333;
   cursor: help;
