@@ -6,7 +6,13 @@
 
 {% block stylesheets %}
     {% stylesheets 'bundles/khatovarweb/css/normalize.css'
-                   'bundles/khatovarweb/css/compagnie.css'
+                   'bundles/khatovarweb/css/foundation.css'
+                   'bundles/khatovarweb/css/font-awesome.css'
+                   filter='cssrewrite'
+                   output='css/base.css' %}
+    <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+    {% endstylesheets %}
+    {% stylesheets 'bundles/khatovarweb/css/compagnie.css'
                    'bundles/khatovarweb/css/lightbox.css'
                    filter='cssrewrite'
                    output='css/compagnie.css' %}

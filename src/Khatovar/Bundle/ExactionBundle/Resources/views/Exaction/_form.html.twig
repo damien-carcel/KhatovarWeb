@@ -9,14 +9,20 @@
     {{ form_errors(form) }}
 </div>
 
-{{ form_row(form.name) }}
-{{ form_row(form.place) }}
-{{ form_row(form.start) }}
-{{ form_row(form.end) }}
-{{ form_row(form.map) }}
-{{ form_row(form.introduction) }}
+{{ form_row(form.name, { tip: 'khatovar_exaction.tips.name'|trans }) }}
+{{ form_row(form.place, { tip: 'khatovar_exaction.tips.place'|trans }) }}
+{{ form_row(form.start, { tip: 'khatovar_exaction.tips.start'|trans }) }}
+{{ form_row(form.end, { tip: 'khatovar_exaction.tips.end'|trans }) }}
+{{ form_row(form.map, { tip: 'khatovar_exaction.tips.map'|trans }) }}
+{{ form_row(form.introduction, { tip: 'khatovar_exaction.tips.introduction'|trans }) }}
 
 <div class="form-group form-textarea">
+    <div class="has-tip"
+         data-tooltip
+         aria-haspopup="true"
+         title="{{ 'khatovar_exaction.tips.links'|trans }}">
+        <i class="fa fa-question-circle"></i>
+    </div>
     {{ form_label(form.links) }}
     {{ form_errors(form.links) }}
     <ul id="link-fields-list" data-prototype="{{ form_widget(form.links.vars.prototype) | e }}">
@@ -32,17 +38,17 @@
 </div>
 
 {% if exaction_passed %}
-    {{ form_row(form.onlyPhotos) }}
-    {{ form_row(form.abstract) }}
-    {{ form_row(form.image) }}
-    {{ form_row(form.imageStory) }}
+    {{ form_row(form.onlyPhotos, { tip: 'khatovar_exaction.tips.only_photos'|trans }) }}
+    {{ form_row(form.abstract, { tip: 'khatovar_exaction.tips.abstract'|trans }) }}
+    {{ form_row(form.image, { tip: 'khatovar_exaction.tips.image'|trans }) }}
+    {{ form_row(form.imageStory, { tip: 'khatovar_exaction.tips.image_story'|trans }) }}
 {% endif %}
+
+{{ form_row(form._token) }}
 
 <div class="form-group">
     {{ form_widget(form.submit, { 'attr': {'class': 'btn btn-default'} }) }}
 </div>
-
-{{ form_rest(form) }}
 {{ form_end(form) }}
 
 <script>

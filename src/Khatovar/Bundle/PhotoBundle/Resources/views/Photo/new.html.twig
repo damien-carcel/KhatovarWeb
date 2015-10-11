@@ -13,6 +13,12 @@
         </div>
 
         <div class="form-group">
+            <div class="has-tip"
+                 data-tooltip
+                 aria-haspopup="true"
+                 title="{{ 'khatovar_photo.tips.file'|trans }}">
+                <i class="fa fa-question-circle"></i>
+            </div>
             {{ form_row(form.file, { 'attr': {'class': 'form-element'} }) }}
         </div>
 
