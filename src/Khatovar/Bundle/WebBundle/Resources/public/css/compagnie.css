@@ -711,7 +711,13 @@ article img {
 }
 
 .form-textarea {
-    width: 100%;
+    width: 785px;
+}
+
+@media all and (max-width: 990px) {
+    .form-textarea {
+        width: 100%;
+    }
 }
 
 .form-element {

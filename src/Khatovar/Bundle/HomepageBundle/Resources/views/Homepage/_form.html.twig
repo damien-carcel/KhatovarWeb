@@ -3,8 +3,8 @@
     {{ form_errors(form) }}
 </div>
 
-{{ form_row(form.name) }}
-{{ form_row(form.content) }}
+{{ form_row(form.name, { tip: 'khatovar_homepage.tips.name'|trans }) }}
+{{ form_row(form.content, { tip: 'khatovar_homepage.tips.content'|trans }) }}
 
 <div class="form-group">
     {{ form_widget(form.submit, { 'attr': {'class': 'btn btn-default'} }) }}

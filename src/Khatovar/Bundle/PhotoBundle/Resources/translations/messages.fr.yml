@@ -1,0 +1,61 @@
+tips.generic: Pas d'aide ici !
+
+khatovar_appearance:
+    tips:
+        active: N'apparaîtra dans le menu que si la case est cochée
+        content: Contenu de la prestation (possibilité de mettre le texte en gras, en couleur, etc.)
+        name: Nom de la prestation (permettra de la retrouver dans la liste)
+        page_type: Choisir s'il s'agit d'une activité, d'un programme (ensemble d'activités), de l'introduction aux activités ou encore de la page d'accueil du campement
+
+khatovar_contact:
+    tips:
+        content: Contenu de la page contact (possibilité de mettre le texte en gras, en couleur, etc.)
+        name: Nom de la page contact (permettra de la retrouver dans la liste)
+        visit_card: Carte de visite à afficher (la liste de choix est à comparer avec les photos disponibles dans le panneau latéral)
+
+khatovar_exaction:
+    tips:
+        abstract: Résumé de la fête
+        end: Date de fin de la fête
+        image: Photo illustrant la fête
+        image_story: Histoire liée à l'image de la fête
+        introduction: Texte d'annonce de la fête (« viendez nous voir ! », ou quelque chose dans le genre)
+        links: Lens utiles (par exemple page Facebook ou site web de la fête, de la ville organisatrice) sous la forme « http://www.lesite.fr|texte à afficher|titre du lien »
+        map: Emplacement de la fête (l’application attend un code HTML généré par Google maps, voir la documentation pour plus de détail)
+        name: Nom de la fête
+        only_photos: si cette case est cochée, seules des photos de la fête seront affichées et les 3 champs suivants ne sont alors pas nécessaires
+        place: Lieu de la fête (idéalement sous la forme « Ville (Département) »
+        start: Date de début de la fête
+
+khatovar_homepage:
+    tips:
+        content: Contenu de la page d'accueil (possibilité de mettre le texte en gras, en couleur, etc.)
+        name: Nom de la page d'accueil (permettra de la retrouver dans la liste)
+
+khatovar_member:
+    tips:
+        active: Si le membre est encore actif dans la compagnie, ou si il s’agit d’un ancien
+        age: Âge (vrai ou faux, ou réponse détournée)
+        name: Nom de scène
+        owner: Compte utilisateur lié à la page (pour permettre au dit utilisateur d’éditer lui même sa page)
+        portrait: Photo de profil (la liste de choix est à comparer avec les photos disponibles dans le panneau latéral)
+        quote: Citation favorite du personnage
+        rank: Rang/rôle dans la compagnie
+        size: Taille (vrai ou fausse, ou réponse détournée)
+        skill: Compétences diverses (s'il y en a !)
+        story: L'histoire du personnage (imaginaire, bien sûr)
+        strength: Point(s) fort(s)
+        weakness: Point(s) faible(s)
+        weight: Poids (vrai ou faux, ou réponse détournée)
+
+khatovar_photo:
+    tips:
+        alt: Ce nom apparaîtra dans la page web à la place de l'image si celle ci avait un problème
+        appearance: La page de prestation à laquelle vous souhaitez lier la photo
+        class: La taille de la photo sur la page d'accueil
+        contact: La page de contact à laquelle vous souhaitez lier la photo
+        entity: Le type de page auquel vous souhaitez lier la photo
+        exaction: La page de la fête (passée ou future) à laquelle vous souhaitez lier la photo
+        file: Sélectionnez la photo que vous souhaitez téléverser
+        homepage: La page d'accueil à laquelle vous souhaitez lier la photo
+        member: La page de membre à laquelle vous souhaitez lier la photo
