@@ -1,3 +1,7 @@
+#0.9.4 (2015-10-11)
+##New feature
+- Tooltips for every form fields
+
 #0.9.3 (2015-10-04)
 ##Enhancement
 - Photo substitution name is automatically set at upload accordingly to file name
