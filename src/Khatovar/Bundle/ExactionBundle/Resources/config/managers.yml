@@ -5,4 +5,4 @@ services:
     khatovar_exaction.manager.exaction:
         class: %khatovar_exaction.manager.exaction.class%
         arguments:
-            - '@doctrine.orm.entity_manager'
+            - '@fos_user.entity_manager'
