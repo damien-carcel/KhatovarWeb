@@ -1,3 +1,7 @@
+#1.0.0 (xxxx-xx-xx)
+##BC breaks
+- use "fos_user.entity_manager" instead of "doctrine.orm.entity_manager"
+
 #0.9.4 (2015-10-11)
 ##New feature
 - Foundation tooltips for every form fields

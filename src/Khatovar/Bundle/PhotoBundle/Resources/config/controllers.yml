@@ -6,7 +6,7 @@ services:
         scope: request
         class: %khatovar_photo.controller.photo.class%
         arguments:
-            - '@doctrine.orm.entity_manager'
+            - '@fos_user.entity_manager'
             - '@session'
             - '@khatovar_photo.manager.photo'
         calls:

@@ -6,7 +6,7 @@ services:
         scope: request
         class: %khatovar_contact.controller.contact.class%
         arguments:
-            - '@doctrine.orm.entity_manager'
+            - '@fos_user.entity_manager'
             - '@session'
         calls:
             - [ setContainer, ['@service_container']]
