@@ -20,7 +20,12 @@
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",
-        "coresphere/console-bundle": "dev-master"
+        "coresphere/console-bundle": "dev-master",
+        "phpspec/phpspec": "~2.3",
+        "squizlabs/php_codesniffer": "~2.3",
+        "phpmd/phpmd": "~2.3",
+        "fabpot/php-cs-fixer": "~1.10",
+        "sebastian/phpcpd": "~2.0"
     },
     "scripts": {
         "post-root-package-install": [
