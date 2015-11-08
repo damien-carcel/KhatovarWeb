@@ -5,6 +5,7 @@
         "This file is @generated automatically"
     ],
     "hash": "6f3aa4145ec138f5efb7fda5495cdc81",
+    "content-hash": "bcc7c807754255072241073e32c9a88f",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -48,16 +49,16 @@
         },
         {
             "name": "carcel/documents",
-            "version": "v0.3",
+            "version": "v0.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/damien-carcel/Documents.git",
-                "reference": "a8e36ced679eab8ee1458baa02b5ac7a7e18e2ea"
+                "reference": "66b492bec81f6b8924d9cdb1382f568ce0516d54"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/damien-carcel/Documents/zipball/a8e36ced679eab8ee1458baa02b5ac7a7e18e2ea",
-                "reference": "a8e36ced679eab8ee1458baa02b5ac7a7e18e2ea",
+                "url": "https://api.github.com/repos/damien-carcel/Documents/zipball/66b492bec81f6b8924d9cdb1382f568ce0516d54",
+                "reference": "66b492bec81f6b8924d9cdb1382f568ce0516d54",
                 "shasum": ""
             },
             "require": {
@@ -106,7 +107,7 @@
                 }
             ],
             "description": "A Symfony application to manage documents on a web server",
-            "time": "2015-08-30 14:00:16"
+            "time": "2015-11-08 15:16:16"
         },
         {
             "name": "doctrine/annotations",

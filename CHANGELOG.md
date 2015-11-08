@@ -1,6 +1,7 @@
 #0.9.5 (2015-11-08)
 ##Bug-fix
 - Correct a bug that prevents photos to be displayed on member pages
+- Update to Documents 0.3.1
 
 #0.9.4 (2015-10-11)
 ##New feature
