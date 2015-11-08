@@ -128,15 +128,19 @@ class PhotosExtension extends \Twig_Extension
     /**
      * Return a lightbox photo album.
      *
-     * @param string     $icon       The photo album icon.
-     * @param string     $data       The data-lightbox attribute.
-     * @param Collection $photos     The rest of the photos to display as an album.
-     * @param Photo      $firstPhoto The first photo of the album..
+     * @param string $icon       The photo album icon.
+     * @param string $data       The data-lightbox attribute.
+     * @param mixed  $photos     The rest of the photos to display as an album.
+     * @param Photo  $firstPhoto The first photo of the album..
      *
      * @return string
      */
-    public function linkAlbum($icon, $data, Collection $photos, Photo $firstPhoto = null)
+    public function linkAlbum($icon, $data, $photos, Photo $firstPhoto = null)
     {
+        if ($photos instanceof Collection) {
+            $photos = $photos->toArray();
+        }
+
         $link  = '';
         $first = true;
         $text  = sprintf(
@@ -144,7 +148,7 @@ class PhotosExtension extends \Twig_Extension
             $icon
         );
 
-        if (null === $firstPhoto && $photos->isEmpty()) {
+        if (null === $firstPhoto && empty($photos)) {
             $link  = $this->linkPicture('/bundles/khatovarweb/images/logonoir.jpg', $text, $data);
         }
 
@@ -210,24 +214,28 @@ class PhotosExtension extends \Twig_Extension
      * Replace line breaks, and remove useless ones, by paragraphs and
      * insert floatings between paragraphs.
      *
-     * @param string      $text   The text to transform.
-     * @param Collection  $photos A list of photos to insert in the text.
+     * @param string $text   The text to transform.
+     * @param mixed  $photos A list of photos to insert in the text.
      *
      * @return string
      */
-    public function addParagraphAndPhotos($text, Collection $photos = null)
+    public function addParagraphAndPhotos($text, $photos = null)
     {
+        if ($photos instanceof Collection) {
+            $photos = $photos->toArray();
+        }
+
         $text = preg_replace('`[\r\n]+`', "\n", $text);
         $text = '<p>' . $text . '</p>';
 
-        if (strlen($text) < self::PARAGRAPH_LENGTH || null === $photos || $photos->isEmpty()) {
+        if (strlen($text) < self::PARAGRAPH_LENGTH || null === $photos || empty($photos)) {
             return str_replace("\n", "</p>\n<p>", $text);
         }
 
         $text = str_replace("\n", "</p>\n[break]<p>", $text);
 
-        if (!$photos->isEmpty()) {
-            $text = $this->addPhotos($text, $photos->toArray());
+        if (!empty($photos)) {
+            $text = $this->addPhotos($text, $photos);
         }
 
         return $text;
@@ -246,8 +254,8 @@ class PhotosExtension extends \Twig_Extension
     /**
      * Insert floatings between paragraphs.
      *
-     * @param string $text
-     * @param array  $photos
+     * @param string  $text
+     * @param Photo[] $photos
      *
      * @return string
      */
