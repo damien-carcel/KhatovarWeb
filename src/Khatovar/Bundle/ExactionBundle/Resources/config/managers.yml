@@ -1,8 +1,5 @@
-parameters:
-    khatovar_exaction.manager.exaction.class: Khatovar\Bundle\ExactionBundle\Manager\ExactionManager
-
 services:
     khatovar_exaction.manager.exaction:
-        class: %khatovar_exaction.manager.exaction.class%
+        class: Khatovar\Bundle\ExactionBundle\Manager\ExactionManager
         arguments:
-            - '@fos_user.entity_manager'
+            - '@doctrine.orm.entity_manager'

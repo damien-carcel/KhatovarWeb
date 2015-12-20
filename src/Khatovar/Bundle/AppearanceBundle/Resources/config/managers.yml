@@ -1,8 +1,5 @@
-parameters:
-    khatovar_appearance.manager.appearance.class: Khatovar\Bundle\AppearanceBundle\Manager\AppearanceManager
-
 services:
     khatovar_appearance.manager.appearance:
-        class: %khatovar_appearance.manager.appearance.class%
+        class: Khatovar\Bundle\AppearanceBundle\Manager\AppearanceManager
         arguments:
-            - '@fos_user.entity_manager'
+            - '@doctrine.orm.entity_manager'

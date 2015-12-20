@@ -25,6 +25,7 @@ namespace Khatovar\Bundle\PhotoBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 use Khatovar\Bundle\MemberBundle\Entity\Member;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Photo repository.
@@ -33,6 +34,26 @@ use Khatovar\Bundle\MemberBundle\Entity\Member;
  */
 class PhotoRepository extends EntityRepository
 {
+    /**
+     * Finds a photo by its ID or throws a 404.
+     *
+     * @param int $id
+     *
+     * @return Photo
+     *
+     * @throws NotFoundHttpException
+     */
+    public function findByIdOr404($id)
+    {
+        $photo = $this->find($id);
+
+        if (!$photo) {
+            throw new NotFoundHttpException('Impossible de trouver la photo.');
+        }
+
+        return $photo;
+    }
+
     /**
      * Return photos ordered by entity and entry to ease the
      * there display when an editor list all photos.

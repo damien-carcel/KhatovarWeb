@@ -1,6 +1,11 @@
-#1.0.0 (xxxx-xx-xx)
+#1.0.0 (2016-xx-xx)
+##Technical improvements
+- Migrate on Symfony 3 and Documents 0.4
+
 ##BC breaks
-- use "fos_user.entity_manager" instead of "doctrine.orm.entity_manager"
+- PhotoHelper::getPhotoEntities return an array as "label => code" instead of "code => label"
+- Controllers are no longer services
+- All FormType are now in a namespace "Khatovar\Bundle\XxxBundle\Form\Type"
 
 #0.9.5 (2015-11-08)
 ##Bug-fix

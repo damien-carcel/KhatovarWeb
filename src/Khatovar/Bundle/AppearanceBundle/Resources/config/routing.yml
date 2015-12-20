@@ -1,48 +1,48 @@
 khatovar_web_appearance:
     path:     /
-    defaults: { _controller: "khatovar_appearance.controller.appearance:indexAction" }
+    defaults: { _controller: KhatovarAppearanceBundle:Appearance:index }
 
 khatovar_web_appearance_workshop:
     path:     /ateliers
-    defaults: { _controller: "khatovar_appearance.controller.appearance:workshopAction" }
+    defaults: { _controller: KhatovarAppearanceBundle:Appearance:workshop }
 
 khatovar_web_appearance_camp:
     path:     /campement
-    defaults: { _controller: "khatovar_appearance.controller.appearance:campAction" }
+    defaults: { _controller: KhatovarAppearanceBundle:Appearance:camp }
 
 khatovar_web_appearance_list:
     path:     /list
-    defaults: { _controller: "khatovar_appearance.controller.appearance:listAction" }
+    defaults: { _controller: KhatovarAppearanceBundle:Appearance:list }
 
 khatovar_web_appearance_show:
     path:     /prestation/{slug}
-    defaults: { _controller: "khatovar_appearance.controller.appearance:showAction" }
+    defaults: { _controller: KhatovarAppearanceBundle:Appearance:show }
     requirements:
-        slug: "[a-zA-Z0-9-_/]+"
+        slug: '[a-zA-Z0-9-_/]+'
 
 khatovar_web_appearance_new:
     path:     /new
-    defaults: { _controller: "khatovar_appearance.controller.appearance:newAction" }
+    defaults: { _controller: KhatovarAppearanceBundle:Appearance:new }
 
 khatovar_web_appearance_create:
     path:     /create
-    defaults: { _controller: "khatovar_appearance.controller.appearance:createAction" }
+    defaults: { _controller: KhatovarAppearanceBundle:Appearance:create }
     methods:  POST
 
 khatovar_web_appearance_edit_index:
     path:     /index/edit
-    defaults: { _controller: "khatovar_appearance.controller.appearance:editIndexAction" }
+    defaults: { _controller: KhatovarAppearanceBundle:Appearance:editIndex }
 
 khatovar_web_appearance_edit:
     path:     /{id}/edit
-    defaults: { _controller: "khatovar_appearance.controller.appearance:editAction" }
+    defaults: { _controller: KhatovarAppearanceBundle:Appearance:edit }
 
 khatovar_web_appearance_update:
     path:     /{id}/update
-    defaults: { _controller: "khatovar_appearance.controller.appearance:updateAction" }
+    defaults: { _controller: KhatovarAppearanceBundle:Appearance:update }
     methods:  [POST, PUT]
 
 khatovar_web_appearance_delete:
     path:     /{id}/delete
-    defaults: { _controller: "khatovar_appearance.controller.appearance:deleteAction" }
+    defaults: { _controller: KhatovarAppearanceBundle:Appearance:delete }
     methods:  [POST, DELETE]

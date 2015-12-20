@@ -24,7 +24,7 @@
 namespace Khatovar\Bundle\WebBundle\Helper;
 
 /**
- * Class EntityHelper
+ * Lists the codes and labels of all the different type of entities.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
  */
@@ -59,4 +59,17 @@ class EntityHelper
 
     /** @staticvar string */
     const CONTACT_LABEL = 'Pages de contact';
+
+    /**
+     * Return the
+     *
+     * @return array
+     */
+    public static function getActivables()
+    {
+        return [
+            EntityHelper::HOMEPAGE_CODE,
+            EntityHelper::CONTACT_CODE,
+        ];
+    }
 }

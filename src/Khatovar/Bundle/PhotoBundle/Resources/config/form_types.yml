@@ -1,10 +1,7 @@
-parameters:
-    khatovar_photo.form.type.photo.class: Khatovar\Bundle\PhotoBundle\Form\PhotoType
-
 services:
     khatovar_photo.form.type.photo:
-        class: %khatovar_photo.form.type.photo.class%
+        class: Khatovar\Bundle\PhotoBundle\Form\Type\PhotoType
         arguments:
             - '@security.authorization_checker'
         tags:
-            - { name: form.type, alias: khatovar_photo_type }
+            - { name: form.type }

@@ -1,8 +1,5 @@
-parameters:
-    khatovar_homepage.form.type.homepage.class: Khatovar\Bundle\HomepageBundle\Form\HomepageType
-
 services:
     khatovar_homepage.form.type.homepage:
-        class: %khatovar_homepage.form.type.homepage.class%
+        class: Khatovar\Bundle\HomepageBundle\Form\Type\HomepageType
         tags:
-            - { name: form.type, alias: khatovar_homepage_type }
+            - { name: form.type }

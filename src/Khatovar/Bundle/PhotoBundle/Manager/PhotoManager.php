@@ -23,7 +23,7 @@
 
 namespace Khatovar\Bundle\PhotoBundle\Manager;
 
-use Carcel\UserBundle\Entity\User;
+use Carcel\Bundle\UserBundle\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Khatovar\Bundle\PhotoBundle\Entity\Photo;
 use Khatovar\Bundle\PhotoBundle\Helper\PhotoHelper;
@@ -152,7 +152,7 @@ class PhotoManager
             ],
         ];
 
-        foreach (PhotoHelper::getPhotoEntities() as $code => $label) {
+        foreach (PhotoHelper::getPhotoEntities() as $label => $code) {
             $sortedPhotos[$label] = $this->getEntityPhotos($code);
         }
 
@@ -238,10 +238,7 @@ class PhotoManager
             return null;
         }
 
-        if (($controller === EntityHelper::HOMEPAGE_CODE || $controller === EntityHelper::CONTACT_CODE) &&
-            null == $slugOrId &&
-            $action === 'index'
-        ) {
+        if (in_array($controller, EntityHelper::getActivables()) && null == $slugOrId && $action === 'index') {
             $currentlyRendered = $repo->findOneBy(['active' => true]);
         } elseif (null != $slugOrId) {
             if (is_string($slugOrId)) {

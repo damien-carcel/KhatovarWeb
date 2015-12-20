@@ -1,32 +1,32 @@
 khatovar_web_member:
     path:       /
-    defaults:   { _controller: 'khatovar_member.controller.member:indexAction' }
+    defaults:   { _controller: KhatovarMemberBundle:Member:index }
 
 khatovar_web_member_show:
     path:       /historique/{slug}
-    defaults:   { _controller: 'khatovar_member.controller.member:showAction' }
+    defaults:   { _controller: KhatovarMemberBundle:Member:show }
     requirements:
         slug: "[a-zA-Z0-9-_/]+"
 
 khatovar_web_member_new:
     path:       /new
-    defaults:   { _controller: 'khatovar_member.controller.member:newAction' }
+    defaults:   { _controller: KhatovarMemberBundle:Member:new }
 
 khatovar_web_member_create:
     path:       /create
-    defaults:   { _controller: 'khatovar_member.controller.member:createAction' }
+    defaults:   { _controller: KhatovarMemberBundle:Member:create }
     methods:  [POST]
 
 khatovar_web_member_edit:
     path:       /{id}/edit
-    defaults:   { _controller: 'khatovar_member.controller.member:editAction' }
+    defaults:   { _controller: KhatovarMemberBundle:Member:edit }
 
 khatovar_web_member_update:
     path:       /{id}/update
-    defaults:   { _controller: 'khatovar_member.controller.member:updateAction' }
+    defaults:   { _controller: KhatovarMemberBundle:Member:update }
     methods:  [POST, PUT]
 
 khatovar_web_member_delete:
     path:       /{id}/delete
-    defaults:   { _controller: 'khatovar_member.controller.member:deleteAction' }
+    defaults:   { _controller: KhatovarMemberBundle:Member:delete }
     methods:  [POST, DELETE]

@@ -21,51 +21,54 @@
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
-namespace Khatovar\Bundle\AppearanceBundle\Form;
+namespace Khatovar\Bundle\ContactBundle\Form\Type;
 
-use Khatovar\Bundle\AppearanceBundle\Helper\AppearanceHelper;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Appearance form type.
+ * Contact activation form type.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
  */
-class AppearanceType extends AbstractType
+class ContactActivationType extends AbstractType
 {
+    /** @var EntityManagerInterface */
+    protected $entityManager;
+
+    /**
+     * @param EntityManagerInterface $entityManager
+     */
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
+
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $previousActive = $this->getPreviousActiveContact();
+
         $builder
-            ->add('name', 'text', ['label' => 'Nom'])
-            ->add(
-                'content',
-                'ckeditor',
-                [
-                    'label'       => false,
-                    'config_name' => 'basic_config',
-                ]
-            )
             ->add(
                 'active',
-                'checkbox',
+                EntityType::class,
                 [
-                    'label'    => 'Prestation proposée',
-                    'required' => false,
+                    'class'             => 'Khatovar\Bundle\ContactBundle\Entity\Contact',
+                    'label'             => false,
+                    'choice_label'      => 'name',
+                    'preferred_choices' => [$previousActive],
                 ]
             )
-            ->add(
-                'pageType',
-                'choice',
-                [
-                    'label'   => 'Type de page',
-                    'choices' => AppearanceHelper::getAppearancePageTypes(),
-                ]
-            );
+            ->add('submit', SubmitType::class, ['label' => 'Activer'])
+            ->getForm();
     }
 
     /**
@@ -73,14 +76,17 @@ class AppearanceType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(['data_class' => 'Khatovar\Bundle\AppearanceBundle\Entity\Appearance']);
+        $resolver->setDefaults([
+            'data_class'        => 'Khatovar\Bundle\ContactBundle\Entity\Contact',
+            'validation_groups' => false,
+        ]);
     }
 
     /**
-     * {@inheritdoc}
+     * @return \Khatovar\Bundle\ContactBundle\Entity\Contact
      */
-    public function getName()
+    protected function getPreviousActiveContact()
     {
-        return 'khatovar_appearance_type';
+        return $this->entityManager->getRepository('KhatovarContactBundle:Contact')->findOneBy(['active' => true]);
     }
 }

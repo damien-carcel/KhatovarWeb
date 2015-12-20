@@ -24,6 +24,7 @@
 namespace Khatovar\Bundle\HomepageBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Homepage repository.
@@ -32,4 +33,41 @@ use Doctrine\ORM\EntityRepository;
  */
 class HomepageRepository extends EntityRepository
 {
+    /**
+     * Finds a homepage by its ID or throws a 404.
+     *
+     * @param int $id
+     *
+     * @return Homepage
+     *
+     * @throws NotFoundHttpException
+     */
+    public function findByIdOr404($id)
+    {
+        $homepage = $this->find($id);
+
+        if (!$homepage) {
+            throw new NotFoundHttpException('Impossible de trouver la page d\'accueil.');
+        }
+
+        return $homepage;
+    }
+
+    /**
+     * Finds the active homepage or throws a 404.
+     *
+     * @return Homepage
+     *
+     * @throws NotFoundHttpException
+     */
+    public function findActiveOr404()
+    {
+        $homepage = $this->findOneBy(['active' => true]);
+
+        if (null === $homepage) {
+            throw new NotFoundHttpException('Il n\'y a pas de page de contact active. Veuillez en activer une.');
+        }
+
+        return $homepage;
+    }
 }

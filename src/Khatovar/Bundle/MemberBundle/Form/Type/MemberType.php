@@ -21,10 +21,14 @@
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
-namespace Khatovar\Bundle\MemberBundle\Form;
+namespace Khatovar\Bundle\MemberBundle\Form\Type;
 
 use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -41,10 +45,10 @@ class MemberType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', 'text', ['label' => 'Nom'])
+            ->add('name', TextType::class, ['label' => 'Nom'])
             ->add(
                 'rank',
-                'text',
+                TextType::class,
                 [
                     'label'    => 'Rang',
                     'required' => false,
@@ -52,7 +56,7 @@ class MemberType extends AbstractType
             )
             ->add(
                 'quote',
-                'text',
+                TextType::class,
                 [
                     'label'    => 'Citation',
                     'required' => false,
@@ -60,7 +64,7 @@ class MemberType extends AbstractType
             )
             ->add(
                 'skill',
-                'text',
+                TextType::class,
                 [
                     'label'    => 'Compétences',
                     'required' => false,
@@ -68,7 +72,7 @@ class MemberType extends AbstractType
             )
             ->add(
                 'age',
-                'text',
+                TextType::class,
                 [
                     'label'    => 'Âge',
                     'required' => false,
@@ -76,7 +80,7 @@ class MemberType extends AbstractType
             )
             ->add(
                 'size',
-                'text',
+                TextType::class,
                 [
                     'label'    => 'Taille',
                     'required' => false,
@@ -84,7 +88,7 @@ class MemberType extends AbstractType
             )
             ->add(
                 'weight',
-                'text',
+                TextType::class,
                 [
                     'label'    => 'Poids',
                     'required' => false,
@@ -92,7 +96,7 @@ class MemberType extends AbstractType
             )
             ->add(
                 'strength',
-                'text',
+                TextType::class,
                 [
                     'label'    => 'Point fort',
                     'required' => false,
@@ -100,16 +104,16 @@ class MemberType extends AbstractType
             )
             ->add(
                 'weakness',
-                'text',
+                TextType::class,
                 [
                     'label'    => 'Point faible',
                     'required' => false,
                 ]
             )
-            ->add('story', 'textarea', ['label' => 'Histoire personnelle'])
+            ->add('story', TextareaType::class, ['label' => 'Histoire personnelle'])
             ->add(
                 'active',
-                'checkbox',
+                CheckboxType::class,
                 [
                     'label'    => 'Membre actif',
                     'required' => false,
@@ -117,11 +121,11 @@ class MemberType extends AbstractType
             )
             ->add(
                 'owner',
-                'entity',
+                EntityType::class,
                 [
                     'label'         => 'Utilisateur lié',
-                    'class'         => 'Carcel\UserBundle\Entity\User',
-                    'property'      => 'username',
+                    'class'         => 'Carcel\Bundle\UserBundle\Entity\User',
+                    'choice_label'  => 'username',
                     'required'      => false,
                     'query_builder' => function (EntityRepository $er) {
                         return $er->createQueryBuilder('o')->orderBy('o.username');
@@ -136,13 +140,5 @@ class MemberType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(['data_class' => 'Khatovar\Bundle\MemberBundle\Entity\Member']);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'khatovar_member_type';
     }
 }

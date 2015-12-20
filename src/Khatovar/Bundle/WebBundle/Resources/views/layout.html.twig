@@ -5,36 +5,23 @@
 {% endblock %}
 
 {% block stylesheets %}
-    {% stylesheets 'bundles/khatovarweb/css/normalize.css'
-                   'bundles/khatovarweb/css/foundation.css'
-                   'bundles/khatovarweb/css/font-awesome.css'
-                   filter='cssrewrite'
-                   output='css/base.css' %}
-    <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
-    {% endstylesheets %}
-    {% stylesheets 'bundles/khatovarweb/css/compagnie.css'
-                   'bundles/khatovarweb/css/lightbox.css'
-                   filter='cssrewrite'
-                   output='css/compagnie.css' %}
-    <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
-    {% endstylesheets %}
+    <link rel="stylesheet" href="{{ asset('bundles/khatovarweb/css/normalize.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('bundles/khatovarweb/css/foundation.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('bundles/khatovarweb/css/font-awesome.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('bundles/khatovarweb/css/compagnie.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('bundles/khatovarweb/css/lightbox.css') }}" type="text/css" />
 
     <!--[if lt IE 9]>
-    {% stylesheets 'bundles/khatovarweb/css/ie.css' filter='cssrewrite' output='css/ie.css' %}
-    <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
-    {% endstylesheets %}
+    <link rel="stylesheet" href="{{ asset('bundles/khatovarweb/css/ie.css') }}" type="text/css" />
     <![endif]-->
 {% endblock %}
 
 {% block javascript %}
     {{ parent() }}
-    {% javascripts 'bundles/khatovarweb/js/lightbox.min.js'
-                   'bundles/khatovarweb/js/jquery.cycle2.min.js'
-                   'bundles/khatovarweb/js/jquery.cycle2.center.min.js'
-                   'bundles/khatovarweb/js/xhtml-external-links.js'
-                   output='js/compagnie.js' %}
-    <script type="text/javascript" src="{{ asset_url }}"></script>
-    {% endjavascripts %}
+    <script type="text/javascript" src="{{ asset('bundles/khatovarweb/js/lightbox.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/khatovarweb/js/jquery.cycle2.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/khatovarweb/js/jquery.cycle2.center.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/khatovarweb/js/xhtml-external-links.js') }}"></script>
 {% endblock %}
 
 {% block container %}page_block{% endblock %}

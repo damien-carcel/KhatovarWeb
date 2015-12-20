@@ -23,46 +23,20 @@
 
 namespace Khatovar\Bundle\AppearanceBundle\Controller;
 
-use Doctrine\ORM\EntityManagerInterface;
-use JMS\SecurityExtraBundle\Annotation\Secure;
 use Khatovar\Bundle\AppearanceBundle\Entity\Appearance;
 use Khatovar\Bundle\AppearanceBundle\Helper\AppearanceHelper;
-use Khatovar\Bundle\AppearanceBundle\Manager\AppearanceManager;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
- * Appearance bundle main controller.
+ * Appearance bundle main controller. Only perform display actions.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
  */
 class AppearanceController extends Controller
 {
-    /** @var AppearanceManager */
-    protected $appearanceManager;
-
-    /** @var EntityManagerInterface */
-    protected $entityManager;
-
-    /** @var Session */
-    protected $session;
-
-    /**
-     * @param EntityManagerInterface $entityManager
-     * @param Session                $session
-     * @param AppearanceManager      $appearanceManager
-     */
-    public function __construct(
-        EntityManagerInterface $entityManager,
-        Session $session,
-        AppearanceManager $appearanceManager
-    ) {
-        $this->entityManager     = $entityManager;
-        $this->session           = $session;
-        $this->appearanceManager = $appearanceManager;
-    }
-
     /**
      * Lists all programmes.
      *
@@ -70,17 +44,11 @@ class AppearanceController extends Controller
      */
     public function indexAction()
     {
-        $appearances = $this->entityManager
-            ->getRepository('KhatovarAppearanceBundle:Appearance')
-            ->findActiveProgrammesSortedBySlug();
+        $appearancesRepo = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('KhatovarAppearanceBundle:Appearance');
 
-        $introduction = $this->entityManager
-            ->getRepository('KhatovarAppearanceBundle:Appearance')
-            ->findActiveIntroduction();
-
-        if (null === $introduction) {
-            throw $this->createNotFoundException('Impossible de trouver une page d\'introduction active.');
-        }
+        $appearances  = $appearancesRepo->findActiveProgrammesSortedBySlug();
+        $introduction = $appearancesRepo->findActiveIntroduction();
 
         return $this->render(
             'KhatovarAppearanceBundle:Appearance:index.html.twig',
@@ -98,13 +66,16 @@ class AppearanceController extends Controller
      */
     public function workshopAction()
     {
-        $appearances = $this->entityManager
+        $appearances = $this->get('doctrine.orm.entity_manager')
             ->getRepository('KhatovarAppearanceBundle:Appearance')
             ->findActiveWorkshopsSortedBySlug();
 
         return $this->render(
             'KhatovarAppearanceBundle:Appearance:index.html.twig',
-            ['appearances' => $appearances]
+            [
+                'appearances'  => $appearances,
+                'introduction' => null,
+            ]
         );
     }
 
@@ -117,11 +88,9 @@ class AppearanceController extends Controller
      */
     public function campAction()
     {
-        $camp = $this->entityManager->getRepository('KhatovarAppearanceBundle:Appearance')->findActiveCamp();
-
-        if (null === $camp) {
-            throw $this->createNotFoundException('Impossible de trouver une page de camp active.');
-        }
+        $camp = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('KhatovarAppearanceBundle:Appearance')
+            ->findActiveCamp();
 
         return $this->render(
             'KhatovarAppearanceBundle:Appearance:show.html.twig',
@@ -134,36 +103,18 @@ class AppearanceController extends Controller
     }
 
     /**
-     * Finds and displays an appearance.
-     *
-     * @param string $slug
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function showAction($slug)
-    {
-        $appearances = $this->appearanceManager->findWithNextAndPreviousOr404($slug);
-
-        return $this->render(
-            'KhatovarAppearanceBundle:Appearance:show.html.twig',
-            [
-                'previous'   => $appearances['previous'],
-                'appearance' => $appearances['current'],
-                'next'       => $appearances['next'],
-            ]
-        );
-    }
-
-    /**
      * Lists all appearances.
      *
      * @return \Symfony\Component\HttpFoundation\Response
      *
-     * @Secure(roles="ROLE_EDITOR")
+     * @Security("has_role('ROLE_EDITOR')")
      */
     public function listAction()
     {
-        $appearances = $this->entityManager->getRepository('KhatovarAppearanceBundle:Appearance')->findAll();
+        $appearances = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('KhatovarAppearanceBundle:Appearance')
+            ->findAll();
+
         $deleteForms = $this->createDeleteForms($appearances);
 
         return $this->render(
@@ -177,11 +128,32 @@ class AppearanceController extends Controller
     }
 
     /**
+     * Finds and displays an appearance.
+     *
+     * @param string $slug
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function showAction($slug)
+    {
+        $appearances = $this->get('khatovar_appearance.manager.appearance')->findWithNextAndPreviousOr404($slug);
+
+        return $this->render(
+            'KhatovarAppearanceBundle:Appearance:show.html.twig',
+            [
+                'previous'   => $appearances['previous'],
+                'appearance' => $appearances['current'],
+                'next'       => $appearances['next'],
+            ]
+        );
+    }
+
+    /**
      * Displays a form to create a new appearance.
      *
      * @return \Symfony\Component\HttpFoundation\Response
      *
-     * @Secure(roles="ROLE_EDITOR")
+     * @Security("has_role('ROLE_EDITOR')")
      */
     public function newAction()
     {
@@ -202,7 +174,7 @@ class AppearanceController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
-     * @Secure(roles="ROLE_EDITOR")
+     * @Security("has_role('ROLE_EDITOR')")
      */
     public function createAction(Request $request)
     {
@@ -212,13 +184,11 @@ class AppearanceController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $this->entityManager->persist($appearance);
-            $this->entityManager->flush();
+            $entityManager = $this->get('doctrine.orm.entity_manager');
+            $entityManager->persist($appearance);
+            $entityManager->flush();
 
-            $this->session->getFlashBag()->add(
-                'notice',
-                'Prestation créée'
-            );
+            $this->addFlash('notice', 'Prestation créée');
 
             return $this->redirect(
                 $this->generateUrl(
@@ -234,15 +204,18 @@ class AppearanceController extends Controller
         );
     }
 
+    /**
+     * Displays a form to edit the active introduction page.
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @Security("has_role('ROLE_EDITOR')")
+     */
     public function editIndexAction()
     {
-        $introduction = $this->entityManager
+        $introduction = $this->get('doctrine.orm.entity_manager')
             ->getRepository('KhatovarAppearanceBundle:Appearance')
             ->findActiveIntroduction();
-
-        if (null === $introduction) {
-            throw $this->createNotFoundException('Impossible de trouver une page d\'introduction active.');
-        }
 
         return $this->editAction($introduction->getId());
     }
@@ -254,12 +227,15 @@ class AppearanceController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      *
-     * @Secure(roles="ROLE_EDITOR")
+     * @Security("has_role('ROLE_EDITOR')")
      */
     public function editAction($id)
     {
-        $appearance = $this->findByIdOr404($id);
-        $workshops  = $this->findActiveWorkshopsIfIsProgramme($appearance);
+        $appearance = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('KhatovarAppearanceBundle:Appearance')
+            ->findByIdOr404($id);
+
+        $workshops = $this->findActiveWorkshopsIfIsProgramme($appearance);
 
         $editForm = $this->createEditForm($appearance);
 
@@ -280,23 +256,23 @@ class AppearanceController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      *
-     * @Secure(roles="ROLE_EDITOR")
+     * @Security("has_role('ROLE_EDITOR')")
      */
     public function updateAction(Request $request, $id)
     {
-        $appearance = $this->findByIdOr404($id);
-        $workshops  = $this->findActiveWorkshopsIfIsProgramme($appearance);
+        $appearance = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('KhatovarAppearanceBundle:Appearance')
+            ->findByIdOr404($id);
+
+        $workshops = $this->findActiveWorkshopsIfIsProgramme($appearance);
 
         $editForm = $this->createEditForm($appearance);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
-            $this->entityManager->flush();
+            $this->get('doctrine.orm.entity_manager')->flush();
 
-            $this->session->getFlashBag()->add(
-                'notice',
-                'Prestation modifiée'
-            );
+            $this->addFlash('notice', 'Prestation modifiée');
 
             return $this->redirect(
                 $this->generateUrl(
@@ -323,7 +299,7 @@ class AppearanceController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      *
-     * @Secure(roles="ROLE_EDITOR")
+     * @Security("has_role('ROLE_EDITOR')")
      */
     public function deleteAction(Request $request, $id)
     {
@@ -331,15 +307,15 @@ class AppearanceController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $appearance = $this->findByIdOr404($id);
+            $appearance = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('KhatovarAppearanceBundle:Appearance')
+                ->findByIdOr404($id);
 
-            $this->entityManager->remove($appearance);
-            $this->entityManager->flush();
+            $entityManager = $this->get('doctrine.orm.entity_manager');
+            $entityManager->remove($appearance);
+            $entityManager->flush();
 
-            $this->session->getFlashBag()->add(
-                'notice',
-                'Prestation supprimée'
-            );
+            $this->addFlash('notice', 'Prestation supprimée');
         }
 
         return $this->redirect($this->generateUrl('khatovar_web_appearance_list'));
@@ -355,7 +331,7 @@ class AppearanceController extends Controller
     protected function createCreateForm(Appearance $entity)
     {
         $form = $this->createForm(
-            'khatovar_appearance_type',
+            'Khatovar\Bundle\AppearanceBundle\Form\Type\AppearanceType',
             $entity,
             [
                 'action' => $this->generateUrl('khatovar_web_appearance_create'),
@@ -363,7 +339,7 @@ class AppearanceController extends Controller
             ]
         );
 
-        $form->add('submit', 'submit', ['label' => 'Créer']);
+        $form->add('submit', SubmitType::class, ['label' => 'Créer']);
 
         return $form;
     }
@@ -378,7 +354,7 @@ class AppearanceController extends Controller
     protected function createEditForm(Appearance $entity)
     {
         $form = $this->createForm(
-            'khatovar_appearance_type',
+            'Khatovar\Bundle\AppearanceBundle\Form\Type\AppearanceType',
             $entity,
             [
                 'action' => $this->generateUrl('khatovar_web_appearance_update', ['id' => $entity->getId()]),
@@ -386,7 +362,7 @@ class AppearanceController extends Controller
             ]
         );
 
-        $form->add('submit', 'submit', ['label' => 'Mettre à jour']);
+        $form->add('submit', SubmitType::class, ['label' => 'Mettre à jour']);
 
         return $form;
     }
@@ -405,7 +381,7 @@ class AppearanceController extends Controller
             ->setMethod('DELETE')
             ->add(
                 'submit',
-                'submit',
+                SubmitType::class,
                 [
                     'label' => 'Effacer',
                     'attr'  => ['onclick' => 'return confirm("Êtes-vous sûr ?")'],
@@ -433,24 +409,6 @@ class AppearanceController extends Controller
     }
 
     /**
-     * @param int $id
-     *
-     * @return Appearance
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     */
-    protected function findByIdOr404($id)
-    {
-        $appearance = $this->entityManager->getRepository('KhatovarAppearanceBundle:Appearance')->find($id);
-
-        if (!$appearance) {
-            throw $this->createNotFoundException('Impossible de trouver la prestation.');
-        }
-
-        return $appearance;
-    }
-
-    /**
      * Get active workshops if given appearance is a programme.
      *
      * @param Appearance $appearance
@@ -462,7 +420,7 @@ class AppearanceController extends Controller
         $workshops = [];
 
         if (AppearanceHelper::PROGRAMME_TYPE_CODE === $appearance->getPageType()) {
-            $workshops = $this->entityManager
+            $workshops = $this->get('doctrine.orm.entity_manager')
                 ->getRepository('KhatovarAppearanceBundle:Appearance')
                 ->findActiveWorkshopsSortedBySlug();
         }

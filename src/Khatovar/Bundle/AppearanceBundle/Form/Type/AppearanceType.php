@@ -21,18 +21,23 @@
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
-namespace Khatovar\Bundle\HomepageBundle\Form;
+namespace Khatovar\Bundle\AppearanceBundle\Form\Type;
 
+use Ivory\CKEditorBundle\Form\Type\CKEditorType;
+use Khatovar\Bundle\AppearanceBundle\Helper\AppearanceHelper;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Homepage from type.
+ * Appearance form type.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
  */
-class HomepageType extends AbstractType
+class AppearanceType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -40,13 +45,29 @@ class HomepageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', 'text', ['label' => 'Nom'])
+            ->add('name', TextType::class, ['label' => 'Nom'])
             ->add(
                 'content',
-                'ckeditor',
+                CKEditorType::class,
                 [
                     'label'       => false,
                     'config_name' => 'basic_config',
+                ]
+            )
+            ->add(
+                'active',
+                CheckboxType::class,
+                [
+                    'label'    => 'Prestation proposée',
+                    'required' => false,
+                ]
+            )
+            ->add(
+                'pageType',
+                ChoiceType::class,
+                [
+                    'label'   => 'Type de page',
+                    'choices' => array_flip(AppearanceHelper::getAppearancePageTypes()),
                 ]
             );
     }
@@ -56,14 +77,6 @@ class HomepageType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(['data_class' => 'Khatovar\Bundle\HomepageBundle\Entity\Homepage']);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'khatovar_homepage_type';
+        $resolver->setDefaults(['data_class' => 'Khatovar\Bundle\AppearanceBundle\Entity\Appearance']);
     }
 }

@@ -41,7 +41,6 @@ class KhatovarWebExtension extends Extension
     public function load(array $configs, ContainerBuilder $container)
     {
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('controllers.yml');
         $loader->load('menus.yml');
         $loader->load('twig.yml');
     }
