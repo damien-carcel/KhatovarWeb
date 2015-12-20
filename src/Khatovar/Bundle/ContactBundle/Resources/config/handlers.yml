@@ -1,0 +1,5 @@
+services:
+    khatovar_contact.form.handler.contact_activation:
+        class: Khatovar\Bundle\ContactBundle\Form\Handler\ContactActivationHandler
+        arguments:
+            - '@doctrine.orm.entity_manager'

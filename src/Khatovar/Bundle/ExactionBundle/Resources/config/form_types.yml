@@ -1,8 +1,5 @@
-parameters:
-    khatovar_exaction.form.type.exaction.class: Khatovar\Bundle\ExactionBundle\Form\ExactionType
-
 services:
     khatovar_exaction.form.type.exaction:
-        class: %khatovar_exaction.form.type.exaction.class%
+        class: Khatovar\Bundle\ExactionBundle\Form\Type\ExactionType
         tags:
-            - { name: form.type, alias: khatovar_exaction_type }
+            - { name: form.type }

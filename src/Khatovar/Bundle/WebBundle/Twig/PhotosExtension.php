@@ -30,7 +30,6 @@ use Khatovar\Bundle\PhotoBundle\Entity\Photo;
  * Twig extension for photo disposition in text.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
- * @package Khatovar\Bundle\WebBundle\Services\Twig
  */
 class PhotosExtension extends \Twig_Extension
 {
@@ -128,10 +127,10 @@ class PhotosExtension extends \Twig_Extension
     /**
      * Return a lightbox photo album.
      *
-     * @param string $icon       The photo album icon.
-     * @param string $data       The data-lightbox attribute.
-     * @param mixed  $photos     The rest of the photos to display as an album.
-     * @param Photo  $firstPhoto The first photo of the album..
+     * @param string           $icon       The photo album icon.
+     * @param string           $data       The data-lightbox attribute.
+     * @param Collection|array $photos     The rest of the photos to display as an album.
+     * @param Photo            $firstPhoto The first photo of the album..
      *
      * @return string
      */

@@ -23,7 +23,7 @@
 
 namespace Khatovar\Bundle\MemberBundle\Entity;
 
-use Carcel\UserBundle\Entity\User;
+use Carcel\Bundle\UserBundle\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
 use Khatovar\Bundle\PhotoBundle\Entity\Photo;
 

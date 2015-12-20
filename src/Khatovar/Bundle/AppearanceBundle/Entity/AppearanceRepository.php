@@ -25,6 +25,7 @@ namespace Khatovar\Bundle\AppearanceBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 use Khatovar\Bundle\AppearanceBundle\Helper\AppearanceHelper;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * AppearanceRepository
@@ -34,6 +35,26 @@ use Khatovar\Bundle\AppearanceBundle\Helper\AppearanceHelper;
  */
 class AppearanceRepository extends EntityRepository
 {
+    /**
+     * Finds one appearance by its id or throws a 404.
+     *
+     * @param int $id
+     *
+     * @return Appearance
+     *
+     * @throws NotFoundHttpException
+     */
+    public function findByIdOr404($id)
+    {
+        $appearance = $this->find($id);
+
+        if (null === $appearance) {
+            throw new NotFoundHttpException('Impossible de trouver la prestation.');
+        }
+
+        return $appearance;
+    }
+
     /**
      * @return Appearance[]
      */
@@ -94,6 +115,8 @@ class AppearanceRepository extends EntityRepository
 
     /**
      * @return Appearance
+     *
+     * @throws NotFoundHttpException
      */
     public function findActiveCamp()
     {
@@ -103,11 +126,21 @@ class AppearanceRepository extends EntityRepository
             ->setParameter('pageType', AppearanceHelper::CAMP_TYPE_CODE)
             ->getQuery();
 
-        return $query->getOneOrNullResult();
+        $camp = $query->getOneOrNullResult();
+
+
+        if (null === $camp) {
+            throw new NotFoundHttpException('Impossible de trouver une page de camp active.');
+        }
+
+
+        return $camp;
     }
 
     /**
      * @return Appearance
+     *
+     * @throws NotFoundHttpException
      */
     public function findActiveIntroduction()
     {
@@ -117,7 +150,13 @@ class AppearanceRepository extends EntityRepository
             ->setParameter('pageType', AppearanceHelper::INTRO_TYPE_CODE)
             ->getQuery();
 
-        return $query->getOneOrNullResult();
+        $introduction = $query->getOneOrNullResult();
+
+        if (null === $introduction) {
+            throw new NotFoundHttpException('Impossible de trouver une page d\'introduction active.');
+        }
+
+        return $introduction;
     }
 
     /**

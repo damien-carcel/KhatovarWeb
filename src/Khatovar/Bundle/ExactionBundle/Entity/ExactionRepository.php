@@ -24,6 +24,7 @@
 namespace Khatovar\Bundle\ExactionBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Exaction repository
@@ -33,11 +34,33 @@ use Doctrine\ORM\EntityRepository;
 class ExactionRepository extends EntityRepository
 {
     /**
-     * Get exactions by year.
+     * Finds one exaction by its ID or throws a 404.
+     *
+     * @param int $id
+     *
+     * @return Exaction
+     *
+     * @throws NotFoundHttpException
+     */
+    public function findByIdOr404($id)
+    {
+        $exaction = $this->find($id);
+
+        if (!$exaction) {
+            throw new NotFoundHttpException('Impossible de trouver l\'exaction.');
+        }
+
+        return $exaction;
+    }
+
+    /**
+     * Gets exactions by year.
      *
      * @param int $year
      *
      * @return Exaction[]
+     *
+     * @throws NotFoundHttpException
      */
     public function getExactionsByYear($year)
     {
@@ -52,7 +75,7 @@ class ExactionRepository extends EntityRepository
     }
 
     /**
-     * Get all exactions to come.
+     * Gets all exactions to come.
      *
      * @return Exaction[]
      */

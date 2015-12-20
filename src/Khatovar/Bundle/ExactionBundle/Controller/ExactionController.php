@@ -23,13 +23,11 @@
 
 namespace Khatovar\Bundle\ExactionBundle\Controller;
 
-use Doctrine\ORM\EntityManagerInterface;
-use JMS\SecurityExtraBundle\Annotation\Secure;
 use Khatovar\Bundle\ExactionBundle\Entity\Exaction;
-use Khatovar\Bundle\ExactionBundle\Manager\ExactionManager;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * Main Controller for Exaction bundle.
@@ -38,30 +36,6 @@ use Symfony\Component\HttpFoundation\Session\Session;
  */
 class ExactionController extends Controller
 {
-    /** @var EntityManagerInterface */
-    protected $entityManager;
-
-    /** @var ExactionManager */
-    protected $exactionManager;
-
-    /** @var Session */
-    protected $session;
-
-    /**
-     * @param EntityManagerInterface $entityManager
-     * @param Session                $session
-     * @param ExactionManager        $exactionManager
-     */
-    public function __construct(
-        EntityManagerInterface $entityManager,
-        Session $session,
-        ExactionManager $exactionManager
-    ) {
-        $this->entityManager   = $entityManager;
-        $this->session         = $session;
-        $this->exactionManager = $exactionManager;
-    }
-
     /**
      * Displays a generalist exaction page.
      *
@@ -69,7 +43,7 @@ class ExactionController extends Controller
      */
     public function indexAction()
     {
-        $activeYears = $this->exactionManager->getSortedYears();
+        $activeYears = $this->get('khatovar_exaction.manager.exaction')->getSortedYears();
 
         return $this->render(
             'KhatovarExactionBundle:Exaction:index.html.twig',
@@ -84,7 +58,7 @@ class ExactionController extends Controller
      */
     public function pastAction()
     {
-        $activeYears = $this->exactionManager->getSortedYears();
+        $activeYears = $this->get('khatovar_exaction.manager.exaction')->getSortedYears();
 
         return $this->render(
             'KhatovarExactionBundle:Exaction:past.html.twig',
@@ -99,7 +73,7 @@ class ExactionController extends Controller
      */
     public function toComeAction()
     {
-        $futureExactions = $this->entityManager
+        $futureExactions = $this->get('doctrine.orm.entity_manager')
             ->getRepository('KhatovarExactionBundle:Exaction')
             ->getFutureExactions();
 
@@ -123,7 +97,7 @@ class ExactionController extends Controller
      */
     public function viewByYearAction($year)
     {
-        $exactions = $this->entityManager
+        $exactions = $this->get('doctrine.orm.entity_manager')
             ->getRepository('KhatovarExactionBundle:Exaction')
             ->getExactionsByYear($year);
 
@@ -143,7 +117,7 @@ class ExactionController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      *
-     * @Secure(roles="ROLE_EDITOR")
+     * @Security("has_role('ROLE_EDITOR')")
      */
     public function newAction()
     {
@@ -167,7 +141,7 @@ class ExactionController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      *
-     * @Secure(roles="ROLE_EDITOR")
+     * @Security("has_role('ROLE_EDITOR')")
      */
     public function createAction(Request $request)
     {
@@ -179,13 +153,11 @@ class ExactionController extends Controller
         if ($form->isValid()) {
             $exaction->setOnlyPhotos(true);
 
-            $this->entityManager->persist($exaction);
-            $this->entityManager->flush();
+            $entityManager = $this->get('doctrine.orm.entity_manager');
+            $entityManager->persist($exaction);
+            $entityManager->flush();
 
-            $this->session->getFlashBag()->add(
-                'notice',
-                'Exaction créée'
-            );
+            $this->addFlash('notice', 'Exaction créée');
 
             return $this->redirect($this->chooseRedirectionURL($exaction));
         }
@@ -206,11 +178,13 @@ class ExactionController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      *
-     * @Secure(roles="ROLE_EDITOR")
+     * @Security("has_role('ROLE_EDITOR')")
      */
     public function editAction($id)
     {
-        $exaction = $this->findByIdOr404($id);
+        $exaction = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('KhatovarExactionBundle:Exaction')
+            ->findByIdOr404($id);
 
         $exactionPassed = true;
         if ($exaction->getStart() >= new \DateTime()) {
@@ -236,11 +210,13 @@ class ExactionController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      *
-     * @Secure(roles="ROLE_EDITOR")
+     * @Security("has_role('ROLE_EDITOR')")
      */
     public function updateAction(Request $request, $id)
     {
-        $exaction = $this->findByIdOr404($id);
+        $exaction = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('KhatovarExactionBundle:Exaction')
+            ->findByIdOr404($id);
 
         $exactionPassed = true;
         if ($exaction->getStart() >= new \DateTime()) {
@@ -251,12 +227,9 @@ class ExactionController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
-            $this->entityManager->flush();
+            $this->get('doctrine.orm.entity_manager')->flush();
 
-            $this->session->getFlashBag()->add(
-                'notice',
-                'Exaction modifiée'
-            );
+            $this->addFlash('notice', 'Exaction modifiée');
 
             return $this->redirect($this->chooseRedirectionURL($exaction));
         }
@@ -278,23 +251,23 @@ class ExactionController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      *
-     * @Secure(roles="ROLE_EDITOR")
+     * @Security("has_role('ROLE_EDITOR')")
      */
     public function deleteAction(Request $request, $id)
     {
-        $exaction = $this->findByIdOr404($id);
+        $exaction = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('KhatovarExactionBundle:Exaction')
+            ->findByIdOr404($id);
 
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $this->entityManager->remove($exaction);
-            $this->entityManager->flush();
+            $entityManager= $this->get('doctrine.orm.entity_manager');
+            $entityManager->remove($exaction);
+            $entityManager->flush();
 
-            $this->session->getFlashBag()->add(
-                'notice',
-                'Exaction supprimée'
-            );
+            $this->addFlash('notice', 'Exaction supprimée');
         }
 
         return $this->redirect($this->chooseRedirectionURL($exaction));
@@ -310,7 +283,7 @@ class ExactionController extends Controller
     protected function createCreateForm(Exaction $exaction)
     {
         $form = $this->createForm(
-            'khatovar_exaction_type',
+            'Khatovar\Bundle\ExactionBundle\Form\Type\ExactionType',
             $exaction,
             [
                 'action' => $this->generateUrl('khatovar_web_exaction_create'),
@@ -318,7 +291,7 @@ class ExactionController extends Controller
             ]
         );
 
-        $form->add('submit', 'submit', ['label' => 'Créer']);
+        $form->add('submit', SubmitType::class, ['label' => 'Créer']);
 
         return $form;
     }
@@ -333,7 +306,7 @@ class ExactionController extends Controller
     protected function createEditForm(Exaction $exaction)
     {
         $form = $this->createForm(
-            'khatovar_exaction_type',
+            'Khatovar\Bundle\ExactionBundle\Form\Type\ExactionType',
             $exaction,
             [
                 'action' => $this->generateUrl('khatovar_web_exaction_update', ['id' => $exaction->getId()]),
@@ -341,7 +314,7 @@ class ExactionController extends Controller
             ]
         );
 
-        $form->add('submit', 'submit', ['label' => 'Mettre à jour']);
+        $form->add('submit', SubmitType::class, ['label' => 'Mettre à jour']);
 
         return $form;
     }
@@ -361,7 +334,7 @@ class ExactionController extends Controller
             ->setMethod('DELETE')
             ->add(
                 'submit',
-                'submit',
+                SubmitType::class,
                 [
                     'label' => 'Effacer',
                     'attr'  => ['onclick' => 'return confirm("Êtes-vous sûr ?")'],
@@ -389,22 +362,6 @@ class ExactionController extends Controller
     }
 
     /**
-     * @param int $id
-     *
-     * @return Exaction
-     */
-    protected function findByIdOr404($id)
-    {
-        $exaction = $this->entityManager->getRepository('KhatovarExactionBundle:Exaction')->find($id);
-
-        if (!$exaction) {
-            throw $this->createNotFoundException('Impossible de trouver l\'exaction.');
-        }
-
-        return $exaction;
-    }
-
-    /**
      * Generate the correct URL for redirection according to exaction
      * date (past or to come).
      *
@@ -414,7 +371,7 @@ class ExactionController extends Controller
      */
     protected function chooseRedirectionURL(Exaction $exaction)
     {
-        $isExactionPassed = $this->exactionManager->isExactionPassed($exaction);
+        $isExactionPassed = $this->get('khatovar_exaction.manager.exaction')->isExactionPassed($exaction);
 
         if ($isExactionPassed) {
             return $this->generateUrl(

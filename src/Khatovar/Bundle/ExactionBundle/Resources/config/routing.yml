@@ -1,38 +1,38 @@
 khatovar_web_exaction:
     path:     /
-    defaults: { _controller: 'khatovar_exaction.controller.exaction:indexAction' }
+    defaults: { _controller: KhatovarExactionBundle:Exaction:index }
 
 khatovar_web_exaction_to_come:
     path:     /a_venir
-    defaults: { _controller: 'khatovar_exaction.controller.exaction:toComeAction' }
+    defaults: { _controller: KhatovarExactionBundle:Exaction:toCome }
 
 khatovar_web_exaction_past:
     path:     /passees
-    defaults: { _controller: 'khatovar_exaction.controller.exaction:pastAction' }
+    defaults: { _controller: KhatovarExactionBundle:Exaction:past }
 
 khatovar_web_exaction_list_by_year:
     path:     /passees/{year}
-    defaults: { _controller: 'khatovar_exaction.controller.exaction:viewByYearAction' }
+    defaults: { _controller: KhatovarExactionBundle:Exaction:viewByYear }
 
 khatovar_web_exaction_new:
     path:     /new
-    defaults: { _controller: 'khatovar_exaction.controller.exaction:newAction' }
+    defaults: { _controller: KhatovarExactionBundle:Exaction:new }
 
 khatovar_web_exaction_create:
     path:     /create
-    defaults: { _controller: 'khatovar_exaction.controller.exaction:createAction' }
+    defaults: { _controller: KhatovarExactionBundle:Exaction:create }
     methods:  [POST]
 
 khatovar_web_exaction_edit:
     path:     /{id}/edit
-    defaults: { _controller: 'khatovar_exaction.controller.exaction:editAction' }
+    defaults: { _controller: KhatovarExactionBundle:Exaction:edit }
 
 khatovar_web_exaction_update:
     path:     /{id}/update
-    defaults: { _controller: 'khatovar_exaction.controller.exaction:updateAction' }
+    defaults: { _controller: KhatovarExactionBundle:Exaction:update }
     methods:  [POST, PUT]
 
 khatovar_web_exaction_delete:
     path:     /{id}/delete
-    defaults: { _controller: 'khatovar_exaction.controller.exaction:deleteAction' }
+    defaults: { _controller: KhatovarExactionBundle:Exaction:delete }
     methods:  [POST, DELETE]

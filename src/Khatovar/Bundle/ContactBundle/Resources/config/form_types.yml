@@ -1,8 +1,12 @@
-parameters:
-    khatovar_contact.form.type.contact.class: Khatovar\Bundle\ContactBundle\Form\ContactType
-
 services:
     khatovar_contact.form.type.contact:
-        class: %khatovar_contact.form.type.contact.class%
+        class: Khatovar\Bundle\ContactBundle\Form\Type\ContactType
         tags:
-            - { name: form.type, alias: khatovar_contact_type }
+            - { name: form.type }
+
+    khatovar_contact.form.type.contact_activation:
+        class: Khatovar\Bundle\ContactBundle\Form\Type\ContactActivationType
+        arguments:
+            - '@doctrine.orm.entity_manager'
+        tags:
+            - { name: form.type }

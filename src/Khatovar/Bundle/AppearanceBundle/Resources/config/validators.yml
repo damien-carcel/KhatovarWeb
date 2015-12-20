@@ -1,19 +1,15 @@
-parameters:
-    khatovar_appearance.validator.constraint.unique_active_camp.class: Khatovar\Bundle\AppearanceBundle\Validator\Constraints\UniqueActiveCampValidator
-    khatovar_appearance.validator.constraint.unique_active_intro.class: Khatovar\Bundle\AppearanceBundle\Validator\Constraints\UniqueActiveIntroValidator
-
 services:
     khatovar_appearance.validator.constraint.unique_active_camp:
-        class: %khatovar_appearance.validator.constraint.unique_active_camp.class%
+        class: Khatovar\Bundle\AppearanceBundle\Validator\Constraints\UniqueActiveCampValidator
         arguments:
-            - '@fos_user.entity_manager'
+            - '@doctrine.orm.entity_manager'
         tags:
             - { name: validator.constraint_validator, alias: khatovar_unique_active_camp_validator }
 
     khatovar_appearance.validator.constraint.unique_active_intro:
-        class: %khatovar_appearance.validator.constraint.unique_active_intro.class%
+        class: Khatovar\Bundle\AppearanceBundle\Validator\Constraints\UniqueActiveIntroValidator
         arguments:
-            - '@fos_user.entity_manager'
+            - '@doctrine.orm.entity_manager'
         tags:
             - { name: validator.constraint_validator, alias: khatovar_unique_active_intro_validator }
 

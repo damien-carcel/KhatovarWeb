@@ -23,15 +23,13 @@
 
 namespace Khatovar\Bundle\HomepageBundle\Controller;
 
-use Doctrine\ORM\EntityManagerInterface;
-use JMS\SecurityExtraBundle\Annotation\Secure;
 use Khatovar\Bundle\HomepageBundle\Entity\Homepage;
-use Khatovar\Bundle\PhotoBundle\Manager\PhotoManager;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Main Controller for Homepage bundle.
@@ -40,30 +38,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class HomepageController extends Controller
 {
-    /** @var EntityManagerInterface */
-    protected $entityManager;
-
-    /** @var PhotoManager */
-    protected $photoManager;
-
-    /** @var Session */
-    protected $session;
-
-    /**
-     * @param EntityManagerInterface $entityManager
-     * @param Session                $session
-     * @param PhotoManager           $photoManager
-     */
-    public function __construct(
-        EntityManagerInterface $entityManager,
-        Session $session,
-        PhotoManager $photoManager
-    ) {
-        $this->entityManager = $entityManager;
-        $this->session       = $session;
-        $this->photoManager  = $photoManager;
-    }
-
     /**
      * Displays the active homepage.
      *
@@ -71,12 +45,14 @@ class HomepageController extends Controller
      */
     public function indexAction()
     {
-        $homepage = $this->findActiveOr404();
+        $homepage = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('KhatovarHomepageBundle:Homepage')
+            ->findActiveOr404();
 
         return $this->render(
             'KhatovarHomepageBundle:Homepage:show.html.twig',
             [
-                'content' => $this->photoManager->imageTranslate($homepage->getContent()),
+                'content' => $this->get('khatovar_photo.manager.photo')->imageTranslate($homepage->getContent()),
                 'page_id' => $homepage->getId()
             ]
         );
@@ -91,12 +67,14 @@ class HomepageController extends Controller
      */
     public function showAction($id)
     {
-        $homepage = $this->findByIdOr404($id);
+        $homepage = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('KhatovarHomepageBundle:Homepage')
+            ->findByIdOr404($id);
 
         return $this->render(
             'KhatovarHomepageBundle:Homepage:show.html.twig',
             [
-                'content' => $this->photoManager->imageTranslate($homepage->getContent()),
+                'content' => $this->get('khatovar_photo.manager.photo')->imageTranslate($homepage->getContent()),
                 'page_id' => $homepage->getId()
             ]
         );
@@ -109,7 +87,7 @@ class HomepageController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
-     * @Secure(roles="ROLE_EDITOR")
+     * @Security("has_role('ROLE_EDITOR')")
      */
     public function listAction(Request $request)
     {
@@ -119,7 +97,7 @@ class HomepageController extends Controller
         if ($form->isValid()) {
             $this->changeActiveHomepage($form);
 
-            $this->session->getFlashBag()->add(
+            $this->addFlash(
                 'notice',
                 'Page d\'accueil activée'
             );
@@ -127,7 +105,10 @@ class HomepageController extends Controller
             return $this->redirect($this->generateUrl('khatovar_web_homepage_list'));
         }
 
-        $homepages = $this->entityManager->getRepository('KhatovarHomepageBundle:Homepage')->findAll();
+        $homepages = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('KhatovarHomepageBundle:Homepage')
+            ->findAll();
+
         $deleteForms = $this->createDeleteForms($homepages);
 
         return $this->render(
@@ -145,7 +126,7 @@ class HomepageController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      *
-     * @Secure(roles="ROLE_EDITOR")
+     * @Security("has_role('ROLE_EDITOR')")
      */
     public function newAction()
     {
@@ -166,7 +147,7 @@ class HomepageController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
-     * @Secure(roles="ROLE_EDITOR")
+     * @Security("has_role('ROLE_EDITOR')")
      */
     public function createAction(Request $request)
     {
@@ -176,10 +157,11 @@ class HomepageController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $this->entityManager->persist($homepage);
-            $this->entityManager->flush();
+            $entityManager = $this->get('doctrine.orm.entity_manager');
+            $entityManager->persist($homepage);
+            $entityManager->flush();
 
-            $this->session->getFlashBag()->add(
+            $this->addFlash(
                 'notice',
                 'Page d\'accueil créée'
             );
@@ -205,11 +187,13 @@ class HomepageController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      *
-     * @Secure(roles="ROLE_EDITOR")
+     * @Security("has_role('ROLE_EDITOR')")
      */
     public function editAction($id)
     {
-        $homepage = $this->findByIdOr404($id);
+        $homepage = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('KhatovarHomepageBundle:Homepage')
+            ->findByIdOr404($id);
 
         $editForm = $this->createEditForm($homepage);
 
@@ -227,19 +211,21 @@ class HomepageController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
-     * @Secure(roles="ROLE_EDITOR")
+     * @Security("has_role('ROLE_EDITOR')")
      */
     public function updateAction(Request $request, $id)
     {
-        $homepage = $this->findByIdOr404($id);
+        $homepage = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('KhatovarHomepageBundle:Homepage')
+            ->findByIdOr404($id);
 
         $form = $this->createEditForm($homepage);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $this->entityManager->flush();
+            $this->get('doctrine.orm.entity_manager')->flush();
 
-            $this->session->getFlashBag()->add(
+            $this->addFlash(
                 'notice',
                 'Page d\'accueil modifiée'
             );
@@ -266,14 +252,16 @@ class HomepageController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      *
-     * @Secure(roles="ROLE_EDITOR")
+     * @Security("has_role('ROLE_EDITOR')")
      */
     public function deleteAction(Request $request, $id)
     {
-        $homepage = $this->findByIdOr404($id);
+        $homepage = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('KhatovarHomepageBundle:Homepage')
+            ->findByIdOr404($id);
 
         if ($homepage->isActive()) {
-            $this->session->getFlashBag()->add(
+            $this->addFlash(
                 'notice',
                 'Vous ne pouvez pas supprimer la page d\'accueil active'
             );
@@ -282,10 +270,11 @@ class HomepageController extends Controller
             $form->handleRequest($request);
 
             if ($form->isValid()) {
-                $this->entityManager->remove($homepage);
-                $this->entityManager->flush();
+                $entityManager = $this->get('doctrine.orm.entity_manager');
+                $entityManager->remove($homepage);
+                $entityManager->flush();
 
-                $this->session->getFlashBag()->add(
+                $this->addFlash(
                     'notice',
                     'Page d\'accueil supprimée'
                 );
@@ -305,7 +294,7 @@ class HomepageController extends Controller
     protected function createCreateForm(Homepage $homepage)
     {
         $form = $this->createForm(
-            'khatovar_homepage_type',
+            'Khatovar\Bundle\HomepageBundle\Form\Type\HomepageType',
             $homepage,
             [
                 'action' => $this->generateUrl('khatovar_web_homepage_create'),
@@ -313,7 +302,7 @@ class HomepageController extends Controller
             ]
         );
 
-        $form->add('submit', 'submit', ['label' => 'Créer']);
+        $form->add('submit', SubmitType::class, ['label' => 'Créer']);
 
         return $form;
     }
@@ -328,7 +317,7 @@ class HomepageController extends Controller
     protected function createEditForm(Homepage $homepage)
     {
         $form = $this->createForm(
-            'khatovar_homepage_type',
+            'Khatovar\Bundle\HomepageBundle\Form\Type\HomepageType',
             $homepage,
             [
                 'action' => $this->generateUrl('khatovar_web_homepage_update', ['id' => $homepage->getId()]),
@@ -336,7 +325,7 @@ class HomepageController extends Controller
             ]
         );
 
-        $form->add('submit', 'submit', ['label' => 'Mettre à jour']);
+        $form->add('submit', SubmitType::class, ['label' => 'Mettre à jour']);
 
         return $form;
     }
@@ -356,7 +345,7 @@ class HomepageController extends Controller
             ->setMethod('DELETE')
             ->add(
                 'submit',
-                'submit',
+                SubmitType::class,
                 [
                     'label' => 'Effacer',
                     'attr'  => ['onclick' => 'return confirm("Êtes-vous sûr ?")'],
@@ -384,60 +373,30 @@ class HomepageController extends Controller
     }
 
     /**
-     * @param int $id
-     *
-     * @return Homepage
-     */
-    protected function findByIdOr404($id)
-    {
-        $homepage = $this->entityManager->getRepository('KhatovarHomepageBundle:Homepage')->find($id);
-
-        if (!$homepage) {
-            throw $this->createNotFoundException('Impossible de trouver la page d\'accueil.');
-        }
-
-        return $homepage;
-    }
-
-    /**
-     * @return Homepage
-     */
-    protected function findActiveOr404()
-    {
-        $homepage = $this->entityManager
-            ->getRepository('KhatovarHomepageBundle:Homepage')
-            ->findOneBy(['active' => true]);
-
-        if (null === $homepage) {
-            throw new NotFoundHttpException('There is no active Contact entity. You must activate one.');
-        }
-
-        return $homepage;
-    }
-
-    /**
      * Create a form to activate a Homepage.
      *
      * @return \Symfony\Component\Form\Form
+     *
+     * @todo Use a handler like for Contact entity.
      */
     protected function createActivationForm()
     {
-        $previousHomepage = $this->entityManager
+        $previousHomepage = $this->get('doctrine.orm.entity_manager')
             ->getRepository('KhatovarHomepageBundle:Homepage')
             ->findOneBy(['active' => true]);
 
         $form = $this->createFormBuilder()
             ->add(
                 'active',
-                'entity',
+                EntityType::class,
                 [
                     'class'             => 'Khatovar\Bundle\HomepageBundle\Entity\Homepage',
                     'label'             => false,
-                    'property'          => 'name',
+                    'choice_label'      => 'name',
                     'preferred_choices' => [$previousHomepage],
                 ]
             )
-            ->add('submit', 'submit', ['label' => 'Activer'])
+            ->add('submit', SubmitType::class, ['label' => 'Activer'])
             ->getForm();
 
         return $form;
@@ -450,19 +409,20 @@ class HomepageController extends Controller
      */
     protected function changeActiveHomepage(FormInterface $form)
     {
-        $repository  = $this->entityManager->getRepository('KhatovarHomepageBundle:Homepage');
+        $entityManager = $this->get('doctrine.orm.entity_manager');
+        $repository  = $entityManager->getRepository('KhatovarHomepageBundle:Homepage');
         $newHomepage = $repository->find($form->get('active')->getData());
         $oldHomepage = $repository->findOneBy(['active' => true]);
 
         if (null !== $oldHomepage) {
             $oldHomepage->setActive(false);
-            $this->entityManager->persist($oldHomepage);
+            $entityManager->persist($oldHomepage);
         }
 
         $newHomepage->setActive(true);
-        $this->entityManager->persist($newHomepage);
-        $this->entityManager->flush();
+        $entityManager->persist($newHomepage);
+        $entityManager->flush();
 
-        $this->session->getFlashBag()->add('notice', 'Page d\'accueil activée');
+        $this->addFlash('notice', 'Page d\'accueil activée');
     }
 }

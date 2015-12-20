@@ -21,53 +21,44 @@
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
-namespace Khatovar\Bundle\ContactBundle\Form;
+namespace Khatovar\Bundle\ContactBundle\Form\Handler;
 
-use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Khatovar\Bundle\ContactBundle\Entity\Contact;
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Contact form type.
+ * Handles the activation of a contact page and deactivation of the previous one.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
  */
-class ContactType extends AbstractType
+class ContactActivationHandler
 {
+    /** @var EntityManagerInterface */
+    protected $entityManager;
+
     /**
-     * {@inheritdoc}
+     * @param EntityManagerInterface $entityManager
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function __construct(EntityManagerInterface $entityManager)
     {
-        $builder
-            ->add('name', 'text', ['label' => 'Titre'])
-            ->add(
-                'content',
-                'ckeditor',
-                [
-                    'config_name' => 'basic_config',
-                    'label'       => 'Contenu',
-                ]
-            );
+        $this->entityManager = $entityManager;
     }
 
     /**
-     * {@inheritdoc}
+     * @param Contact $newActiveContact
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function handle(Contact $newActiveContact)
     {
-        $resolver->setDefaults(['data_class' => 'Khatovar\Bundle\ContactBundle\Entity\Contact']);
-    }
+        $repository = $this->entityManager->getRepository('KhatovarContactBundle:Contact');
+        $oldContact = $repository->findOneBy(['active' => true]);
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'khatovar_contact_type';
+        if (null !== $oldContact) {
+            $oldContact->setActive(false);
+            $this->entityManager->persist($oldContact);
+        }
+
+        $newActiveContact->setActive(true);
+        $this->entityManager->persist($newActiveContact);
+        $this->entityManager->flush();
     }
 }

@@ -10,7 +10,9 @@
         <hr />
     {% endif %}
 
-    {{ introduction.content|khatovar_normalize_appearance_links|add_paragraph_and_photos(introduction.photos) }}
+    {% if null != introduction %}
+        {{ introduction.content|khatovar_normalize_appearance_links|add_paragraph_and_photos(introduction.photos) }}
+    {% endif %}
 
     <div class="link_list">
         –

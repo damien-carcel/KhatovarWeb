@@ -24,6 +24,7 @@
 namespace Khatovar\Bundle\MemberBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Member repository.
@@ -32,4 +33,43 @@ use Doctrine\ORM\EntityRepository;
  */
 class MemberRepository extends EntityRepository
 {
+    /**
+     * Finds a member by its ID or throws a 404.
+     *
+     * @param int $id
+     *
+     * @return Member
+     *
+     * @throws NotFoundHttpException
+     */
+    public function findByIdOr404($id)
+    {
+        $contact = $this->find($id);
+
+        if (!$contact) {
+            throw new NotFoundHttpException('Impossible de trouver le membre.');
+        }
+
+        return $contact;
+    }
+
+    /**
+     * Finds a member by its slug or throws a 404.
+     *
+     * @param string $slug
+     *
+     * @return Member
+     *
+     * @throws NotFoundHttpException
+     */
+    public function findBySlugOr404($slug)
+    {
+        $contact = $this->findOneBy(['slug' => $slug]);
+
+        if (!$contact) {
+            throw new NotFoundHttpException('Impossible de trouver le membre.');
+        }
+
+        return $contact;
+    }
 }

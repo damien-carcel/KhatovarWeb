@@ -4,7 +4,7 @@ use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
 
 /**
- * Class AppKernel
+ * Application main class.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
  */
@@ -15,9 +15,7 @@ class AppKernel extends Kernel
      */
     public function registerBundles()
     {
-        $bundles = array(
-            new Carcel\UserBundle\CarcelUserBundle(),
-            new Carcel\DocumentsBundle\CarcelDocumentsBundle(),
+        $bundles = [
             new Khatovar\Bundle\WebBundle\KhatovarWebBundle(),
             new Khatovar\Bundle\PhotoBundle\KhatovarPhotoBundle(),
             new Khatovar\Bundle\HomepageBundle\KhatovarHomepageBundle(),
@@ -25,14 +23,13 @@ class AppKernel extends Kernel
             new Khatovar\Bundle\ExactionBundle\KhatovarExactionBundle(),
             new Khatovar\Bundle\ContactBundle\KhatovarContactBundle(),
             new Khatovar\Bundle\AppearanceBundle\KhatovarAppearanceBundle()
-        );
+        ];
 
-        if (in_array($this->getEnvironment(), array('dev', 'test'))) {
+        if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
             $bundles[] = new Symfony\Bundle\DebugBundle\DebugBundle();
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
-            $bundles[] = new CoreSphere\ConsoleBundle\CoreSphereConsoleBundle();
         }
 
         $bundles = array_merge(
@@ -42,6 +39,30 @@ class AppKernel extends Kernel
         );
 
         return $bundles;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getRootDir()
+    {
+        return __DIR__;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getCacheDir()
+    {
+        return dirname(__DIR__).'/var/cache/'.$this->getEnvironment();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getLogDir()
+    {
+        return dirname(__DIR__).'/var/logs';
     }
 
     /**
@@ -59,15 +80,14 @@ class AppKernel extends Kernel
      */
     protected function getAdditionalBundles()
     {
-        return array(
-            new JMS\AopBundle\JMSAopBundle(),
-            new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
-            new JMS\DiExtraBundle\JMSDiExtraBundle($this),
+        return [
+            new Carcel\Bundle\UserBundle\CarcelUserBundle(),
+            new Carcel\Bundle\DocumentsBundle\CarcelDocumentsBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
-        );
+        ];
     }
 
     /**
@@ -77,15 +97,14 @@ class AppKernel extends Kernel
      */
     protected function getSymfonyBundles()
     {
-        return array(
+        return [
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
             new Symfony\Bundle\MonologBundle\MonologBundle(),
             new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
-            new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
-        );
+        ];
     }
 }

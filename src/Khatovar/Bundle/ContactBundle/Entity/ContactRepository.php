@@ -24,6 +24,7 @@
 namespace Khatovar\Bundle\ContactBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Contact repository.
@@ -32,4 +33,41 @@ use Doctrine\ORM\EntityRepository;
  */
 class ContactRepository extends EntityRepository
 {
+    /**
+     * Returns a contact page by its ID or throw a 404.
+     *
+     * @param int $id
+     *
+     * @return Contact
+     *
+     * @throws NotFoundHttpException
+     */
+    public function findByIdOr404($id)
+    {
+        $contact = $this->find($id);
+
+        if (!$contact) {
+            throw new NotFoundHttpException('Impossible de trouver le contact.');
+        }
+
+        return $contact;
+    }
+
+    /**
+     * Returns active contact page or throw a 404.
+     *
+     * @return Contact
+     *
+     * @throws NotFoundHttpException
+     */
+    public function findActiveOr404()
+    {
+        $contact = $this->findOneBy(['active' => true]);
+
+        if (null === $contact) {
+            throw new NotFoundHttpException('There is no active Contact entity. You must activate one.');
+        }
+
+        return $contact;
+    }
 }

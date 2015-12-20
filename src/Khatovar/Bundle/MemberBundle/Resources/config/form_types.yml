@@ -1,8 +1,5 @@
-parameters:
-    khatovar_member.form.type.member.class: Khatovar\Bundle\MemberBundle\Form\MemberType
-
 services:
     khatovar_member.form.type.member:
-        class: %khatovar_member.form.type.member.class%
+        class: Khatovar\Bundle\MemberBundle\Form\Type\MemberType
         tags:
-            - { name: form.type, alias: khatovar_member_type }
+            - { name: form.type }

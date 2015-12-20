@@ -32,7 +32,8 @@ use Knp\Menu\ItemInterface;
  * Build the web site menu.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
- * @package Khatovar\Bundle\WebBundle\Menu
+ * @todo   Inject directly the needed repositories (define them as services).
+ * @todo   $appareances and $programmes should be get directly in the methods that needs them.
  */
 class MenuBuilder
 {

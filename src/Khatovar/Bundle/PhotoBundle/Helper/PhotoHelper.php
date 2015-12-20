@@ -43,11 +43,11 @@ class PhotoHelper
     public static function getPhotoEntities()
     {
         return [
-            EntityHelper::HOMEPAGE_CODE   => EntityHelper::HOMEPAGE_CODE,
-            EntityHelper::APPEARANCE_CODE => EntityHelper::APPEARANCE_LABEL,
-            EntityHelper::EXACTION_CODE   => EntityHelper::EXACTION_LABEL,
-            EntityHelper::MEMBER_CODE     => EntityHelper::MEMBER_LABEL,
-            EntityHelper::CONTACT_CODE    => EntityHelper::CONTACT_LABEL,
+            EntityHelper::HOMEPAGE_LABEL   => EntityHelper::HOMEPAGE_CODE,
+            EntityHelper::APPEARANCE_LABEL => EntityHelper::APPEARANCE_CODE,
+            EntityHelper::EXACTION_LABEL   => EntityHelper::EXACTION_CODE,
+            EntityHelper::MEMBER_LABEL     => EntityHelper::MEMBER_CODE,
+            EntityHelper::CONTACT_LABEL    => EntityHelper::CONTACT_CODE,
         ];
     }
 }

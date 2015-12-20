@@ -23,13 +23,13 @@
 
 namespace Khatovar\Bundle\MemberBundle\Controller;
 
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
-use JMS\SecurityExtraBundle\Annotation\Secure;
 use Khatovar\Bundle\MemberBundle\Entity\Member;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
@@ -39,23 +39,6 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
  */
 class MemberController extends Controller
 {
-    /** @var EntityManagerInterface */
-    protected $entityManager;
-
-    /** @var Session */
-    protected $session;
-
-    /**
-     * @param EntityManagerInterface $entityManager
-     * @param Session                $session
-     */
-    public function __construct(EntityManagerInterface $entityManager, Session $session)
-    {
-        $this->entityManager = $entityManager;
-        $this->session       = $session;
-
-    }
-
     /**
      * Return the list of all members, both active or not.
      *
@@ -63,7 +46,7 @@ class MemberController extends Controller
      */
     public function indexAction()
     {
-        $memberRepository  = $this->entityManager->getRepository('KhatovarMemberBundle:Member');
+        $memberRepository  = $this->get('doctrine.orm.entity_manager')->getRepository('KhatovarMemberBundle:Member');
         $activeMembers     = $memberRepository->findBy(['active' => true]);
         $pastMembers       = $memberRepository->findBy(['active' => false]);
         $activeDeleteForms = $this->createDeleteForms($activeMembers);
@@ -89,11 +72,13 @@ class MemberController extends Controller
      */
     public function showAction($slug)
     {
-        $member = $this->findBySlugOr404($slug);
+        $member = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('KhatovarMemberBundle:Member')
+            ->findBySlugOr404($slug);
 
         $currentUser = $this->getUser();
 
-        $photos = $this->entityManager
+        $photos = $this->get('doctrine.orm.entity_manager')
             ->getRepository('KhatovarPhotoBundle:Photo')
             ->getAllButPortrait($member);
 
@@ -112,7 +97,7 @@ class MemberController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      *
-     * @Secure(roles="ROLE_EDITOR")
+     * @Security("has_role('ROLE_EDITOR')")
      */
     public function newAction()
     {
@@ -136,7 +121,7 @@ class MemberController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
-     * @Secure(roles="ROLE_EDITOR")
+     * @Security("has_role('ROLE_EDITOR')")
      */
     public function createAction(Request $request)
     {
@@ -146,10 +131,11 @@ class MemberController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $this->entityManager->persist($member);
-            $this->entityManager->flush();
+            $entityManager = $this->get('doctrine.orm.entity_manager');
+            $entityManager->persist($member);
+            $entityManager->flush();
 
-            $this->session->getFlashBag()->add(
+            $this->addFlash(
                 'notice',
                 sprintf(
                     'La page du membre %s a bien été créée. Vous pouvez maintenant ajouter une photo de profil.',
@@ -181,11 +167,13 @@ class MemberController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      *
-     * @Secure(roles="ROLE_VIEWER")
+     * @Security("has_role('ROLE_EDITOR')")
      */
     public function editAction($id)
     {
-        $contact = $this->findByIdOr404($id);
+        $contact = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('KhatovarMemberBundle:Member')
+            ->findByIdOr404($id);
 
         $editForm = $this->createEditForm($contact);
 
@@ -206,22 +194,21 @@ class MemberController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
-     * @Secure(roles="ROLE_VIEWER")
+     * @Security("has_role('ROLE_EDITOR')")
      */
     public function updateAction(Request $request, $id)
     {
-        $member = $this->findByIdOr404($id);
+        $member = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('KhatovarMemberBundle:Member')
+            ->findByIdOr404($id);
 
         $editForm = $this->createEditForm($member);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
-            $this->entityManager->flush();
+            $this->get('doctrine.orm.entity_manager')->flush();
 
-            $this->session->getFlashBag()->add(
-                'notice',
-                'Page de membre modifiée'
-            );
+            $this->addFlash('notice', 'Page de membre modifiée');
 
             return $this->redirect(
                 $this->generateUrl(
@@ -248,23 +235,23 @@ class MemberController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      *
-     * @Secure(roles="ROLE_EDITOR")
+     * @Security("has_role('ROLE_EDITOR')")
      */
     public function deleteAction(Request $request, $id)
     {
-        $member = $this->findByIdOr404($id);
+        $member = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('KhatovarMemberBundle:Member')
+            ->findByIdOr404($id);
 
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $this->entityManager->remove($member);
-            $this->entityManager->flush();
+            $entityManager = $this->get('doctrine.orm.entity_manager');
+            $entityManager->remove($member);
+            $entityManager->flush();
 
-            $this->session->getFlashBag()->add(
-                'notice',
-                'Page de membre supprimée'
-            );
+            $this->addFlash('notice', 'Page de membre supprimée');
         }
 
         return $this->redirect($this->generateUrl('khatovar_web_member'));
@@ -280,7 +267,7 @@ class MemberController extends Controller
     protected function createCreateForm(Member $member)
     {
         $form = $this->createForm(
-            'khatovar_member_type',
+            'Khatovar\Bundle\MemberBundle\Form\Type\MemberType',
             $member,
             [
                 'action' => $this->generateUrl('khatovar_web_member_create'),
@@ -288,7 +275,7 @@ class MemberController extends Controller
             ]
         );
 
-        $form->add('submit', 'submit', ['label' => 'Créer']);
+        $form->add('submit', SubmitType::class, ['label' => 'Créer']);
 
         return $form;
     }
@@ -303,7 +290,7 @@ class MemberController extends Controller
     protected function createEditForm(Member $member)
     {
         $form = $this->createForm(
-            'khatovar_member_type',
+            'Khatovar\Bundle\MemberBundle\Form\Type\MemberType',
             $member,
             [
                 'action' => $this->generateUrl('khatovar_web_member_update', ['id' => $member->getId()]),
@@ -313,15 +300,15 @@ class MemberController extends Controller
 
         $form->add(
             'portrait',
-            'entity',
+            EntityType::class,
             [
-                'label' => 'Photo de profil',
-                'class' => 'Khatovar\Bundle\PhotoBundle\Entity\Photo',
-                'property' => 'alt',
+                'label'         => 'Photo de profil',
+                'class'         => 'Khatovar\Bundle\PhotoBundle\Entity\Photo',
+                'choice_label'  => 'alt',
                 'query_builder' => function (EntityRepository $er) use ($member) {
                     return $er->createQueryBuilder('p')
-                        ->where('p.member = ?1')
-                        ->setParameter(1, $member);
+                        ->where('p.member = :member')
+                        ->setParameter('member', $member);
                 }
             ]
         );
@@ -337,7 +324,7 @@ class MemberController extends Controller
             $form->remove('owner');
         }
 
-        $form->add('submit', 'submit', ['label' => 'Mettre à jour']);
+        $form->add('submit', SubmitType::class, ['label' => 'Mettre à jour']);
 
         return $form;
     }
@@ -357,7 +344,7 @@ class MemberController extends Controller
             ->setMethod('DELETE')
             ->add(
                 'submit',
-                'submit',
+                SubmitType::class,
                 [
                     'label' => 'Effacer',
                     'attr'  => ['onclick' => 'return confirm("Êtes-vous sûr ?")'],
@@ -382,39 +369,5 @@ class MemberController extends Controller
         }
 
         return $deleteForms;
-    }
-
-    /**
-     * @param int $id
-     *
-     * @return Member
-     */
-    protected function findByIdOr404($id)
-    {
-        $contact = $this->entityManager->getRepository('KhatovarMemberBundle:Member')->find($id);
-
-        if (!$contact) {
-            throw $this->createNotFoundException('Impossible de trouver le membre.');
-        }
-
-        return $contact;
-    }
-
-    /**
-     * @param string $slug
-     *
-     * @return Member
-     */
-    protected function findBySlugOr404($slug)
-    {
-        $contact = $this->entityManager
-            ->getRepository('KhatovarMemberBundle:Member')
-            ->findOneBy(['slug' => $slug]);
-
-        if (!$contact) {
-            throw $this->createNotFoundException('Impossible de trouver le membre.');
-        }
-
-        return $contact;
     }
 }

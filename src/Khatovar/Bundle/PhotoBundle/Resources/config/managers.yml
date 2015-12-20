@@ -1,10 +1,7 @@
-parameters:
-    khatovar_photo.manager.photo.class:  Khatovar\Bundle\PhotoBundle\Manager\PhotoManager
-
 services:
     khatovar_photo.manager.photo:
-        class: %khatovar_photo.manager.photo.class%
+        class: Khatovar\Bundle\PhotoBundle\Manager\PhotoManager
         arguments:
-            - '@fos_user.entity_manager'
+            - '@doctrine.orm.entity_manager'
             - '@security.authorization_checker'
             - '@security.token_storage'

@@ -23,15 +23,15 @@
 
 namespace Khatovar\Bundle\PhotoBundle\Controller;
 
-use Doctrine\ORM\EntityManagerInterface;
-use JMS\SecurityExtraBundle\Annotation\Secure;
+use Doctrine\DBAL\Types\TextType;
 use Khatovar\Bundle\PhotoBundle\Entity\Photo;
 use Khatovar\Bundle\PhotoBundle\Helper\PhotoHelper;
-use Khatovar\Bundle\PhotoBundle\Manager\PhotoManager;
 use Khatovar\Bundle\WebBundle\Helper\EntityHelper;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
@@ -48,45 +48,20 @@ class PhotoController extends Controller
     /** @staticvar string */
     const MAX_PHOTO_HEIGHT = 720;
 
-    /** @var EntityManagerInterface */
-    protected $entityManager;
-
-    /** @var PhotoManager */
-    protected $photoManager;
-
-    /** @var Session */
-    protected $session;
-
-    /**
-     * @param EntityManagerInterface $entityManager
-     * @param Session                $session
-     * @param PhotoManager           $photoManager
-     */
-    public function __construct(
-        EntityManagerInterface $entityManager,
-        Session $session,
-        PhotoManager $photoManager
-    ) {
-        $this->entityManager = $entityManager;
-        $this->session       = $session;
-        $this->photoManager  = $photoManager;
-
-    }
-
     /**
      * Return the list of all photos uploaded for the website and
      * display admin utilities to manage them.
      *
      * @return \Symfony\Component\HttpFoundation\Response
      *
-     * @Secure(roles="ROLE_VIEWER")
+     * @Security("has_role('ROLE_EDITOR')")
      */
     public function indexAction()
     {
         if ($this->isGranted('ROLE_EDITOR')) {
-            $photos = $this->photoManager->getPhotosSortedByEntities();
+            $photos = $this->get('khatovar_photo.manager.photo')->getPhotosSortedByEntities();
         } else {
-            $photos = $this->photoManager->getMemberPhotos($this->getUser());
+            $photos = $this->get('khatovar_photo.manager.photo')->getMemberPhotos($this->getUser());
         }
 
         return $this->render(
@@ -103,7 +78,7 @@ class PhotoController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      *
-     * @Secure(roles="ROLE_VIEWER")
+     * @Security("has_role('ROLE_EDITOR')")
      */
     public function newAction()
     {
@@ -139,7 +114,7 @@ class PhotoController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
-     * @Secure(roles="ROLE_VIEWER")
+     * @Security("has_role('ROLE_EDITOR')")
      */
     public function createAction(Request $request)
     {
@@ -163,12 +138,16 @@ class PhotoController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $this->entityManager->persist($photo);
-            $this->entityManager->flush();
+            $entityManager = $this->get('doctrine.orm.entity_manager');
+            $entityManager->persist($photo);
+            $entityManager->flush();
 
-            $this->photoManager->imageResize($photo->getAbsolutePath(), static::MAX_PHOTO_HEIGHT);
+            $this->get('khatovar_photo.manager.photo')->imageResize(
+                $photo->getAbsolutePath(),
+                static::MAX_PHOTO_HEIGHT
+            );
 
-            $this->session->getFlashBag()->add(
+            $this->addFlash(
                 'notice',
                 'Photo ajoutée'
             );
@@ -198,11 +177,13 @@ class PhotoController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      *
-     * @Secure(roles="ROLE_VIEWER")
+     * @Security("has_role('ROLE_EDITOR')")
      */
     public function editAction($id)
     {
-        $photo = $this->findByIdOr404($id);
+        $photo = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('KhatovarPhotoBundle:Photo')
+            ->findByIdOr404($id);
 
         $this->userHasEditRights($photo);
 
@@ -225,11 +206,13 @@ class PhotoController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
-     * @Secure(roles="ROLE_VIEWER")
+     * @Security("has_role('ROLE_EDITOR')")
      */
     public function updateAction(Request $request, $id)
     {
-        $photo = $this->findByIdOr404($id);
+        $photo = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('KhatovarPhotoBundle:Photo')
+            ->findByIdOr404($id);
 
         $this->userHasEditRights($photo);
 
@@ -242,15 +225,16 @@ class PhotoController extends Controller
 
         $editForm->handleRequest($request);
         if ($editForm->isValid()) {
-            $this->entityManager->persist($photo);
+            $entityManager = $this->get('doctrine.orm.entity_manager');
+            $entityManager->persist($photo);
 
             if ($photo->getEntity() !== $entity) {
-                foreach (PhotoHelper::getPhotoEntities() as $code => $label) {
+                foreach (PhotoHelper::getPhotoEntities() as $code) {
                     $setter = 'set' . ucfirst($code);
                     $photo->$setter(null);
                 }
 
-                $this->entityManager->flush();
+                $entityManager->flush();
 
                 return $this->redirect(
                     $this->generateUrl(
@@ -259,12 +243,9 @@ class PhotoController extends Controller
                     )
                 );
             } else {
-                $this->entityManager->flush();
+                $entityManager->flush();
 
-                $this->session->getFlashBag()->add(
-                    'notice',
-                    'Photo modifiée'
-                );
+                $this->addFlash('notice', 'Photo modifiée');
             }
 
             return $this->redirect($this->generateUrl('khatovar_web_photo'));
@@ -287,24 +268,25 @@ class PhotoController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
-     * @Secure(roles="ROLE_VIEWER")
+     * @Security("has_role('ROLE_EDITOR')")
      */
     public function deleteAction(Request $request, $id)
     {
-        $photo = $this->findByIdOr404($id);
+        $photo = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('KhatovarPhotoBundle:Photo')
+            ->findByIdOr404($id);
+
         $this->userHasEditRights($photo);
 
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $this->entityManager->remove($photo);
-            $this->entityManager->flush();
+            $entityManager = $this->get('doctrine.orm.entity_manager');
+            $entityManager->remove($photo);
+            $entityManager->flush();
 
-            $this->session->getFlashBag()->add(
-                'notice',
-                'Photo supprimée'
-            );
+            $this->addFlash('notice', 'Photo supprimée');
         }
 
         return $this->redirect($this->generateUrl('khatovar_web_photo'));
@@ -320,7 +302,7 @@ class PhotoController extends Controller
     protected function createCreateForm(Photo $photo)
     {
         $form = $this->createForm(
-            'khatovar_photo_type',
+            'Khatovar\Bundle\PhotoBundle\Form\Type\PhotoType',
             $photo,
             [
                 'action' => $this->generateUrl('khatovar_web_photo_create'),
@@ -329,8 +311,8 @@ class PhotoController extends Controller
         );
 
         $form
-            ->add('file', 'file', ['label' => false])
-            ->add('submit', 'submit', ['label' => 'Créer']);
+            ->add('file', FileType::class, ['label' => false])
+            ->add('submit', SubmitType::class, ['label' => 'Créer']);
 
         return $form;
     }
@@ -345,7 +327,7 @@ class PhotoController extends Controller
     protected function createEditForm(Photo $photo)
     {
         $form = $this->createForm(
-            'khatovar_photo_type',
+            'Khatovar\Bundle\PhotoBundle\Form\Type\PhotoType',
             $photo,
             [
                 'action' => $this->generateUrl('khatovar_web_photo_update', ['id' => $photo->getId()]),
@@ -354,8 +336,8 @@ class PhotoController extends Controller
         );
 
         $form
-            ->add('alt', 'text', ['label' => 'Nom de substitution'])
-            ->add('submit', 'submit', ['label' => 'Mettre à jour']);
+            ->add('alt', TextType::class, ['label' => 'Nom de substitution'])
+            ->add('submit', SubmitType::class, ['label' => 'Mettre à jour']);
 
         return $form;
     }
@@ -375,7 +357,7 @@ class PhotoController extends Controller
             ->setMethod('DELETE')
             ->add(
                 'submit',
-                'submit',
+                SubmitType::class,
                 [
                     'label' => 'Effacer',
                     'attr'  => ['onclick' => 'return confirm("Êtes-vous sûr ?")'],
@@ -409,29 +391,13 @@ class PhotoController extends Controller
     }
 
     /**
-     * @param int $id
-     *
-     * @return Photo
-     */
-    protected function findByIdOr404($id)
-    {
-        $photo = $this->entityManager->getRepository('KhatovarPhotoBundle:Photo')->find($id);
-
-        if (!$photo) {
-            throw $this->createNotFoundException('Impossible de trouver la photo.');
-        }
-
-        return $photo;
-    }
-
-    /**
      * Get the member page corresponding to the current user.
      *
      * @return \Khatovar\Bundle\MemberBundle\Entity\Member
      */
     protected function getLoggedMember()
     {
-        return $this->entityManager
+        return $this->get('doctrine.orm.entity_manager')
             ->getRepository('KhatovarMemberBundle:Member')
             ->findOneBy(['owner' => $this->getUser()->getId()]);
     }

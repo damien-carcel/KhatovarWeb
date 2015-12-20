@@ -24,40 +24,24 @@
 namespace Khatovar\Bundle\WebBundle\Twig;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Twig extension that return the name of the current controller and
  * the action executed.
  * Thanks to Dani Sancas for it: http://stackoverflow.com/a/17544023
- *
- * @package Khatovar\Bundle\WebBundle\Services\Twig
  */
 class ControllerNameExtension extends \Twig_Extension
 {
-    /**
-     * @var Request
-     */
+    /** @var Request */
     protected $request;
 
     /**
-     * @var \Twig_Environment
+     * @param RequestStack $requestStack
      */
-    protected $environment;
-
-    /**
-     * @param Request $request
-     */
-    public function setRequest(Request $request = null)
+    public function __construct(RequestStack $requestStack)
     {
-        $this->request = $request;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function initRuntime(\Twig_Environment $environment)
-    {
-        $this->environment = $environment;
+        $this->request = $requestStack->getCurrentRequest();
     }
 
     /**
@@ -96,7 +80,7 @@ class ControllerNameExtension extends \Twig_Extension
             $name = strtolower($matches[1]);
         }
 
-        return $name;
+        return str_replace('controller', '', $name);
     }
 
     /**

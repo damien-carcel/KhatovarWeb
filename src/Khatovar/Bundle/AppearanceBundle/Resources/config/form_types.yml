@@ -1,8 +1,5 @@
-parameters:
-    khatovar_appearance.form.type.appearance.class: Khatovar\Bundle\AppearanceBundle\Form\AppearanceType
-
 services:
     khatovar_appearance.form.type.appearance:
-        class: %khatovar_appearance.form.type.appearance.class%
+        class: Khatovar\Bundle\AppearanceBundle\Form\Type\AppearanceType
         tags:
-            - { name: form.type, alias: khatovar_appearance_type }
+            - { name: form.type }

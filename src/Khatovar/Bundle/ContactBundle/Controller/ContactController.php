@@ -23,15 +23,11 @@
 
 namespace Khatovar\Bundle\ContactBundle\Controller;
 
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\EntityRepository;
-use JMS\SecurityExtraBundle\Annotation\Secure;
 use Khatovar\Bundle\ContactBundle\Entity\Contact;
-use Symfony\Component\Form\FormInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Main controller for Contact bundle.
@@ -40,23 +36,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class ContactController extends Controller
 {
-    /** @var EntityManagerInterface */
-    protected $entityManager;
-
-    /** @var Session */
-    protected $session;
-
-    /**
-     * @param EntityManagerInterface $entityManager
-     * @param Session                $session
-     */
-    public function __construct(EntityManagerInterface $entityManager, Session $session)
-    {
-        $this->entityManager = $entityManager;
-        $this->session       = $session;
-
-    }
-
     /**
      * Displays the active contact page.
      *
@@ -64,7 +43,9 @@ class ContactController extends Controller
      */
     public function indexAction()
     {
-        $activeContact = $this->findActiveOr404();
+        $activeContact = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('KhatovarContactBundle:Contact')
+            ->findActiveOr404();
 
         return $this->render(
             'KhatovarContactBundle:Contact:show.html.twig',
@@ -81,7 +62,9 @@ class ContactController extends Controller
      */
     public function showAction($id)
     {
-        $contact = $this->findByIdOr404($id);
+        $contact = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('KhatovarContactBundle:Contact')
+            ->findByIdOr404($id);
 
         return $this->render(
             'KhatovarContactBundle:Contact:show.html.twig',
@@ -90,31 +73,31 @@ class ContactController extends Controller
     }
 
     /**
-     * Lists all contact pages, and allow to activate one of them.
+     * Lists all contact pages, and allows to activate one of them.
      *
      * @param Request $request
      *
      * @return \Symfony\Component\HttpFoundation\Response
      *
-     * @Secure(roles="ROLE_EDITOR")
+     * @Security("has_role('ROLE_EDITOR')")
      */
     public function listAction(Request $request)
     {
-        $form = $this->createActivationForm();
+        $form = $this->createForm('Khatovar\Bundle\ContactBundle\Form\Type\ContactActivationType');
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $this->changeActiveContact($form);
+            $this->get('khatovar_contact.form.handler.contact_activation')->handle($form->get('active')->getData());
 
-            $this->session->getFlashBag()->add(
-                'notice',
-                'Page de contact activée'
-            );
+            $this->addFlash('notice', 'Page de contact activée');
 
             return $this->redirect($this->generateUrl('khatovar_web_contact_list'));
         }
 
-        $contacts    = $this->entityManager->getRepository('KhatovarContactBundle:Contact')->findAll();
+        $contacts = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('KhatovarContactBundle:Contact')
+            ->findAll();
+
         $deleteForms = $this->createDeleteForms($contacts);
 
         return $this->render(
@@ -132,7 +115,7 @@ class ContactController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      *
-     * @Secure(roles="ROLE_EDITOR")
+     * @Security("has_role('ROLE_EDITOR')")
      */
     public function newAction()
     {
@@ -153,7 +136,7 @@ class ContactController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
-     * @Secure(roles="ROLE_EDITOR")
+     * @Security("has_role('ROLE_EDITOR')")
      */
     public function createAction(Request $request)
     {
@@ -163,13 +146,11 @@ class ContactController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $this->entityManager->persist($contact);
-            $this->entityManager->flush();
+            $entityManager = $this->get('doctrine.orm.entity_manager');
+            $entityManager->persist($contact);
+            $entityManager->flush();
 
-            $this->session->getFlashBag()->add(
-                'notice',
-                'Page de contact créée'
-            );
+            $this->addFlash('notice', 'Page de contact créée');
 
             return $this->redirect(
                 $this->generateUrl(
@@ -192,11 +173,13 @@ class ContactController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      *
-     * @Secure(roles="ROLE_EDITOR")
+     * @Security("has_role('ROLE_EDITOR')")
      */
     public function editAction($id)
     {
-        $contact = $this->findByIdOr404($id);
+        $contact = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('KhatovarContactBundle:Contact')
+            ->findByIdOr404($id);
 
         $editForm = $this->createEditForm($contact);
 
@@ -214,22 +197,21 @@ class ContactController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
-     * @Secure(roles="ROLE_EDITOR")
+     * @Security("has_role('ROLE_EDITOR')")
      */
     public function updateAction(Request $request, $id)
     {
-        $contact = $this->findByIdOr404($id);
+        $contact = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('KhatovarContactBundle:Contact')
+            ->findByIdOr404($id);
 
         $editForm = $this->createEditForm($contact);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
-            $this->entityManager->flush();
+            $this->get('doctrine.orm.entity_manager')->flush();
 
-            $this->session->getFlashBag()->add(
-                'notice',
-                'Page de contact modifiée'
-            );
+            $this->addFlash('notice', 'Page de contact modifiée');
 
             return $this->redirect(
                 $this->generateUrl(
@@ -253,29 +235,26 @@ class ContactController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      *
-     * @Secure(roles="ROLE_EDITOR")
+     * @Security("has_role('ROLE_EDITOR')")
      */
     public function deleteAction(Request $request, $id)
     {
-        $contact = $this->findByIdOr404($id);
+        $contact = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('KhatovarContactBundle:Contact')
+            ->findByIdOr404($id);
 
         if ($contact->isActive()) {
-            $this->session->getFlashBag()->add(
-                'notice',
-                'Vous ne pouvez pas supprimer la page d\'accueil active'
-            );
+            $this->addFlash('notice', 'Vous ne pouvez pas supprimer la page d\'accueil active');
         } else {
             $form = $this->createDeleteForm($id);
             $form->handleRequest($request);
 
             if ($form->isValid()) {
-                $this->entityManager->remove($contact);
-                $this->entityManager->flush();
+                $entityManager = $this->get('doctrine.orm.entity_manager');
+                $entityManager->remove($contact);
+                $entityManager->flush();
 
-                $this->session->getFlashBag()->add(
-                    'notice',
-                    'Page de contact supprimée'
-                );
+                $this->addFlash('notice', 'Page de contact supprimée');
             }
         }
 
@@ -292,7 +271,7 @@ class ContactController extends Controller
     protected function createCreateForm(Contact $contact)
     {
         $form = $this->createForm(
-            'khatovar_contact_type',
+            'Khatovar\Bundle\ContactBundle\Form\Type\ContactType',
             $contact,
             [
                 'action' => $this->generateUrl('khatovar_web_contact_create'),
@@ -300,7 +279,7 @@ class ContactController extends Controller
             ]
         );
 
-        $form->add('submit', 'submit', ['label' => 'Créer']);
+        $form->add('submit', SubmitType::class, ['label' => 'Créer']);
 
         return $form;
     }
@@ -315,7 +294,7 @@ class ContactController extends Controller
     protected function createEditForm(Contact $contact)
     {
         $form = $this->createForm(
-            'khatovar_contact_type',
+            'Khatovar\Bundle\ContactBundle\Form\Type\ContactType',
             $contact,
             [
                 'action' => $this->generateUrl('khatovar_web_contact_update', ['id' => $contact->getId()]),
@@ -323,23 +302,7 @@ class ContactController extends Controller
             ]
         );
 
-        $form->add(
-            'visitCard',
-            'entity',
-            [
-                'label' => 'Carte de visite',
-                'class' => 'Khatovar\Bundle\PhotoBundle\Entity\Photo',
-                'property' => 'alt',
-                'query_builder' => function (EntityRepository $repository) use ($contact) {
-                    return $repository
-                        ->createQueryBuilder('c')
-                        ->where('c.contact = :contact')
-                        ->setParameter('contact', $contact);
-                }
-            ]
-        );
-
-        $form->add('submit', 'submit', ['label' => 'Mettre à jour']);
+        $form->add('submit', SubmitType::class, ['label' => 'Mettre à jour']);
 
         return $form;
     }
@@ -359,7 +322,7 @@ class ContactController extends Controller
             ->setMethod('DELETE')
             ->add(
                 'submit',
-                'submit',
+                SubmitType::class,
                 [
                     'label' => 'Effacer',
                     'attr'  => ['onclick' => 'return confirm("Êtes-vous sûr ?")'],
@@ -384,91 +347,5 @@ class ContactController extends Controller
         }
 
         return $deleteForms;
-    }
-
-    /**
-     * @param int $id
-     *
-     * @return Contact
-     */
-    protected function findByIdOr404($id)
-    {
-        $contact = $this->entityManager->getRepository('KhatovarContactBundle:Contact')->find($id);
-
-        if (!$contact) {
-            throw $this->createNotFoundException('Impossible de trouver le contact.');
-        }
-
-        return $contact;
-    }
-
-    /**
-     * @return Contact
-     */
-    protected function findActiveOr404()
-    {
-        $contact = $this->entityManager
-            ->getRepository('KhatovarContactBundle:Contact')
-            ->findOneBy(['active' => true]);
-
-        if (null === $contact) {
-            throw new NotFoundHttpException('There is no active Contact entity. You must activate one.');
-        }
-
-        return $contact;
-    }
-
-    /**
-     * Create a form to activate a Homepage.
-     *
-     * @return \Symfony\Component\Form\Form
-     */
-    protected function createActivationForm()
-    {
-        $previousContact = $this->entityManager
-            ->getRepository('KhatovarContactBundle:Contact')
-            ->findOneBy(['active' => true]);
-
-        $form = $this->createFormBuilder()
-            ->add(
-                'active',
-                'entity',
-                [
-                    'class'             => 'Khatovar\Bundle\ContactBundle\Entity\Contact',
-                    'label'             => false,
-                    'property'          => 'name',
-                    'preferred_choices' => [$previousContact],
-                ]
-            )
-            ->add('submit', 'submit', ['label' => 'Activer'])
-            ->getForm();
-
-        return $form;
-    }
-
-    /**
-     * Change the active Homepage.
-     *
-     * @param FormInterface $form
-     */
-    protected function changeActiveContact(FormInterface $form)
-    {
-        $repository = $this->entityManager->getRepository('KhatovarContactBundle:Contact');
-        $newContact = $repository->find($form->get('active')->getData());
-        $oldContact = $repository->findOneBy(['active' => true]);
-
-        if (null !== $oldContact) {
-            $oldContact->setActive(false);
-            $this->entityManager->persist($oldContact);
-        }
-
-        $newContact->setActive(true);
-        $this->entityManager->persist($newContact);
-        $this->entityManager->flush();
-
-        $this->session->getFlashBag()->add(
-            'notice',
-            'Page de contact activée'
-        );
     }
 }

@@ -21,12 +21,18 @@
  * @license   http://www.gnu.org/licenses/gpl.html
  */
 
-namespace Khatovar\Bundle\ExactionBundle\Form;
+namespace Khatovar\Bundle\ExactionBundle\Form\Type;
 
 use Doctrine\ORM\EntityRepository;
 use Khatovar\Bundle\ExactionBundle\Entity\Exaction;
 use Khatovar\Bundle\WebBundle\Helper\EntityHelper;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -48,11 +54,11 @@ class ExactionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', 'text', ['label' => 'Nom'])
-            ->add('place', 'text', ['label' => 'Lieu'])
+            ->add('name', TextType::class, ['label' => 'Nom'])
+            ->add('place', TextType::class, ['label' => 'Lieu'])
             ->add(
                 'start',
-                'date',
+                DateType::class,
                 [
                     'label' => 'Date de début',
                     'years' => $this->getYearslist(),
@@ -60,7 +66,7 @@ class ExactionType extends AbstractType
             )
             ->add(
                 'end',
-                'date',
+                DateType::class,
                 [
                     'label' => 'Date de fin',
                     'years' => $this->getYearslist(),
@@ -68,7 +74,7 @@ class ExactionType extends AbstractType
             )
             ->add(
                 'map',
-                'textarea',
+                TextareaType::class,
                 [
                     'label' => 'Emplacement (copier le lien depuis Google Map)',
                     'required' => false,
@@ -76,7 +82,7 @@ class ExactionType extends AbstractType
             )
             ->add(
                 'introduction',
-                'textarea',
+                TextareaType::class,
                 [
                     'label'    => 'Annonce',
                     'required' => false,
@@ -84,13 +90,12 @@ class ExactionType extends AbstractType
             )
             ->add(
                 'links',
-                'collection',
+                CollectionType::class,
                 [
                     'label'              => 'Liens utiles',
-                    'type'               => 'text',
+                    'entry_type'         => TextType::class,
                     'allow_add'          => true,
                     'allow_delete'       => true,
-                    'cascade_validation' => true,
                 ]
             )
         ;
@@ -104,14 +109,6 @@ class ExactionType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(['data_class' => 'Khatovar\Bundle\ExactionBundle\Entity\Exaction']);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'khatovar_exaction_type';
     }
 
     /**
@@ -135,7 +132,7 @@ class ExactionType extends AbstractType
                     $form
                         ->add(
                             'image',
-                            'entity',
+                            EntityType::class,
                             [
                                 'class'         => 'Khatovar\Bundle\PhotoBundle\Entity\Photo',
                                 'label'         => 'L\'image de la fête',
@@ -150,7 +147,7 @@ class ExactionType extends AbstractType
                         )
                         ->add(
                             'onlyPhotos',
-                            'checkbox',
+                            CheckboxType::class,
                             [
                                 'label'    => 'Pas de résumé de fête, seulement des photos ?',
                                 'required' => false,
@@ -158,7 +155,7 @@ class ExactionType extends AbstractType
                         )
                         ->add(
                             'abstract',
-                            'textarea',
+                            TextareaType::class,
                             [
                                 'label'    => 'Résumé de la fête',
                                 'required' => false,
@@ -166,7 +163,7 @@ class ExactionType extends AbstractType
                         )
                         ->add(
                             'imageStory',
-                            'textarea',
+                            TextareaType::class,
                             [
                                 'label'    => 'Explication de l\'image de la fête',
                                 'required' => false,
