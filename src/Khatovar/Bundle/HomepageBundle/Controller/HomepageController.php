@@ -81,15 +81,13 @@ class HomepageController extends Controller
     }
 
     /**
-     * List of all homepages, and allow to activate one of them.
+     * List of all homepages, and allows to activate one of them.
      *
      * @param Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
      * @Security("has_role('ROLE_EDITOR')")
-     *
-     * @todo Create another method to handle the request and perform the activation, like the other methods
      */
     public function listAction(Request $request)
     {
@@ -286,6 +284,25 @@ class HomepageController extends Controller
     }
 
     /**
+     * Create a form to activate a Homepage.
+     *
+     * @return \Symfony\Component\Form\Form
+     */
+    protected function createActivationForm()
+    {
+        $form = $this->createForm(
+            'Khatovar\Bundle\HomepageBundle\Form\Type\HomepageActivationType',
+            null,
+            [
+                'action' => $this->generateUrl('khatovar_web_homepage_list'),
+                'method' => 'PUT',
+            ]
+        );
+
+        return $form;
+    }
+
+    /**
      * Creates a form to create a Homepage entity.
      *
      * @param Homepage $homepage
@@ -371,36 +388,6 @@ class HomepageController extends Controller
         }
 
         return $deleteForms;
-    }
-
-    /**
-     * Create a form to activate a Homepage.
-     *
-     * @return \Symfony\Component\Form\Form
-     *
-     * @todo Create an ActivationFormType (check if the one of Contact entity is reusable).
-     */
-    protected function createActivationForm()
-    {
-        $previousHomepage = $this->get('doctrine.orm.entity_manager')
-            ->getRepository('KhatovarHomepageBundle:Homepage')
-            ->findOneBy(['active' => true]);
-
-        $form = $this->createFormBuilder()
-            ->add(
-                'active',
-                EntityType::class,
-                [
-                    'class'             => 'Khatovar\Bundle\HomepageBundle\Entity\Homepage',
-                    'label'             => false,
-                    'choice_label'      => 'name',
-                    'preferred_choices' => [$previousHomepage],
-                ]
-            )
-            ->add('submit', SubmitType::class, ['label' => 'Activer'])
-            ->getForm();
-
-        return $form;
     }
 
     /**
