@@ -21,35 +21,39 @@
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
-namespace Khatovar\Bundle\ContactBundle\Form\Handler;
+namespace Khatovar\Bundle\WebBundle\Form\Handler;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Khatovar\Bundle\ContactBundle\Entity\Contact;
 
 /**
- * Handles the activation of a contact page and deactivation of the previous one.
+ * Handles the activation of an entity and deactivation of the previous active one.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
  */
-class ContactActivationHandler
+class ActivationHandler
 {
+    /** @var string */
+    protected $entity;
+
     /** @var EntityManagerInterface */
     protected $entityManager;
 
     /**
      * @param EntityManagerInterface $entityManager
+     * @param string                 $entity
      */
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, $entity)
     {
         $this->entityManager = $entityManager;
+        $this->entity        = $entity;
     }
 
     /**
-     * @param Contact $newActiveContact
+     * @param object $newActiveEntity
      */
-    public function handle(Contact $newActiveContact)
+    public function handle($newActiveEntity)
     {
-        $repository = $this->entityManager->getRepository('KhatovarContactBundle:Contact');
+        $repository = $this->entityManager->getRepository($this->entity);
         $oldContact = $repository->findOneBy(['active' => true]);
 
         if (null !== $oldContact) {
@@ -57,8 +61,8 @@ class ContactActivationHandler
             $this->entityManager->persist($oldContact);
         }
 
-        $newActiveContact->setActive(true);
-        $this->entityManager->persist($newActiveContact);
+        $newActiveEntity->setActive(true);
+        $this->entityManager->persist($newActiveEntity);
         $this->entityManager->flush();
     }
 }

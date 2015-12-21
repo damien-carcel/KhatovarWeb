@@ -25,10 +25,8 @@ namespace Khatovar\Bundle\HomepageBundle\Controller;
 
 use Khatovar\Bundle\HomepageBundle\Entity\Homepage;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -95,12 +93,9 @@ class HomepageController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $this->changeActiveHomepage($form);
+            $this->get('khatovar_homepage.form.handler.homepage_activation')->handle($form->get('active')->getData());
 
-            $this->addFlash(
-                'notice',
-                'Page d\'accueil activée'
-            );
+            $this->addFlash('notice', 'Page d\'accueil activée');
 
             return $this->redirect($this->generateUrl('khatovar_web_homepage_list'));
         }
@@ -388,31 +383,5 @@ class HomepageController extends Controller
         }
 
         return $deleteForms;
-    }
-
-    /**
-     * Change the active Homepage.
-     *
-     * @param FormInterface $form
-     *
-     * @todo Use a handler (check if the one of Contact entity is reusable).
-     */
-    protected function changeActiveHomepage(FormInterface $form)
-    {
-        $entityManager = $this->get('doctrine.orm.entity_manager');
-        $repository  = $entityManager->getRepository('KhatovarHomepageBundle:Homepage');
-        $newHomepage = $repository->find($form->get('active')->getData());
-        $oldHomepage = $repository->findOneBy(['active' => true]);
-
-        if (null !== $oldHomepage) {
-            $oldHomepage->setActive(false);
-            $entityManager->persist($oldHomepage);
-        }
-
-        $newHomepage->setActive(true);
-        $entityManager->persist($newHomepage);
-        $entityManager->flush();
-
-        $this->addFlash('notice', 'Page d\'accueil activée');
     }
 }
