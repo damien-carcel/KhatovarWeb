@@ -102,8 +102,7 @@ class MemberController extends Controller
     public function newAction()
     {
         $member = new Member();
-
-        $form = $this->createCreateForm($member);
+        $form   = $this->createCreateForm($member);
 
         return $this->render(
             'KhatovarMemberBundle:Member:new.html.twig',
@@ -167,7 +166,7 @@ class MemberController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      *
-     * @Security("has_role('ROLE_EDITOR')")
+     * @Security("has_role('ROLE_VIEWER')")
      */
     public function editAction($id)
     {
@@ -194,7 +193,7 @@ class MemberController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
-     * @Security("has_role('ROLE_EDITOR')")
+     * @Security("has_role('ROLE_VIEWER')")
      */
     public function updateAction(Request $request, $id)
     {
@@ -289,6 +288,12 @@ class MemberController extends Controller
      */
     protected function createEditForm(Member $member)
     {
+        if (!$this->isGranted('ROLE_EDITOR') && $this->getUser() !== $member->getOwner()) {
+            throw new AccessDeniedHttpException(
+                'Désolé, ceci n\'est pas votre page de membre. Vous ne pouvez donc pas la modifier.'
+            );
+        }
+
         $form = $this->createForm(
             'Khatovar\Bundle\MemberBundle\Form\Type\MemberType',
             $member,
@@ -297,32 +302,6 @@ class MemberController extends Controller
                 'method' => 'PUT',
             ]
         );
-
-        $form->add(
-            'portrait',
-            EntityType::class,
-            [
-                'label'         => 'Photo de profil',
-                'class'         => 'Khatovar\Bundle\PhotoBundle\Entity\Photo',
-                'choice_label'  => 'alt',
-                'query_builder' => function (EntityRepository $er) use ($member) {
-                    return $er->createQueryBuilder('p')
-                        ->where('p.member = :member')
-                        ->setParameter('member', $member);
-                }
-            ]
-        );
-
-        $currentUser = $this->getUser();
-        if (!$this->isGranted('ROLE_EDITOR')) {
-            if ($currentUser !== $member->getOwner()) {
-                throw new AccessDeniedHttpException(
-                    'Désolé, ceci n\'est pas votre page de membre. Vous ne pouvez donc pas la modifier.'
-                );
-            }
-
-            $form->remove('owner');
-        }
 
         $form->add('submit', SubmitType::class, ['label' => 'Mettre à jour']);
 

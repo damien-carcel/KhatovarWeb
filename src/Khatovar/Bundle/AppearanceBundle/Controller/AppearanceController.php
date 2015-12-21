@@ -236,8 +236,7 @@ class AppearanceController extends Controller
             ->findByIdOr404($id);
 
         $workshops = $this->findActiveWorkshopsIfIsProgramme($appearance);
-
-        $editForm = $this->createEditForm($appearance);
+        $editForm  = $this->createEditForm($appearance);
 
         return $this->render(
             'KhatovarAppearanceBundle:Appearance:edit.html.twig',
@@ -265,8 +264,7 @@ class AppearanceController extends Controller
             ->findByIdOr404($id);
 
         $workshops = $this->findActiveWorkshopsIfIsProgramme($appearance);
-
-        $editForm = $this->createEditForm($appearance);
+        $editForm  = $this->createEditForm($appearance);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {

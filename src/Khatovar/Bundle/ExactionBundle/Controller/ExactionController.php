@@ -122,8 +122,7 @@ class ExactionController extends Controller
     public function newAction()
     {
         $exaction = new Exaction();
-
-        $form = $this->createCreateForm($exaction);
+        $form     = $this->createCreateForm($exaction);
 
         return $this->render(
             'KhatovarExactionBundle:Exaction:new.html.twig',

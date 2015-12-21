@@ -1,6 +1,7 @@
 #1.0.0 (2016-xx-xx)
 ##Technical improvements
 - Migrate on Symfony 3 and Documents 0.4
+- Form fields that were added through EventSubscriber in the form types are now added in FormSubscriber
 
 ##BC breaks
 - PhotoHelper::getPhotoEntities return an array as "label => code" instead of "code => label"

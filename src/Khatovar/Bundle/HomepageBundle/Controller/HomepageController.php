@@ -88,6 +88,8 @@ class HomepageController extends Controller
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
      * @Security("has_role('ROLE_EDITOR')")
+     *
+     * @todo Create another method to handle the request and perform the activation, like the other methods
      */
     public function listAction(Request $request)
     {
@@ -131,8 +133,7 @@ class HomepageController extends Controller
     public function newAction()
     {
         $homepage = new Homepage();
-
-        $form = $this->createCreateForm($homepage);
+        $form     = $this->createCreateForm($homepage);
 
         return $this->render(
             'KhatovarHomepageBundle:Homepage:new.html.twig',
@@ -377,7 +378,7 @@ class HomepageController extends Controller
      *
      * @return \Symfony\Component\Form\Form
      *
-     * @todo Use a handler like for Contact entity.
+     * @todo Create an ActivationFormType (check if the one of Contact entity is reusable).
      */
     protected function createActivationForm()
     {
@@ -406,6 +407,8 @@ class HomepageController extends Controller
      * Change the active Homepage.
      *
      * @param FormInterface $form
+     *
+     * @todo Use a handler (check if the one of Contact entity is reusable).
      */
     protected function changeActiveHomepage(FormInterface $form)
     {
