@@ -49,12 +49,12 @@ class PhotoController extends Controller
     const MAX_PHOTO_HEIGHT = 720;
 
     /**
-     * Return the list of all photos uploaded for the website and
+     * Returns the list of all photos uploaded for the website and
      * display admin utilities to manage them.
      *
      * @return \Symfony\Component\HttpFoundation\Response
      *
-     * @Security("has_role('ROLE_EDITOR')")
+     * @Security("has_role('ROLE_VIEWER')")
      */
     public function indexAction()
     {
@@ -78,7 +78,7 @@ class PhotoController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      *
-     * @Security("has_role('ROLE_EDITOR')")
+     * @Security("has_role('ROLE_VIEWER')")
      */
     public function newAction()
     {
@@ -114,7 +114,7 @@ class PhotoController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
-     * @Security("has_role('ROLE_EDITOR')")
+     * @Security("has_role('ROLE_VIEWER')")
      */
     public function createAction(Request $request)
     {
@@ -177,7 +177,7 @@ class PhotoController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      *
-     * @Security("has_role('ROLE_EDITOR')")
+     * @Security("has_role('ROLE_VIEWER')")
      */
     public function editAction($id)
     {
@@ -206,7 +206,7 @@ class PhotoController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
-     * @Security("has_role('ROLE_EDITOR')")
+     * @Security("has_role('ROLE_VIEWER')")
      */
     public function updateAction(Request $request, $id)
     {
@@ -268,7 +268,7 @@ class PhotoController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
-     * @Security("has_role('ROLE_EDITOR')")
+     * @Security("has_role('ROLE_VIEWER')")
      */
     public function deleteAction(Request $request, $id)
     {
