@@ -25,15 +25,10 @@ namespace Khatovar\Bundle\PhotoBundle\Form\Type;
 
 use Khatovar\Bundle\PhotoBundle\Helper\PhotoHelper;
 use Khatovar\Bundle\WebBundle\Helper\EntityHelper;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
@@ -45,6 +40,9 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 class PhotoType extends AbstractType
 {
     /** @var EventSubscriberInterface */
+    protected $addAuthorizedSubscriber;
+
+    /** @var EventSubscriberInterface */
     protected $addFieldsSubscriber;
 
     /** @var AuthorizationCheckerInterface */
@@ -53,13 +51,16 @@ class PhotoType extends AbstractType
     /**
      * @param AuthorizationCheckerInterface $authorizationChecker
      * @param EventSubscriberInterface      $addFieldsSubscriber
+     * @param EventSubscriberInterface      $addAuthorizedSubscriber
      */
     public function __construct(
         AuthorizationCheckerInterface $authorizationChecker,
-        EventSubscriberInterface $addFieldsSubscriber
+        EventSubscriberInterface $addFieldsSubscriber,
+        EventSubscriberInterface $addAuthorizedSubscriber
     ) {
-        $this->authorizationChecker = $authorizationChecker;
-        $this->addFieldsSubscriber  = $addFieldsSubscriber;
+        $this->authorizationChecker    = $authorizationChecker;
+        $this->addFieldsSubscriber     = $addFieldsSubscriber;
+        $this->addAuthorizedSubscriber = $addAuthorizedSubscriber;
     }
 
     /**
@@ -67,39 +68,6 @@ class PhotoType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $formModifier = function (FormInterface $form, $entity) {
-            if (null !== $entity) {
-                if ($entity === EntityHelper::HOMEPAGE_CODE) {
-                    $form->add(
-                        'class',
-                        ChoiceType::class,
-                        [
-                            'label'             => 'Taille de la photo',
-                            'choices'           => [
-                                'Petit format'  => 'photo_small',
-                                'Format normal' => 'photo',
-                                'Panorama'      => 'panorama',
-                            ],
-                            'preferred_choices' => ['photo'],
-                            'required'          => true,
-                        ]
-                    );
-                } else {
-                    $form->add('class', HiddenType::class, ['data' => 'none']);
-                }
-
-                $form->add(
-                    $entity,
-                    EntityType::class,
-                    [
-                        'class'        => 'Khatovar' . ucfirst($entity) . 'Bundle:' . ucfirst($entity),
-                        'choice_label' => $entity === EntityHelper::EXACTION_CODE ? 'completeName' : 'name',
-                        'label'        => 'Page',
-                    ]
-                );
-            }
-        };
-
         if ($this->authorizationChecker->isGranted('ROLE_EDITOR')) {
             $builder->add(
                 'entity',
@@ -111,24 +79,10 @@ class PhotoType extends AbstractType
                 ]
             );
 
-            $builder->addEventListener(
-                FormEvents::PRE_SET_DATA,
-                function (FormEvent $event) use ($formModifier) {
-                    $data = $event->getData();
-                    $formModifier($event->getForm(), $data->getEntity());
-                }
-            );
-
-            $builder->get('entity')->addEventListener(
-                FormEvents::POST_SET_DATA,
-                function (FormEvent $event) use ($formModifier) {
-                    $entity = $event->getForm()->getData();
-                    $formModifier($event->getForm()->getParent(), $entity);
-                }
-            );
+            $builder->addEventSubscriber($this->addAuthorizedSubscriber);
         }
 
-        $this->addSubscribers($builder);
+        $builder->addEventSubscriber($this->addFieldsSubscriber);
     }
 
     /**
@@ -137,13 +91,5 @@ class PhotoType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(['data_class' => 'Khatovar\Bundle\PhotoBundle\Entity\Photo']);
-    }
-
-    /**
-     * @param FormBuilderInterface $builder
-     */
-    protected function addSubscribers(FormBuilderInterface $builder)
-    {
-        $builder->addEventSubscriber($this->addFieldsSubscriber);
     }
 }

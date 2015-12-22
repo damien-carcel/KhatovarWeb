@@ -86,17 +86,10 @@ class PhotoController extends Controller
         $photo = new Photo();
 
         if (!$this->isGranted('ROLE_EDITOR')) {
-            $member = $this->getLoggedMember();
-
-            $photo->setClass('none')->setEntity(EntityHelper::MEMBER_CODE)->setMember($member);
-
-            $form = $this->createCreateForm($photo);
-
-            // TODO should be done in a subscriber
-            $form->remove('class')->remove('entity')->remove(EntityHelper::MEMBER_CODE);
-        } else {
-            $form = $this->createCreateForm($photo);
+            $photo->setClass('none')->setEntity(EntityHelper::MEMBER_CODE)->setMember($this->getLoggedMember());
         }
+
+        $form = $this->createCreateForm($photo);
 
         return $this->render(
             'KhatovarPhotoBundle:Photo:new.html.twig',
@@ -121,23 +114,15 @@ class PhotoController extends Controller
     {
         $this->userHasEditRights();
 
-        $photo = new Photo();
+        $photo    = new Photo();
+        $isEditor = true;
 
         if (!$this->isGranted('ROLE_EDITOR')) {
             $isEditor = false;
-            $member   = $this->getLoggedMember();
-
-            $photo->setClass('none')->setEntity(EntityHelper::MEMBER_CODE)->setMember($member);
-
-            $form = $this->createCreateForm($photo);
-
-            // TODO should be done in a subscriber
-            $form->remove('class')->remove('entity')->remove(EntityHelper::MEMBER_CODE);
-        } else {
-            $isEditor = true;
-            $form     = $this->createCreateForm($photo);
+            $photo->setClass('none')->setEntity(EntityHelper::MEMBER_CODE)->setMember($this->getLoggedMember());
         }
 
+        $form = $this->createCreateForm($photo);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -221,11 +206,6 @@ class PhotoController extends Controller
 
         $editForm = $this->createEditForm($photo);
         $entity   = $photo->getEntity();
-
-        if (!$this->isGranted('ROLE_EDITOR')) {
-            // TODO should be done in a subscriber
-            $editForm->remove('class')->remove('entity')->remove(EntityHelper::MEMBER_CODE);
-        }
 
         $editForm->handleRequest($request);
         if ($editForm->isValid()) {
