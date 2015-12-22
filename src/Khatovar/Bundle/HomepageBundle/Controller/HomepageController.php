@@ -155,10 +155,7 @@ class HomepageController extends Controller
             $entityManager->persist($homepage);
             $entityManager->flush();
 
-            $this->addFlash(
-                'notice',
-                'Page d\'accueil créée'
-            );
+            $this->addFlash('notice', 'Page d\'accueil créée');
 
             return $this->redirect(
                 $this->generateUrl(
@@ -219,10 +216,7 @@ class HomepageController extends Controller
         if ($form->isValid()) {
             $this->get('doctrine.orm.entity_manager')->flush();
 
-            $this->addFlash(
-                'notice',
-                'Page d\'accueil modifiée'
-            );
+            $this->addFlash('notice', 'Page d\'accueil modifiée');
 
             return $this->redirect(
                 $this->generateUrl(
@@ -255,10 +249,7 @@ class HomepageController extends Controller
             ->findByIdOr404($id);
 
         if ($homepage->isActive()) {
-            $this->addFlash(
-                'notice',
-                'Vous ne pouvez pas supprimer la page d\'accueil active'
-            );
+            $this->addFlash('notice', 'Vous ne pouvez pas supprimer la page d\'accueil active');
         } else {
             $form = $this->createDeleteForm($id);
             $form->handleRequest($request);
@@ -268,10 +259,7 @@ class HomepageController extends Controller
                 $entityManager->remove($homepage);
                 $entityManager->flush();
 
-                $this->addFlash(
-                    'notice',
-                    'Page d\'accueil supprimée'
-                );
+                $this->addFlash('notice', 'Page d\'accueil supprimée');
             }
         }
 

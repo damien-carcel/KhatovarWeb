@@ -24,8 +24,6 @@
 namespace Khatovar\Bundle\PhotoBundle\Controller;
 
 use Khatovar\Bundle\PhotoBundle\Entity\Photo;
-use Khatovar\Bundle\PhotoBundle\Helper\PhotoHelper;
-use Khatovar\Bundle\WebBundle\Helper\EntityHelper;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -43,9 +41,6 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
  */
 class PhotoController extends Controller
 {
-    /** @staticvar string */
-    const MAX_PHOTO_HEIGHT = 720;
-
     /**
      * Returns the list of all photos uploaded for the website and
      * display admin utilities to manage them.
@@ -82,7 +77,7 @@ class PhotoController extends Controller
     {
         $this->userHasEditRights();
 
-        $photo = $this->container->get('khatovar_photo.factory.photo')->createPhoto();
+        $photo = $this->get('khatovar_photo.factory.photo')->createPhoto();
         $form  = $this->createCreateForm($photo);
 
         return $this->render(
@@ -108,27 +103,20 @@ class PhotoController extends Controller
     {
         $this->userHasEditRights();
 
-        $photo = $this->container->get('khatovar_photo.factory.photo')->createPhoto();
+        $photo = $this->get('khatovar_photo.factory.photo')->createPhoto();
         $form  = $this->createCreateForm($photo);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $entityManager = $this->get('doctrine.orm.entity_manager');
-            $entityManager->persist($photo);
-            $entityManager->flush();
+            $this->get('khatovar_photo.handler.photo')->handleCreation($photo);
 
-            $this->get('khatovar_photo.manager.photo')->imageResize(
-                $photo->getAbsolutePath(),
-                static::MAX_PHOTO_HEIGHT
-            );
-
-            $this->addFlash(
-                'notice',
-                'Photo ajoutée'
-            );
+            $this->addFlash('notice', 'Photo ajoutée');
 
             if ($this->isGranted('ROLE_EDITOR')) {
-                return $this->redirect($this->generateUrl('khatovar_web_photo_edit', ['id'=> $photo->getId()]));
+                return $this->redirect($this->generateUrl(
+                    'khatovar_web_photo_edit',
+                    ['id'=> $photo->getId()]
+                ));
             }
 
             return $this->redirect($this->generateUrl('khatovar_web_photo'));
@@ -186,36 +174,16 @@ class PhotoController extends Controller
 
         $this->userHasEditRights($photo);
 
+        $entity   = $photo->getEntity();
         $editForm = $this->createEditForm($photo);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
-            $entityManager = $this->get('doctrine.orm.entity_manager');
-            $entityManager->persist($photo);
+            $route = $this->get('khatovar_photo.handler.photo')->handleUpdate($photo, $entity);
 
-            $entity = $photo->getEntity();
+            $this->addFlash('notice', 'Photo modifiée');
 
-            if ($photo->getEntity() !== $entity) {
-                foreach (PhotoHelper::getPhotoEntities() as $code) {
-                    $setter = 'set' . ucfirst($code);
-                    $photo->$setter(null);
-                }
-
-                $entityManager->flush();
-
-                return $this->redirect(
-                    $this->generateUrl(
-                        'khatovar_web_photo',
-                        ['id' => $photo->getId()]
-                    )
-                );
-            } else {
-                $entityManager->flush();
-
-                $this->addFlash('notice', 'Photo modifiée');
-            }
-
-            return $this->redirect($this->generateUrl('khatovar_web_photo'));
+            return $this->redirect($route);
         }
 
         return $this->render(
