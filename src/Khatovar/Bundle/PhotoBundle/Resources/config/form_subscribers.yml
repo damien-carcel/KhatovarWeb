@@ -1,0 +1,3 @@
+services:
+    khatovar_photo.form.subscriber.add_fields:
+        class: Khatovar\Bundle\PhotoBundle\Form\Subscriber\AddPhotoFieldsSubscriber

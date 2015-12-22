@@ -49,10 +49,10 @@ class AddPortraitSubscriber implements EventSubscriberInterface
     /**
      * {@inheritdoc}
      */
-    public function preSetData(FormEvent $formEvent)
+    public function preSetData(FormEvent $event)
     {
-        $member = $formEvent->getData();
-        $form   = $formEvent->getForm();
+        $member = $event->getData();
+        $form   = $event->getForm();
 
         if (null !== $member->getId()) {
             $form->add(

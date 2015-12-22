@@ -23,13 +23,11 @@
 
 namespace Khatovar\Bundle\PhotoBundle\Controller;
 
-use Doctrine\DBAL\Types\TextType;
 use Khatovar\Bundle\PhotoBundle\Entity\Photo;
 use Khatovar\Bundle\PhotoBundle\Helper\PhotoHelper;
 use Khatovar\Bundle\WebBundle\Helper\EntityHelper;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -42,6 +40,7 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
  * site sections. Regular users can only see their own members photos.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
+ * @todo   There should be a PhotoHandler with two methods: handleCreation and handleUpdate
  */
 class PhotoController extends Controller
 {
@@ -92,6 +91,8 @@ class PhotoController extends Controller
             $photo->setClass('none')->setEntity(EntityHelper::MEMBER_CODE)->setMember($member);
 
             $form = $this->createCreateForm($photo);
+
+            // TODO should be done in a subscriber
             $form->remove('class')->remove('entity')->remove(EntityHelper::MEMBER_CODE);
         } else {
             $form = $this->createCreateForm($photo);
@@ -129,6 +130,8 @@ class PhotoController extends Controller
             $photo->setClass('none')->setEntity(EntityHelper::MEMBER_CODE)->setMember($member);
 
             $form = $this->createCreateForm($photo);
+
+            // TODO should be done in a subscriber
             $form->remove('class')->remove('entity')->remove(EntityHelper::MEMBER_CODE);
         } else {
             $isEditor = true;
@@ -220,6 +223,7 @@ class PhotoController extends Controller
         $entity   = $photo->getEntity();
 
         if (!$this->isGranted('ROLE_EDITOR')) {
+            // TODO should be done in a subscriber
             $editForm->remove('class')->remove('entity')->remove(EntityHelper::MEMBER_CODE);
         }
 
@@ -310,9 +314,7 @@ class PhotoController extends Controller
             ]
         );
 
-        $form
-            ->add('file', FileType::class, ['label' => false])
-            ->add('submit', SubmitType::class, ['label' => 'Créer']);
+        $form->add('submit', SubmitType::class, ['label' => 'Créer']);
 
         return $form;
     }
@@ -335,9 +337,7 @@ class PhotoController extends Controller
             ]
         );
 
-        $form
-            ->add('alt', TextType::class, ['label' => 'Nom de substitution'])
-            ->add('submit', SubmitType::class, ['label' => 'Mettre à jour']);
+        $form->add('submit', SubmitType::class, ['label' => 'Mettre à jour']);
 
         return $form;
     }
@@ -425,9 +425,9 @@ class PhotoController extends Controller
             throw new AccessDeniedHttpException(
                 'Désolé, vous n\'avez pas de page de membre, et ne pouvez donc pas manipuler les photos.'
             );
-        } else {
+        } elseif (null !== $photo) {
             if (null === $photo->getMember() ||
-                $member->getId() !== $photo->getMember()->getOwner()->getId()
+                $member->getId() !== $photo->getMember()->getId()
             ) {
                 throw new AccessDeniedHttpException(
                     'Désolé, vous n\'avez pas les droits requis pour modifier cette photo.'

@@ -21,30 +21,23 @@
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
-namespace Khatovar\Bundle\MemberBundle\Form\Subscriber;
+namespace Khatovar\Bundle\PhotoBundle\Form\Subscriber;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
- * Removes the owner field from the Member form if page is edited by its owner.
+ * Add missing fields to the Photo form.
+ * If the entity is just created, adds a File upload field, if it
+ * already exists adds a "alt" text field.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
  */
-class RemoveOwnerSubscriber implements EventSubscriberInterface
+class AddPhotoFieldsSubscriber implements EventSubscriberInterface
 {
-    protected $tokenStorage;
-
-    /**
-     * @param TokenStorageInterface $tokenStorage
-     */
-    public function __construct(TokenStorageInterface $tokenStorage)
-    {
-        $this->tokenStorage = $tokenStorage;
-    }
-
     /**
      * {@inheritdoc}
      */
@@ -56,16 +49,17 @@ class RemoveOwnerSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @param FormEvent $event
      */
     public function preSetData(FormEvent $event)
     {
-        $member = $event->getData();
-        $form   = $event->getForm();
-        $token  = $this->tokenStorage->getToken();
+        $form  = $event->getForm();
+        $photo = $event->getData();
 
-        if (null !== $member->getId() && null !== $token && $token->getUser() === $member->getOwner()) {
-            $form->remove('owner');
+        if (null === $photo->getId()) {
+            $form->add('file', FileType::class, ['label' => false]);
+        } else {
+            $form->add('alt', TextType::class, ['label' => 'Nom de substitution']);
         }
     }
 }

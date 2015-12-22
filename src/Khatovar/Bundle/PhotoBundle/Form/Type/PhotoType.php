@@ -26,8 +26,10 @@ namespace Khatovar\Bundle\PhotoBundle\Form\Type;
 use Khatovar\Bundle\PhotoBundle\Helper\PhotoHelper;
 use Khatovar\Bundle\WebBundle\Helper\EntityHelper;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -42,15 +44,22 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
  */
 class PhotoType extends AbstractType
 {
+    /** @var EventSubscriberInterface */
+    protected $addFieldsSubscriber;
+
     /** @var AuthorizationCheckerInterface */
     protected $authorizationChecker;
 
     /**
      * @param AuthorizationCheckerInterface $authorizationChecker
+     * @param EventSubscriberInterface      $addFieldsSubscriber
      */
-    public function __construct(AuthorizationCheckerInterface $authorizationChecker)
-    {
+    public function __construct(
+        AuthorizationCheckerInterface $authorizationChecker,
+        EventSubscriberInterface $addFieldsSubscriber
+    ) {
         $this->authorizationChecker = $authorizationChecker;
+        $this->addFieldsSubscriber  = $addFieldsSubscriber;
     }
 
     /**
@@ -76,7 +85,7 @@ class PhotoType extends AbstractType
                         ]
                     );
                 } else {
-                    $form->add('class', 'hidden', ['data' => 'none']);
+                    $form->add('class', HiddenType::class, ['data' => 'none']);
                 }
 
                 $form->add(
@@ -118,6 +127,8 @@ class PhotoType extends AbstractType
                 }
             );
         }
+
+        $this->addSubscribers($builder);
     }
 
     /**
@@ -126,5 +137,13 @@ class PhotoType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(['data_class' => 'Khatovar\Bundle\PhotoBundle\Entity\Photo']);
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     */
+    protected function addSubscribers(FormBuilderInterface $builder)
+    {
+        $builder->addEventSubscriber($this->addFieldsSubscriber);
     }
 }
