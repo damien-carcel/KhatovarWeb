@@ -1,6 +1,6 @@
 services:
-    khatovar_homepage.form.handler.homepage_activation:
-        class: Khatovar\Bundle\WebBundle\Form\Handler\ActivationHandler
+    khatovar_homepage.handler.homepage_activation:
+        class: Khatovar\Bundle\WebBundle\Handler\ActivationHandler
         arguments:
             - '@doctrine.orm.entity_manager'
             - 'Khatovar\Bundle\HomepageBundle\Entity\Homepage'

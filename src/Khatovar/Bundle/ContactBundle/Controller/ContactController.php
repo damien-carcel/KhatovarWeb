@@ -87,7 +87,7 @@ class ContactController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $this->get('khatovar_contact.form.handler.contact_activation')->handle($form->get('active')->getData());
+            $this->get('khatovar_contact.handler.contact_activation')->handle($form->get('active')->getData());
 
             $this->addFlash('notice', 'Page de contact activée');
 

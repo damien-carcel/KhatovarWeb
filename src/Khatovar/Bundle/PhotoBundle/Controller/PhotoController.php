@@ -40,7 +40,6 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
  * site sections. Regular users can only see their own members photos.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
- * @todo   There should be a PhotoHandler with two methods: handleCreation and handleUpdate
  */
 class PhotoController extends Controller
 {
@@ -83,13 +82,8 @@ class PhotoController extends Controller
     {
         $this->userHasEditRights();
 
-        $photo = new Photo();
-
-        if (!$this->isGranted('ROLE_EDITOR')) {
-            $photo->setClass('none')->setEntity(EntityHelper::MEMBER_CODE)->setMember($this->getLoggedMember());
-        }
-
-        $form = $this->createCreateForm($photo);
+        $photo = $this->container->get('khatovar_photo.factory.photo')->createPhoto();
+        $form  = $this->createCreateForm($photo);
 
         return $this->render(
             'KhatovarPhotoBundle:Photo:new.html.twig',
@@ -114,15 +108,8 @@ class PhotoController extends Controller
     {
         $this->userHasEditRights();
 
-        $photo    = new Photo();
-        $isEditor = true;
-
-        if (!$this->isGranted('ROLE_EDITOR')) {
-            $isEditor = false;
-            $photo->setClass('none')->setEntity(EntityHelper::MEMBER_CODE)->setMember($this->getLoggedMember());
-        }
-
-        $form = $this->createCreateForm($photo);
+        $photo = $this->container->get('khatovar_photo.factory.photo')->createPhoto();
+        $form  = $this->createCreateForm($photo);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -140,13 +127,8 @@ class PhotoController extends Controller
                 'Photo ajoutée'
             );
 
-            if ($isEditor) {
-                return $this->redirect(
-                    $this->generateUrl(
-                        'khatovar_web_photo_edit',
-                        ['id'=> $photo->getId()]
-                    )
-                );
+            if ($this->isGranted('ROLE_EDITOR')) {
+                return $this->redirect($this->generateUrl('khatovar_web_photo_edit', ['id'=> $photo->getId()]));
             }
 
             return $this->redirect($this->generateUrl('khatovar_web_photo'));
@@ -205,12 +187,13 @@ class PhotoController extends Controller
         $this->userHasEditRights($photo);
 
         $editForm = $this->createEditForm($photo);
-        $entity   = $photo->getEntity();
-
         $editForm->handleRequest($request);
+
         if ($editForm->isValid()) {
             $entityManager = $this->get('doctrine.orm.entity_manager');
             $entityManager->persist($photo);
+
+            $entity = $photo->getEntity();
 
             if ($photo->getEntity() !== $entity) {
                 foreach (PhotoHelper::getPhotoEntities() as $code) {
@@ -371,18 +354,6 @@ class PhotoController extends Controller
     }
 
     /**
-     * Get the member page corresponding to the current user.
-     *
-     * @return \Khatovar\Bundle\MemberBundle\Entity\Member
-     */
-    protected function getLoggedMember()
-    {
-        return $this->get('doctrine.orm.entity_manager')
-            ->getRepository('KhatovarMemberBundle:Member')
-            ->findOneBy(['owner' => $this->getUser()->getId()]);
-    }
-
-    /**
      * Checks if the logged user has the editor role. If he has not,
      * checks if he has a member page (he can then upload new photos),
      * and if editing a photo, that it belongs to its member page.
@@ -395,7 +366,9 @@ class PhotoController extends Controller
      */
     protected function userHasEditRights(Photo $photo = null)
     {
-        $member = $this->getLoggedMember();
+        $member = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('KhatovarMemberBundle:Member')
+            ->getLoggedMember($this->getUser()->getId());
 
         if ($this->isGranted('ROLE_EDITOR')) {
             return true;

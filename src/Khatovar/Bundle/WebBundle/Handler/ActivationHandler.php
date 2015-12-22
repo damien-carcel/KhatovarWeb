@@ -21,7 +21,7 @@
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
-namespace Khatovar\Bundle\WebBundle\Form\Handler;
+namespace Khatovar\Bundle\WebBundle\Handler;
 
 use Doctrine\ORM\EntityManagerInterface;
 

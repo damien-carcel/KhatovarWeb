@@ -72,4 +72,16 @@ class MemberRepository extends EntityRepository
 
         return $contact;
     }
+
+    /**
+     * Returns the member corresponding to the logged user, if any.
+     *
+     * @param int $id
+     *
+     * @return null|Member
+     */
+    public function getLoggedMember($id)
+    {
+        return $this->findOneBy(['owner' => $id]);
+    }
 }

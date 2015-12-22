@@ -93,7 +93,7 @@ class HomepageController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $this->get('khatovar_homepage.form.handler.homepage_activation')->handle($form->get('active')->getData());
+            $this->get('khatovar_homepage.handler.homepage_activation')->handle($form->get('active')->getData());
 
             $this->addFlash('notice', 'Page d\'accueil activée');
 
