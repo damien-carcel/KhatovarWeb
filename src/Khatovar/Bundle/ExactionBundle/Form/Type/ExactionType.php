@@ -23,19 +23,13 @@
 
 namespace Khatovar\Bundle\ExactionBundle\Form\Type;
 
-use Doctrine\ORM\EntityRepository;
-use Khatovar\Bundle\ExactionBundle\Entity\Exaction;
-use Khatovar\Bundle\WebBundle\Helper\EntityHelper;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -47,6 +41,17 @@ class ExactionType extends AbstractType
 {
     /** @staticvar int */
     const KHATOVAR_CREATION = 2008;
+
+    /** @var EventSubscriberInterface */
+    protected $addPassedFields;
+
+    /**
+     * @param EventSubscriberInterface $addPassedFields
+     */
+    public function __construct(EventSubscriberInterface $addPassedFields)
+    {
+        $this->addPassedFields = $addPassedFields;
+    }
 
     /**
      * {@inheritdoc}
@@ -97,10 +102,9 @@ class ExactionType extends AbstractType
                     'allow_add'          => true,
                     'allow_delete'       => true,
                 ]
-            )
-        ;
+            );
 
-        $this->addEdtionSpecificFields($builder);
+        $builder->addEventSubscriber($this->addPassedFields);
     }
 
     /**
@@ -109,69 +113,6 @@ class ExactionType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(['data_class' => 'Khatovar\Bundle\ExactionBundle\Entity\Exaction']);
-    }
-
-    /**
-     * Add form fields that are available only when editing an existing
-     * exaction.
-     *
-     * @param FormBuilderInterface $builder
-     */
-    protected function addEdtionSpecificFields(FormBuilderInterface $builder)
-    {
-        $builder->addEventListener(
-            FormEvents::PRE_SET_DATA,
-            function (FormEvent $event) {
-                $form = $event->getForm();
-                $exaction = $event->getData();
-
-                if ($exaction instanceof Exaction &&
-                    null !== $exaction->getName() &&
-                    $exaction->getStart() <= new \DateTime()
-                ) {
-                    $form
-                        ->add(
-                            'image',
-                            EntityType::class,
-                            [
-                                'class'         => 'Khatovar\Bundle\PhotoBundle\Entity\Photo',
-                                'label'         => 'L\'image de la fête',
-                                'required'      => false,
-                                'query_builder' => function (EntityRepository $repository) use ($exaction) {
-                                    return $repository
-                                        ->createQueryBuilder('e')
-                                        ->where('e.exaction = :exaction')
-                                        ->setParameter(EntityHelper::EXACTION_CODE, $exaction);
-                                }
-                            ]
-                        )
-                        ->add(
-                            'onlyPhotos',
-                            CheckboxType::class,
-                            [
-                                'label'    => 'Pas de résumé de fête, seulement des photos ?',
-                                'required' => false,
-                            ]
-                        )
-                        ->add(
-                            'abstract',
-                            TextareaType::class,
-                            [
-                                'label'    => 'Résumé de la fête',
-                                'required' => false,
-                            ]
-                        )
-                        ->add(
-                            'imageStory',
-                            TextareaType::class,
-                            [
-                                'label'    => 'Explication de l\'image de la fête',
-                                'required' => false,
-                            ]
-                        );
-                }
-            }
-        );
     }
 
     /**
