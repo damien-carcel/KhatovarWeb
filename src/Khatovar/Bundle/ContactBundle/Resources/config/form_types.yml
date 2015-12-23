@@ -1,6 +1,8 @@
 services:
     khatovar_contact.form.type.contact:
         class: Khatovar\Bundle\ContactBundle\Form\Type\ContactType
+        arguments:
+            - '@khatovar_contact.form.subscriber.add_visit_card'
         tags:
             - { name: form.type }
 

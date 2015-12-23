@@ -23,15 +23,11 @@
 
 namespace Khatovar\Bundle\ContactBundle\Form\Type;
 
-use Doctrine\ORM\EntityRepository;
 use Ivory\CKEditorBundle\Form\Type\CKEditorType;
-use Khatovar\Bundle\ContactBundle\Entity\Contact;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -41,6 +37,17 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ContactType extends AbstractType
 {
+    /** @var EventSubscriberInterface */
+    protected $addVisitCard;
+
+    /**
+     * @param EventSubscriberInterface $addVisitCard
+     */
+    public function __construct(EventSubscriberInterface $addVisitCard)
+    {
+        $this->addVisitCard = $addVisitCard;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -57,30 +64,7 @@ class ContactType extends AbstractType
                 ]
             );
 
-        $builder->addEventListener(
-            FormEvents::PRE_SET_DATA,
-            function (FormEvent $event) {
-                $form    = $event->getForm();
-                $contact = $event->getData();
-
-                if ($contact instanceof Contact && null !== $contact->getId()) {
-                    $form->add(
-                        'visitCard',
-                        EntityType::class,
-                        [
-                            'label'         => 'Carte de visite',
-                            'class'         => 'Khatovar\Bundle\PhotoBundle\Entity\Photo',
-                            'choice_label'  => 'alt',
-                            'query_builder' => function (EntityRepository $repository) use ($contact) {
-                                return $repository->createQueryBuilder('c')
-                                    ->where('c.contact = :contact')
-                                    ->setParameter('contact', $contact);
-                            }
-                        ]
-                    );
-                }
-            }
-        );
+        $builder->addEventSubscriber($this->addVisitCard);
     }
 
     /**
