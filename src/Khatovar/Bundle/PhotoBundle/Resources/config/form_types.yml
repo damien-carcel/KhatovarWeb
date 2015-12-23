@@ -3,5 +3,7 @@ services:
         class: Khatovar\Bundle\PhotoBundle\Form\Type\PhotoType
         arguments:
             - '@security.authorization_checker'
+            - '@khatovar_photo.form.subscriber.add_fields'
+            - '@khatovar_photo.form.subscriber.add_authorized'
         tags:
             - { name: form.type }

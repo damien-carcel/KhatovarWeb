@@ -25,6 +25,7 @@ namespace Khatovar\Bundle\MemberBundle\Form\Type;
 
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -39,13 +40,78 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class MemberType extends AbstractType
 {
+    /** @var EventSubscriberInterface */
+    protected $addPortraitSubscriber;
+
+    /** @var EventSubscriberInterface */
+    protected $removeOwnerSubscriber;
+
+    /**
+     * @param EventSubscriberInterface $addPortraitSubscriber
+     * @param EventSubscriberInterface $removeOwnerSubscriber
+     */
+    public function __construct(
+        EventSubscriberInterface $addPortraitSubscriber,
+        EventSubscriberInterface $removeOwnerSubscriber
+    ) {
+        $this->addPortraitSubscriber = $addPortraitSubscriber;
+        $this->removeOwnerSubscriber = $removeOwnerSubscriber;
+    }
+
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->addBaseFields($builder);
+        $this->addDescriptionFields($builder);
+        $this->addEventSubscribers($builder);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(['data_class' => 'Khatovar\Bundle\MemberBundle\Entity\Member']);
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     */
+    protected function addBaseFields(FormBuilderInterface $builder)
+    {
         $builder
             ->add('name', TextType::class, ['label' => 'Nom'])
+            ->add(
+                'active',
+                CheckboxType::class,
+                [
+                    'label'    => 'Membre actif',
+                    'required' => false,
+                ]
+            )
+            ->add(
+                'owner',
+                EntityType::class,
+                [
+                    'label'         => 'Utilisateur lié',
+                    'class'         => 'Carcel\Bundle\UserBundle\Entity\User',
+                    'choice_label'  => 'username',
+                    'required'      => false,
+                    'query_builder' => function (EntityRepository $er) {
+                        return $er->createQueryBuilder('o')->orderBy('o.username');
+                    },
+                ]
+            );
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     */
+    protected function addDescriptionFields(FormBuilderInterface $builder)
+    {
+        $builder
             ->add(
                 'rank',
                 TextType::class,
@@ -110,35 +176,16 @@ class MemberType extends AbstractType
                     'required' => false,
                 ]
             )
-            ->add('story', TextareaType::class, ['label' => 'Histoire personnelle'])
-            ->add(
-                'active',
-                CheckboxType::class,
-                [
-                    'label'    => 'Membre actif',
-                    'required' => false,
-                ]
-            )
-            ->add(
-                'owner',
-                EntityType::class,
-                [
-                    'label'         => 'Utilisateur lié',
-                    'class'         => 'Carcel\Bundle\UserBundle\Entity\User',
-                    'choice_label'  => 'username',
-                    'required'      => false,
-                    'query_builder' => function (EntityRepository $er) {
-                        return $er->createQueryBuilder('o')->orderBy('o.username');
-                    },
-                ]
-            );
+            ->add('story', TextareaType::class, ['label' => 'Histoire personnelle']);
     }
 
     /**
-     * {@inheritdoc}
+     * @param FormBuilderInterface $builder
      */
-    public function configureOptions(OptionsResolver $resolver)
+    protected function addEventSubscribers(FormBuilderInterface $builder)
     {
-        $resolver->setDefaults(['data_class' => 'Khatovar\Bundle\MemberBundle\Entity\Member']);
+        $builder
+            ->addEventSubscriber($this->addPortraitSubscriber)
+            ->addEventSubscriber($this->removeOwnerSubscriber);
     }
 }

@@ -25,10 +25,8 @@ namespace Khatovar\Bundle\HomepageBundle\Controller;
 
 use Khatovar\Bundle\HomepageBundle\Entity\Homepage;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -81,7 +79,7 @@ class HomepageController extends Controller
     }
 
     /**
-     * List of all homepages, and allow to activate one of them.
+     * List of all homepages, and allows to activate one of them.
      *
      * @param Request $request
      *
@@ -95,12 +93,9 @@ class HomepageController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $this->changeActiveHomepage($form);
+            $this->get('khatovar_homepage.handler.homepage_activation')->handle($form->get('active')->getData());
 
-            $this->addFlash(
-                'notice',
-                'Page d\'accueil activée'
-            );
+            $this->addFlash('notice', 'Page d\'accueil activée');
 
             return $this->redirect($this->generateUrl('khatovar_web_homepage_list'));
         }
@@ -131,8 +126,7 @@ class HomepageController extends Controller
     public function newAction()
     {
         $homepage = new Homepage();
-
-        $form = $this->createCreateForm($homepage);
+        $form     = $this->createCreateForm($homepage);
 
         return $this->render(
             'KhatovarHomepageBundle:Homepage:new.html.twig',
@@ -161,10 +155,7 @@ class HomepageController extends Controller
             $entityManager->persist($homepage);
             $entityManager->flush();
 
-            $this->addFlash(
-                'notice',
-                'Page d\'accueil créée'
-            );
+            $this->addFlash('notice', 'Page d\'accueil créée');
 
             return $this->redirect(
                 $this->generateUrl(
@@ -225,10 +216,7 @@ class HomepageController extends Controller
         if ($form->isValid()) {
             $this->get('doctrine.orm.entity_manager')->flush();
 
-            $this->addFlash(
-                'notice',
-                'Page d\'accueil modifiée'
-            );
+            $this->addFlash('notice', 'Page d\'accueil modifiée');
 
             return $this->redirect(
                 $this->generateUrl(
@@ -261,10 +249,7 @@ class HomepageController extends Controller
             ->findByIdOr404($id);
 
         if ($homepage->isActive()) {
-            $this->addFlash(
-                'notice',
-                'Vous ne pouvez pas supprimer la page d\'accueil active'
-            );
+            $this->addFlash('notice', 'Vous ne pouvez pas supprimer la page d\'accueil active');
         } else {
             $form = $this->createDeleteForm($id);
             $form->handleRequest($request);
@@ -274,14 +259,30 @@ class HomepageController extends Controller
                 $entityManager->remove($homepage);
                 $entityManager->flush();
 
-                $this->addFlash(
-                    'notice',
-                    'Page d\'accueil supprimée'
-                );
+                $this->addFlash('notice', 'Page d\'accueil supprimée');
             }
         }
 
         return $this->redirect($this->generateUrl('khatovar_web_homepage_list'));
+    }
+
+    /**
+     * Create a form to activate a Homepage.
+     *
+     * @return \Symfony\Component\Form\Form
+     */
+    protected function createActivationForm()
+    {
+        $form = $this->createForm(
+            'Khatovar\Bundle\HomepageBundle\Form\Type\HomepageActivationType',
+            null,
+            [
+                'action' => $this->generateUrl('khatovar_web_homepage_list'),
+                'method' => 'PUT',
+            ]
+        );
+
+        return $form;
     }
 
     /**
@@ -370,59 +371,5 @@ class HomepageController extends Controller
         }
 
         return $deleteForms;
-    }
-
-    /**
-     * Create a form to activate a Homepage.
-     *
-     * @return \Symfony\Component\Form\Form
-     *
-     * @todo Use a handler like for Contact entity.
-     */
-    protected function createActivationForm()
-    {
-        $previousHomepage = $this->get('doctrine.orm.entity_manager')
-            ->getRepository('KhatovarHomepageBundle:Homepage')
-            ->findOneBy(['active' => true]);
-
-        $form = $this->createFormBuilder()
-            ->add(
-                'active',
-                EntityType::class,
-                [
-                    'class'             => 'Khatovar\Bundle\HomepageBundle\Entity\Homepage',
-                    'label'             => false,
-                    'choice_label'      => 'name',
-                    'preferred_choices' => [$previousHomepage],
-                ]
-            )
-            ->add('submit', SubmitType::class, ['label' => 'Activer'])
-            ->getForm();
-
-        return $form;
-    }
-
-    /**
-     * Change the active Homepage.
-     *
-     * @param FormInterface $form
-     */
-    protected function changeActiveHomepage(FormInterface $form)
-    {
-        $entityManager = $this->get('doctrine.orm.entity_manager');
-        $repository  = $entityManager->getRepository('KhatovarHomepageBundle:Homepage');
-        $newHomepage = $repository->find($form->get('active')->getData());
-        $oldHomepage = $repository->findOneBy(['active' => true]);
-
-        if (null !== $oldHomepage) {
-            $oldHomepage->setActive(false);
-            $entityManager->persist($oldHomepage);
-        }
-
-        $newHomepage->setActive(true);
-        $entityManager->persist($newHomepage);
-        $entityManager->flush();
-
-        $this->addFlash('notice', 'Page d\'accueil activée');
     }
 }

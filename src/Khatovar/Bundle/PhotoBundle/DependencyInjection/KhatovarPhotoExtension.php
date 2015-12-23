@@ -41,7 +41,10 @@ class KhatovarPhotoExtension extends Extension
     public function load(array $configs, ContainerBuilder $container)
     {
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader->load('factories.yml');
+        $loader->load('form_subscribers.yml');
         $loader->load('form_types.yml');
+        $loader->load('handlers.yml');
         $loader->load('managers.yml');
     }
 }

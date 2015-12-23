@@ -1,11 +1,15 @@
 #1.0.0 (2016-xx-xx)
 ##Technical improvements
 - Migrate on Symfony 3 and Documents 0.4
+- Form fields that were added through EventSubscriber in the form types or in the controllers are now added in form subscribers
+- Activation of the default homepage and contact page are now manage through an "activation handler" called from the controller
 
 ##BC breaks
 - PhotoHelper::getPhotoEntities return an array as "label => code" instead of "code => label"
+- All class parameters has been removed
 - Controllers are no longer services
 - All FormType are now in a namespace "Khatovar\Bundle\XxxBundle\Form\Type"
+- Activation of the default homepage and contact page has been extracted from the controllers
 
 #0.9.5 (2015-11-08)
 ##Bug-fix

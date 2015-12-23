@@ -21,31 +21,31 @@
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
-namespace Khatovar\Bundle\ContactBundle\Form\Type;
+namespace Khatovar\Bundle\HomepageBundle\Form\Type;
 
-use Ivory\CKEditorBundle\Form\Type\CKEditorType;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Contact form type.
+ * Class HomepageActivationType
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
  */
-class ContactType extends AbstractType
+class HomepageActivationType extends AbstractType
 {
-    /** @var EventSubscriberInterface */
-    protected $addVisitCard;
+    /** @var EntityManagerInterface */
+    protected $entityManager;
 
     /**
-     * @param EventSubscriberInterface $addVisitCard
+     * @param EntityManagerInterface $entityManager
      */
-    public function __construct(EventSubscriberInterface $addVisitCard)
+    public function __construct(EntityManagerInterface $entityManager)
     {
-        $this->addVisitCard = $addVisitCard;
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -53,18 +53,21 @@ class ContactType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('name', TextType::class, ['label' => 'Titre'])
-            ->add(
-                'content',
-                CKEditorType::class,
-                [
-                    'config_name' => 'basic_config',
-                    'label'       => 'Contenu',
-                ]
-            );
+        $previousActive = $this->getPreviousActiveContact();
 
-        $builder->addEventSubscriber($this->addVisitCard);
+        $builder
+            ->add(
+                'active',
+                EntityType::class,
+                [
+                    'class'             => 'Khatovar\Bundle\HomepageBundle\Entity\Homepage',
+                    'label'             => false,
+                    'choice_label'      => 'name',
+                    'preferred_choices' => [$previousActive],
+                ]
+            )
+            ->add('submit', SubmitType::class, ['label' => 'Activer'])
+            ->getForm();
     }
 
     /**
@@ -72,6 +75,17 @@ class ContactType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(['data_class' => 'Khatovar\Bundle\ContactBundle\Entity\Contact']);
+        $resolver->setDefaults([
+            'data_class' => 'Khatovar\Bundle\HomepageBundle\Entity\Homepage',
+            'validation_groups' => false,
+        ]);
+    }
+
+    /**
+     * @return \Khatovar\Bundle\ContactBundle\Entity\Contact
+     */
+    protected function getPreviousActiveContact()
+    {
+        return $this->entityManager->getRepository('KhatovarHomepageBundle:Homepage')->findOneBy(['active' => true]);
     }
 }

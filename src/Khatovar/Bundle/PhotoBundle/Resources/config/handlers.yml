@@ -1,0 +1,7 @@
+services:
+    khatovar_photo.handler.photo:
+        class: Khatovar\Bundle\PhotoBundle\Handler\PhotoHandler
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@khatovar_photo.manager.photo'
+            - '@router'

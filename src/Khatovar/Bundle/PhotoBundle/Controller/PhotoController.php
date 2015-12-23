@@ -23,13 +23,9 @@
 
 namespace Khatovar\Bundle\PhotoBundle\Controller;
 
-use Doctrine\DBAL\Types\TextType;
 use Khatovar\Bundle\PhotoBundle\Entity\Photo;
-use Khatovar\Bundle\PhotoBundle\Helper\PhotoHelper;
-use Khatovar\Bundle\WebBundle\Helper\EntityHelper;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -45,16 +41,13 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
  */
 class PhotoController extends Controller
 {
-    /** @staticvar string */
-    const MAX_PHOTO_HEIGHT = 720;
-
     /**
-     * Return the list of all photos uploaded for the website and
+     * Returns the list of all photos uploaded for the website and
      * display admin utilities to manage them.
      *
      * @return \Symfony\Component\HttpFoundation\Response
      *
-     * @Security("has_role('ROLE_EDITOR')")
+     * @Security("has_role('ROLE_VIEWER')")
      */
     public function indexAction()
     {
@@ -78,24 +71,14 @@ class PhotoController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      *
-     * @Security("has_role('ROLE_EDITOR')")
+     * @Security("has_role('ROLE_VIEWER')")
      */
     public function newAction()
     {
         $this->userHasEditRights();
 
-        $photo = new Photo();
-
-        if (!$this->isGranted('ROLE_EDITOR')) {
-            $member = $this->getLoggedMember();
-
-            $photo->setClass('none')->setEntity(EntityHelper::MEMBER_CODE)->setMember($member);
-
-            $form = $this->createCreateForm($photo);
-            $form->remove('class')->remove('entity')->remove(EntityHelper::MEMBER_CODE);
-        } else {
-            $form = $this->createCreateForm($photo);
-        }
+        $photo = $this->get('khatovar_photo.factory.photo')->createPhoto();
+        $form  = $this->createCreateForm($photo);
 
         return $this->render(
             'KhatovarPhotoBundle:Photo:new.html.twig',
@@ -114,51 +97,26 @@ class PhotoController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
-     * @Security("has_role('ROLE_EDITOR')")
+     * @Security("has_role('ROLE_VIEWER')")
      */
     public function createAction(Request $request)
     {
         $this->userHasEditRights();
 
-        $photo = new Photo();
-
-        if (!$this->isGranted('ROLE_EDITOR')) {
-            $isEditor = false;
-            $member   = $this->getLoggedMember();
-
-            $photo->setClass('none')->setEntity(EntityHelper::MEMBER_CODE)->setMember($member);
-
-            $form = $this->createCreateForm($photo);
-            $form->remove('class')->remove('entity')->remove(EntityHelper::MEMBER_CODE);
-        } else {
-            $isEditor = true;
-            $form     = $this->createCreateForm($photo);
-        }
-
+        $photo = $this->get('khatovar_photo.factory.photo')->createPhoto();
+        $form  = $this->createCreateForm($photo);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $entityManager = $this->get('doctrine.orm.entity_manager');
-            $entityManager->persist($photo);
-            $entityManager->flush();
+            $this->get('khatovar_photo.handler.photo')->handleCreation($photo);
 
-            $this->get('khatovar_photo.manager.photo')->imageResize(
-                $photo->getAbsolutePath(),
-                static::MAX_PHOTO_HEIGHT
-            );
+            $this->addFlash('notice', 'Photo ajoutée');
 
-            $this->addFlash(
-                'notice',
-                'Photo ajoutée'
-            );
-
-            if ($isEditor) {
-                return $this->redirect(
-                    $this->generateUrl(
-                        'khatovar_web_photo_edit',
-                        ['id'=> $photo->getId()]
-                    )
-                );
+            if ($this->isGranted('ROLE_EDITOR')) {
+                return $this->redirect($this->generateUrl(
+                    'khatovar_web_photo_edit',
+                    ['id'=> $photo->getId()]
+                ));
             }
 
             return $this->redirect($this->generateUrl('khatovar_web_photo'));
@@ -177,7 +135,7 @@ class PhotoController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      *
-     * @Security("has_role('ROLE_EDITOR')")
+     * @Security("has_role('ROLE_VIEWER')")
      */
     public function editAction($id)
     {
@@ -206,7 +164,7 @@ class PhotoController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
-     * @Security("has_role('ROLE_EDITOR')")
+     * @Security("has_role('ROLE_VIEWER')")
      */
     public function updateAction(Request $request, $id)
     {
@@ -216,39 +174,16 @@ class PhotoController extends Controller
 
         $this->userHasEditRights($photo);
 
-        $editForm = $this->createEditForm($photo);
         $entity   = $photo->getEntity();
-
-        if (!$this->isGranted('ROLE_EDITOR')) {
-            $editForm->remove('class')->remove('entity')->remove(EntityHelper::MEMBER_CODE);
-        }
-
+        $editForm = $this->createEditForm($photo);
         $editForm->handleRequest($request);
+
         if ($editForm->isValid()) {
-            $entityManager = $this->get('doctrine.orm.entity_manager');
-            $entityManager->persist($photo);
+            $route = $this->get('khatovar_photo.handler.photo')->handleUpdate($photo, $entity);
 
-            if ($photo->getEntity() !== $entity) {
-                foreach (PhotoHelper::getPhotoEntities() as $code) {
-                    $setter = 'set' . ucfirst($code);
-                    $photo->$setter(null);
-                }
+            $this->addFlash('notice', 'Photo modifiée');
 
-                $entityManager->flush();
-
-                return $this->redirect(
-                    $this->generateUrl(
-                        'khatovar_web_photo',
-                        ['id' => $photo->getId()]
-                    )
-                );
-            } else {
-                $entityManager->flush();
-
-                $this->addFlash('notice', 'Photo modifiée');
-            }
-
-            return $this->redirect($this->generateUrl('khatovar_web_photo'));
+            return $this->redirect($route);
         }
 
         return $this->render(
@@ -268,7 +203,7 @@ class PhotoController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
-     * @Security("has_role('ROLE_EDITOR')")
+     * @Security("has_role('ROLE_VIEWER')")
      */
     public function deleteAction(Request $request, $id)
     {
@@ -310,9 +245,7 @@ class PhotoController extends Controller
             ]
         );
 
-        $form
-            ->add('file', FileType::class, ['label' => false])
-            ->add('submit', SubmitType::class, ['label' => 'Créer']);
+        $form->add('submit', SubmitType::class, ['label' => 'Créer']);
 
         return $form;
     }
@@ -335,9 +268,7 @@ class PhotoController extends Controller
             ]
         );
 
-        $form
-            ->add('alt', TextType::class, ['label' => 'Nom de substitution'])
-            ->add('submit', SubmitType::class, ['label' => 'Mettre à jour']);
+        $form->add('submit', SubmitType::class, ['label' => 'Mettre à jour']);
 
         return $form;
     }
@@ -391,18 +322,6 @@ class PhotoController extends Controller
     }
 
     /**
-     * Get the member page corresponding to the current user.
-     *
-     * @return \Khatovar\Bundle\MemberBundle\Entity\Member
-     */
-    protected function getLoggedMember()
-    {
-        return $this->get('doctrine.orm.entity_manager')
-            ->getRepository('KhatovarMemberBundle:Member')
-            ->findOneBy(['owner' => $this->getUser()->getId()]);
-    }
-
-    /**
      * Checks if the logged user has the editor role. If he has not,
      * checks if he has a member page (he can then upload new photos),
      * and if editing a photo, that it belongs to its member page.
@@ -415,7 +334,9 @@ class PhotoController extends Controller
      */
     protected function userHasEditRights(Photo $photo = null)
     {
-        $member = $this->getLoggedMember();
+        $member = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('KhatovarMemberBundle:Member')
+            ->getLoggedMember($this->getUser()->getId());
 
         if ($this->isGranted('ROLE_EDITOR')) {
             return true;
@@ -425,9 +346,9 @@ class PhotoController extends Controller
             throw new AccessDeniedHttpException(
                 'Désolé, vous n\'avez pas de page de membre, et ne pouvez donc pas manipuler les photos.'
             );
-        } else {
+        } elseif (null !== $photo) {
             if (null === $photo->getMember() ||
-                $member->getId() !== $photo->getMember()->getOwner()->getId()
+                $member->getId() !== $photo->getMember()->getId()
             ) {
                 throw new AccessDeniedHttpException(
                     'Désolé, vous n\'avez pas les droits requis pour modifier cette photo.'
