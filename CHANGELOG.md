@@ -11,8 +11,12 @@
 - All FormType are now in a namespace "Khatovar\Bundle\XxxBundle\Form\Type"
 - Activation of the default homepage and contact page has been extracted from the controllers
 
+#0.9.6 (2016-06-01)
+##Bug-fixes
+- Fix a bug on exaction to comes, that contained all those of current year, and the past exactions of the current year that also contained those still to come
+
 #0.9.5 (2015-11-08)
-##Bug-fix
+##Bug-fixes
 - Correct a bug that prevents photos to be displayed on member pages
 - Update to Documents 0.3.1
 

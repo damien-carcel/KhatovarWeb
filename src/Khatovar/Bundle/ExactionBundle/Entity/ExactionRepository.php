@@ -65,10 +65,12 @@ class ExactionRepository extends EntityRepository
     public function getExactionsByYear($year)
     {
         $query = $this->createQueryBuilder('pe')
-            ->orderBy('pe.start', 'DESC')
             ->where('pe.start >= :start AND pe.start <= :end')
             ->setParameter('start', new \DateTime($year . '-01-01'))
             ->setParameter('end', new \DateTime($year . '-12-31'))
+            ->andWhere('pe.start <= :now')
+            ->setParameter('now', new \DateTime())
+            ->orderBy('pe.start', 'DESC')
             ->getQuery();
 
         return $query->getResult();
@@ -82,8 +84,9 @@ class ExactionRepository extends EntityRepository
     public function getFutureExactions()
     {
         $query = $this->createQueryBuilder('pf')
-            ->where('pf.start > :start')
-            ->setParameter('start', new \DateTime())
+            ->where('pf.start > :now')
+            ->setParameter('now', new \DateTime())
+            ->orderBy('pf.start', 'ASC')
             ->getQuery();
 
         return $query->getResult();
