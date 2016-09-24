@@ -30,6 +30,9 @@ carcel_documents:
     resource: "@CarcelDocumentsBundle/Resources/config/routing.yml"
     prefix:   /documents
 
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
 carcel_user:
     resource: "@CarcelUserBundle/Resources/config/routing.yml"
     prefix:   /

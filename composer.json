@@ -1,5 +1,6 @@
 {
-    "name": "KhatovarWeb",
+    "name": "khatovar/web",
+    "homepage": "https://github.com/damien-carcel/khatovar-web",
     "license": "GPL",
     "type": "project",
     "description": "Repository for the web site of the french association \"La compagnie franche du Khatovar\"",
@@ -10,23 +11,48 @@
         }
     ],
     "autoload": {
-        "psr-4": { "": "src/" },
-        "files": [ "app/AppKernel.php" ]
-    },
-    "autoload-dev": {
-        "psr-4": { "Tests\\": "tests/" }
+        "psr-4": {
+            "Khatovar\\Bundle\\": "src/Khatovar/Bundle"
+        },
+        "classmap": [
+            "app/AppKernel.php",
+            "app/AppCache.php"
+        ]
     },
     "require": {
-        "carcel/documents": "^0.4@dev",
+        "php": ">=5.5.9",
+        "symfony/symfony": "3.1.*",
+        "doctrine/orm": "^2.5",
+        "doctrine/doctrine-bundle": "^1.6",
+        "doctrine/doctrine-cache-bundle": "^1.2",
+        "doctrine/doctrine-fixtures-bundle": "^2.3",
+        "symfony/swiftmailer-bundle": "^2.3",
+        "symfony/monolog-bundle": "^2.8",
+        "symfony/polyfill-apcu": "^1.0",
+        "sensio/distribution-bundle": "^5.0",
+        "sensio/framework-extra-bundle": "^3.0.2",
+        "incenteev/composer-parameter-handler": "^2.0",
+        "carcel/documents-bundle": "^0.4@dev",
+        "carcel/user-bundle": "^0.1",
         "friendsofsymfony/user-bundle": "^2.0@dev",
         "egeloen/ckeditor-bundle": "^4.0",
-        "knplabs/knp-menu-bundle": "^2.1@dev",
-        "stof/doctrine-extensions-bundle": "^1.2@dev"
+        "knplabs/knp-menu-bundle": "^2.1.1",
+        "stof/doctrine-extensions-bundle": "^1.2.2"
     },
     "require-dev": {
-        "phpspec/phpspec": "^2.4",
         "sensio/generator-bundle": "^3.0",
-        "symfony/phpunit-bridge": "^2.7"
+        "symfony/phpunit-bridge": "^3.0",
+        "behat/behat": "^3.1",
+        "behat/mink": "^1.7",
+        "behat/mink-extension": "^2.2",
+        "behat/mink-browserkit-driver": "^1.3",
+        "behat/symfony2-extension": "^2.1",
+        "behat-extension/doctrine-data-fixtures-extension": "^4.0",
+        "friendsofphp/php-cs-fixer": "^1.11",
+        "phpmd/phpmd": "^2.4",
+        "phpspec/phpspec": "^3.0",
+        "phpunit/phpunit": "^5.4",
+        "squizlabs/php_codesniffer": "^2.5"
     },
     "scripts": {
         "post-install-cmd": [
@@ -46,12 +72,15 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
         ]
     },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "minimum-stability": "stable",
     "extra": {
         "symfony-app-dir": "app",
         "symfony-bin-dir": "bin",
         "symfony-var-dir": "var",
         "symfony-web-dir": "www",
-        "symfony-tests-dir": "tests",
         "symfony-assets-install": "relative",
         "incenteev-parameters": {
             "file": "app/config/parameters.yml"

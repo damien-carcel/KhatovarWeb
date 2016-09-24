@@ -1,2 +1,0 @@
-parameters:
-    upload_dir: "%kernel.root_dir%/../www/uploaded/"
