@@ -17,3 +17,7 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
+
+    # Khatovar specific configuration
+    upload_dir: "%kernel.root_dir%/../www/uploaded/"
+    mailer_address: registration@example.fr

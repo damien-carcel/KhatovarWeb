@@ -1,0 +1,15 @@
+{
+    "name": "khatovar-web",
+    "homepage": "https://github.com/damien-carcel/khatovar-web",
+    "authors": [
+        {
+            "name": "Damien Carcel",
+            "homepage": "https://github.com/damien-carcel/"
+        }
+    ],
+    "description": "",
+    "license": "MIT",
+    "dependencies": {
+        "bootstrap": "~3.3.6"
+    }
+}

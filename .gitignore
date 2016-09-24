@@ -2,8 +2,6 @@
 /bin/*
 !/bin/console
 !/bin/symfony_requirements
-/build/
-/phpunit.xml
 /var/*
 !/var/cache
 /var/cache/*
@@ -16,5 +14,6 @@
 !var/sessions/.gitkeep
 !var/SymfonyRequirements.php
 /vendor/
+/www/assets/
 /www/bundles/
 /www/uploaded/
