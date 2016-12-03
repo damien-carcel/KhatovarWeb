@@ -80,6 +80,8 @@ Khatovar\Bundle\MemberBundle\Entity\Member:
     oneToOne:
         portrait:
             targetEntity: Khatovar\Bundle\PhotoBundle\Entity\Photo
+            cascade:
+                - detach
             JoinColumn:
                 name: portrait_id
                 referencedColumnName: id
@@ -96,3 +98,5 @@ Khatovar\Bundle\MemberBundle\Entity\Member:
         photos:
             targetEntity: Khatovar\Bundle\PhotoBundle\Entity\Photo
             mappedBy: member
+            cascade:
+                - detach

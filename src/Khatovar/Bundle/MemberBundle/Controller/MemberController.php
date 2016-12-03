@@ -53,7 +53,6 @@ class MemberController extends Controller
     {
         $this->entityManager = $entityManager;
         $this->session       = $session;
-
     }
 
     /**
@@ -258,6 +257,8 @@ class MemberController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+            $this->unlink($member);
+
             $this->entityManager->remove($member);
             $this->entityManager->flush();
 
@@ -322,7 +323,7 @@ class MemberController extends Controller
                     return $er->createQueryBuilder('p')
                         ->where('p.member = ?1')
                         ->setParameter(1, $member);
-                }
+                },
             ]
         );
 
@@ -416,5 +417,25 @@ class MemberController extends Controller
         }
 
         return $contact;
+    }
+
+    /**
+     * Unlink every connection of a Member entity to allow its removal.
+     *
+     * @param Member $member
+     *
+     * @todo Ugly dirty fix. Improve that!
+     */
+    protected function unlink(Member $member)
+    {
+        $member->setPortrait(null);
+        $member->setOwner(null);
+
+        $photos = $member->getPhotos();
+        foreach ($photos as $photo) {
+            $photo->setMember(null);
+        }
+
+        $this->entityManager->flush();
     }
 }
