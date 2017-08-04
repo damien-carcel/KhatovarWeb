@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * This file is part of KhatovarWeb.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @copyright   Copyright (C) Damien Carcel (https://github.com/damien-carcel)
- * @link        https://github.com/damien-carcel/KhatovarWeb
+ *
+ * @see        https://github.com/damien-carcel/KhatovarWeb
+ *
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
@@ -52,7 +53,7 @@ class AddVisitCardSubscriber implements EventSubscriberInterface
      */
     public function preSetData(FormEvent $event)
     {
-        $form    = $event->getForm();
+        $form = $event->getForm();
         $contact = $event->getData();
 
         if ($contact instanceof Contact && null !== $contact->getId()) {
@@ -67,7 +68,7 @@ class AddVisitCardSubscriber implements EventSubscriberInterface
                         return $repository->createQueryBuilder('c')
                             ->where('c.contact = :contact')
                             ->setParameter('contact', $contact);
-                    }
+                    },
                 ]
             );
         }

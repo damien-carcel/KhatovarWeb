@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * This file is part of KhatovarWeb.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @copyright   Copyright (C) Damien Carcel (https://github.com/damien-carcel)
- * @link        https://github.com/damien-carcel/KhatovarWeb
+ *
+ * @see        https://github.com/damien-carcel/KhatovarWeb
+ *
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
@@ -78,9 +79,9 @@ class AppearanceManager
      * @param string $pageType
      * @param string $slug
      *
-     * @return bool
-     *
      * @throws NotFoundHttpException
+     *
+     * @return bool
      */
     protected function isPageType($pageType, $slug)
     {
@@ -133,11 +134,11 @@ class AppearanceManager
 
         $appearances = [];
 
-        for ($position = 0; $position < count($sortedAppearances); $position++) {
+        for ($position = 0; $position < count($sortedAppearances); ++$position) {
             if ($slug === $sortedAppearances[$position]->getSlug()) {
                 $appearances['previous'] = $this->getPreviousActiveAppearance($sortedAppearances, $position);
-                $appearances['current']  = $sortedAppearances[$position];
-                $appearances['next']     = $this->getNextActiveAppearance($sortedAppearances, $position);
+                $appearances['current'] = $sortedAppearances[$position];
+                $appearances['next'] = $this->getNextActiveAppearance($sortedAppearances, $position);
 
                 break;
             }
@@ -154,7 +155,7 @@ class AppearanceManager
      */
     protected function getPreviousActiveAppearance(array $sortedAppearances, $currentPosition)
     {
-        for ($position = $currentPosition -1; $position >= 0; $position--) {
+        for ($position = $currentPosition - 1; $position >= 0; --$position) {
             if (isset($sortedAppearances[$position]) && $sortedAppearances[$position]->isActive()) {
                 return $sortedAppearances[$position];
             }
@@ -171,7 +172,7 @@ class AppearanceManager
      */
     protected function getNextActiveAppearance(array $sortedAppearances, $currentPosition)
     {
-        for ($position = $currentPosition +1; $position < count($sortedAppearances); $position++) {
+        for ($position = $currentPosition + 1; $position < count($sortedAppearances); ++$position) {
             if (isset($sortedAppearances[$position]) && $sortedAppearances[$position]->isActive()) {
                 return $sortedAppearances[$position];
             }

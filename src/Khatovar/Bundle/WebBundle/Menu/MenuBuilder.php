@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * This file is part of KhatovarWeb.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @copyright   Copyright (C) Damien Carcel (https://github.com/damien-carcel)
- * @link        https://github.com/damien-carcel/KhatovarWeb
+ *
+ * @see        https://github.com/damien-carcel/KhatovarWeb
+ *
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
@@ -32,6 +33,7 @@ use Knp\Menu\ItemInterface;
  * Build the web site menu.
  *
  * @author Damien Carcel (https://github.com/damien-carcel)
+ *
  * @todo   Inject directly the needed repositories (define them as services).
  * @todo   $appareances and $programmes should be get directly in the methods that needs them.
  */
@@ -59,12 +61,12 @@ class MenuBuilder
         EntityManagerInterface $entityManager,
         ExactionManager $exactionManager
     ) {
-        $this->menuFactory    = $menuFactory;
+        $this->menuFactory = $menuFactory;
         $appearanceRepository = $entityManager->getRepository('KhatovarAppearanceBundle:Appearance');
 
         $this->exactionYears = $exactionManager->getSortedYears();
-        $this->appearances   = $appearanceRepository->findActiveWorkshopsSortedBySlug();
-        $this->programmes    = $appearanceRepository->findActiveProgrammesSortedBySlug();
+        $this->appearances = $appearanceRepository->findActiveWorkshopsSortedBySlug();
+        $this->programmes = $appearanceRepository->findActiveProgrammesSortedBySlug();
     }
 
     /**
@@ -177,7 +179,7 @@ class MenuBuilder
             $menu['dates']['references']->addChild(
                 $year,
                 [
-                    'label'           => 'Saison ' . $year,
+                    'label'           => 'Saison '.$year,
                     'route'           => 'khatovar_web_exaction_list_by_year',
                     'routeParameters' => ['year' => $year],
                 ]

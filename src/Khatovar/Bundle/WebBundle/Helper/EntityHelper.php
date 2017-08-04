@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * This file is part of KhatovarWeb.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @copyright   Copyright (C) Damien Carcel (https://github.com/damien-carcel)
- * @link        https://github.com/damien-carcel/KhatovarWeb
+ *
+ * @see        https://github.com/damien-carcel/KhatovarWeb
+ *
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
@@ -61,15 +62,15 @@ class EntityHelper
     const CONTACT_LABEL = 'Pages de contact';
 
     /**
-     * Return the
+     * Return the.
      *
      * @return array
      */
     public static function getActivables()
     {
         return [
-            EntityHelper::HOMEPAGE_CODE,
-            EntityHelper::CONTACT_CODE,
+            self::HOMEPAGE_CODE,
+            self::CONTACT_CODE,
         ];
     }
 }

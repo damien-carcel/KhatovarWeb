@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * This file is part of KhatovarWeb.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @copyright   Copyright (C) Damien Carcel (https://github.com/damien-carcel)
- * @link        https://github.com/damien-carcel/KhatovarWeb
+ *
+ * @see        https://github.com/damien-carcel/KhatovarWeb
+ *
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
@@ -34,7 +35,7 @@ use Khatovar\Bundle\PhotoBundle\Entity\Photo;
  */
 class Member
 {
-    /** @var integer */
+    /** @var int */
     protected $id;
 
     /** @var string */
@@ -82,6 +83,14 @@ class Member
     /** @var \Doctrine\Common\Collections\Collection */
     protected $photos;
 
+    /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        $this->active = false;
+        $this->photos = new ArrayCollection();
+    }
 
     /**
      * Allow to save only the entity's ID in database as a string when
@@ -91,20 +100,11 @@ class Member
      */
     public function __toString()
     {
-        return strval($this->id);
+        return (string) ($this->id);
     }
 
     /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->active = false;
-        $this->photos = new ArrayCollection();
-    }
-
-    /**
-     * Get id
+     * Get id.
      *
      * @return int
      */
@@ -114,7 +114,7 @@ class Member
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      *
@@ -128,7 +128,7 @@ class Member
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -138,7 +138,7 @@ class Member
     }
 
     /**
-     * Set slug
+     * Set slug.
      *
      * @param string $slug
      *
@@ -152,7 +152,7 @@ class Member
     }
 
     /**
-     * Get slug
+     * Get slug.
      *
      * @return string
      */
@@ -162,7 +162,7 @@ class Member
     }
 
     /**
-     * Set rank
+     * Set rank.
      *
      * @param string $rank
      *
@@ -176,7 +176,7 @@ class Member
     }
 
     /**
-     * Get rank
+     * Get rank.
      *
      * @return string
      */
@@ -186,7 +186,7 @@ class Member
     }
 
     /**
-     * Set quote
+     * Set quote.
      *
      * @param string $quote
      *
@@ -200,7 +200,7 @@ class Member
     }
 
     /**
-     * Get quote
+     * Get quote.
      *
      * @return string
      */
@@ -210,7 +210,7 @@ class Member
     }
 
     /**
-     * Set skill
+     * Set skill.
      *
      * @param string $skill
      *
@@ -224,7 +224,7 @@ class Member
     }
 
     /**
-     * Get skill
+     * Get skill.
      *
      * @return string
      */
@@ -234,7 +234,7 @@ class Member
     }
 
     /**
-     * Set age
+     * Set age.
      *
      * @param string $age
      *
@@ -248,7 +248,7 @@ class Member
     }
 
     /**
-     * Get age
+     * Get age.
      *
      * @return string
      */
@@ -258,7 +258,7 @@ class Member
     }
 
     /**
-     * Set size
+     * Set size.
      *
      * @param string $size
      *
@@ -272,7 +272,7 @@ class Member
     }
 
     /**
-     * Get size
+     * Get size.
      *
      * @return string
      */
@@ -282,7 +282,7 @@ class Member
     }
 
     /**
-     * Set weight
+     * Set weight.
      *
      * @param string $weight
      *
@@ -296,7 +296,7 @@ class Member
     }
 
     /**
-     * Get weight
+     * Get weight.
      *
      * @return string
      */
@@ -306,7 +306,7 @@ class Member
     }
 
     /**
-     * Set strength
+     * Set strength.
      *
      * @param string $strength
      *
@@ -320,7 +320,7 @@ class Member
     }
 
     /**
-     * Get strength
+     * Get strength.
      *
      * @return string
      */
@@ -330,7 +330,7 @@ class Member
     }
 
     /**
-     * Set weakness
+     * Set weakness.
      *
      * @param string $weakness
      *
@@ -344,7 +344,7 @@ class Member
     }
 
     /**
-     * Get weakness
+     * Get weakness.
      *
      * @return string
      */
@@ -354,7 +354,7 @@ class Member
     }
 
     /**
-     * Set story
+     * Set story.
      *
      * @param string $story
      *
@@ -368,7 +368,7 @@ class Member
     }
 
     /**
-     * Get story
+     * Get story.
      *
      * @return string
      */
@@ -378,7 +378,7 @@ class Member
     }
 
     /**
-     * Set active
+     * Set active.
      *
      * @param bool $active
      *
@@ -392,7 +392,7 @@ class Member
     }
 
     /**
-     * Get active
+     * Get active.
      *
      * @return bool
      */
@@ -402,7 +402,7 @@ class Member
     }
 
     /**
-     * Set portrait
+     * Set portrait.
      *
      * @param Photo $portrait
      *
@@ -416,7 +416,7 @@ class Member
     }
 
     /**
-     * Get portrait
+     * Get portrait.
      *
      * @return Photo
      */
@@ -426,9 +426,10 @@ class Member
     }
 
     /**
-     * Set owner
+     * Set owner.
      *
      * @param User $owner
+     *
      * @return Member
      */
     public function setOwner(User $owner = null)
@@ -439,7 +440,7 @@ class Member
     }
 
     /**
-     * Get owner
+     * Get owner.
      *
      * @return User
      */
@@ -449,9 +450,10 @@ class Member
     }
 
     /**
-     * Add photos
+     * Add photos.
      *
      * @param Photo $photos
+     *
      * @return Member
      */
     public function addPhoto(Photo $photos)
@@ -462,7 +464,7 @@ class Member
     }
 
     /**
-     * Remove photos
+     * Remove photos.
      *
      * @param Photo $photos
      *
@@ -476,7 +478,7 @@ class Member
     }
 
     /**
-     * Get photos
+     * Get photos.
      *
      * @return \Doctrine\Common\Collections\Collection
      */

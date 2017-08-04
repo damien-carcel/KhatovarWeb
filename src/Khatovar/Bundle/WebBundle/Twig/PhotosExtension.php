@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * This file is part of KhatovarWeb.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @copyright   Copyright (C) Damien Carcel (https://github.com/damien-carcel)
- * @link        https://github.com/damien-carcel/KhatovarWeb
+ *
+ * @see        https://github.com/damien-carcel/KhatovarWeb
+ *
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
@@ -82,21 +83,21 @@ class PhotosExtension extends \Twig_Extension
     /**
      * Return a picture as a link to display it using lightbox framework.
      *
-     * @param string $path  The path to the picture.
-     * @param string $class The stylesheet class to use.
-     * @param string $alt   The alternative name of the picture.
-     * @param string $data  The data-lightbox attribute.
+     * @param string $path  the path to the picture
+     * @param string $class the stylesheet class to use
+     * @param string $alt   the alternative name of the picture
+     * @param string $data  the data-lightbox attribute
      *
      * @return string
      */
     public function popupPicture($path, $class = '', $alt = '', $data = 'Photos Khatovar')
     {
-        $link = '<a href="' . $path
-            . '" data-lightbox="' . $data . '" title="Copyright &copy; '
-            . date('Y') . ' association La Compagnie franche du Khatovar"><img class="'
-            . $class . ' photo_rest" onmouseover="this.className=\''
-            . $class . ' photo_over\'" onmouseout="this.className=\'' . $class
-            . ' photo_rest\'" src="' . $path . '" alt="' . $alt . '" /></a>';
+        $link = '<a href="'.$path
+            .'" data-lightbox="'.$data.'" title="Copyright &copy; '
+            .date('Y').' association La Compagnie franche du Khatovar"><img class="'
+            .$class.' photo_rest" onmouseover="this.className=\''
+            .$class.' photo_over\'" onmouseout="this.className=\''.$class
+            .' photo_rest\'" src="'.$path.'" alt="'.$alt.'" /></a>';
 
         return $link;
     }
@@ -104,16 +105,16 @@ class PhotosExtension extends \Twig_Extension
     /**
      * Return a link to display a picture with lightbox framework.
      *
-     * @param string $path The path to the picture.
-     * @param string $text The link text.
-     * @param string $data The data-lightbox attribute.
+     * @param string $path the path to the picture
+     * @param string $text the link text
+     * @param string $data the data-lightbox attribute
      *
      * @return string
      */
     public function linkPicture($path, $text = '', $data = '')
     {
         $link = sprintf(
-            '<a href="%s" data-lightbox="%s" ' .
+            '<a href="%s" data-lightbox="%s" '.
             'title="Copyright &copy; %s association La Compagnie franche du Khatovar">%s</a>',
             $path,
             $data ? $data : $path,
@@ -127,9 +128,9 @@ class PhotosExtension extends \Twig_Extension
     /**
      * Return a lightbox photo album.
      *
-     * @param string           $icon       The photo album icon.
-     * @param string           $data       The data-lightbox attribute.
-     * @param Collection|array $photos     The rest of the photos to display as an album.
+     * @param string           $icon       the photo album icon
+     * @param string           $data       the data-lightbox attribute
+     * @param Collection|array $photos     the rest of the photos to display as an album
      * @param Photo            $firstPhoto The first photo of the album..
      *
      * @return string
@@ -140,25 +141,25 @@ class PhotosExtension extends \Twig_Extension
             $photos = $photos->toArray();
         }
 
-        $link  = '';
+        $link = '';
         $first = true;
-        $text  = sprintf(
+        $text = sprintf(
             '<img src="%s" class="photolink" alt="Album photo" /><br />Album photo',
             $icon
         );
 
         if (null === $firstPhoto && empty($photos)) {
-            $link  = $this->linkPicture('/bundles/khatovarweb/images/logonoir.jpg', $text, $data);
+            $link = $this->linkPicture('/bundles/khatovarweb/images/logonoir.jpg', $text, $data);
         }
 
         if (null !== $firstPhoto) {
-            $link  = $this->linkPicture($firstPhoto->getWebPath(), $text, $data);
+            $link = $this->linkPicture($firstPhoto->getWebPath(), $text, $data);
             $first = false;
         }
 
         foreach ($photos as $photo) {
             if ($first) {
-                $link  = $this->linkPicture($photo->getWebPath(), $text, $data);
+                $link = $this->linkPicture($photo->getWebPath(), $text, $data);
                 $first = false;
             } else {
                 if (null === $firstPhoto || $photo->getWebPath() !== $firstPhoto->getWebPath()) {
@@ -181,7 +182,7 @@ class PhotosExtension extends \Twig_Extension
      */
     public function thumbnail($path, $class, $alt = '')
     {
-        $link = '<img src="' . $path . '" class="thumbnail ' . $class .' photo_rest" alt="' . $alt . '" />';
+        $link = '<img src="'.$path.'" class="thumbnail '.$class.' photo_rest" alt="'.$alt.'" />';
 
         return $link;
     }
@@ -199,12 +200,12 @@ class PhotosExtension extends \Twig_Extension
      */
     public function thumbnailLink($path, $destination, $class, $alt = '', $text = '')
     {
-        $link = '<div class="thumbnail_link ' . $class . ' photo_rest"
-            onmouseover="this.className=\'thumbnail_link ' . $class . ' photo_over\';"
-            onmouseout="this.className=\'thumbnail_link ' . $class . ' photo_rest\';"
-            onclick="location.href=\'' . $destination . '\';">
-            <img src="' . $path . '" class="trombinoscope" alt="' . $alt . '" /><br />'
-            . $text . '</div>';
+        $link = '<div class="thumbnail_link '.$class.' photo_rest"
+            onmouseover="this.className=\'thumbnail_link '.$class.' photo_over\';"
+            onmouseout="this.className=\'thumbnail_link '.$class.' photo_rest\';"
+            onclick="location.href=\''.$destination.'\';">
+            <img src="'.$path.'" class="trombinoscope" alt="'.$alt.'" /><br />'
+            .$text.'</div>';
 
         return $link;
     }
@@ -213,8 +214,8 @@ class PhotosExtension extends \Twig_Extension
      * Replace line breaks, and remove useless ones, by paragraphs and
      * insert floatings between paragraphs.
      *
-     * @param string $text   The text to transform.
-     * @param mixed  $photos A list of photos to insert in the text.
+     * @param string $text   the text to transform
+     * @param mixed  $photos a list of photos to insert in the text
      *
      * @return string
      */
@@ -225,7 +226,7 @@ class PhotosExtension extends \Twig_Extension
         }
 
         $text = preg_replace('`[\r\n]+`', "\n", $text);
-        $text = '<p>' . $text . '</p>';
+        $text = '<p>'.$text.'</p>';
 
         if (strlen($text) < self::PARAGRAPH_LENGTH || null === $photos || empty($photos)) {
             return str_replace("\n", "</p>\n<p>", $text);
@@ -269,14 +270,14 @@ class PhotosExtension extends \Twig_Extension
         $photosCount = count($photos);
         $paragraphs = count($exploded);
 
-        for ($p = 0; $p < $paragraphs; $p++) {
+        for ($p = 0; $p < $paragraphs; ++$p) {
             /**
-             * @var Photo $photo
+             * @var Photo
              */
-            $photo = $photos[$currentPhoto-1];
+            $photo = $photos[$currentPhoto - 1];
             $photoSize = getimagesize($photo->getAbsolutePath());
             if ($photoSize[0] / $photoSize[1] < 1) {
-                $photoLimit = self::PARAGRAPH_LENGTH +100;
+                $photoLimit = self::PARAGRAPH_LENGTH + 100;
             } else {
                 $photoLimit = self::PARAGRAPH_LENGTH;
             }
@@ -284,7 +285,7 @@ class PhotosExtension extends \Twig_Extension
             if (strlen($exploded[$p]) > $photoLimit) {
                 $textWithPhotos .= $exploded[$p];
 
-                $remain = strlen(implode(' ', array_slice($exploded, $p+1)));
+                $remain = strlen(implode(' ', array_slice($exploded, $p + 1)));
                 if ($currentPhoto < $photosCount && $remain > $photoLimit + 600) {
                     $textWithPhotos .= $this->addFloat(
                         $photos[$currentPhoto],
@@ -293,7 +294,7 @@ class PhotosExtension extends \Twig_Extension
                     $currentPhoto += 1;
                 }
             } elseif ($p + 1 < $paragraphs) {
-                $exploded[$p+1] = $exploded[$p] . $exploded[$p+1];
+                $exploded[$p + 1] = $exploded[$p].$exploded[$p + 1];
                 $exploded[$p] = '';
             } else {
                 $textWithPhotos .= $exploded[$p];
@@ -307,21 +308,21 @@ class PhotosExtension extends \Twig_Extension
      * Return the html code to display a photo as a floating element in
      * a lightbox container.
      *
-     * @param Photo  $photo The photo to display.
-     * @param string $side The side the photo float (left or right).
+     * @param Photo  $photo the photo to display
+     * @param string $side  the side the photo float (left or right)
      *
      * @return string
      */
     protected function addFloat(Photo $photo, $side)
     {
-        $text = '<a href="' . $photo->getWebPath() . '" data-lightbox="Photos Khatovar"'
-            . ' title="Copyright &copy; ' . date('Y') . ' association La Compagnie franche du Khatovar">'
-            . '<img class="float float' . $side . ' photo_rest"'
-            . ' onmouseover="this.className=\'float float' . $side . ' photo_over\'"'
-            . ' onmouseout="this.className=\'float float' . $side . ' photo_rest\'"'
-            . ' src="'. $photo->getWebPath() . '" alt="' . $photo->getAlt() . '" />'
-            . '</a>';
+        $text = '<a href="'.$photo->getWebPath().'" data-lightbox="Photos Khatovar"'
+            .' title="Copyright &copy; '.date('Y').' association La Compagnie franche du Khatovar">'
+            .'<img class="float float'.$side.' photo_rest"'
+            .' onmouseover="this.className=\'float float'.$side.' photo_over\'"'
+            .' onmouseout="this.className=\'float float'.$side.' photo_rest\'"'
+            .' src="'.$photo->getWebPath().'" alt="'.$photo->getAlt().'" />'
+            .'</a>';
 
-        return $text . "\n";
+        return $text."\n";
     }
 }

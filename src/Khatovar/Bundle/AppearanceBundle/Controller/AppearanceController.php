@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * This file is part of KhatovarWeb.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @copyright   Copyright (C) Damien Carcel (https://github.com/damien-carcel)
- * @link        https://github.com/damien-carcel/KhatovarWeb
+ *
+ * @see        https://github.com/damien-carcel/KhatovarWeb
+ *
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
@@ -47,7 +48,7 @@ class AppearanceController extends Controller
         $appearancesRepo = $this->get('doctrine.orm.entity_manager')
             ->getRepository('KhatovarAppearanceBundle:Appearance');
 
-        $appearances  = $appearancesRepo->findActiveProgrammesSortedBySlug();
+        $appearances = $appearancesRepo->findActiveProgrammesSortedBySlug();
         $introduction = $appearancesRepo->findActiveIntroduction();
 
         return $this->render(
@@ -82,9 +83,9 @@ class AppearanceController extends Controller
     /**
      * Displays the camp page.
      *
-     * @return \Symfony\Component\HttpFoundation\Response
-     *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function campAction()
     {
@@ -236,7 +237,7 @@ class AppearanceController extends Controller
             ->findByIdOr404($id);
 
         $workshops = $this->findActiveWorkshopsIfIsProgramme($appearance);
-        $editForm  = $this->createEditForm($appearance);
+        $editForm = $this->createEditForm($appearance);
 
         return $this->render(
             'KhatovarAppearanceBundle:Appearance:edit.html.twig',
@@ -264,7 +265,7 @@ class AppearanceController extends Controller
             ->findByIdOr404($id);
 
         $workshops = $this->findActiveWorkshopsIfIsProgramme($appearance);
-        $editForm  = $this->createEditForm($appearance);
+        $editForm = $this->createEditForm($appearance);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {

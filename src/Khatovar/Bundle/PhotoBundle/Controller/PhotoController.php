@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * This file is part of KhatovarWeb.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @copyright   Copyright (C) Damien Carcel (https://github.com/damien-carcel)
- * @link        https://github.com/damien-carcel/KhatovarWeb
+ *
+ * @see        https://github.com/damien-carcel/KhatovarWeb
+ *
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
@@ -78,7 +79,7 @@ class PhotoController extends Controller
         $this->userHasEditRights();
 
         $photo = $this->get('khatovar_photo.factory.photo')->createPhoto();
-        $form  = $this->createCreateForm($photo);
+        $form = $this->createCreateForm($photo);
 
         return $this->render(
             'KhatovarPhotoBundle:Photo:new.html.twig',
@@ -104,7 +105,7 @@ class PhotoController extends Controller
         $this->userHasEditRights();
 
         $photo = $this->get('khatovar_photo.factory.photo')->createPhoto();
-        $form  = $this->createCreateForm($photo);
+        $form = $this->createCreateForm($photo);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -174,7 +175,7 @@ class PhotoController extends Controller
 
         $this->userHasEditRights($photo);
 
-        $entity   = $photo->getEntity();
+        $entity = $photo->getEntity();
         $editForm = $this->createEditForm($photo);
         $editForm->handleRequest($request);
 
@@ -328,9 +329,9 @@ class PhotoController extends Controller
      *
      * @param Photo $photo
      *
-     * @return bool
-     *
      * @throws AccessDeniedHttpException
+     *
+     * @return bool
      */
     protected function userHasEditRights(Photo $photo = null)
     {

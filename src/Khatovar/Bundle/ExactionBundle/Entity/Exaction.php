@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * This file is part of KhatovarWeb.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @copyright   Copyright (C) Damien Carcel (https://github.com/damien-carcel)
- * @link        https://github.com/damien-carcel/KhatovarWeb
+ *
+ * @see        https://github.com/damien-carcel/KhatovarWeb
+ *
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
@@ -33,7 +34,7 @@ use Khatovar\Bundle\PhotoBundle\Entity\Photo;
  */
 class Exaction
 {
-    /** @var integer */
+    /** @var int */
     protected $id;
 
     /**
@@ -67,7 +68,7 @@ class Exaction
     /**
      * Photos of the festival.
      *
-     * @var \Doctrine\Common\Collections\Collection $photos
+     * @var \Doctrine\Common\Collections\Collection
      */
     protected $photos;
 
@@ -121,6 +122,15 @@ class Exaction
     protected $onlyPhotos;
 
     /**
+     * Create an instance of Exaction.
+     */
+    public function __construct()
+    {
+        $this->photos = new ArrayCollection();
+        $this->onlyPhotos = false;
+    }
+
+    /**
      * Allow to save only the entity's ID in database as a string when
      * using entity form type.
      *
@@ -128,16 +138,7 @@ class Exaction
      */
     public function __toString()
     {
-        return strval($this->id);
-    }
-
-    /**
-     * Create an instance of Exaction.
-     */
-    public function __construct()
-    {
-        $this->photos     = new ArrayCollection();
-        $this->onlyPhotos = false;
+        return (string) ($this->id);
     }
 
     /**

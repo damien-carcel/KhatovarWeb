@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * This file is part of KhatovarWeb.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @copyright Copyright (C) Damien Carcel (https://github.com/damien-carcel)
- * @link      https://github.com/damien-carcel/KhatovarWeb
+ *
+ * @see      https://github.com/damien-carcel/KhatovarWeb
+ *
  * @license   http://www.gnu.org/licenses/gpl.html
  */
 
@@ -122,7 +123,7 @@ class ExactionController extends Controller
     public function newAction()
     {
         $exaction = new Exaction();
-        $form     = $this->createCreateForm($exaction);
+        $form = $this->createCreateForm($exaction);
 
         return $this->render(
             'KhatovarExactionBundle:Exaction:new.html.twig',
@@ -262,7 +263,7 @@ class ExactionController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $entityManager= $this->get('doctrine.orm.entity_manager');
+            $entityManager = $this->get('doctrine.orm.entity_manager');
             $entityManager->remove($exaction);
             $entityManager->flush();
 

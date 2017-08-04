@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * This file is part of KhatovarWeb.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @copyright   Copyright (C) Damien Carcel (https://github.com/damien-carcel)
- * @link        https://github.com/damien-carcel/KhatovarWeb
+ *
+ * @see        https://github.com/damien-carcel/KhatovarWeb
+ *
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
@@ -37,7 +38,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 class Photo
 {
-    /** @var integer */
+    /** @var int */
     protected $id;
 
     /**
@@ -132,13 +133,13 @@ class Photo
     public function preUpload()
     {
         if (null !== $this->file) {
-            $this->path = 'photo-' . time() . '.' . $this->file->guessExtension();
+            $this->path = 'photo-'.time().'.'.$this->file->guessExtension();
 
-            $name      = $this->file->getClientOriginalName();
-            $exploded  = explode('.', $name);
+            $name = $this->file->getClientOriginalName();
+            $exploded = explode('.', $name);
             $cleanName = $exploded[0];
 
-            $this->alt  = $cleanName;
+            $this->alt = $cleanName;
         }
     }
 
@@ -178,7 +179,7 @@ class Photo
      */
     public function getAbsolutePath()
     {
-        return null === $this->path ? null : $this->getUploadRootDir() . '/' . $this->path;
+        return null === $this->path ? null : $this->getUploadRootDir().'/'.$this->path;
     }
 
     /**
@@ -188,7 +189,7 @@ class Photo
      */
     public function getWebPath()
     {
-        return null === $this->path ? null : '/' . $this->getUploadDir() . '/' . $this->path;
+        return null === $this->path ? null : '/'.$this->getUploadDir().'/'.$this->path;
     }
 
     /**
@@ -386,7 +387,7 @@ class Photo
      */
     protected function getUploadRootDir()
     {
-        return __DIR__ . '/../../../../../www/' . $this->getUploadDir();
+        return __DIR__.'/../../../../../www/'.$this->getUploadDir();
     }
 
     /**

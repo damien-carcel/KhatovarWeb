@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * This file is part of KhatovarWeb.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @copyright   Copyright (C) Damien Carcel (https://github.com/damien-carcel)
- * @link        https://github.com/damien-carcel/KhatovarWeb
+ *
+ * @see        https://github.com/damien-carcel/KhatovarWeb
+ *
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
@@ -38,9 +39,9 @@ class HomepageRepository extends EntityRepository
      *
      * @param int $id
      *
-     * @return Homepage
-     *
      * @throws NotFoundHttpException
+     *
+     * @return Homepage
      */
     public function findByIdOr404($id)
     {
@@ -56,9 +57,9 @@ class HomepageRepository extends EntityRepository
     /**
      * Finds the active homepage or throws a 404.
      *
-     * @return Homepage
-     *
      * @throws NotFoundHttpException
+     *
+     * @return Homepage
      */
     public function findActiveOr404()
     {

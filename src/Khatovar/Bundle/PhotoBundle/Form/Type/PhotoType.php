@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * This file is part of KhatovarWeb.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @copyright   Copyright (C) Damien Carcel (https://github.com/damien-carcel)
- * @link        https://github.com/damien-carcel/KhatovarWeb
+ *
+ * @see        https://github.com/damien-carcel/KhatovarWeb
+ *
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
@@ -58,8 +59,8 @@ class PhotoType extends AbstractType
         EventSubscriberInterface $addFieldsSubscriber,
         EventSubscriberInterface $addAuthorizedSubscriber
     ) {
-        $this->authorizationChecker    = $authorizationChecker;
-        $this->addFieldsSubscriber     = $addFieldsSubscriber;
+        $this->authorizationChecker = $authorizationChecker;
+        $this->addFieldsSubscriber = $addFieldsSubscriber;
         $this->addAuthorizedSubscriber = $addAuthorizedSubscriber;
     }
 

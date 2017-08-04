@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * This file is part of KhatovarWeb.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @copyright   Copyright (C) Damien Carcel (https://github.com/damien-carcel)
- * @link        https://github.com/damien-carcel/KhatovarWeb
+ *
+ * @see        https://github.com/damien-carcel/KhatovarWeb
+ *
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
@@ -57,20 +58,21 @@ class PhotoManager
         AuthorizationCheckerInterface $authorizationChecker,
         TokenStorageInterface $tokenStorage
     ) {
-        $this->entityManager        = $entityManager;
+        $this->entityManager = $entityManager;
         $this->authorizationChecker = $authorizationChecker;
-        $this->tokenStorage         = $tokenStorage;
+        $this->tokenStorage = $tokenStorage;
     }
 
     /**
      * Look for special photo insertion tags and transform it in html syntax.
      *
-     * @param string $text The text to transform.
+     * @param string $text the text to transform
+     *
      * @return string
      */
     public function imageTranslate($text)
     {
-        $text  = $this->insertTagsInText($text);
+        $text = $this->insertTagsInText($text);
         $paths = $this->getPhotoPaths($text);
 
         $repository = $this->entityManager->getRepository('KhatovarPhotoBundle:Photo');
@@ -81,19 +83,19 @@ class PhotoManager
             $photo = $repository->findOneBy(['path' => $path]);
             if (null !== $photo) {
                 $photos[] = '<a href="/uploaded/photos/'
-                    . $photo->getPath()
-                    . '" data-lightbox="Photos Khatovar" title="Copyright &copy; '
-                    . date('Y')
-                    . ' association La Compagnie franche du Khatovar"><img class="'
-                    . $photo->getClass()
-                    . ' photo_rest" onmouseover="this.className=\''
-                    . $photo->getClass()
-                    . ' photo_over\'" onmouseout="this.className=\''
-                    . $photo->getClass()
-                    . ' photo_rest\'" src="/uploaded/photos/'
-                    . $photo->getPath()
-                    . '" alt="' . $photo->getAlt()
-                    . '" /></a>';
+                    .$photo->getPath()
+                    .'" data-lightbox="Photos Khatovar" title="Copyright &copy; '
+                    .date('Y')
+                    .' association La Compagnie franche du Khatovar"><img class="'
+                    .$photo->getClass()
+                    .' photo_rest" onmouseover="this.className=\''
+                    .$photo->getClass()
+                    .' photo_over\'" onmouseout="this.className=\''
+                    .$photo->getClass()
+                    .' photo_rest\'" src="/uploaded/photos/'
+                    .$photo->getPath()
+                    .'" alt="'.$photo->getAlt()
+                    .'" /></a>';
             } else {
                 $photos[] = 'Cette photo n\'existe pas';
             }
@@ -106,8 +108,8 @@ class PhotoManager
      * Resize an jpeg image according to a given height, but only if
      * the original image is higher.
      *
-     * @param string $image The path to the original image
-     * @param int $newHeight
+     * @param string $image     The path to the original image
+     * @param int    $newHeight
      */
     public function imageResize($image, $newHeight)
     {
@@ -122,13 +124,13 @@ class PhotoManager
             $resized = imagecreatetruecolor($newWidth, $newHeight);
             imagecopyresampled($resized, $original, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
 
-            copy($image, $image . '.old');
+            copy($image, $image.'.old');
             unlink($image);
 
             if (imagejpeg($resized, $image)) {
-                unlink($image . '.old');
+                unlink($image.'.old');
             } else {
-                copy($image . '.old', $image);
+                copy($image.'.old', $image);
             }
 
             imagedestroy($resized);
@@ -260,7 +262,7 @@ class PhotoManager
      */
     protected function getRepository($controller)
     {
-        $entity = 'Khatovar' . ucfirst($controller) . 'Bundle:' . ucfirst($controller);
+        $entity = 'Khatovar'.ucfirst($controller).'Bundle:'.ucfirst($controller);
 
         return $this->entityManager->getRepository($entity);
     }
@@ -306,7 +308,7 @@ class PhotoManager
         $sortedPhotos = [];
 
         $entities = $this->entityManager
-            ->getRepository('Khatovar' . ucfirst($entityCode) . 'Bundle:' . ucfirst($entityCode))
+            ->getRepository('Khatovar'.ucfirst($entityCode).'Bundle:'.ucfirst($entityCode))
             ->findAll();
 
         foreach ($entities as $entity) {

@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * This file is part of KhatovarWeb.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @copyright   Copyright (C) Damien Carcel (https://github.com/damien-carcel)
- * @link        https://github.com/damien-carcel/KhatovarWeb
+ *
+ * @see        https://github.com/damien-carcel/KhatovarWeb
+ *
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
@@ -33,7 +34,7 @@ use Khatovar\Bundle\PhotoBundle\Entity\Photo;
  */
 class Contact
 {
-    /** @var integer */
+    /** @var int */
     protected $id;
 
     /** @var string */
@@ -52,6 +53,15 @@ class Contact
     protected $photos;
 
     /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        $this->active = false;
+        $this->photos = new ArrayCollection();
+    }
+
+    /**
      * Allow to save only the entity's ID in database as a string when
      * using entity form type.
      *
@@ -59,16 +69,7 @@ class Contact
      */
     public function __toString()
     {
-        return strval($this->id);
-    }
-
-    /**
-     * Constructor.
-     */
-    public function __construct()
-    {
-        $this->active = false;
-        $this->photos = new ArrayCollection();
+        return (string) ($this->id);
     }
 
     /**

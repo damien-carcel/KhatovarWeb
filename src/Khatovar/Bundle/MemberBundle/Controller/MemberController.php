@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * This file is part of KhatovarWeb.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,16 +16,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @copyright   Copyright (C) Damien Carcel (https://github.com/damien-carcel)
- * @link        https://github.com/damien-carcel/KhatovarWeb
+ *
+ * @see        https://github.com/damien-carcel/KhatovarWeb
+ *
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
 namespace Khatovar\Bundle\MemberBundle\Controller;
 
-use Doctrine\ORM\EntityRepository;
 use Khatovar\Bundle\MemberBundle\Entity\Member;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
@@ -46,11 +45,11 @@ class MemberController extends Controller
      */
     public function indexAction()
     {
-        $memberRepository  = $this->get('doctrine.orm.entity_manager')->getRepository('KhatovarMemberBundle:Member');
-        $activeMembers     = $memberRepository->findBy(['active' => true]);
-        $pastMembers       = $memberRepository->findBy(['active' => false]);
+        $memberRepository = $this->get('doctrine.orm.entity_manager')->getRepository('KhatovarMemberBundle:Member');
+        $activeMembers = $memberRepository->findBy(['active' => true]);
+        $pastMembers = $memberRepository->findBy(['active' => false]);
         $activeDeleteForms = $this->createDeleteForms($activeMembers);
-        $pastDeleteForms   = $this->createDeleteForms($pastMembers);
+        $pastDeleteForms = $this->createDeleteForms($pastMembers);
 
         return $this->render(
             'KhatovarMemberBundle:Member:index.html.twig',
@@ -102,7 +101,7 @@ class MemberController extends Controller
     public function newAction()
     {
         $member = new Member();
-        $form   = $this->createCreateForm($member);
+        $form = $this->createCreateForm($member);
 
         return $this->render(
             'KhatovarMemberBundle:Member:new.html.twig',
