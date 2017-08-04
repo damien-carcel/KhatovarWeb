@@ -1,0 +1,27 @@
+default:
+    extensions:
+        Behat\MinkExtension:
+            sessions:
+                default:
+                    symfony2: ~
+        Behat\Symfony2Extension: ~
+        BehatExtension\DoctrineDataFixturesExtension\Extension:
+            lifetime: scenario
+            autoload: false
+            directories: ~
+            fixtures:
+                - Carcel\Bundle\UserBundle\DataFixtures\ORM\LoadUserData
+    suites:
+        default:
+            contexts:
+                - Context\DocumentsBundleFeatureContext:
+                    session: '@session'
+                    container: '@service_container'
+            paths:
+                - '%paths.base%/vendor/carcel/documents-bundle/features'
+        users:
+            contexts:
+                - Context\UserBundleFeatureContext:
+                    session: '@session'
+            paths:
+                - '%paths.base%/vendor/carcel/user-bundle/features'
