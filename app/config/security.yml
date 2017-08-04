@@ -1,6 +1,8 @@
+# To get started with security, check out the documentation:
+# http://symfony.com/doc/current/security.html
 security:
     encoders:
-        FOS\UserBundle\Model\UserInterface: sha512
+        FOS\UserBundle\Model\UserInterface: sha512 #TODO see if that can be change for `bcrypt` without impacts
 
     role_hierarchy:
         ROLE_VIEWER:        [ROLE_USER]
@@ -9,28 +11,38 @@ security:
         ROLE_ADMIN:         [ROLE_UPLOADER, ROLE_EDITOR]
         ROLE_SUPER_ADMIN:   [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
+    # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
         fos_userbundle:
             id: fos_user.user_provider.username
 
     firewalls:
+        # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+
         main:
             pattern: ^/
+            # activate different ways to authenticate
+
+            # http://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
+            #http_basic: ~
+
+            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
             form_login:
                 provider: fos_userbundle
                 csrf_token_generator: security.csrf.token_manager
                 use_referer: true
                 use_forward: true
+                always_use_default_target_path: true
             logout:
                 path: fos_user_security_logout
                 target: /
                 success_handler: carcel_user.handler.logout_success_handler
             anonymous: true
             remember_me:
-                secret: %secret%
+                secret: '%secret%'
 
     access_control:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }

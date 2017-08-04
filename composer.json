@@ -1,61 +1,61 @@
 {
     "name": "khatovar/web",
-    "homepage": "https://github.com/damien-carcel/khatovar-web",
     "license": "GPL",
     "type": "project",
     "description": "Repository for the web site of the french association \"La compagnie franche du Khatovar\"",
+    "homepage": "http://www.compagniefranchedukhatovar.fr",
     "authors": [
         {
             "name": "Damien Carcel",
-            "homepage": "http://www.compagniefranchedukhatovar.fr"
+            "email": "damien.carcel@gmail.com",
+            "homepage": "https://github.com/damien-carcel/khatovar-web"
         }
     ],
     "autoload": {
         "psr-4": {
             "Khatovar\\Bundle\\": "src/Khatovar/Bundle"
         },
-        "classmap": [
-            "app/AppKernel.php",
-            "app/AppCache.php"
-        ]
+        "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
+    },
+    "autoload-dev": {
+        "files": [ "vendor/symfony/symfony/src/Symfony/Component/VarDumper/Resources/functions/dump.php" ]
     },
     "require": {
-        "php": ">=5.5.9",
-        "symfony/symfony": "3.1.*",
-        "doctrine/orm": "^2.5",
+        "php": ">=7.1.0",
+        "carcel/user-bundle": "^0.2",
+        "carcel/documents-bundle": "0.4.x-dev@dev",
         "doctrine/doctrine-bundle": "^1.6",
-        "doctrine/doctrine-cache-bundle": "^1.2",
         "doctrine/doctrine-fixtures-bundle": "^2.3",
-        "symfony/swiftmailer-bundle": "^2.3",
-        "symfony/monolog-bundle": "^2.8",
-        "symfony/polyfill-apcu": "^1.0",
-        "sensio/distribution-bundle": "^5.0",
-        "sensio/framework-extra-bundle": "^3.0.2",
+        "doctrine/orm": "^2.5",
+        "egeloen/ckeditor-bundle": "^6.0",
         "incenteev/composer-parameter-handler": "^2.0",
-        "carcel/documents-bundle": "^0.4@dev",
-        "carcel/user-bundle": "^0.1",
-        "friendsofsymfony/user-bundle": "^2.0@dev",
-        "egeloen/ckeditor-bundle": "^4.0",
         "knplabs/knp-menu-bundle": "^2.1.1",
-        "stof/doctrine-extensions-bundle": "^1.2.2"
+        "sensio/distribution-bundle": "^5.0.19",
+        "sensio/framework-extra-bundle": "^3.0.2",
+        "stof/doctrine-extensions-bundle": "^1.2.2",
+        "symfony/monolog-bundle": "^3.1.0",
+        "symfony/polyfill-apcu": "^1.0",
+        "symfony/swiftmailer-bundle": "^2.3.10",
+        "symfony/symfony": "3.3.*",
+        "twig/twig": "^2.0"
     },
     "require-dev": {
-        "sensio/generator-bundle": "^3.0",
-        "symfony/phpunit-bridge": "^3.0",
         "behat/behat": "^3.1",
         "behat/mink": "^1.7",
         "behat/mink-extension": "^2.2",
         "behat/mink-browserkit-driver": "^1.3",
         "behat/symfony2-extension": "^2.1",
         "behat-extension/doctrine-data-fixtures-extension": "^4.0",
-        "friendsofphp/php-cs-fixer": "^1.11",
+        "friendsofphp/php-cs-fixer": "^2.0",
         "phpmd/phpmd": "^2.4",
-        "phpspec/phpspec": "^3.0",
-        "phpunit/phpunit": "^5.4",
-        "squizlabs/php_codesniffer": "^2.5"
+        "phpspec/phpspec": "^4.0",
+        "phpunit/phpunit": "^6.0",
+        "sensio/generator-bundle": "^3.0",
+        "squizlabs/php_codesniffer": "^3.0",
+        "symfony/phpunit-bridge": "^3.0"
     },
     "scripts": {
-        "post-install-cmd": [
+        "symfony-scripts": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
@@ -63,24 +63,27 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
         ],
+        "post-install-cmd": [
+            "@symfony-scripts"
+        ],
         "post-update-cmd": [
-            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
+            "@symfony-scripts"
         ]
     },
     "config": {
-        "bin-dir": "bin"
+        "bin-dir": "vendor/bin",
+        "platform": {
+            "php": "7.1"
+        },
+        "sort-packages": true
     },
     "minimum-stability": "stable",
     "extra": {
         "symfony-app-dir": "app",
         "symfony-bin-dir": "bin",
         "symfony-var-dir": "var",
-        "symfony-web-dir": "www",
+        "symfony-web-dir": "web",
+        "symfony-tests-dir": "tests",
         "symfony-assets-install": "relative",
         "incenteev-parameters": {
             "file": "app/config/parameters.yml"
