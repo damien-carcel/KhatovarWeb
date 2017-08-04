@@ -1,0 +1,28 @@
+{
+    "name": "documents-bundle-dev",
+    "version": "0.4.0",
+    "description": "Development application for CarcelDocumentsBundle",
+    "main": "index.js",
+    "scripts": {
+        "assets": "node_modules/.bin/bower update"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/damien-carcel/documents-bundle-dev.git"
+    },
+    "keywords": [
+        "document management"
+    ],
+    "author": {
+        "name": "Damien Carcel",
+        "email": "damien.carcel@gmail.com"
+    },
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/damien-carcel/documents-bundle-dev/issues"
+    },
+    "homepage": "https://github.com/damien-carcel/documents-bundle-dev#readme",
+    "dependencies": {
+        "bower": "^1.8.0"
+    }
+}

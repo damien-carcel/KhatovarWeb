@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "641ac88c2eb11cd08bd951dd52204b4b",
+    "content-hash": "9b6bdef78793488d35d9359ae584c191",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -56,12 +56,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/damien-carcel/DocumentsBundle.git",
-                "reference": "02cf7d7234a77c25b8fa8babe065df8fb5613525"
+                "reference": "89629c1e75cf3d59b497a2a9b031d13f8adba862"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/damien-carcel/DocumentsBundle/zipball/02cf7d7234a77c25b8fa8babe065df8fb5613525",
-                "reference": "02cf7d7234a77c25b8fa8babe065df8fb5613525",
+                "url": "https://api.github.com/repos/damien-carcel/DocumentsBundle/zipball/89629c1e75cf3d59b497a2a9b031d13f8adba862",
+                "reference": "89629c1e75cf3d59b497a2a9b031d13f8adba862",
                 "shasum": ""
             },
             "require": {
@@ -70,16 +70,15 @@
                 "doctrine/orm": "^2.5",
                 "php": ">=7.1",
                 "symfony/framework-bundle": "^3.0",
-                "symfony/swiftmailer-bundle": "^2.3",
                 "symfony/translation": "^3.0",
-                "twig/twig": "^1.0||^2.0"
+                "twig/twig": "^2.0"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.0",
                 "phpmd/phpmd": "^2.4",
-                "phpspec/phpspec": "^3.0",
-                "phpunit/phpunit": "^5.4",
-                "squizlabs/php_codesniffer": "^2.5"
+                "phpspec/phpspec": "^4.0",
+                "phpunit/phpunit": "^6.0",
+                "squizlabs/php_codesniffer": "^3.0"
             },
             "type": "symfony-bundle",
             "extra": {
@@ -111,20 +110,20 @@
                 "management",
                 "web server"
             ],
-            "time": "2017-07-23 19:00:01"
+            "time": "2017-08-04 16:29:22"
         },
         {
             "name": "carcel/user-bundle",
-            "version": "v0.2.2",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/damien-carcel/UserBundle.git",
-                "reference": "9f525cf82e52d866b0eb111f2b24e4f743de53ad"
+                "reference": "1f1542d5b1b55271bf02336761b4198c21869f03"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/damien-carcel/UserBundle/zipball/9f525cf82e52d866b0eb111f2b24e4f743de53ad",
-                "reference": "9f525cf82e52d866b0eb111f2b24e4f743de53ad",
+                "url": "https://api.github.com/repos/damien-carcel/UserBundle/zipball/1f1542d5b1b55271bf02336761b4198c21869f03",
+                "reference": "1f1542d5b1b55271bf02336761b4198c21869f03",
                 "shasum": ""
             },
             "require": {
@@ -134,16 +133,16 @@
                 "friendsofsymfony/user-bundle": "^2.0",
                 "php": ">=7.1",
                 "symfony/framework-bundle": "^3.0",
-                "symfony/swiftmailer-bundle": "^2.3",
+                "symfony/swiftmailer-bundle": "^3.0",
                 "symfony/translation": "^3.0",
-                "twig/twig": "^1.0||^2.0"
+                "twig/twig": "^2.0"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.0",
                 "phpmd/phpmd": "^2.4",
-                "phpspec/phpspec": "^3.0",
-                "phpunit/phpunit": "^5.4",
-                "squizlabs/php_codesniffer": "^2.5"
+                "phpspec/phpspec": "^4.0",
+                "phpunit/phpunit": "^6.0",
+                "squizlabs/php_codesniffer": "^3.0"
             },
             "type": "symfony-bundle",
             "extra": {
@@ -173,7 +172,7 @@
             "keywords": [
                 "User management"
             ],
-            "time": "2017-07-23T12:26:34+00:00"
+            "time": "2017-08-04 16:18:17"
         },
         {
             "name": "composer/ca-bundle",
@@ -1246,6 +1245,63 @@
             "time": "2017-02-27T20:18:54+00:00"
         },
         {
+            "name": "egulias/email-validator",
+            "version": "2.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/egulias/EmailValidator.git",
+                "reference": "bc31baa11ea2883e017f0a10d9722ef9d50eac1c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/bc31baa11ea2883e017f0a10d9722ef9d50eac1c",
+                "reference": "bc31baa11ea2883e017f0a10d9722ef9d50eac1c",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/lexer": "^1.0.1",
+                "php": ">= 5.5"
+            },
+            "require-dev": {
+                "dominicsayers/isemail": "dev-master",
+                "phpunit/phpunit": "^4.8.0",
+                "satooshi/php-coveralls": "dev-master"
+            },
+            "suggest": {
+                "ext-intl": "PHP Internationalization Libraries are required to use the SpoofChecking validation"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Egulias\\EmailValidator\\": "EmailValidator"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Eduardo Gulias Davis"
+                }
+            ],
+            "description": "A library for validating emails against several RFCs",
+            "homepage": "https://github.com/egulias/EmailValidator",
+            "keywords": [
+                "email",
+                "emailvalidation",
+                "emailvalidator",
+                "validation",
+                "validator"
+            ],
+            "time": "2017-01-30T22:07:36+00:00"
+        },
+        {
             "name": "fig/link-util",
             "version": "1.0.0",
             "source": {
@@ -2273,29 +2329,30 @@
         },
         {
             "name": "swiftmailer/swiftmailer",
-            "version": "v5.4.8",
+            "version": "v6.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/swiftmailer/swiftmailer.git",
-                "reference": "9a06dc570a0367850280eefd3f1dc2da45aef517"
+                "reference": "008f088d535ed3333af5ad804dd4c0eaf97c2805"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/9a06dc570a0367850280eefd3f1dc2da45aef517",
-                "reference": "9a06dc570a0367850280eefd3f1dc2da45aef517",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/008f088d535ed3333af5ad804dd4c0eaf97c2805",
+                "reference": "008f088d535ed3333af5ad804dd4c0eaf97c2805",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.3"
+                "egulias/email-validator": "~2.0",
+                "php": ">=7.0.0"
             },
             "require-dev": {
                 "mockery/mockery": "~0.9.1",
-                "symfony/phpunit-bridge": "~3.2"
+                "symfony/phpunit-bridge": "~3.3@dev"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "5.4-dev"
+                    "dev-master": "6.0-dev"
                 }
             },
             "autoload": {
@@ -2323,7 +2380,7 @@
                 "mail",
                 "mailer"
             ],
-            "time": "2017-05-01T15:54:03+00:00"
+            "time": "2017-05-20T06:20:27+00:00"
         },
         {
             "name": "symfony/monolog-bundle",
@@ -2724,22 +2781,22 @@
         },
         {
             "name": "symfony/swiftmailer-bundle",
-            "version": "v2.6.3",
+            "version": "v3.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/swiftmailer-bundle.git",
-                "reference": "11555c338f3c367b0a1bd2f024a53aa813f4ce00"
+                "reference": "1c870bdd6ad0cccd45a7e553f80ca881b60a14d6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/swiftmailer-bundle/zipball/11555c338f3c367b0a1bd2f024a53aa813f4ce00",
-                "reference": "11555c338f3c367b0a1bd2f024a53aa813f4ce00",
+                "url": "https://api.github.com/repos/symfony/swiftmailer-bundle/zipball/1c870bdd6ad0cccd45a7e553f80ca881b60a14d6",
+                "reference": "1c870bdd6ad0cccd45a7e553f80ca881b60a14d6",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.2",
-                "swiftmailer/swiftmailer": "~4.2|~5.0",
-                "symfony/config": "~2.7|~3.0",
+                "swiftmailer/swiftmailer": "^6.0.1",
+                "symfony/config": "~2.8|~3.0",
                 "symfony/dependency-injection": "~2.7|~3.0",
                 "symfony/http-kernel": "~2.7|~3.0"
             },
@@ -2755,7 +2812,7 @@
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.6-dev"
+                    "dev-master": "3.0-dev"
                 }
             },
             "autoload": {
@@ -2779,7 +2836,7 @@
             ],
             "description": "Symfony SwiftmailerBundle",
             "homepage": "http://symfony.com",
-            "time": "2017-07-22T07:18:13+00:00"
+            "time": "2017-06-09T00:03:44+00:00"
         },
         {
             "name": "symfony/symfony",
@@ -5434,6 +5491,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "carcel/user-bundle": 20,
         "carcel/documents-bundle": 20
     },
     "prefer-stable": false,
