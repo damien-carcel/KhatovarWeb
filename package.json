@@ -1,7 +1,7 @@
 {
-    "name": "documents-bundle-dev",
-    "version": "0.4.0",
-    "description": "Development application for CarcelDocumentsBundle",
+    "name": "khatovar-web",
+    "version": "1.0.0",
+    "description": "Repository for the web site of the french association \"La compagnie franche du Khatovar\"",
     "main": "index.js",
     "scripts": {
         "assets": "node_modules/.bin/bower update"

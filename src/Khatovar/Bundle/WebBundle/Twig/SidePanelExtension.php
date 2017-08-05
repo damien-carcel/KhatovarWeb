@@ -51,16 +51,11 @@ class SidePanelExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            'get_controller_photos' => new \Twig_SimpleFunction($this, 'getControllerPhotos'),
+            'get_controller_photos' => new \Twig_SimpleFunction(
+                'side_panel_extension',
+                [$this, 'getControllerPhotos']
+            ),
         ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'side_panel_extension';
     }
 
     /**

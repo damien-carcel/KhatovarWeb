@@ -56,12 +56,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/damien-carcel/DocumentsBundle.git",
-                "reference": "89629c1e75cf3d59b497a2a9b031d13f8adba862"
+                "reference": "9fda0770ce4a33dbc011f759b396ff13f2eba0e2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/damien-carcel/DocumentsBundle/zipball/89629c1e75cf3d59b497a2a9b031d13f8adba862",
-                "reference": "89629c1e75cf3d59b497a2a9b031d13f8adba862",
+                "url": "https://api.github.com/repos/damien-carcel/DocumentsBundle/zipball/9fda0770ce4a33dbc011f759b396ff13f2eba0e2",
+                "reference": "9fda0770ce4a33dbc011f759b396ff13f2eba0e2",
                 "shasum": ""
             },
             "require": {
@@ -90,7 +90,7 @@
             "autoload": {
                 "psr-4": {
                     "Carcel\\Bundle\\DocumentsBundle\\": "src",
-                    "Context\\": "features/bootstrap"
+                    "DocumentsBundleContext\\": "features/bootstrap"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -110,7 +110,7 @@
                 "management",
                 "web server"
             ],
-            "time": "2017-08-04 16:29:22"
+            "time": "2017-08-05 09:22:32"
         },
         {
             "name": "carcel/user-bundle",
@@ -118,12 +118,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/damien-carcel/UserBundle.git",
-                "reference": "1f1542d5b1b55271bf02336761b4198c21869f03"
+                "reference": "68dd1015c6fdd89dfc76f9e41ff9ed40fef6bfe8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/damien-carcel/UserBundle/zipball/1f1542d5b1b55271bf02336761b4198c21869f03",
-                "reference": "1f1542d5b1b55271bf02336761b4198c21869f03",
+                "url": "https://api.github.com/repos/damien-carcel/UserBundle/zipball/68dd1015c6fdd89dfc76f9e41ff9ed40fef6bfe8",
+                "reference": "68dd1015c6fdd89dfc76f9e41ff9ed40fef6bfe8",
                 "shasum": ""
             },
             "require": {
@@ -154,7 +154,7 @@
             "autoload": {
                 "psr-4": {
                     "Carcel\\Bundle\\UserBundle\\": "src",
-                    "Context\\": "features/bootstrap"
+                    "UserBundleContext\\": "features/bootstrap"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -172,7 +172,7 @@
             "keywords": [
                 "User management"
             ],
-            "time": "2017-08-04 16:18:17"
+            "time": "2017-08-05 09:06:53"
         },
         {
             "name": "composer/ca-bundle",
@@ -1661,7 +1661,7 @@
                     "email": "stof@notk.org"
                 },
                 {
-                    "name": "Knplabs",
+                    "name": "KnpLabs",
                     "homepage": "http://knplabs.com"
                 },
                 {
@@ -4081,16 +4081,16 @@
         },
         {
             "name": "phpspec/phpspec",
-            "version": "4.0.0",
+            "version": "4.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/phpspec.git",
-                "reference": "f6b26bd9cb2b69894a818cf570feeabc7c8f5655"
+                "reference": "eae06d6b409fc1479e2f12d0a9ab1a88e2fda94c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/phpspec/zipball/f6b26bd9cb2b69894a818cf570feeabc7c8f5655",
-                "reference": "f6b26bd9cb2b69894a818cf570feeabc7c8f5655",
+                "url": "https://api.github.com/repos/phpspec/phpspec/zipball/eae06d6b409fc1479e2f12d0a9ab1a88e2fda94c",
+                "reference": "eae06d6b409fc1479e2f12d0a9ab1a88e2fda94c",
                 "shasum": ""
             },
             "require": {
@@ -4158,7 +4158,7 @@
                 "testing",
                 "tests"
             ],
-            "time": "2017-07-29T17:27:35+00:00"
+            "time": "2017-08-05T20:11:20+00:00"
         },
         {
             "name": "phpspec/prophecy",

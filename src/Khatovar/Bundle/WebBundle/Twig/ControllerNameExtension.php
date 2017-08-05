@@ -67,14 +67,6 @@ class ControllerNameExtension extends \Twig_Extension
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'controller_name_extension';
-    }
-
-    /**
      * Get current controller name.
      *
      * @return string|null
