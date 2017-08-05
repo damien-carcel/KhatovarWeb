@@ -88,7 +88,7 @@ class MemberType extends AbstractType
                 'active',
                 CheckboxType::class,
                 [
-                    'label'    => 'Membre actif',
+                    'label' => 'Membre actif',
                     'required' => false,
                 ]
             )
@@ -96,10 +96,10 @@ class MemberType extends AbstractType
                 'owner',
                 EntityType::class,
                 [
-                    'label'         => 'Utilisateur lié',
-                    'class'         => 'Carcel\Bundle\UserBundle\Entity\User',
-                    'choice_label'  => 'username',
-                    'required'      => false,
+                    'label' => 'Utilisateur lié',
+                    'class' => 'Carcel\Bundle\UserBundle\Entity\User',
+                    'choice_label' => 'username',
+                    'required' => false,
                     'query_builder' => function (EntityRepository $er) {
                         return $er->createQueryBuilder('o')->orderBy('o.username');
                     },
@@ -117,7 +117,7 @@ class MemberType extends AbstractType
                 'rank',
                 TextType::class,
                 [
-                    'label'    => 'Rang',
+                    'label' => 'Rang',
                     'required' => false,
                 ]
             )
@@ -125,7 +125,7 @@ class MemberType extends AbstractType
                 'quote',
                 TextType::class,
                 [
-                    'label'    => 'Citation',
+                    'label' => 'Citation',
                     'required' => false,
                 ]
             )
@@ -133,7 +133,7 @@ class MemberType extends AbstractType
                 'skill',
                 TextType::class,
                 [
-                    'label'    => 'Compétences',
+                    'label' => 'Compétences',
                     'required' => false,
                 ]
             )
@@ -141,7 +141,7 @@ class MemberType extends AbstractType
                 'age',
                 TextType::class,
                 [
-                    'label'    => 'Âge',
+                    'label' => 'Âge',
                     'required' => false,
                 ]
             )
@@ -149,7 +149,7 @@ class MemberType extends AbstractType
                 'size',
                 TextType::class,
                 [
-                    'label'    => 'Taille',
+                    'label' => 'Taille',
                     'required' => false,
                 ]
             )
@@ -157,7 +157,7 @@ class MemberType extends AbstractType
                 'weight',
                 TextType::class,
                 [
-                    'label'    => 'Poids',
+                    'label' => 'Poids',
                     'required' => false,
                 ]
             )
@@ -165,7 +165,7 @@ class MemberType extends AbstractType
                 'strength',
                 TextType::class,
                 [
-                    'label'    => 'Point fort',
+                    'label' => 'Point fort',
                     'required' => false,
                 ]
             )
@@ -173,7 +173,7 @@ class MemberType extends AbstractType
                 'weakness',
                 TextType::class,
                 [
-                    'label'    => 'Point faible',
+                    'label' => 'Point faible',
                     'required' => false,
                 ]
             )

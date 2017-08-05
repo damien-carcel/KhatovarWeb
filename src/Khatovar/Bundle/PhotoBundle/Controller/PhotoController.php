@@ -62,7 +62,7 @@ class PhotoController extends Controller
             'KhatovarPhotoBundle:Photo:index.html.twig',
             [
                 'sorted_photos' => $photos,
-                'delete_forms'  => $this->createDeleteForms($photos),
+                'delete_forms' => $this->createDeleteForms($photos),
             ]
         );
     }
@@ -116,7 +116,7 @@ class PhotoController extends Controller
             if ($this->isGranted('ROLE_EDITOR')) {
                 return $this->redirect($this->generateUrl(
                     'khatovar_web_photo_edit',
-                    ['id'=> $photo->getId()]
+                    ['id' => $photo->getId()]
                 ));
             }
 
@@ -152,7 +152,7 @@ class PhotoController extends Controller
             'KhatovarPhotoBundle:Photo:edit.html.twig',
             [
                 'edit_form' => $editForm->createView(),
-                'photo'     => $photo,
+                'photo' => $photo,
             ]
         );
     }
@@ -191,7 +191,7 @@ class PhotoController extends Controller
             'KhatovarPhotoBundle:Photo:edit.html.twig',
             [
                 'edit_form' => $editForm->createView(),
-                'photo'     => $photo,
+                'photo' => $photo,
             ]
         );
     }
@@ -292,7 +292,7 @@ class PhotoController extends Controller
                 SubmitType::class,
                 [
                     'label' => 'Effacer',
-                    'attr'  => ['onclick' => 'return confirm("Êtes-vous sûr ?")'],
+                    'attr' => ['onclick' => 'return confirm("Êtes-vous sûr ?")'],
                 ]
             )
             ->getForm();

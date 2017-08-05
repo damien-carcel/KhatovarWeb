@@ -51,7 +51,7 @@ class AppearanceType extends AbstractType
                 'content',
                 CKEditorType::class,
                 [
-                    'label'       => false,
+                    'label' => false,
                     'config_name' => 'basic_config',
                 ]
             )
@@ -59,7 +59,7 @@ class AppearanceType extends AbstractType
                 'active',
                 CheckboxType::class,
                 [
-                    'label'    => 'Prestation proposée',
+                    'label' => 'Prestation proposée',
                     'required' => false,
                 ]
             )
@@ -67,7 +67,7 @@ class AppearanceType extends AbstractType
                 'pageType',
                 ChoiceType::class,
                 [
-                    'label'   => 'Type de page',
+                    'label' => 'Type de page',
                     'choices' => array_flip(AppearanceHelper::getAppearancePageTypes()),
                 ]
             );

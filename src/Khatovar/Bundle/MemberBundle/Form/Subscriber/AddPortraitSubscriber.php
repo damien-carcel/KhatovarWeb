@@ -60,9 +60,9 @@ class AddPortraitSubscriber implements EventSubscriberInterface
                 'portrait',
                 EntityType::class,
                 [
-                    'label'         => 'Photo de profil',
-                    'class'         => 'Khatovar\Bundle\PhotoBundle\Entity\Photo',
-                    'choice_label'  => 'alt',
+                    'label' => 'Photo de profil',
+                    'class' => 'Khatovar\Bundle\PhotoBundle\Entity\Photo',
+                    'choice_label' => 'alt',
                     'query_builder' => function (EntityRepository $er) use ($member) {
                         return $er->createQueryBuilder('p')
                             ->where('p.member = :member')

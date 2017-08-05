@@ -69,9 +69,9 @@ class AddPassedExactionFieldsSubscriber implements EventSubscriberInterface
                     'image',
                     EntityType::class,
                     [
-                        'class'         => 'Khatovar\Bundle\PhotoBundle\Entity\Photo',
-                        'label'         => 'L\'image de la fête',
-                        'required'      => false,
+                        'class' => 'Khatovar\Bundle\PhotoBundle\Entity\Photo',
+                        'label' => 'L\'image de la fête',
+                        'required' => false,
                         'query_builder' => function (EntityRepository $repository) use ($exaction) {
                             return $repository
                                 ->createQueryBuilder('e')
@@ -84,7 +84,7 @@ class AddPassedExactionFieldsSubscriber implements EventSubscriberInterface
                     'onlyPhotos',
                     CheckboxType::class,
                     [
-                        'label'    => 'Pas de résumé de fête, seulement des photos ?',
+                        'label' => 'Pas de résumé de fête, seulement des photos ?',
                         'required' => false,
                     ]
                 )
@@ -92,7 +92,7 @@ class AddPassedExactionFieldsSubscriber implements EventSubscriberInterface
                     'abstract',
                     TextareaType::class,
                     [
-                        'label'    => 'Résumé de la fête',
+                        'label' => 'Résumé de la fête',
                         'required' => false,
                     ]
                 )
@@ -100,7 +100,7 @@ class AddPassedExactionFieldsSubscriber implements EventSubscriberInterface
                     'imageStory',
                     TextareaType::class,
                     [
-                        'label'    => 'Explication de l\'image de la fête',
+                        'label' => 'Explication de l\'image de la fête',
                         'required' => false,
                     ]
                 );

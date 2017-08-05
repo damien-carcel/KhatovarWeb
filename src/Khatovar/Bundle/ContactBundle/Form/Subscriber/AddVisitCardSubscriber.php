@@ -61,9 +61,9 @@ class AddVisitCardSubscriber implements EventSubscriberInterface
                 'visitCard',
                 EntityType::class,
                 [
-                    'label'         => 'Carte de visite',
-                    'class'         => 'Khatovar\Bundle\PhotoBundle\Entity\Photo',
-                    'choice_label'  => 'alt',
+                    'label' => 'Carte de visite',
+                    'class' => 'Khatovar\Bundle\PhotoBundle\Entity\Photo',
+                    'choice_label' => 'alt',
                     'query_builder' => function (EntityRepository $repository) use ($contact) {
                         return $repository->createQueryBuilder('c')
                             ->where('c.contact = :contact')

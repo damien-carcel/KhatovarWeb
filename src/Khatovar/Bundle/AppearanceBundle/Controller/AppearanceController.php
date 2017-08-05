@@ -54,7 +54,7 @@ class AppearanceController extends Controller
         return $this->render(
             'KhatovarAppearanceBundle:Appearance:index.html.twig',
             [
-                'appearances'  => $appearances,
+                'appearances' => $appearances,
                 'introduction' => $introduction,
             ]
         );
@@ -74,7 +74,7 @@ class AppearanceController extends Controller
         return $this->render(
             'KhatovarAppearanceBundle:Appearance:index.html.twig',
             [
-                'appearances'  => $appearances,
+                'appearances' => $appearances,
                 'introduction' => null,
             ]
         );
@@ -96,9 +96,9 @@ class AppearanceController extends Controller
         return $this->render(
             'KhatovarAppearanceBundle:Appearance:show.html.twig',
             [
-                'previous'   => null,
+                'previous' => null,
                 'appearance' => $camp,
-                'next'       => null,
+                'next' => null,
             ]
         );
     }
@@ -121,9 +121,9 @@ class AppearanceController extends Controller
         return $this->render(
             'KhatovarAppearanceBundle:Appearance:list.html.twig',
             [
-                'appearances'  => $appearances,
+                'appearances' => $appearances,
                 'delete_forms' => $deleteForms,
-                'helper'       => AppearanceHelper::getAppearancePageTypes(),
+                'helper' => AppearanceHelper::getAppearancePageTypes(),
             ]
         );
     }
@@ -142,9 +142,9 @@ class AppearanceController extends Controller
         return $this->render(
             'KhatovarAppearanceBundle:Appearance:show.html.twig',
             [
-                'previous'   => $appearances['previous'],
+                'previous' => $appearances['previous'],
                 'appearance' => $appearances['current'],
-                'next'       => $appearances['next'],
+                'next' => $appearances['next'],
             ]
         );
     }
@@ -383,7 +383,7 @@ class AppearanceController extends Controller
                 SubmitType::class,
                 [
                     'label' => 'Effacer',
-                    'attr'  => ['onclick' => 'return confirm("Êtes-vous sûr ?")'],
+                    'attr' => ['onclick' => 'return confirm("Êtes-vous sûr ?")'],
                 ]
             )
             ->getForm();

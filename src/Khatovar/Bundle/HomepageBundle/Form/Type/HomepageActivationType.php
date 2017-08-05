@@ -61,9 +61,9 @@ class HomepageActivationType extends AbstractType
                 'active',
                 EntityType::class,
                 [
-                    'class'             => 'Khatovar\Bundle\HomepageBundle\Entity\Homepage',
-                    'label'             => false,
-                    'choice_label'      => 'name',
+                    'class' => 'Khatovar\Bundle\HomepageBundle\Entity\Homepage',
+                    'label' => false,
+                    'choice_label' => 'name',
                     'preferred_choices' => [$previousActive],
                 ]
             )
@@ -77,7 +77,7 @@ class HomepageActivationType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class'        => 'Khatovar\Bundle\HomepageBundle\Entity\Homepage',
+            'data_class' => 'Khatovar\Bundle\HomepageBundle\Entity\Homepage',
             'validation_groups' => false,
         ]);
     }

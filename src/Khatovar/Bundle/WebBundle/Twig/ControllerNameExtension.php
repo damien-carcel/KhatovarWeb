@@ -123,7 +123,7 @@ class ControllerNameExtension extends \Twig_Extension
         $slugOrId = $this->request->get('slug');
 
         if (null === $slugOrId) {
-            $slugOrId = (int)$this->request->get('id');
+            $slugOrId = (int) $this->request->get('id');
         }
 
         return $slugOrId;

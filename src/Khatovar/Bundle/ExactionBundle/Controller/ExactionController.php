@@ -84,7 +84,7 @@ class ExactionController extends Controller
             'KhatovarExactionBundle:Exaction:to_come.html.twig',
             [
                 'future_exactions' => $futureExactions,
-                'delete_forms'     => $deleteForms,
+                'delete_forms' => $deleteForms,
             ]
         );
     }
@@ -107,7 +107,7 @@ class ExactionController extends Controller
         return $this->render(
             'KhatovarExactionBundle:Exaction:view_by_year.html.twig',
             [
-                'exactions'    => $exactions,
+                'exactions' => $exactions,
                 'delete_forms' => $deleteForms,
             ]
         );
@@ -128,7 +128,7 @@ class ExactionController extends Controller
         return $this->render(
             'KhatovarExactionBundle:Exaction:new.html.twig',
             [
-                'form'            => $form->createView(),
+                'form' => $form->createView(),
                 'exaction_passed' => false,
             ]
         );
@@ -165,7 +165,7 @@ class ExactionController extends Controller
         return $this->render(
             'KhatovarExactionBundle:Exaction:new.html.twig',
             [
-                'form'            => $form->createView(),
+                'form' => $form->createView(),
                 'exaction_passed' => false,
             ]
         );
@@ -196,7 +196,7 @@ class ExactionController extends Controller
         return $this->render(
             'KhatovarExactionBundle:Exaction:edit.html.twig',
             [
-                'edit_form'       => $editForm->createView(),
+                'edit_form' => $editForm->createView(),
                 'exaction_passed' => $exactionPassed,
             ]
         );
@@ -237,7 +237,7 @@ class ExactionController extends Controller
         return $this->render(
             'KhatovarExactionBundle:Exaction:edit.html.twig',
             [
-                'edit_form'       => $editForm->createView(),
+                'edit_form' => $editForm->createView(),
                 'exaction_passed' => $exactionPassed,
             ]
         );
@@ -337,7 +337,7 @@ class ExactionController extends Controller
                 SubmitType::class,
                 [
                     'label' => 'Effacer',
-                    'attr'  => ['onclick' => 'return confirm("Êtes-vous sûr ?")'],
+                    'attr' => ['onclick' => 'return confirm("Êtes-vous sûr ?")'],
                 ]
             )
             ->getForm();

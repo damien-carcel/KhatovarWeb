@@ -104,9 +104,9 @@ class ContactController extends Controller
         return $this->render(
             'KhatovarContactBundle:Contact:list.html.twig',
             [
-                'contacts'        => $contacts,
+                'contacts' => $contacts,
                 'activation_form' => $form->createView(),
-                'delete_forms'    => $deleteForms,
+                'delete_forms' => $deleteForms,
             ]
         );
     }
@@ -326,7 +326,7 @@ class ContactController extends Controller
                 SubmitType::class,
                 [
                     'label' => 'Effacer',
-                    'attr'  => ['onclick' => 'return confirm("Êtes-vous sûr ?")'],
+                    'attr' => ['onclick' => 'return confirm("Êtes-vous sûr ?")'],
                 ]
             )
             ->getForm();

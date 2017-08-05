@@ -69,14 +69,14 @@ class AddAuthorizedFieldsSubscriber implements EventSubscriberInterface
                     'class',
                     ChoiceType::class,
                     [
-                        'label'             => 'Taille de la photo',
-                        'choices'           => [
-                            'Petit format'  => 'photo_small',
+                        'label' => 'Taille de la photo',
+                        'choices' => [
+                            'Petit format' => 'photo_small',
                             'Format normal' => 'photo',
-                            'Panorama'      => 'panorama',
+                            'Panorama' => 'panorama',
                         ],
                         'preferred_choices' => ['photo'],
-                        'required'          => true,
+                        'required' => true,
                     ]
                 );
             } else {
@@ -87,9 +87,9 @@ class AddAuthorizedFieldsSubscriber implements EventSubscriberInterface
                 $entityName,
                 EntityType::class,
                 [
-                    'class'        => 'Khatovar'.ucfirst($entityName).'Bundle:'.ucfirst($entityName),
+                    'class' => 'Khatovar'.ucfirst($entityName).'Bundle:'.ucfirst($entityName),
                     'choice_label' => $entityName === EntityHelper::EXACTION_CODE ? 'completeName' : 'name',
-                    'label'        => 'Page',
+                    'label' => 'Page',
                 ]
             );
         }

@@ -61,9 +61,9 @@ class ContactActivationType extends AbstractType
                 'active',
                 EntityType::class,
                 [
-                    'class'             => 'Khatovar\Bundle\ContactBundle\Entity\Contact',
-                    'label'             => false,
-                    'choice_label'      => 'name',
+                    'class' => 'Khatovar\Bundle\ContactBundle\Entity\Contact',
+                    'label' => false,
+                    'choice_label' => 'name',
                     'preferred_choices' => [$previousActive],
                 ]
             )
@@ -77,7 +77,7 @@ class ContactActivationType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class'        => 'Khatovar\Bundle\ContactBundle\Entity\Contact',
+            'data_class' => 'Khatovar\Bundle\ContactBundle\Entity\Contact',
             'validation_groups' => false,
         ]);
     }

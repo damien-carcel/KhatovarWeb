@@ -112,8 +112,8 @@ class AppearanceManager
 
         return [
             'previous' => null,
-            'current'  => $camp,
-            'next'     => null,
+            'current' => $camp,
+            'next' => null,
         ];
     }
 

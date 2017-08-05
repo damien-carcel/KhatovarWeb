@@ -110,9 +110,9 @@ class HomepageController extends Controller
         return $this->render(
             'KhatovarHomepageBundle:Homepage:list.html.twig',
             [
-                'homepages'       => $homepages,
+                'homepages' => $homepages,
                 'activation_form' => $form->createView(),
-                'delete_forms'    => $deleteForms,
+                'delete_forms' => $deleteForms,
             ]
         );
     }
@@ -350,7 +350,7 @@ class HomepageController extends Controller
                 SubmitType::class,
                 [
                     'label' => 'Effacer',
-                    'attr'  => ['onclick' => 'return confirm("Êtes-vous sûr ?")'],
+                    'attr' => ['onclick' => 'return confirm("Êtes-vous sûr ?")'],
                 ]
             )
             ->getForm();

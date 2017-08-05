@@ -74,8 +74,8 @@ class PhotoType extends AbstractType
                 'entity',
                 ChoiceType::class,
                 [
-                    'label'             => 'Rattacher la photo à une',
-                    'choices'           => PhotoHelper::getPhotoEntities(),
+                    'label' => 'Rattacher la photo à une',
+                    'choices' => PhotoHelper::getPhotoEntities(),
                     'preferred_choices' => [EntityHelper::HOMEPAGE_CODE],
                 ]
             );

@@ -61,7 +61,7 @@ class ContactType extends AbstractType
                 CKEditorType::class,
                 [
                     'config_name' => 'basic_config',
-                    'label'       => 'Contenu',
+                    'label' => 'Contenu',
                 ]
             );
 

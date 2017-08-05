@@ -54,10 +54,10 @@ class MemberController extends Controller
         return $this->render(
             'KhatovarMemberBundle:Member:index.html.twig',
             [
-                'active_members'      => $activeMembers,
-                'past_members'        => $pastMembers,
+                'active_members' => $activeMembers,
+                'past_members' => $pastMembers,
                 'active_delete_forms' => $activeDeleteForms,
-                'past_delete_forms'   => $pastDeleteForms,
+                'past_delete_forms' => $pastDeleteForms,
             ]
         );
     }
@@ -84,9 +84,9 @@ class MemberController extends Controller
         return $this->render(
             'KhatovarMemberBundle:Member:show.html.twig',
             [
-                'member'       => $member,
+                'member' => $member,
                 'current_user' => $currentUser,
-                'photos'       => $photos,
+                'photos' => $photos,
             ]
         );
     }
@@ -179,7 +179,7 @@ class MemberController extends Controller
             'KhatovarMemberBundle:Member:edit.html.twig',
             [
                 'edit_form' => $editForm->createView(),
-                'edit'      => true,
+                'edit' => true,
             ]
         );
     }
@@ -220,7 +220,7 @@ class MemberController extends Controller
             'KhatovarMemberBundle:Member:edit.html.twig',
             [
                 'edit_form' => $editForm->createView(),
-                'edit'      => true,
+                'edit' => true,
             ]
         );
     }
@@ -325,7 +325,7 @@ class MemberController extends Controller
                 SubmitType::class,
                 [
                     'label' => 'Effacer',
-                    'attr'  => ['onclick' => 'return confirm("Êtes-vous sûr ?")'],
+                    'attr' => ['onclick' => 'return confirm("Êtes-vous sûr ?")'],
                 ]
             )
             ->getForm();

@@ -119,8 +119,8 @@ class MenuBuilder
             $menu['programmes']->addChild(
                 $programme->getSlug(),
                 [
-                    'label'           => $programme->getName(),
-                    'route'           => 'khatovar_web_appearance_show',
+                    'label' => $programme->getName(),
+                    'route' => 'khatovar_web_appearance_show',
                     'routeParameters' => ['slug' => $programme->getSlug()],
                 ]
             );
@@ -138,8 +138,8 @@ class MenuBuilder
             $menu['programmes']['appearances']->addChild(
                 $appearance->getSlug(),
                 [
-                    'label'           => $appearance->getName(),
-                    'route'           => 'khatovar_web_appearance_show',
+                    'label' => $appearance->getName(),
+                    'route' => 'khatovar_web_appearance_show',
                     'routeParameters' => ['slug' => $appearance->getSlug()],
                 ]
             );
@@ -179,8 +179,8 @@ class MenuBuilder
             $menu['dates']['references']->addChild(
                 $year,
                 [
-                    'label'           => 'Saison '.$year,
-                    'route'           => 'khatovar_web_exaction_list_by_year',
+                    'label' => 'Saison '.$year,
+                    'route' => 'khatovar_web_exaction_list_by_year',
                     'routeParameters' => ['year' => $year],
                 ]
             );

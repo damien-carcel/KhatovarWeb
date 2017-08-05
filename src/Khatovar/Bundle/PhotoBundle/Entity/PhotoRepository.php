@@ -88,7 +88,7 @@ class PhotoRepository extends EntityRepository
             ->andWhere('p.id != :portrait')
             ->setParameters(
                 [
-                    'member'   => $member,
+                    'member' => $member,
                     'portrait' => $member->getPortrait(),
                 ]
             )

@@ -48,7 +48,7 @@ class HomepageType extends AbstractType
                 'content',
                 CKEditorType::class,
                 [
-                    'label'       => false,
+                    'label' => false,
                     'config_name' => 'basic_config',
                 ]
             );

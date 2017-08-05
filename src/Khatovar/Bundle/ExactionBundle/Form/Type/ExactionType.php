@@ -82,7 +82,7 @@ class ExactionType extends AbstractType
                 'map',
                 TextareaType::class,
                 [
-                    'label'    => 'Emplacement (copier le lien depuis Google Map)',
+                    'label' => 'Emplacement (copier le lien depuis Google Map)',
                     'required' => false,
                 ]
             )
@@ -90,7 +90,7 @@ class ExactionType extends AbstractType
                 'introduction',
                 TextareaType::class,
                 [
-                    'label'    => 'Annonce',
+                    'label' => 'Annonce',
                     'required' => false,
                 ]
             )
@@ -98,10 +98,10 @@ class ExactionType extends AbstractType
                 'links',
                 CollectionType::class,
                 [
-                    'label'              => 'Liens utiles',
-                    'entry_type'         => TextType::class,
-                    'allow_add'          => true,
-                    'allow_delete'       => true,
+                    'label' => 'Liens utiles',
+                    'entry_type' => TextType::class,
+                    'allow_add' => true,
+                    'allow_delete' => true,
                 ]
             );
 
