@@ -24,6 +24,7 @@
 
 namespace Khatovar\Bundle\WebBundle\Twig;
 
+use Khatovar\Bundle\PhotoBundle\Entity\Photo;
 use Khatovar\Bundle\PhotoBundle\Manager\PhotoManager;
 
 /**
@@ -50,7 +51,7 @@ class SidePanelExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            'get_controller_photos' => new \Twig_Function_Method($this, 'getControllerPhotos'),
+            'get_controller_photos' => new \Twig_SimpleFunction($this, 'getControllerPhotos'),
         ];
     }
 
@@ -71,7 +72,7 @@ class SidePanelExtension extends \Twig_Extension
      * @param string     $action     the controller method used for rendering
      * @param string|int $slugOrId   the slug or the ID of the object currently rendered
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Photo[]
      */
     public function getControllerPhotos($controller, $action, $slugOrId)
     {

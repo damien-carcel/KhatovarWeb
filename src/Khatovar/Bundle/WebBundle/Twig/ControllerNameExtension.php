@@ -17,7 +17,7 @@
  *
  * @copyright   Copyright (C) Damien Carcel (https://github.com/damien-carcel)
  *
- * @see        https://github.com/damien-carcel/KhatovarWeb
+ * @see         https://github.com/damien-carcel/KhatovarWeb
  *
  * @license     http://www.gnu.org/licenses/gpl.html
  */
@@ -51,9 +51,18 @@ class ControllerNameExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            'get_controller_name' => new \Twig_Function_Method($this, 'getControllerName'),
-            'get_action_name'     => new \Twig_Function_Method($this, 'getActionName'),
-            'get_slug_or_id'      => new \Twig_Function_Method($this, 'getSlugOrId'),
+            'get_controller_name' => new \Twig_SimpleFunction(
+                'controller_name_extension',
+                [$this, 'getControllerName']
+            ),
+            'get_action_name' => new \Twig_SimpleFunction(
+                'controller_name_extension',
+                [$this, 'getActionName']
+            ),
+            'get_slug_or_id' => new \Twig_SimpleFunction(
+                'controller_name_extension',
+                [$this, 'getSlugOrId']
+            ),
         ];
     }
 
@@ -114,7 +123,7 @@ class ControllerNameExtension extends \Twig_Extension
         $slugOrId = $this->request->get('slug');
 
         if (null === $slugOrId) {
-            $slugOrId = (int) $this->request->get('id');
+            $slugOrId = (int)$this->request->get('id');
         }
 
         return $slugOrId;
