@@ -1,0 +1,59 @@
+version: '2'
+
+services:
+  node:
+    image: node:8
+    user: node
+    volumes:
+      - ./:/srv/application
+      - ~/.npm:/home/node/.npm
+    working_dir: /srv/application
+    networks:
+      - khatovar
+
+  fpm:
+    image: akeneo/fpm:7.1
+    depends_on:
+      - mysql
+    environment:
+      COMPOSER_HOME: /home/docker/.composer
+      PHP_IDE_CONFIG: 'serverName=khatovar-cli'
+      PHP_XDEBUG_ENABLED: 0
+      XDEBUG_CONFIG: 'remote_host=xxx.xxx.xxx.xxx'
+    user: docker
+    volumes:
+      - ./:/srv/application
+      - ~/.composer:/home/docker/.composer
+    working_dir: /srv/application
+    networks:
+      - khatovar
+
+  nginx:
+    image: nginx
+    depends_on:
+      - fpm
+    environment:
+      PHP_IDE_CONFIG: 'serverName=khatovar'
+    ports:
+      - '8080:80'
+    volumes:
+      - ./:/srv/application
+      - ./docker/nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./docker/upload.conf:/etc/nginx/conf.d/upload.conf
+    networks:
+      - khatovar
+
+  mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: khatovar
+      MYSQL_PASSWORD: khatovar
+      MYSQL_DATABASE: khatovar
+    ports:
+      - '3306:3306'
+    networks:
+      - khatovar
+
+networks:
+  khatovar: ~
