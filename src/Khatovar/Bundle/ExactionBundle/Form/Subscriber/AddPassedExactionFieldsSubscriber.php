@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * This file is part of KhatovarWeb.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @copyright   Copyright (C) Damien Carcel (https://github.com/damien-carcel)
- * @link        https://github.com/damien-carcel/KhatovarWeb
+ *
+ * @see        https://github.com/damien-carcel/KhatovarWeb
+ *
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
@@ -56,7 +57,7 @@ class AddPassedExactionFieldsSubscriber implements EventSubscriberInterface
      */
     public function preSetData(FormEvent $event)
     {
-        $form     = $event->getForm();
+        $form = $event->getForm();
         $exaction = $event->getData();
 
         if ($exaction instanceof Exaction &&
@@ -68,22 +69,22 @@ class AddPassedExactionFieldsSubscriber implements EventSubscriberInterface
                     'image',
                     EntityType::class,
                     [
-                        'class'         => 'Khatovar\Bundle\PhotoBundle\Entity\Photo',
-                        'label'         => 'L\'image de la fête',
-                        'required'      => false,
+                        'class' => 'Khatovar\Bundle\PhotoBundle\Entity\Photo',
+                        'label' => 'L\'image de la fête',
+                        'required' => false,
                         'query_builder' => function (EntityRepository $repository) use ($exaction) {
                             return $repository
                                 ->createQueryBuilder('e')
                                 ->where('e.exaction = :exaction')
                                 ->setParameter(EntityHelper::EXACTION_CODE, $exaction);
-                        }
+                        },
                     ]
                 )
                 ->add(
                     'onlyPhotos',
                     CheckboxType::class,
                     [
-                        'label'    => 'Pas de résumé de fête, seulement des photos ?',
+                        'label' => 'Pas de résumé de fête, seulement des photos ?',
                         'required' => false,
                     ]
                 )
@@ -91,7 +92,7 @@ class AddPassedExactionFieldsSubscriber implements EventSubscriberInterface
                     'abstract',
                     TextareaType::class,
                     [
-                        'label'    => 'Résumé de la fête',
+                        'label' => 'Résumé de la fête',
                         'required' => false,
                     ]
                 )
@@ -99,7 +100,7 @@ class AddPassedExactionFieldsSubscriber implements EventSubscriberInterface
                     'imageStory',
                     TextareaType::class,
                     [
-                        'label'    => 'Explication de l\'image de la fête',
+                        'label' => 'Explication de l\'image de la fête',
                         'required' => false,
                     ]
                 );

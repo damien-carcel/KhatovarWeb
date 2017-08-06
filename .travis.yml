@@ -1,0 +1,34 @@
+language: php
+
+php:
+    - '7.1'
+
+git:
+    depth: 10
+
+cache:
+    directories:
+        - $HOME/.composer/cache
+
+before_install:
+    - echo "memory_limit=2G" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
+    - phpenv config-rm xdebug.ini
+    - echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+    - composer self-update --no-interaction
+
+install:
+    - cp app/config/parameters.yml.dist app/config/parameters.yml
+    - cp behat.yml.dist behat.yml
+    - composer update --prefer-dist --no-interaction --no-scripts
+    - mysql -e 'CREATE DATABASE symfony;'
+    - bin/console doctrine:schema:update --force --env=test > /dev/null
+    - bin/console assets:install www
+    - npm install
+    - npm run assets
+
+script:
+    - vendor/bin/phpcs -p --standard=PSR2 --extensions=php src
+    - vendor/bin/php-cs-fixer fix --dry-run -v --diff --config=.php_cs.php
+    - vendor/bin/phpspec run
+    - vendor/bin/behat vendor/carcel/user-bundle/features
+    - vendor/bin/behat vendor/carcel/documents-bundle/features

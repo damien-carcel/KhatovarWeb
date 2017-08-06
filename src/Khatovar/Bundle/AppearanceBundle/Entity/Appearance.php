@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * This file is part of KhatovarWeb.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,14 +16,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @copyright   Copyright (C) Damien Carcel (https://github.com/damien-carcel)
- * @link        https://github.com/damien-carcel/KhatovarWeb
+ *
+ * @see        https://github.com/damien-carcel/KhatovarWeb
+ *
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
 namespace Khatovar\Bundle\AppearanceBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
 use Khatovar\Bundle\PhotoBundle\Entity\Photo;
 
 /**
@@ -34,7 +34,7 @@ use Khatovar\Bundle\PhotoBundle\Entity\Photo;
  */
 class Appearance
 {
-    /** @var integer */
+    /** @var int */
     protected $id;
 
     /** @var string */
@@ -56,20 +56,20 @@ class Appearance
     protected $photos;
 
     /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return strval($this->id);
-    }
-
-    /**
      * Constructor.
      */
     public function __construct()
     {
         $this->active = false;
         $this->photos = new ArrayCollection();
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return (string) ($this->id);
     }
 
     /**
@@ -181,7 +181,7 @@ class Appearance
     }
 
     /**
-     * Add photos
+     * Add photos.
      *
      * @param Photo $photos
      *
@@ -195,7 +195,7 @@ class Appearance
     }
 
     /**
-     * Remove photos
+     * Remove photos.
      *
      * @param Photo $photos
      *
@@ -209,7 +209,7 @@ class Appearance
     }
 
     /**
-     * Get photos
+     * Get photos.
      *
      * @return \Doctrine\Common\Collections\Collection
      */

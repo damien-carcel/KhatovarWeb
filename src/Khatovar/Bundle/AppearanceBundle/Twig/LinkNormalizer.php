@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * This file is part of KhatovarWeb.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @copyright   Copyright (C) Damien Carcel (https://github.com/damien-carcel)
- * @link        https://github.com/damien-carcel/KhatovarWeb
+ *
+ * @see        https://github.com/damien-carcel/KhatovarWeb
+ *
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
@@ -53,13 +54,13 @@ class LinkNormalizer extends \Twig_Extension
                 'khatovar_normalize_appearance_links',
                 [$this, 'formatText'],
                 ['is_sage' => ['html']]
-            )
+            ),
         ];
     }
 
     /**
      * Format html links in a text, given as:
-     * [route|text to display]
+     * [route|text to display].
      *
      * @param string $text
      *

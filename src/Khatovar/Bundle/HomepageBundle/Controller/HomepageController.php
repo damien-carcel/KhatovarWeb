@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * This file is part of KhatovarWeb.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @copyright   Copyright (C) Damien Carcel (https://github.com/damien-carcel)
- * @link        https://github.com/damien-carcel/KhatovarWeb
+ *
+ * @see        https://github.com/damien-carcel/KhatovarWeb
+ *
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
@@ -51,7 +52,7 @@ class HomepageController extends Controller
             'KhatovarHomepageBundle:Homepage:show.html.twig',
             [
                 'content' => $this->get('khatovar_photo.manager.photo')->imageTranslate($homepage->getContent()),
-                'page_id' => $homepage->getId()
+                'page_id' => $homepage->getId(),
             ]
         );
     }
@@ -73,7 +74,7 @@ class HomepageController extends Controller
             'KhatovarHomepageBundle:Homepage:show.html.twig',
             [
                 'content' => $this->get('khatovar_photo.manager.photo')->imageTranslate($homepage->getContent()),
-                'page_id' => $homepage->getId()
+                'page_id' => $homepage->getId(),
             ]
         );
     }
@@ -109,9 +110,9 @@ class HomepageController extends Controller
         return $this->render(
             'KhatovarHomepageBundle:Homepage:list.html.twig',
             [
-                'homepages'       => $homepages,
+                'homepages' => $homepages,
                 'activation_form' => $form->createView(),
-                'delete_forms'    => $deleteForms,
+                'delete_forms' => $deleteForms,
             ]
         );
     }
@@ -126,7 +127,7 @@ class HomepageController extends Controller
     public function newAction()
     {
         $homepage = new Homepage();
-        $form     = $this->createCreateForm($homepage);
+        $form = $this->createCreateForm($homepage);
 
         return $this->render(
             'KhatovarHomepageBundle:Homepage:new.html.twig',
@@ -236,7 +237,7 @@ class HomepageController extends Controller
      * Deletes a homepage.
      *
      * @param Request $request
-     * @param int $id
+     * @param int     $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      *
@@ -349,7 +350,7 @@ class HomepageController extends Controller
                 SubmitType::class,
                 [
                     'label' => 'Effacer',
-                    'attr'  => ['onclick' => 'return confirm("Êtes-vous sûr ?")'],
+                    'attr' => ['onclick' => 'return confirm("Êtes-vous sûr ?")'],
                 ]
             )
             ->getForm();

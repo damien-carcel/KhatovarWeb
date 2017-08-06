@@ -1,46 +1,46 @@
 khatovar_appearance:
-    resource: "@KhatovarAppearanceBundle/Resources/config/routing.yml"
+    resource: '@KhatovarAppearanceBundle/Resources/config/routing.yml'
     prefix:   /prestations
 
 khatovar_contact:
-    resource: "@KhatovarContactBundle/Resources/config/routing.yml"
+    resource: '@KhatovarContactBundle/Resources/config/routing.yml'
     prefix:   /contact
 
 khatovar_exaction:
-    resource: "@KhatovarExactionBundle/Resources/config/routing.yml"
+    resource: '@KhatovarExactionBundle/Resources/config/routing.yml'
     prefix:   /dates
 
 khatovar_member:
-    resource: "@KhatovarMemberBundle/Resources/config/routing.yml"
+    resource: '@KhatovarMemberBundle/Resources/config/routing.yml'
     prefix:   /membres
 
 khatovar_photo:
-    resource: "@KhatovarPhotoBundle/Resources/config/routing.yml"
+    resource: '@KhatovarPhotoBundle/Resources/config/routing.yml'
     prefix:   /photos
 
 khatovar_homepage:
-    resource: "@KhatovarHomepageBundle/Resources/config/routing.yml"
+    resource: '@KhatovarHomepageBundle/Resources/config/routing.yml'
     prefix:   /accueil
 
 khatovar_web:
-    resource: "@KhatovarWebBundle/Resources/config/routing.yml"
+    resource: '@KhatovarWebBundle/Resources/config/routing.yml'
     prefix:   /
 
 carcel_documents:
-    resource: "@CarcelDocumentsBundle/Resources/config/routing.yml"
+    resource: '@CarcelDocumentsBundle/Resources/config/routing.yml'
     prefix:   /documents
 
 fos_user:
-    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+    resource: '@FOSUserBundle/Resources/config/routing/all.xml'
 
 carcel_user:
-    resource: "@CarcelUserBundle/Resources/config/routing.yml"
+    resource: '@CarcelUserBundle/Resources/config/routing.yml'
     prefix:   /
 
 # redirecting the root
 root:
     path: /
     defaults:
-        _controller: FrameworkBundle:Redirect:urlRedirect
+        _controller: 'FrameworkBundle:Redirect:urlRedirect'
         path: /accueil
         permanent: true

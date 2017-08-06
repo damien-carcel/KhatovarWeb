@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * This file is part of KhatovarWeb.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @copyright   Copyright (C) Damien Carcel (https://github.com/damien-carcel)
- * @link        https://github.com/damien-carcel/KhatovarWeb
+ *
+ * @see         https://github.com/damien-carcel/KhatovarWeb
+ *
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
@@ -29,7 +30,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 /**
  * Twig extension that return the name of the current controller and
  * the action executed.
- * Thanks to Dani Sancas for it: http://stackoverflow.com/a/17544023
+ * Thanks to Dani Sancas for it: http://stackoverflow.com/a/17544023.
  */
 class ControllerNameExtension extends \Twig_Extension
 {
@@ -50,18 +51,19 @@ class ControllerNameExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            'get_controller_name' => new \Twig_Function_Method($this, 'getControllerName'),
-            'get_action_name'     => new \Twig_Function_Method($this, 'getActionName'),
-            'get_slug_or_id'      => new \Twig_Function_Method($this, 'getSlugOrId')
+            'get_controller_name' => new \Twig_SimpleFunction(
+                'controller_name_extension',
+                [$this, 'getControllerName']
+            ),
+            'get_action_name' => new \Twig_SimpleFunction(
+                'controller_name_extension',
+                [$this, 'getActionName']
+            ),
+            'get_slug_or_id' => new \Twig_SimpleFunction(
+                'controller_name_extension',
+                [$this, 'getSlugOrId']
+            ),
         ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'controller_name_extension';
     }
 
     /**
@@ -93,11 +95,11 @@ class ControllerNameExtension extends \Twig_Extension
         $name = null;
 
         if (null !== $this->request) {
-            $pattern = "#:([a-zA-Z]*)Action#";
+            $pattern = '#:([a-zA-Z]*)Action#';
             $matches = [];
             preg_match($pattern, $this->request->get('_controller'), $matches);
 
-            $name =  $matches[1];
+            $name = $matches[1];
         }
 
         return $name;

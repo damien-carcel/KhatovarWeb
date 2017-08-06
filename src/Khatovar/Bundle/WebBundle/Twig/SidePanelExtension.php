@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * This file is part of KhatovarWeb.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,12 +16,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @copyright   Copyright (C) Damien Carcel (https://github.com/damien-carcel)
- * @link        https://github.com/damien-carcel/KhatovarWeb
+ *
+ * @see        https://github.com/damien-carcel/KhatovarWeb
+ *
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
 namespace Khatovar\Bundle\WebBundle\Twig;
 
+use Khatovar\Bundle\PhotoBundle\Entity\Photo;
 use Khatovar\Bundle\PhotoBundle\Manager\PhotoManager;
 
 /**
@@ -49,16 +51,11 @@ class SidePanelExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            'get_controller_photos' => new \Twig_Function_Method($this, 'getControllerPhotos')
+            'get_controller_photos' => new \Twig_SimpleFunction(
+                'side_panel_extension',
+                [$this, 'getControllerPhotos']
+            ),
         ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'side_panel_extension';
     }
 
     /**
@@ -66,11 +63,11 @@ class SidePanelExtension extends \Twig_Extension
      * small sidebar. Editors and admin can access all photos, but
      * regular users can only access photos of their own member page.
      *
-     * @param string     $controller The controller currently rendered.
-     * @param string     $action     The controller method used for rendering.
-     * @param string|int $slugOrId   The slug or the ID of the object currently rendered.
+     * @param string     $controller the controller currently rendered
+     * @param string     $action     the controller method used for rendering
+     * @param string|int $slugOrId   the slug or the ID of the object currently rendered
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Photo[]
      */
     public function getControllerPhotos($controller, $action, $slugOrId)
     {

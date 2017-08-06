@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * This file is part of KhatovarWeb.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @copyright   Copyright (C) Damien Carcel (https://github.com/damien-carcel)
- * @link        https://github.com/damien-carcel/KhatovarWeb
+ *
+ * @see        https://github.com/damien-carcel/KhatovarWeb
+ *
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
@@ -26,7 +27,6 @@ namespace Khatovar\Bundle\ContactBundle\Form\Type;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -61,9 +61,9 @@ class ContactActivationType extends AbstractType
                 'active',
                 EntityType::class,
                 [
-                    'class'             => 'Khatovar\Bundle\ContactBundle\Entity\Contact',
-                    'label'             => false,
-                    'choice_label'      => 'name',
+                    'class' => 'Khatovar\Bundle\ContactBundle\Entity\Contact',
+                    'label' => false,
+                    'choice_label' => 'name',
                     'preferred_choices' => [$previousActive],
                 ]
             )
@@ -77,7 +77,7 @@ class ContactActivationType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class'        => 'Khatovar\Bundle\ContactBundle\Entity\Contact',
+            'data_class' => 'Khatovar\Bundle\ContactBundle\Entity\Contact',
             'validation_groups' => false,
         ]);
     }

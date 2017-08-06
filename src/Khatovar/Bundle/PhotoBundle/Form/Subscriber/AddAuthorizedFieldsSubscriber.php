@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * This file is part of KhatovarWeb.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @copyright   Copyright (C) Damien Carcel (https://github.com/damien-carcel)
- * @link        https://github.com/damien-carcel/KhatovarWeb
+ *
+ * @see        https://github.com/damien-carcel/KhatovarWeb
+ *
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
@@ -59,7 +60,7 @@ class AddAuthorizedFieldsSubscriber implements EventSubscriberInterface
      */
     public function preSetData(FormEvent $event)
     {
-        $form  = $event->getForm();
+        $form = $event->getForm();
         $photo = $event->getData();
 
         if ($photo instanceof Photo && null !== $entityName = $photo->getEntity()) {
@@ -68,14 +69,14 @@ class AddAuthorizedFieldsSubscriber implements EventSubscriberInterface
                     'class',
                     ChoiceType::class,
                     [
-                        'label'             => 'Taille de la photo',
-                        'choices'           => [
-                            'Petit format'  => 'photo_small',
+                        'label' => 'Taille de la photo',
+                        'choices' => [
+                            'Petit format' => 'photo_small',
                             'Format normal' => 'photo',
-                            'Panorama'      => 'panorama',
+                            'Panorama' => 'panorama',
                         ],
                         'preferred_choices' => ['photo'],
-                        'required'          => true,
+                        'required' => true,
                     ]
                 );
             } else {
@@ -86,9 +87,9 @@ class AddAuthorizedFieldsSubscriber implements EventSubscriberInterface
                 $entityName,
                 EntityType::class,
                 [
-                    'class'        => 'Khatovar'.ucfirst($entityName).'Bundle:'.ucfirst($entityName),
+                    'class' => 'Khatovar'.ucfirst($entityName).'Bundle:'.ucfirst($entityName),
                     'choice_label' => $entityName === EntityHelper::EXACTION_CODE ? 'completeName' : 'name',
-                    'label'        => 'Page',
+                    'label' => 'Page',
                 ]
             );
         }

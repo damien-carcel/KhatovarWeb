@@ -2,6 +2,7 @@
 /bin/*
 !/bin/console
 !/bin/symfony_requirements
+/node_modules
 /var/*
 !/var/cache
 /var/cache/*
@@ -17,3 +18,7 @@
 /www/assets/
 /www/bundles/
 /www/uploaded/
+/behat.yml
+/docker-compose.yml
+/package-lock.json
+/.php_cs.cache

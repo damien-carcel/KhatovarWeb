@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * This file is part of KhatovarWeb.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @copyright Copyright (C) Damien Carcel (https://github.com/damien-carcel)
- * @link      https://github.com/damien-carcel/KhatovarWeb
+ *
+ * @see      https://github.com/damien-carcel/KhatovarWeb
+ *
  * @license   http://www.gnu.org/licenses/gpl.html
  */
 
@@ -89,7 +90,7 @@ class ExactionType extends AbstractType
                 'introduction',
                 TextareaType::class,
                 [
-                    'label'    => 'Annonce',
+                    'label' => 'Annonce',
                     'required' => false,
                 ]
             )
@@ -97,10 +98,10 @@ class ExactionType extends AbstractType
                 'links',
                 CollectionType::class,
                 [
-                    'label'              => 'Liens utiles',
-                    'entry_type'         => TextType::class,
-                    'allow_add'          => true,
-                    'allow_delete'       => true,
+                    'label' => 'Liens utiles',
+                    'entry_type' => TextType::class,
+                    'allow_add' => true,
+                    'allow_delete' => true,
                 ]
             );
 
@@ -123,11 +124,11 @@ class ExactionType extends AbstractType
     protected function getYearslist()
     {
         $currentYear = new \DateTime();
-        $startYear   = static::KHATOVAR_CREATION;
-        $endYear     = ((int) $currentYear->format('Y')) + 3;
-        $yearList    = [];
+        $startYear = static::KHATOVAR_CREATION;
+        $endYear = ((int) $currentYear->format('Y')) + 3;
+        $yearList = [];
 
-        for ($year = $startYear; $year <= $endYear; $year++) {
+        for ($year = $startYear; $year <= $endYear; ++$year) {
             $yearList[] = $year;
         }
 

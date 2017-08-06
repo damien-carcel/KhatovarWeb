@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * This file is part of KhatovarWeb.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @copyright Copyright (C) Damien Carcel (https://github.com/damien-carcel)
- * @link      https://github.com/damien-carcel/KhatovarWeb
+ *
+ * @see      https://github.com/damien-carcel/KhatovarWeb
+ *
  * @license   http://www.gnu.org/licenses/gpl.html
  */
 
@@ -83,7 +84,7 @@ class ExactionController extends Controller
             'KhatovarExactionBundle:Exaction:to_come.html.twig',
             [
                 'future_exactions' => $futureExactions,
-                'delete_forms'     => $deleteForms,
+                'delete_forms' => $deleteForms,
             ]
         );
     }
@@ -106,7 +107,7 @@ class ExactionController extends Controller
         return $this->render(
             'KhatovarExactionBundle:Exaction:view_by_year.html.twig',
             [
-                'exactions'    => $exactions,
+                'exactions' => $exactions,
                 'delete_forms' => $deleteForms,
             ]
         );
@@ -122,12 +123,12 @@ class ExactionController extends Controller
     public function newAction()
     {
         $exaction = new Exaction();
-        $form     = $this->createCreateForm($exaction);
+        $form = $this->createCreateForm($exaction);
 
         return $this->render(
             'KhatovarExactionBundle:Exaction:new.html.twig',
             [
-                'form'            => $form->createView(),
+                'form' => $form->createView(),
                 'exaction_passed' => false,
             ]
         );
@@ -164,7 +165,7 @@ class ExactionController extends Controller
         return $this->render(
             'KhatovarExactionBundle:Exaction:new.html.twig',
             [
-                'form'            => $form->createView(),
+                'form' => $form->createView(),
                 'exaction_passed' => false,
             ]
         );
@@ -195,7 +196,7 @@ class ExactionController extends Controller
         return $this->render(
             'KhatovarExactionBundle:Exaction:edit.html.twig',
             [
-                'edit_form'       => $editForm->createView(),
+                'edit_form' => $editForm->createView(),
                 'exaction_passed' => $exactionPassed,
             ]
         );
@@ -236,7 +237,7 @@ class ExactionController extends Controller
         return $this->render(
             'KhatovarExactionBundle:Exaction:edit.html.twig',
             [
-                'edit_form'       => $editForm->createView(),
+                'edit_form' => $editForm->createView(),
                 'exaction_passed' => $exactionPassed,
             ]
         );
@@ -262,7 +263,7 @@ class ExactionController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $entityManager= $this->get('doctrine.orm.entity_manager');
+            $entityManager = $this->get('doctrine.orm.entity_manager');
             $entityManager->remove($exaction);
             $entityManager->flush();
 
@@ -336,7 +337,7 @@ class ExactionController extends Controller
                 SubmitType::class,
                 [
                     'label' => 'Effacer',
-                    'attr'  => ['onclick' => 'return confirm("Êtes-vous sûr ?")'],
+                    'attr' => ['onclick' => 'return confirm("Êtes-vous sûr ?")'],
                 ]
             )
             ->getForm();

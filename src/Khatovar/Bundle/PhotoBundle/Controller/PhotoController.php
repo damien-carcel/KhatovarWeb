@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * This file is part of KhatovarWeb.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @copyright   Copyright (C) Damien Carcel (https://github.com/damien-carcel)
- * @link        https://github.com/damien-carcel/KhatovarWeb
+ *
+ * @see        https://github.com/damien-carcel/KhatovarWeb
+ *
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
@@ -61,7 +62,7 @@ class PhotoController extends Controller
             'KhatovarPhotoBundle:Photo:index.html.twig',
             [
                 'sorted_photos' => $photos,
-                'delete_forms'  => $this->createDeleteForms($photos),
+                'delete_forms' => $this->createDeleteForms($photos),
             ]
         );
     }
@@ -78,7 +79,7 @@ class PhotoController extends Controller
         $this->userHasEditRights();
 
         $photo = $this->get('khatovar_photo.factory.photo')->createPhoto();
-        $form  = $this->createCreateForm($photo);
+        $form = $this->createCreateForm($photo);
 
         return $this->render(
             'KhatovarPhotoBundle:Photo:new.html.twig',
@@ -104,7 +105,7 @@ class PhotoController extends Controller
         $this->userHasEditRights();
 
         $photo = $this->get('khatovar_photo.factory.photo')->createPhoto();
-        $form  = $this->createCreateForm($photo);
+        $form = $this->createCreateForm($photo);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -115,7 +116,7 @@ class PhotoController extends Controller
             if ($this->isGranted('ROLE_EDITOR')) {
                 return $this->redirect($this->generateUrl(
                     'khatovar_web_photo_edit',
-                    ['id'=> $photo->getId()]
+                    ['id' => $photo->getId()]
                 ));
             }
 
@@ -151,7 +152,7 @@ class PhotoController extends Controller
             'KhatovarPhotoBundle:Photo:edit.html.twig',
             [
                 'edit_form' => $editForm->createView(),
-                'photo'     => $photo,
+                'photo' => $photo,
             ]
         );
     }
@@ -174,7 +175,7 @@ class PhotoController extends Controller
 
         $this->userHasEditRights($photo);
 
-        $entity   = $photo->getEntity();
+        $entity = $photo->getEntity();
         $editForm = $this->createEditForm($photo);
         $editForm->handleRequest($request);
 
@@ -190,7 +191,7 @@ class PhotoController extends Controller
             'KhatovarPhotoBundle:Photo:edit.html.twig',
             [
                 'edit_form' => $editForm->createView(),
-                'photo'     => $photo,
+                'photo' => $photo,
             ]
         );
     }
@@ -291,7 +292,7 @@ class PhotoController extends Controller
                 SubmitType::class,
                 [
                     'label' => 'Effacer',
-                    'attr'  => ['onclick' => 'return confirm("Êtes-vous sûr ?")'],
+                    'attr' => ['onclick' => 'return confirm("Êtes-vous sûr ?")'],
                 ]
             )
             ->getForm();
@@ -328,9 +329,9 @@ class PhotoController extends Controller
      *
      * @param Photo $photo
      *
-     * @return bool
-     *
      * @throws AccessDeniedHttpException
+     *
+     * @return bool
      */
     protected function userHasEditRights(Photo $photo = null)
     {

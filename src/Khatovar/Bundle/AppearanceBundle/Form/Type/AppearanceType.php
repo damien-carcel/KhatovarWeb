@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * This file is part of KhatovarWeb.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @copyright   Copyright (C) Damien Carcel (https://github.com/damien-carcel)
- * @link        https://github.com/damien-carcel/KhatovarWeb
+ *
+ * @see        https://github.com/damien-carcel/KhatovarWeb
+ *
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
@@ -50,7 +51,7 @@ class AppearanceType extends AbstractType
                 'content',
                 CKEditorType::class,
                 [
-                    'label'       => false,
+                    'label' => false,
                     'config_name' => 'basic_config',
                 ]
             )
@@ -58,7 +59,7 @@ class AppearanceType extends AbstractType
                 'active',
                 CheckboxType::class,
                 [
-                    'label'    => 'Prestation proposée',
+                    'label' => 'Prestation proposée',
                     'required' => false,
                 ]
             )
@@ -66,7 +67,7 @@ class AppearanceType extends AbstractType
                 'pageType',
                 ChoiceType::class,
                 [
-                    'label'   => 'Type de page',
+                    'label' => 'Type de page',
                     'choices' => array_flip(AppearanceHelper::getAppearancePageTypes()),
                 ]
             );

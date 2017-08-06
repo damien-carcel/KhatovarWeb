@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * This file is part of KhatovarWeb.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @copyright   Copyright (C) Damien Carcel (https://github.com/damien-carcel)
- * @link        https://github.com/damien-carcel/KhatovarWeb
+ *
+ * @see        https://github.com/damien-carcel/KhatovarWeb
+ *
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
@@ -33,7 +34,7 @@ use Khatovar\Bundle\PhotoBundle\Entity\Photo;
  */
 class Homepage
 {
-    /** @var integer */
+    /** @var int */
     protected $id;
 
     /** @var string */
@@ -49,18 +50,7 @@ class Homepage
     protected $photos;
 
     /**
-     * Allow to save only the entity's ID in database as a string when
-     * using entity form type.
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        return strval($this->id);
-    }
-
-    /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -69,7 +59,18 @@ class Homepage
     }
 
     /**
-     * Get id
+     * Allow to save only the entity's ID in database as a string when
+     * using entity form type.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return (string) ($this->id);
+    }
+
+    /**
+     * Get id.
      *
      * @return int
      */
@@ -79,7 +80,7 @@ class Homepage
     }
 
     /**
-     * Set content
+     * Set content.
      *
      * @param string $content
      *
@@ -93,7 +94,7 @@ class Homepage
     }
 
     /**
-     * Get content
+     * Get content.
      *
      * @return string
      */
@@ -103,7 +104,7 @@ class Homepage
     }
 
     /**
-     * Set active
+     * Set active.
      *
      * @param bool $active
      *
@@ -117,7 +118,7 @@ class Homepage
     }
 
     /**
-     * Get active
+     * Get active.
      *
      * @return bool
      */
@@ -127,7 +128,7 @@ class Homepage
     }
 
     /**
-     * Add photos
+     * Add photos.
      *
      * @param Photo $photos
      *
@@ -141,7 +142,7 @@ class Homepage
     }
 
     /**
-     * Remove photos
+     * Remove photos.
      *
      * @param Photo $photos
      *
@@ -155,7 +156,7 @@ class Homepage
     }
 
     /**
-     * Get photos
+     * Get photos.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -165,7 +166,7 @@ class Homepage
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      *
@@ -179,7 +180,7 @@ class Homepage
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */

@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * This file is part of KhatovarWeb.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @copyright   Copyright (C) Damien Carcel (https://github.com/damien-carcel)
- * @link        https://github.com/damien-carcel/KhatovarWeb
+ *
+ * @see        https://github.com/damien-carcel/KhatovarWeb
+ *
  * @license     http://www.gnu.org/licenses/gpl.html
  */
 
@@ -43,11 +44,11 @@ class PhotoHelper
     public static function getPhotoEntities()
     {
         return [
-            EntityHelper::HOMEPAGE_LABEL   => EntityHelper::HOMEPAGE_CODE,
+            EntityHelper::HOMEPAGE_LABEL => EntityHelper::HOMEPAGE_CODE,
             EntityHelper::APPEARANCE_LABEL => EntityHelper::APPEARANCE_CODE,
-            EntityHelper::EXACTION_LABEL   => EntityHelper::EXACTION_CODE,
-            EntityHelper::MEMBER_LABEL     => EntityHelper::MEMBER_CODE,
-            EntityHelper::CONTACT_LABEL    => EntityHelper::CONTACT_CODE,
+            EntityHelper::EXACTION_LABEL => EntityHelper::EXACTION_CODE,
+            EntityHelper::MEMBER_LABEL => EntityHelper::MEMBER_CODE,
+            EntityHelper::CONTACT_LABEL => EntityHelper::CONTACT_CODE,
         ];
     }
 }
