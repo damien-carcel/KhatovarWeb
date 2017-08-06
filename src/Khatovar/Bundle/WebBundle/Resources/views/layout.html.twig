@@ -76,7 +76,7 @@
                 </a>
                 {% if is_granted('ROLE_SUPER_ADMIN') %}
                     |
-                    <a href="{{ path('carcel_user_admin_index') }}">Page d'adminitration</a>
+                    <a href="{{ path('khatovar_user_admin_index') }}">Page d'adminitration</a>
                 {% endif %}
                 |
                 <a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a>

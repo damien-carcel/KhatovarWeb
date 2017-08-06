@@ -1,0 +1,58 @@
+khatovar_documents:
+    add:
+        file:
+            title: Add a file
+            warning: Caution, if you add a file that has the same name that an other one in this folder, the new one will replace the old one
+        folder.title: Add a folder
+    button:
+        add: Add
+        back: Back
+        delete: Delete
+        move: Move
+        rename: Rename
+    constraint:
+        unique_folder: Another folder in this current one is already named « %name% »
+    form:
+        add:
+            file.label: File
+            folder.label: Name
+        move:
+            folder.label: Choose a folder
+        rename:
+            label: New name
+    index:
+        label:
+            element: "{1} element|{2} elements"
+            folder: Folder
+            last_update: Last modification
+            name: Name
+            size: Size
+            type: Type
+    layout:
+        admin: Administration page
+    move:
+        file.title: Move a file
+        folder.title: Move a folder
+    notice:
+        add:
+            file:
+                new: The file has been added
+                replace: The file has been replaced
+            folder: New folder added
+        delete.confirmation: Are you sure?
+        move:
+            file: The file has been moved
+            folder: The folder has been moved
+        remove:
+            confirmation: Are you sure?
+            file: The file has been deleted
+            folder: The folder has been deleted
+        rename:
+            file: The file has been renamed
+            folder: The folder has been renamed
+    rename:
+        file.title: Rename a file
+        folder.title: Rename a folder
+    root: Root
+
+ROLE_UPLOADER: Uploader

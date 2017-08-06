@@ -1,0 +1,25 @@
+khatovar_documents_homepage:
+    path: /
+    defaults: { _controller: KhatovarDocumentsBundle:Folder:index }
+
+khatovar_documents_folder:
+    path: /{id}
+    defaults: { _controller: KhatovarDocumentsBundle:Folder:folder }
+    requirements:
+        id: \d*
+
+khatovar_documents_add_folder:
+    path: /{parentId}/addFolder
+    defaults: { _controller: KhatovarDocumentsBundle:Folder:addFolder }
+
+khatovar_documents_move_folder:
+    path: /{id}/moveFolder
+    defaults: { _controller: KhatovarDocumentsBundle:Folder:moveFolder }
+
+khatovar_documents_rename_folder:
+    path: /{id}/renameFolder
+    defaults: { _controller: KhatovarDocumentsBundle:Folder:renameFolder }
+
+khatovar_documents_remove_folder:
+    path: /{id}/removeFolder
+    defaults: { _controller: KhatovarDocumentsBundle:Folder:removeFolder }

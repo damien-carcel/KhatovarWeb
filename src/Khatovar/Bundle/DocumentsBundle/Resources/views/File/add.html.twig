@@ -1,0 +1,31 @@
+{% extends "KhatovarDocumentsBundle::layout.html.twig" %}
+
+{% block insection %}
+
+    {% if 0 != previousId %}
+        {% set href_link = path('khatovar_documents_folder', {'id': previousId}) %}
+    {% else %}
+        {% set href_link = path('khatovar_documents_homepage') %}
+    {% endif %}
+
+    <a href="{{ href_link }}"
+       class="btn btn-default pull-right">
+        {{ 'khatovar_documents.button.back'|trans }}
+    </a>
+
+    <h2>{{ 'khatovar_documents.add.file.title'|trans }}</h2>
+
+    <p>{{ 'khatovar_documents.add.file.warning'|trans }}</p>
+
+    <div class="well">
+        {{ form_start(form) }}
+        {{ form_errors(form) }}
+
+        <div class="form-group">
+            {{ form_row(form.filePath) }}
+        </div>
+
+        {{ form_row(form.submit, { 'attr': {'class': 'btn btn-default'} }) }}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

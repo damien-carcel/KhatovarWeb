@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "9b6bdef78793488d35d9359ae584c191",
+    "content-hash": "75717259bb970a74a7ee3e663328653b",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -49,68 +49,6 @@
                 "transliterator"
             ],
             "time": "2017-04-04T11:38:05+00:00"
-        },
-        {
-            "name": "carcel/documents-bundle",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/damien-carcel/DocumentsBundle.git",
-                "reference": "9fda0770ce4a33dbc011f759b396ff13f2eba0e2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/damien-carcel/DocumentsBundle/zipball/9fda0770ce4a33dbc011f759b396ff13f2eba0e2",
-                "reference": "9fda0770ce4a33dbc011f759b396ff13f2eba0e2",
-                "shasum": ""
-            },
-            "require": {
-                "doctrine/doctrine-bundle": "^1.6",
-                "doctrine/doctrine-fixtures-bundle": "^2.3",
-                "doctrine/orm": "^2.5",
-                "php": ">=7.1",
-                "symfony/framework-bundle": "^3.0",
-                "symfony/translation": "^3.0",
-                "twig/twig": "^2.0"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.0",
-                "phpmd/phpmd": "^2.4",
-                "phpspec/phpspec": "^4.0",
-                "phpunit/phpunit": "^6.0",
-                "squizlabs/php_codesniffer": "^3.0"
-            },
-            "type": "symfony-bundle",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "0.4.x-dev",
-                    "dev-0.3": "0.3.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Carcel\\Bundle\\DocumentsBundle\\": "src",
-                    "DocumentsBundleContext\\": "features/bootstrap"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Damien Carcel",
-                    "homepage": "https://github.com/damien-carcel/"
-                }
-            ],
-            "description": "A Symfony 3 bundle to manage documents on a web server",
-            "homepage": "https://github.com/damien-carcel/DocumentsBundle",
-            "keywords": [
-                "documents",
-                "management",
-                "web server"
-            ],
-            "time": "2017-08-05 09:22:32"
         },
         {
             "name": "carcel/user-bundle",
@@ -5491,8 +5429,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "carcel/user-bundle": 20,
-        "carcel/documents-bundle": 20
+        "carcel/user-bundle": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

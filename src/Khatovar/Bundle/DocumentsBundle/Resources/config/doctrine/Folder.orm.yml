@@ -1,0 +1,46 @@
+Khatovar\Bundle\DocumentsBundle\Entity\Folder:
+    type:  entity
+    table: khatovar_documents_folder
+    repositoryClass: Khatovar\Bundle\DocumentsBundle\Entity\FolderRepository
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+            column: name
+            nullable: false
+        created:
+            type: datetime
+            column: created
+            nullable: false
+        updated:
+            type: datetime
+            column: updated
+            nullable: false
+    manyToOne:
+        parent:
+            targetEntity: Khatovar\Bundle\DocumentsBundle\Entity\Folder
+            inversedBy: children
+            JoinColumn:
+                name: parent_id
+                referencedColumnName: id
+                onDelete: 'SET NULL'
+    oneToMany:
+        children:
+            targetEntity: Khatovar\Bundle\DocumentsBundle\Entity\Folder
+            mappedBy: parent
+            cascade:
+                - persist
+                - remove
+        files:
+            targetEntity: Khatovar\Bundle\DocumentsBundle\Entity\File
+            mappedBy: folder
+            cascade:
+                - persist
+                - remove
+    lifecycleCallbacks:
+        preUpdate: [autoUpdate]

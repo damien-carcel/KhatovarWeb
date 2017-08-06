@@ -1,0 +1,42 @@
+Khatovar\Bundle\DocumentsBundle\Entity\File:
+    type:  entity
+    table: khatovar_documents_file
+    repositoryClass: Khatovar\Bundle\DocumentsBundle\Entity\FileRepository
+    entityListeners:
+        Khatovar\Bundle\DocumentsBundle\Entity\Listener\FileListener:
+            postLoad: [postLoad]
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+            column: name
+            nullable: false
+        fileName:
+            type: string
+            length: 255
+            column: file_name
+            nullable: false
+        created:
+            type: datetime
+            column: created
+            nullable: false
+        updated:
+            type: datetime
+            column: updated
+            nullable: false
+    manyToOne:
+        folder:
+            targetEntity: Khatovar\Bundle\DocumentsBundle\Entity\Folder
+            inversedBy: files
+    lifecycleCallbacks:
+        preUpdate:   [preUpload, autoUpdate]
+        prePersist:  [preUpload]
+        preRemove:   [preRemoveUpload]
+        postUpdate:  [upload]
+        postPersist: [upload]
+        postRemove:  [removeUpload]

@@ -1,0 +1,11 @@
+parameters:
+    khatovar_documents.validator.constraint.unique_folder_name.class: Khatovar\Bundle\DocumentsBundle\Validator\Constraints\UniqueFolderNameValidator
+
+services:
+    khatovar_documents.validator.constraint.unique_folder_name:
+        class: Khatovar\Bundle\DocumentsBundle\Validator\Constraints\UniqueFolderNameValidator
+        arguments:
+            - '@translator'
+            - '@khatovar_documents.repositories.folder'
+        tags:
+            - { name: validator.constraint_validator, alias: documents_unique_folder_name_validator }

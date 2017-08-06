@@ -1,0 +1,13 @@
+Khatovar\Bundle\DocumentsBundle\Entity\File:
+    properties:
+        name:
+            - Length:
+                min: 3
+                max: 255
+        filePath:
+            - File:
+                maxSize: 61440k
+        created:
+            - DateTime: ~
+        updated:
+            - DateTime: ~

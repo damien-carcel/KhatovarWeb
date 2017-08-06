@@ -16,6 +16,7 @@ class AppKernel extends Kernel
     public function registerBundles()
     {
         $bundles = [
+            new Khatovar\Bundle\DocumentsBundle\KhatovarDocumentsBundle(),
             new Khatovar\Bundle\WebBundle\KhatovarWebBundle(),
             new Khatovar\Bundle\PhotoBundle\KhatovarPhotoBundle(),
             new Khatovar\Bundle\HomepageBundle\KhatovarHomepageBundle(),
@@ -83,7 +84,6 @@ class AppKernel extends Kernel
     {
         return [
             new Carcel\Bundle\UserBundle\CarcelUserBundle(),
-            new Carcel\Bundle\DocumentsBundle\CarcelDocumentsBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),

@@ -1,0 +1,58 @@
+khatovar_documents:
+    add:
+        file:
+            title: Ajouter un fichier
+            warning: Attention, si vous ajoutez un fichier portant le même nom qu'un fichier déjà présent, ce dernier sera écrasé.
+        folder.title: Ajouter un dossier
+    button:
+        add: Ajouter
+        back: Retour
+        delete: Supprimer
+        move: Déplacer
+        rename: Renommer
+    constraint:
+        unique_folder: Un dossier présent dans le dossier actuel porte déjà le nom « %name% »
+    form:
+        add:
+            file.label: Fichier
+            folder.label: Nom
+        move:
+            folder.label: Choisissez un dossier
+        rename:
+            label: Nouveau nom
+    index:
+        label:
+            element: "{1} élément|{2} éléments"
+            folder: Dossier
+            last_update: Dernière modification
+            name: Nom
+            size: Taille
+            type: Type
+    layout:
+        admin: Page d'adminitration
+    move:
+        file.title: Déplacer un fichier
+        folder.title: Déplacer un dossier
+    notice:
+        add:
+            file:
+                new: Le fichier a bien été ajouté
+                replace: Le fichier a bien été remplacé
+            folder: Nouveau dossier ajouté
+        delete.confirmation: Êtes-vous sûr ?
+        move:
+            file: Le fichier a bien été déplacé
+            folder: Le dossier a bien été déplacé
+        remove:
+            confirmation: Êtes-vous sûr ?
+            file: Le fichier a bien été supprimé
+            folder: Le dossier a bien été supprimé
+        rename:
+            file: Le fichier a bien été renommé
+            folder: Le dossier a bien été renommé
+    rename:
+        file.title: Renommer un fichier
+        folder.title: Renommer un dossier
+    root: Racine
+
+ROLE_UPLOADER: Téléverseur
