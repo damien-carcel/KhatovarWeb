@@ -1,6 +1,9 @@
 <?php
+
 /**
  * This file is part of KhatovarWeb.
+ *
+ * Copyright (c) 2015 Damien Carcel (https://github.com/damien-carcel)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,12 +17,6 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @copyright   Copyright (C) Damien Carcel (https://github.com/damien-carcel)
- *
- * @see        https://github.com/damien-carcel/KhatovarWeb
- *
- * @license     http://www.gnu.org/licenses/gpl.html
  */
 
 namespace Khatovar\Bundle\MemberBundle\Entity;
@@ -29,9 +26,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Khatovar\Bundle\PhotoBundle\Entity\Photo;
 
 /**
- * Member entity.
- *
- * @author Damien Carcel (https://github.com/damien-carcel)
+ * @author Damien Carcel <damien.carcel@gmail.com>
  */
 class Member
 {

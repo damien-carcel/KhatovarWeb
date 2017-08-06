@@ -1,6 +1,9 @@
 <?php
+
 /**
  * This file is part of KhatovarWeb.
+ *
+ * Copyright (c) 2015 Damien Carcel (https://github.com/damien-carcel)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,12 +17,6 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @copyright   Copyright (C) Damien Carcel (https://github.com/damien-carcel)
- *
- * @see        https://github.com/damien-carcel/KhatovarWeb
- *
- * @license     http://www.gnu.org/licenses/gpl.html
  */
 
 namespace Khatovar\Bundle\PhotoBundle\Form\Subscriber;
@@ -35,7 +32,7 @@ use Symfony\Component\Form\FormEvents;
  * If the entity is just created, adds a File upload field, if it
  * already exists adds a "alt" text field.
  *
- * @author Damien Carcel (https://github.com/damien-carcel)
+ * @author Damien Carcel <damien.carcel@gmail.com>
  */
 class AddPhotoFieldsSubscriber implements EventSubscriberInterface
 {

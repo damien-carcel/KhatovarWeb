@@ -3,7 +3,7 @@
 /*
  * This file is part of KhatovarWeb.
  *
- * Copyright (c) 2015 Damien Carcel <damien.carcel@gmail.com>
+ * Copyright (c) 2015 Damien Carcel (https://github.com/damien-carcel)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
