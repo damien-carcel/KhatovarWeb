@@ -1,6 +1,6 @@
 {
     "name": "khatovar/web",
-    "license": "GPL",
+    "license": "GPL-3.0",
     "type": "project",
     "description": "Repository for the web site of the french association \"La compagnie franche du Khatovar\"",
     "homepage": "http://www.compagniefranchedukhatovar.fr",
