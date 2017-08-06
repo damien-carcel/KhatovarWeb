@@ -26,8 +26,8 @@ khatovar_web:
     resource: '@KhatovarWebBundle/Resources/config/routing.yml'
     prefix:   /
 
-carcel_documents:
-    resource: '@CarcelDocumentsBundle/Resources/config/routing.yml'
+khatovar_documents:
+    resource: '@KhatovarDocumentsBundle/Resources/config/routing.yml'
     prefix:   /documents
 
 fos_user:

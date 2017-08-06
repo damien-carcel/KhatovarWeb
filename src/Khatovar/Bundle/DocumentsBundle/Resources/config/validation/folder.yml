@@ -1,0 +1,12 @@
+Khatovar\Bundle\DocumentsBundle\Entity\Folder:
+    constraints:
+        - Khatovar\Bundle\DocumentsBundle\Validator\Constraints\UniqueFolderName: ~
+    properties:
+        name:
+            - NotBlank: ~
+            - Length:
+                max: 255
+        created:
+            - DateTime: ~
+        updated:
+            - DateTime: ~

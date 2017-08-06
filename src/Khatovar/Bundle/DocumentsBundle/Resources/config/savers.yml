@@ -1,0 +1,20 @@
+services:
+    khatovar_documents.saver.file:
+        class: Khatovar\Bundle\DocumentsBundle\Saver\FileSaver
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@khatovar_documents.saver.file_options_resolver'
+            - 'Khatovar\Bundle\DocumentsBundle\Entity\File'
+
+    khatovar_documents.saver.folder:
+        class: Khatovar\Bundle\DocumentsBundle\Saver\BaseSaver
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@khatovar_documents.saver.folder_options_resolver'
+            - 'Khatovar\Bundle\DocumentsBundle\Entity\Folder'
+
+    khatovar_documents.saver.file_options_resolver:
+        class: Khatovar\Bundle\DocumentsBundle\Saver\FileSavingOptionsResolver
+
+    khatovar_documents.saver.folder_options_resolver:
+        class: Khatovar\Bundle\DocumentsBundle\Saver\BaseSavingOptionsResolver

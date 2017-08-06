@@ -20,5 +20,4 @@
 /www/uploaded/
 /behat.yml
 /docker-compose.yml
-/package-lock.json
 /.php_cs.cache

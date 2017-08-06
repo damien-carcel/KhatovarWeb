@@ -27,8 +27,7 @@ install:
     - npm run assets
 
 script:
-    - vendor/bin/phpcs -p --standard=PSR2 --extensions=php src
+    - vendor/bin/phpcs -p --standard=PSR2 --extensions=php features src
     - vendor/bin/php-cs-fixer fix --dry-run -v --diff --config=.php_cs.php
     - vendor/bin/phpspec run
-    - vendor/bin/behat vendor/carcel/user-bundle/features
-    - vendor/bin/behat vendor/carcel/documents-bundle/features
+    - vendor/bin/behat features

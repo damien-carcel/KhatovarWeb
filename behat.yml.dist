@@ -14,11 +14,11 @@ default:
     suites:
         default:
             contexts:
-                - DocumentsBundleContext\DocumentsBundleFeatureContext:
+                - Context\DocumentsBundleFeatureContext:
                     session: '@session'
                     container: '@service_container'
             paths:
-                - '%paths.base%/vendor/carcel/documents-bundle/features'
+                - '%paths.base%/features'
         users:
             contexts:
                 - UserBundleContext\UserBundleFeatureContext:

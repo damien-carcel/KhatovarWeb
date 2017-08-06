@@ -1,0 +1,12 @@
+services:
+    khatovar_documents.doctrine.entity_listener_resolver:
+        class: Khatovar\Bundle\DocumentsBundle\Doctrine\EntityListenerResolver
+        arguments:
+            - '@service_container'
+
+    khatovar_documents.entity_listener.file:
+        class: Khatovar\Bundle\DocumentsBundle\Entity\Listener\FileListener
+        arguments:
+            - '%khatovar_document.upload_dir%'
+        tags:
+            - { name: doctrine.entity_listener }

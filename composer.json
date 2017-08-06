@@ -1,6 +1,6 @@
 {
     "name": "khatovar/web",
-    "license": "GPL",
+    "license": "GPL-3.0",
     "type": "project",
     "description": "Repository for the web site of the french association \"La compagnie franche du Khatovar\"",
     "homepage": "http://www.compagniefranchedukhatovar.fr",
@@ -13,7 +13,8 @@
     ],
     "autoload": {
         "psr-4": {
-            "Khatovar\\Bundle\\": "src/Khatovar/Bundle"
+            "Khatovar\\Bundle\\": "src/Khatovar/Bundle",
+            "Context\\": "features/bootstrap"
         },
         "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
     },
@@ -23,7 +24,6 @@
     "require": {
         "php": ">=7.1.0",
         "carcel/user-bundle": "0.3.x-dev@dev",
-        "carcel/documents-bundle": "0.4.x-dev@dev",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/doctrine-fixtures-bundle": "^2.3",
         "doctrine/orm": "^2.5",

@@ -1,0 +1,19 @@
+khatovar_documents_share:
+    path: /{id}/share
+    defaults: { _controller: KhatovarDocumentsBundle:File:share }
+
+khatovar_documents_add_file:
+    path: /{parentId}/addFile
+    defaults: { _controller: KhatovarDocumentsBundle:File:addFile }
+
+khatovar_documents_move_file:
+    path: /{id}/moveFile
+    defaults: { _controller: KhatovarDocumentsBundle:File:moveFile }
+
+khatovar_documents_rename_file:
+    path: /{id}/renameFile
+    defaults: { _controller: KhatovarDocumentsBundle:File:renameFile }
+
+khatovar_documents_remove_file:
+    path: /{id}/removeFile
+    defaults: { _controller: KhatovarDocumentsBundle:File:removeFile }

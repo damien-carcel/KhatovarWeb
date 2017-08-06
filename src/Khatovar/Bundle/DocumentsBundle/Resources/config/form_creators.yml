@@ -1,0 +1,7 @@
+services:
+    khatovar_documents.creator.form:
+        class: Khatovar\Bundle\DocumentsBundle\Form\Creator\DocumentsFormCreator
+        arguments:
+            - '@form.factory'
+            - '@router'
+            - '@translator'
