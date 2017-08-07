@@ -1,6 +1,0 @@
-services:
-    khatovar_photo.form.subscriber.add_fields:
-        class: Khatovar\Bundle\PhotoBundle\Form\Subscriber\AddPhotoFieldsSubscriber
-
-    khatovar_photo.form.subscriber.add_authorized:
-        class: Khatovar\Bundle\PhotoBundle\Form\Subscriber\AddAuthorizedFieldsSubscriber

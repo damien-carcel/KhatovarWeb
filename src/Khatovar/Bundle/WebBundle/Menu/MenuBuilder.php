@@ -1,6 +1,9 @@
 <?php
+
 /**
  * This file is part of KhatovarWeb.
+ *
+ * Copyright (c) 2015 Damien Carcel (https://github.com/damien-carcel)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,32 +17,26 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @copyright   Copyright (C) Damien Carcel (https://github.com/damien-carcel)
- *
- * @see        https://github.com/damien-carcel/KhatovarWeb
- *
- * @license     http://www.gnu.org/licenses/gpl.html
  */
 
 namespace Khatovar\Bundle\WebBundle\Menu;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Khatovar\Bundle\ExactionBundle\Manager\ExactionManager;
+use Khatovar\Bundle\WebBundle\Manager\ExactionManager;
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
 
 /**
  * Build the web site menu.
  *
- * @author Damien Carcel (https://github.com/damien-carcel)
+ * @author Damien Carcel <damien.carcel@gmail.com>
  *
  * @todo   Inject directly the needed repositories (define them as services).
  * @todo   $appareances and $programmes should be get directly in the methods that needs them.
  */
 class MenuBuilder
 {
-    /** @var \Khatovar\Bundle\AppearanceBundle\Entity\Appearance[] */
+    /** @var \Khatovar\Bundle\WebBundle\Entity\Appearance[] */
     protected $appearances;
 
     /** @var array */
@@ -48,7 +45,7 @@ class MenuBuilder
     /** @var FactoryInterface */
     protected $menuFactory;
 
-    /** @var \Khatovar\Bundle\AppearanceBundle\Entity\Appearance[] */
+    /** @var \Khatovar\Bundle\WebBundle\Entity\Appearance[] */
     protected $programmes;
 
     /**
@@ -62,7 +59,7 @@ class MenuBuilder
         ExactionManager $exactionManager
     ) {
         $this->menuFactory = $menuFactory;
-        $appearanceRepository = $entityManager->getRepository('KhatovarAppearanceBundle:Appearance');
+        $appearanceRepository = $entityManager->getRepository('KhatovarWebBundle:Appearance');
 
         $this->exactionYears = $exactionManager->getSortedYears();
         $this->appearances = $appearanceRepository->findActiveWorkshopsSortedBySlug();

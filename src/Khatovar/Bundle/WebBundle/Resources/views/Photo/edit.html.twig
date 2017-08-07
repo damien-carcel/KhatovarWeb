@@ -1,0 +1,21 @@
+{% extends "KhatovarWebBundle::layout.html.twig" %}
+
+{% form_theme edit_form 'KhatovarWebBundle:form:fields.html.twig' %}
+
+{% block inarticle %}
+    <h2>Modifier les informations de la photo</h2>
+
+    <div class="form-background relative-position">
+        <div class="photo_admin right-corner">
+            {{ photo.getWebPath()|thumbnail('landscape', photo.alt) }}
+        </div>
+
+        {{ form_start(edit_form) }}
+        {{ form_errors(edit_form) }}
+
+        {% include 'KhatovarWebBundle:Photo:_form.html.twig' with {'form': edit_form} %}
+
+        {{ form_rest(edit_form) }}
+        {{ form_end(edit_form) }}
+    </div>
+{% endblock %}

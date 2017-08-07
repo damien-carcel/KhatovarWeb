@@ -1,6 +1,9 @@
 <?php
+
 /**
  * This file is part of KhatovarWeb.
+ *
+ * Copyright (c) 2015 Damien Carcel (https://github.com/damien-carcel)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,12 +17,6 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @copyright   Copyright (C) Damien Carcel (https://github.com/damien-carcel)
- *
- * @see         https://github.com/damien-carcel/KhatovarWeb
- *
- * @license     http://www.gnu.org/licenses/gpl.html
  */
 
 namespace Khatovar\Bundle\WebBundle\Twig;
@@ -28,6 +25,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
+ * @author Damien Carcel <damien.carcel@gmail.com>
+ *
  * Twig extension that return the name of the current controller and
  * the action executed.
  * Thanks to Dani Sancas for it: http://stackoverflow.com/a/17544023.

@@ -1,0 +1,26 @@
+{% extends 'KhatovarWebBundle::layout.html.twig' %}
+
+{% block inarticle %}
+    {% if is_granted('ROLE_EDITOR') %}
+        <a href="{{ path('khatovar_web_member_new') }}">Ajouter un nouveau membre</a>
+        <hr />
+    {% endif %}
+
+    <div class="container">
+        <p>
+            <b>Voici les membres de notre compagnie&nbsp;:</b>
+        </p>
+
+        {% include 'KhatovarWebBundle:Member:_list.html.twig' with {'members': active_members, 'delete_forms': active_delete_forms} %}
+    </div>
+
+    {% if past_members %}
+        <div class="container">
+            <p style="text-align: center">
+                <b>Veni, Vidi… mais pas Vici : les anciens</b>
+            </p>
+
+            {% include 'KhatovarWebBundle:Member:_list.html.twig' with {'members': past_members, 'delete_forms': past_delete_forms} %}
+        </div>
+    {% endif %}
+{% endblock %}

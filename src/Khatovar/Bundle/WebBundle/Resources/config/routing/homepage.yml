@@ -1,0 +1,34 @@
+khatovar_web_homepage:
+    path:       /
+    defaults:   { _controller: KhatovarWebBundle:Homepage:index }
+
+khatovar_web_homepage_show:
+    path:       /{id}/show
+    defaults:   { _controller: KhatovarWebBundle:Homepage:show }
+
+khatovar_web_homepage_list:
+    path:       /list
+    defaults:   { _controller: KhatovarWebBundle:Homepage:list }
+
+khatovar_web_homepage_new:
+    path:       /new
+    defaults:   { _controller: KhatovarWebBundle:Homepage:new }
+
+khatovar_web_homepage_create:
+    path:       /create
+    defaults:   { _controller: KhatovarWebBundle:Homepage:create }
+    methods:  [POST]
+
+khatovar_web_homepage_edit:
+    path:       /{id}/edit
+    defaults:   { _controller: KhatovarWebBundle:Homepage:edit }
+
+khatovar_web_homepage_update:
+    path:       /{id}/update
+    defaults:   { _controller: KhatovarWebBundle:Homepage:update }
+    methods:  [POST, PUT]
+
+khatovar_web_homepage_delete:
+    path:       /{id}/delete
+    defaults:   { _controller: KhatovarWebBundle:Homepage:delete }
+    methods:  [POST, DELETE]

@@ -1,0 +1,12 @@
+{% extends 'KhatovarWebBundle::layout.html.twig' %}
+
+{% form_theme edit_form 'KhatovarWebBundle:form:fields.html.twig' %}
+
+{% block inarticle %}
+    <a href="{{ path('khatovar_web_homepage_list') }}">Retour à la liste des pages d'accueil</a>
+    <hr />
+
+    <h1>Édition de la page d'accueil</h1>
+
+    {% include 'KhatovarWebBundle:Homepage:_form.html.twig' with {'form': edit_form} %}
+{% endblock %}

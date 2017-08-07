@@ -1,0 +1,36 @@
+Khatovar\Bundle\WebBundle\Entity\Contact:
+    type: entity
+    table: khatovar_web_contact
+    repositoryClass: Khatovar\Bundle\WebBundle\Entity\ContactRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+            column: name
+            nullable: false
+            unique: true
+        content:
+            type: text
+            column: content
+            nullable: false
+        active:
+            type: boolean
+            column: active
+            nullable: false
+    oneToOne:
+        visitCard:
+            targetEntity: Khatovar\Bundle\WebBundle\Entity\Photo
+            joinColumn:
+                name: visit_card_id
+                referencedColumnName: id
+                onDelete: 'SET NULL'
+    oneToMany:
+        photos:
+            targetEntity: Khatovar\Bundle\WebBundle\Entity\Photo
+            mappedBy: contact

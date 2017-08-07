@@ -1,3 +1,27 @@
-khatovar_web_camp:
-    path:     /camp
-    defaults: { _controller: KhatovarWebBundle:Web:camp }
+khatovar_appearance:
+    resource: '@KhatovarWebBundle/Resources/config/routing/appearance.yml'
+    prefix:   /prestations
+
+khatovar_camp:
+    resource: '@KhatovarWebBundle/Resources/config/routing/camp.yml'
+    prefix:   /camp
+
+khatovar_contact:
+    resource: '@KhatovarWebBundle/Resources/config/routing/contact.yml'
+    prefix:   /contact
+
+khatovar_exaction:
+    resource: '@KhatovarWebBundle/Resources/config/routing/exaction.yml'
+    prefix:   /dates
+
+khatovar_homepage:
+    resource: '@KhatovarWebBundle/Resources/config/routing/homepage.yml'
+    prefix:   /accueil
+
+khatovar_member:
+    resource: '@KhatovarWebBundle/Resources/config/routing/member.yml'
+    prefix:   /membres
+
+khatovar_photo:
+    resource: '@KhatovarWebBundle/Resources/config/routing/photo.yml'
+    prefix:   /photos

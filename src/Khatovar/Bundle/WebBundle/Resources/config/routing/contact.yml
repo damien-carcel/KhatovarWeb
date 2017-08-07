@@ -1,0 +1,34 @@
+khatovar_web_contact:
+     path:     /
+     defaults: { _controller: KhatovarWebBundle:Contact:index }
+
+khatovar_web_contact_show:
+    path:     /{id}/show
+    defaults: { _controller: KhatovarWebBundle:Contact:show }
+
+khatovar_web_contact_list:
+    path:     /list
+    defaults: { _controller: KhatovarWebBundle:Contact:list }
+
+khatovar_web_contact_new:
+    path:     /new
+    defaults: { _controller: KhatovarWebBundle:Contact:new }
+
+khatovar_web_contact_create:
+    path:     /create
+    defaults: { _controller: KhatovarWebBundle:Contact:create }
+    methods:  [POST]
+
+khatovar_web_contact_edit:
+    path:     /{id}/edit
+    defaults: { _controller: KhatovarWebBundle:Contact:edit }
+
+khatovar_web_contact_update:
+    path:     /{id}/update
+    defaults: { _controller: KhatovarWebBundle:Contact:update }
+    methods:  [POST, PUT]
+
+khatovar_web_contact_delete:
+    path:     /{id}/delete
+    defaults: { _controller: KhatovarWebBundle:Contact:delete }
+    methods:  [POST, DELETE]

@@ -1,0 +1,38 @@
+khatovar_web_exaction:
+    path:     /
+    defaults: { _controller: KhatovarWebBundle:Exaction:index }
+
+khatovar_web_exaction_to_come:
+    path:     /a_venir
+    defaults: { _controller: KhatovarWebBundle:Exaction:toCome }
+
+khatovar_web_exaction_past:
+    path:     /passees
+    defaults: { _controller: KhatovarWebBundle:Exaction:past }
+
+khatovar_web_exaction_list_by_year:
+    path:     /passees/{year}
+    defaults: { _controller: KhatovarWebBundle:Exaction:viewByYear }
+
+khatovar_web_exaction_new:
+    path:     /new
+    defaults: { _controller: KhatovarWebBundle:Exaction:new }
+
+khatovar_web_exaction_create:
+    path:     /create
+    defaults: { _controller: KhatovarWebBundle:Exaction:create }
+    methods:  [POST]
+
+khatovar_web_exaction_edit:
+    path:     /{id}/edit
+    defaults: { _controller: KhatovarWebBundle:Exaction:edit }
+
+khatovar_web_exaction_update:
+    path:     /{id}/update
+    defaults: { _controller: KhatovarWebBundle:Exaction:update }
+    methods:  [POST, PUT]
+
+khatovar_web_exaction_delete:
+    path:     /{id}/delete
+    defaults: { _controller: KhatovarWebBundle:Exaction:delete }
+    methods:  [POST, DELETE]

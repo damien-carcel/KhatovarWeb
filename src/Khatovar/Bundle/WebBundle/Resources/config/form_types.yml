@@ -1,0 +1,55 @@
+services:
+    khatovar_appearance.form.type.appearance:
+        class: Khatovar\Bundle\WebBundle\Form\Type\AppearanceType
+        tags:
+            - { name: form.type }
+
+    khatovar_contact.form.type.contact:
+        class: Khatovar\Bundle\WebBundle\Form\Type\ContactType
+        arguments:
+            - '@khatovar_contact.form.subscriber.add_visit_card'
+        tags:
+            - { name: form.type }
+
+    khatovar_contact.form.type.contact_activation:
+        class: Khatovar\Bundle\WebBundle\Form\Type\ContactActivationType
+        arguments:
+            - '@doctrine.orm.entity_manager'
+        tags:
+            - { name: form.type }
+
+    khatovar_exaction.form.type.exaction:
+        class: Khatovar\Bundle\WebBundle\Form\Type\ExactionType
+        arguments:
+            - '@khatovar_exaction.form.subscriber.add_passed_exaction_fields'
+        tags:
+            - { name: form.type }
+
+    khatovar_homepage.form.type.homepage:
+        class: Khatovar\Bundle\WebBundle\Form\Type\HomepageType
+        tags:
+            - { name: form.type }
+
+    khatovar_homepage.form.type.homepage_activation:
+        class: Khatovar\Bundle\WebBundle\Form\Type\HomepageActivationType
+        arguments:
+            - '@doctrine.orm.entity_manager'
+        tags:
+            - { name: form.type }
+
+    khatovar_member.form.type.member:
+        class: Khatovar\Bundle\WebBundle\Form\Type\MemberType
+        arguments:
+            - '@khatovar_member.form.subscriber.add_portrait'
+            - '@khatovar_member.form.subscriber.remove_owner'
+        tags:
+            - { name: form.type }
+
+    khatovar_photo.form.type.photo:
+        class: Khatovar\Bundle\WebBundle\Form\Type\PhotoType
+        arguments:
+            - '@security.authorization_checker'
+            - '@khatovar_photo.form.subscriber.add_fields'
+            - '@khatovar_photo.form.subscriber.add_authorized'
+        tags:
+            - { name: form.type }

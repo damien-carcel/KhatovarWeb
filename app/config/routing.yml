@@ -1,26 +1,9 @@
-khatovar_appearance:
-    resource: '@KhatovarAppearanceBundle/Resources/config/routing.yml'
-    prefix:   /prestations
+fos_user:
+    resource: '@FOSUserBundle/Resources/config/routing/all.xml'
 
-khatovar_contact:
-    resource: '@KhatovarContactBundle/Resources/config/routing.yml'
-    prefix:   /contact
-
-khatovar_exaction:
-    resource: '@KhatovarExactionBundle/Resources/config/routing.yml'
-    prefix:   /dates
-
-khatovar_member:
-    resource: '@KhatovarMemberBundle/Resources/config/routing.yml'
-    prefix:   /membres
-
-khatovar_photo:
-    resource: '@KhatovarPhotoBundle/Resources/config/routing.yml'
-    prefix:   /photos
-
-khatovar_homepage:
-    resource: '@KhatovarHomepageBundle/Resources/config/routing.yml'
-    prefix:   /accueil
+carcel_user:
+    resource: '@CarcelUserBundle/Resources/config/routing.yml'
+    prefix:   /
 
 khatovar_web:
     resource: '@KhatovarWebBundle/Resources/config/routing.yml'
@@ -29,13 +12,6 @@ khatovar_web:
 khatovar_documents:
     resource: '@KhatovarDocumentsBundle/Resources/config/routing.yml'
     prefix:   /documents
-
-fos_user:
-    resource: '@FOSUserBundle/Resources/config/routing/all.xml'
-
-carcel_user:
-    resource: '@CarcelUserBundle/Resources/config/routing.yml'
-    prefix:   /
 
 # redirecting the root
 root:

@@ -1,8 +1,0 @@
-services:
-    khatovar_member.form.type.member:
-        class: Khatovar\Bundle\MemberBundle\Form\Type\MemberType
-        arguments:
-            - '@khatovar_member.form.subscriber.add_portrait'
-            - '@khatovar_member.form.subscriber.remove_owner'
-        tags:
-            - { name: form.type }

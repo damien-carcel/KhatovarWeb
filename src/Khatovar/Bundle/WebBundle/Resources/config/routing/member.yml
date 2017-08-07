@@ -1,0 +1,32 @@
+khatovar_web_member:
+    path:       /
+    defaults:   { _controller: KhatovarWebBundle:Member:index }
+
+khatovar_web_member_show:
+    path:       /historique/{slug}
+    defaults:   { _controller: KhatovarWebBundle:Member:show }
+    requirements:
+        slug: "[a-zA-Z0-9-_/]+"
+
+khatovar_web_member_new:
+    path:       /new
+    defaults:   { _controller: KhatovarWebBundle:Member:new }
+
+khatovar_web_member_create:
+    path:       /create
+    defaults:   { _controller: KhatovarWebBundle:Member:create }
+    methods:  [POST]
+
+khatovar_web_member_edit:
+    path:       /{id}/edit
+    defaults:   { _controller: KhatovarWebBundle:Member:edit }
+
+khatovar_web_member_update:
+    path:       /{id}/update
+    defaults:   { _controller: KhatovarWebBundle:Member:update }
+    methods:  [POST, PUT]
+
+khatovar_web_member_delete:
+    path:       /{id}/delete
+    defaults:   { _controller: KhatovarWebBundle:Member:delete }
+    methods:  [POST, DELETE]

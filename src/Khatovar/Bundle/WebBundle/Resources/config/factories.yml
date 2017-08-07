@@ -1,0 +1,7 @@
+services:
+    khatovar_photo.factory.photo:
+        class: Khatovar\Bundle\WebBundle\Factory\PhotoFactory
+        arguments:
+            - '@security.authorization_checker'
+            - '@security.token_storage'
+            - '@doctrine.orm.entity_manager'

@@ -18,12 +18,6 @@ class AppKernel extends Kernel
         $bundles = [
             new Khatovar\Bundle\DocumentsBundle\KhatovarDocumentsBundle(),
             new Khatovar\Bundle\WebBundle\KhatovarWebBundle(),
-            new Khatovar\Bundle\PhotoBundle\KhatovarPhotoBundle(),
-            new Khatovar\Bundle\HomepageBundle\KhatovarHomepageBundle(),
-            new Khatovar\Bundle\MemberBundle\KhatovarMemberBundle(),
-            new Khatovar\Bundle\ExactionBundle\KhatovarExactionBundle(),
-            new Khatovar\Bundle\ContactBundle\KhatovarContactBundle(),
-            new Khatovar\Bundle\AppearanceBundle\KhatovarAppearanceBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
