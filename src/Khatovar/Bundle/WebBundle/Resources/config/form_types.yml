@@ -36,3 +36,11 @@ services:
             - '@doctrine.orm.entity_manager'
         tags:
             - { name: form.type }
+
+    khatovar_member.form.type.member:
+        class: Khatovar\Bundle\WebBundle\Form\Type\MemberType
+        arguments:
+            - '@khatovar_member.form.subscriber.add_portrait'
+            - '@khatovar_member.form.subscriber.remove_owner'
+        tags:
+            - { name: form.type }

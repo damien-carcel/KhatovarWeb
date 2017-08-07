@@ -19,7 +19,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Khatovar\Bundle\MemberBundle\Form\Type;
+namespace Khatovar\Bundle\WebBundle\Form\Type;
 
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -69,7 +69,7 @@ class MemberType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(['data_class' => 'Khatovar\Bundle\MemberBundle\Entity\Member']);
+        $resolver->setDefaults(['data_class' => 'Khatovar\Bundle\WebBundle\Entity\Member']);
     }
 
     /**

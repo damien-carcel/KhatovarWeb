@@ -4,3 +4,11 @@ services:
 
     khatovar_exaction.form.subscriber.add_passed_exaction_fields:
         class: Khatovar\Bundle\WebBundle\Form\Subscriber\AddPassedExactionFieldsSubscriber
+
+    khatovar_member.form.subscriber.add_portrait:
+        class: Khatovar\Bundle\WebBundle\Form\Subscriber\AddPortraitSubscriber
+
+    khatovar_member.form.subscriber.remove_owner:
+        class: Khatovar\Bundle\WebBundle\Form\Subscriber\RemoveOwnerSubscriber
+        arguments:
+            - '@security.token_storage'

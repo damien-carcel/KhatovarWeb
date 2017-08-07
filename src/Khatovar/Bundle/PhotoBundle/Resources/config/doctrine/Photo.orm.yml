@@ -40,7 +40,7 @@ Khatovar\Bundle\PhotoBundle\Entity\Photo:
                 referencedColumnName: id
                 onDelete: 'SET NULL'
         member:
-            targetEntity: Khatovar\Bundle\MemberBundle\Entity\Member
+            targetEntity: Khatovar\Bundle\WebBundle\Entity\Member
             cascade:
                 - detach
             inversedBy: photos

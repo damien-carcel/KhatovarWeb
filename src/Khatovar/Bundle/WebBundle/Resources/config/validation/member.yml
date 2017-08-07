@@ -1,4 +1,4 @@
-Khatovar\Bundle\MemberBundle\Entity\Member:
+Khatovar\Bundle\WebBundle\Entity\Member:
     properties:
         name:
             - NotBlank: ~

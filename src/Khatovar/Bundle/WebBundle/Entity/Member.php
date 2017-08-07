@@ -19,7 +19,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Khatovar\Bundle\MemberBundle\Entity;
+namespace Khatovar\Bundle\WebBundle\Entity;
 
 use Carcel\Bundle\UserBundle\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;

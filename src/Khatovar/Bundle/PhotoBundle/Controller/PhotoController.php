@@ -333,7 +333,7 @@ class PhotoController extends Controller
     protected function userHasEditRights(Photo $photo = null)
     {
         $member = $this->get('doctrine.orm.entity_manager')
-            ->getRepository('KhatovarMemberBundle:Member')
+            ->getRepository('KhatovarWebBundle:Member')
             ->getLoggedMember($this->getUser()->getId());
 
         if ($this->isGranted('ROLE_EDITOR')) {

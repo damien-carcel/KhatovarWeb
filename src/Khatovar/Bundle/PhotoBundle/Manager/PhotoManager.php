@@ -168,7 +168,7 @@ class PhotoManager
         $sortedPhotos = [];
 
         $member = $this->entityManager
-            ->getRepository('KhatovarMemberBundle:Member')
+            ->getRepository('KhatovarWebBundle:Member')
             ->findOneBy(['owner' => $currentUser]);
 
         $memberPhotos = $member->getPhotos();

@@ -1,7 +1,3 @@
-khatovar_member:
-    resource: '@KhatovarMemberBundle/Resources/config/routing.yml'
-    prefix:   /membres
-
 khatovar_photo:
     resource: '@KhatovarPhotoBundle/Resources/config/routing.yml'
     prefix:   /photos

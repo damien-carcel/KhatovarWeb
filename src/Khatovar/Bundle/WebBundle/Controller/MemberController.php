@@ -19,9 +19,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Khatovar\Bundle\MemberBundle\Controller;
+namespace Khatovar\Bundle\WebBundle\Controller;
 
-use Khatovar\Bundle\MemberBundle\Entity\Member;
+use Khatovar\Bundle\WebBundle\Entity\Member;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -40,14 +40,14 @@ class MemberController extends Controller
      */
     public function indexAction()
     {
-        $memberRepository = $this->get('doctrine.orm.entity_manager')->getRepository('KhatovarMemberBundle:Member');
+        $memberRepository = $this->get('doctrine.orm.entity_manager')->getRepository('KhatovarWebBundle:Member');
         $activeMembers = $memberRepository->findBy(['active' => true]);
         $pastMembers = $memberRepository->findBy(['active' => false]);
         $activeDeleteForms = $this->createDeleteForms($activeMembers);
         $pastDeleteForms = $this->createDeleteForms($pastMembers);
 
         return $this->render(
-            'KhatovarMemberBundle:Member:index.html.twig',
+            'KhatovarWebBundle:Member:index.html.twig',
             [
                 'active_members' => $activeMembers,
                 'past_members' => $pastMembers,
@@ -67,7 +67,7 @@ class MemberController extends Controller
     public function showAction($slug)
     {
         $member = $this->get('doctrine.orm.entity_manager')
-            ->getRepository('KhatovarMemberBundle:Member')
+            ->getRepository('KhatovarWebBundle:Member')
             ->findBySlugOr404($slug);
 
         $currentUser = $this->getUser();
@@ -77,7 +77,7 @@ class MemberController extends Controller
             ->getAllButPortrait($member);
 
         return $this->render(
-            'KhatovarMemberBundle:Member:show.html.twig',
+            'KhatovarWebBundle:Member:show.html.twig',
             [
                 'member' => $member,
                 'current_user' => $currentUser,
@@ -99,7 +99,7 @@ class MemberController extends Controller
         $form = $this->createCreateForm($member);
 
         return $this->render(
-            'KhatovarMemberBundle:Member:new.html.twig',
+            'KhatovarWebBundle:Member:new.html.twig',
             [
                 'form' => $form->createView(),
                 'edit' => false,
@@ -145,7 +145,7 @@ class MemberController extends Controller
         }
 
         return $this->render(
-            'KhatovarMemberBundle:Member:new.html.twig',
+            'KhatovarWebBundle:Member:new.html.twig',
             [
                 'form' => $form->createView(),
                 'edit' => false,
@@ -165,13 +165,13 @@ class MemberController extends Controller
     public function editAction($id)
     {
         $contact = $this->get('doctrine.orm.entity_manager')
-            ->getRepository('KhatovarMemberBundle:Member')
+            ->getRepository('KhatovarWebBundle:Member')
             ->findByIdOr404($id);
 
         $editForm = $this->createEditForm($contact);
 
         return $this->render(
-            'KhatovarMemberBundle:Member:edit.html.twig',
+            'KhatovarWebBundle:Member:edit.html.twig',
             [
                 'edit_form' => $editForm->createView(),
                 'edit' => true,
@@ -192,7 +192,7 @@ class MemberController extends Controller
     public function updateAction(Request $request, $id)
     {
         $member = $this->get('doctrine.orm.entity_manager')
-            ->getRepository('KhatovarMemberBundle:Member')
+            ->getRepository('KhatovarWebBundle:Member')
             ->findByIdOr404($id);
 
         $editForm = $this->createEditForm($member);
@@ -212,7 +212,7 @@ class MemberController extends Controller
         }
 
         return $this->render(
-            'KhatovarMemberBundle:Member:edit.html.twig',
+            'KhatovarWebBundle:Member:edit.html.twig',
             [
                 'edit_form' => $editForm->createView(),
                 'edit' => true,
@@ -233,7 +233,7 @@ class MemberController extends Controller
     public function deleteAction(Request $request, $id)
     {
         $member = $this->get('doctrine.orm.entity_manager')
-            ->getRepository('KhatovarMemberBundle:Member')
+            ->getRepository('KhatovarWebBundle:Member')
             ->findByIdOr404($id);
 
         $form = $this->createDeleteForm($id);
@@ -260,7 +260,7 @@ class MemberController extends Controller
     protected function createCreateForm(Member $member)
     {
         $form = $this->createForm(
-            'Khatovar\Bundle\MemberBundle\Form\Type\MemberType',
+            'Khatovar\Bundle\WebBundle\Form\Type\MemberType',
             $member,
             [
                 'action' => $this->generateUrl('khatovar_web_member_create'),
@@ -289,7 +289,7 @@ class MemberController extends Controller
         }
 
         $form = $this->createForm(
-            'Khatovar\Bundle\MemberBundle\Form\Type\MemberType',
+            'Khatovar\Bundle\WebBundle\Form\Type\MemberType',
             $member,
             [
                 'action' => $this->generateUrl('khatovar_web_member_update', ['id' => $member->getId()]),

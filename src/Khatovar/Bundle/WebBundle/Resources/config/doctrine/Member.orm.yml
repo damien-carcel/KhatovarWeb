@@ -1,7 +1,7 @@
-Khatovar\Bundle\MemberBundle\Entity\Member:
+Khatovar\Bundle\WebBundle\Entity\Member:
     type: entity
     table: khatovar_web_member
-    repositoryClass: Khatovar\Bundle\MemberBundle\Entity\MemberRepository
+    repositoryClass: Khatovar\Bundle\WebBundle\Entity\MemberRepository
     indexes:
         search_idx:
               columns: slug

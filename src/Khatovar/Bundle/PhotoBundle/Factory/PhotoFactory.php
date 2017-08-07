@@ -69,7 +69,7 @@ class PhotoFactory
         if (!$this->authorizationChecker->isGranted('ROLE_EDITOR')) {
             $user = $this->tokenStorage->getToken()->getUser();
             $loggedMember = $this->entityManager
-                ->getRepository('KhatovarMemberBundle:Member')
+                ->getRepository('KhatovarWebBundle:Member')
                 ->getLoggedMember($user->getId());
 
             $photo

@@ -1,8 +1,0 @@
-services:
-    khatovar_member.form.subscriber.add_portrait:
-        class: Khatovar\Bundle\MemberBundle\Form\Subscriber\AddPortraitSubscriber
-
-    khatovar_member.form.subscriber.remove_owner:
-        class: Khatovar\Bundle\MemberBundle\Form\Subscriber\RemoveOwnerSubscriber
-        arguments:
-            - '@security.token_storage'

@@ -25,7 +25,7 @@ use Khatovar\Bundle\WebBundle\Entity\Appearance;
 use Khatovar\Bundle\WebBundle\Entity\Contact;
 use Khatovar\Bundle\WebBundle\Entity\Exaction;
 use Khatovar\Bundle\WebBundle\Entity\Homepage;
-use Khatovar\Bundle\MemberBundle\Entity\Member;
+use Khatovar\Bundle\WebBundle\Entity\Member;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**

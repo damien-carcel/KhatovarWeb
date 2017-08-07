@@ -22,7 +22,7 @@
 namespace Khatovar\Bundle\PhotoBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
-use Khatovar\Bundle\MemberBundle\Entity\Member;
+use Khatovar\Bundle\WebBundle\Entity\Member;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**

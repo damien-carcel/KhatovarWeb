@@ -11,7 +11,7 @@
             <b>Voici les membres de notre compagnie&nbsp;:</b>
         </p>
 
-        {% include 'KhatovarMemberBundle:Member:_list.html.twig' with {'members': active_members, 'delete_forms': active_delete_forms} %}
+        {% include 'KhatovarWebBundle:Member:_list.html.twig' with {'members': active_members, 'delete_forms': active_delete_forms} %}
     </div>
 
     {% if past_members %}
@@ -20,7 +20,7 @@
                 <b>Veni, Vidi… mais pas Vici : les anciens</b>
             </p>
 
-            {% include 'KhatovarMemberBundle:Member:_list.html.twig' with {'members': past_members, 'delete_forms': past_delete_forms} %}
+            {% include 'KhatovarWebBundle:Member:_list.html.twig' with {'members': past_members, 'delete_forms': past_delete_forms} %}
         </div>
     {% endif %}
 {% endblock %}
