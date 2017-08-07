@@ -19,8 +19,18 @@ services:
             - { name: twig.extension }
 
     khatovar_appearance.twig.normalizer.link:
-        class: Khatovar\Bundle\WebBundle\Twig\LinkNormalizer
+        class: Khatovar\Bundle\WebBundle\Twig\AppearanceLinkNormalizer
         arguments:
             - '@router'
+        tags:
+            - { name: twig.extension }
+
+    khatovar_exaction.twig.normalizer.date:
+        class: Khatovar\Bundle\WebBundle\Twig\DateNormalizer
+        tags:
+            - { name: twig.extension }
+
+    khatovar_exaction.twig.normalizer.link:
+        class: Khatovar\Bundle\WebBundle\Twig\ExactionLinkNormalizer
         tags:
             - { name: twig.extension }

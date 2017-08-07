@@ -1,3 +1,0 @@
-services:
-    khatovar_exaction.form.subscriber.add_passed_exaction_fields:
-        class: Khatovar\Bundle\ExactionBundle\Form\Subscriber\AddPassedExactionFieldsSubscriber

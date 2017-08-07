@@ -9,3 +9,11 @@ khatovar_appearance:
 khatovar_contact:
     resource: '@KhatovarWebBundle/Resources/config/routing/contact.yml'
     prefix:   /contact
+
+khatovar_exaction:
+    resource: '@KhatovarWebBundle/Resources/config/routing/exaction.yml'
+    prefix:   /dates
+
+khatovar_homepage:
+    resource: '@KhatovarWebBundle/Resources/config/routing/homepage.yml'
+    prefix:   /accueil

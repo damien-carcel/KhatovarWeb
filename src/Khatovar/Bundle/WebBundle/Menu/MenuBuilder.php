@@ -22,7 +22,7 @@
 namespace Khatovar\Bundle\WebBundle\Menu;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Khatovar\Bundle\ExactionBundle\Manager\ExactionManager;
+use Khatovar\Bundle\WebBundle\Manager\ExactionManager;
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
 

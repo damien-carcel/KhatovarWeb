@@ -31,7 +31,7 @@ Khatovar\Bundle\PhotoBundle\Entity\Photo:
             nullable: true
     manyToOne:
         homepage:
-            targetEntity: Khatovar\Bundle\HomepageBundle\Entity\Homepage
+            targetEntity: Khatovar\Bundle\WebBundle\Entity\Homepage
             cascade:
                 - detach
             inversedBy: photos
@@ -49,7 +49,7 @@ Khatovar\Bundle\PhotoBundle\Entity\Photo:
                 referencedColumnName: id
                 onDelete: 'SET NULL'
         exaction:
-            targetEntity: Khatovar\Bundle\ExactionBundle\Entity\Exaction
+            targetEntity: Khatovar\Bundle\WebBundle\Entity\Exaction
             cascade:
                 - detach
             inversedBy: photos

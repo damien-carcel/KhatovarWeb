@@ -3,3 +3,8 @@ services:
         class: Khatovar\Bundle\WebBundle\Manager\AppearanceManager
         arguments:
             - '@doctrine.orm.entity_manager'
+
+    khatovar_exaction.manager.exaction:
+        class: Khatovar\Bundle\WebBundle\Manager\ExactionManager
+        arguments:
+            - '@doctrine.orm.entity_manager'

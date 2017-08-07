@@ -1,0 +1,17 @@
+Khatovar\Bundle\WebBundle\Entity\Exaction:
+    constraints:
+        - Khatovar\Bundle\WebBundle\Validator\Constraints\Dates: ~
+    properties:
+        name:
+            - NotBlank: ~
+            - Length:
+                max: 255
+        place:
+            - NotBlank: ~
+            - Length:
+                max: 255
+        links:
+            - Khatovar\Bundle\WebBundle\Validator\Constraints\ExactionLink: ~
+        map:
+            - Khatovar\Bundle\WebBundle\Validator\Constraints\ContainsIframe: ~
+            - Khatovar\Bundle\WebBundle\Validator\Constraints\IframeSize: ~

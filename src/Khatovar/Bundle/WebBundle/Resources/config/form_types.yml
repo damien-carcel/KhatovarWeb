@@ -17,3 +17,22 @@ services:
             - '@doctrine.orm.entity_manager'
         tags:
             - { name: form.type }
+
+    khatovar_exaction.form.type.exaction:
+        class: Khatovar\Bundle\WebBundle\Form\Type\ExactionType
+        arguments:
+            - '@khatovar_exaction.form.subscriber.add_passed_exaction_fields'
+        tags:
+            - { name: form.type }
+
+    khatovar_homepage.form.type.homepage:
+        class: Khatovar\Bundle\WebBundle\Form\Type\HomepageType
+        tags:
+            - { name: form.type }
+
+    khatovar_homepage.form.type.homepage_activation:
+        class: Khatovar\Bundle\WebBundle\Form\Type\HomepageActivationType
+        arguments:
+            - '@doctrine.orm.entity_manager'
+        tags:
+            - { name: form.type }

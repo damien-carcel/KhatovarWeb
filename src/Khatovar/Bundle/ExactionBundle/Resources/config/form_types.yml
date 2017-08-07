@@ -1,7 +1,0 @@
-services:
-    khatovar_exaction.form.type.exaction:
-        class: Khatovar\Bundle\ExactionBundle\Form\Type\ExactionType
-        arguments:
-            - '@khatovar_exaction.form.subscriber.add_passed_exaction_fields'
-        tags:
-            - { name: form.type }

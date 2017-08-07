@@ -1,3 +1,6 @@
 services:
     khatovar_contact.form.subscriber.add_visit_card:
         class: Khatovar\Bundle\WebBundle\Form\Subscriber\AddVisitCardSubscriber
+
+    khatovar_exaction.form.subscriber.add_passed_exaction_fields:
+        class: Khatovar\Bundle\WebBundle\Form\Subscriber\AddPassedExactionFieldsSubscriber
