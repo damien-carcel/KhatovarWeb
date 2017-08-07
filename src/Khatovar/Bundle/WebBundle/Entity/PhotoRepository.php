@@ -22,7 +22,6 @@
 namespace Khatovar\Bundle\WebBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
-use Khatovar\Bundle\WebBundle\Entity\Member;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**

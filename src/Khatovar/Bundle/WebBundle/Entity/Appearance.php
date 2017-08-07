@@ -22,7 +22,6 @@
 namespace Khatovar\Bundle\WebBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Khatovar\Bundle\WebBundle\Entity\Photo;
 
 /**
  * @author Damien Carcel <damien.carcel@gmail.com>

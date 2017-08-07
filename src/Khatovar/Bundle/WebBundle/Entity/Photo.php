@@ -21,11 +21,6 @@
 
 namespace Khatovar\Bundle\WebBundle\Entity;
 
-use Khatovar\Bundle\WebBundle\Entity\Appearance;
-use Khatovar\Bundle\WebBundle\Entity\Contact;
-use Khatovar\Bundle\WebBundle\Entity\Exaction;
-use Khatovar\Bundle\WebBundle\Entity\Homepage;
-use Khatovar\Bundle\WebBundle\Entity\Member;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
@@ -382,7 +377,7 @@ class Photo
      */
     protected function getUploadRootDir()
     {
-        return __DIR__ . '/../../../../../www/' .$this->getUploadDir();
+        return __DIR__.'/../../../../../www/'.$this->getUploadDir();
     }
 
     /**

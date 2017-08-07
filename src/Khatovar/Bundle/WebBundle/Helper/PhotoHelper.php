@@ -21,8 +21,6 @@
 
 namespace Khatovar\Bundle\WebBundle\Helper;
 
-use Khatovar\Bundle\WebBundle\Helper\EntityHelper;
-
 /**
  * @author Damien Carcel <damien.carcel@gmail.com>
  */

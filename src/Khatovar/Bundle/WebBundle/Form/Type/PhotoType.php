@@ -21,8 +21,8 @@
 
 namespace Khatovar\Bundle\WebBundle\Form\Type;
 
-use Khatovar\Bundle\WebBundle\Helper\PhotoHelper;
 use Khatovar\Bundle\WebBundle\Helper\EntityHelper;
+use Khatovar\Bundle\WebBundle\Helper\PhotoHelper;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;

@@ -24,8 +24,8 @@ namespace Khatovar\Bundle\WebBundle\Manager;
 use Carcel\Bundle\UserBundle\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Khatovar\Bundle\WebBundle\Entity\Photo;
-use Khatovar\Bundle\WebBundle\Helper\PhotoHelper;
 use Khatovar\Bundle\WebBundle\Helper\EntityHelper;
+use Khatovar\Bundle\WebBundle\Helper\PhotoHelper;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
