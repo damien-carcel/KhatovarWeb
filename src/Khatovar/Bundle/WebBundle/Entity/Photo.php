@@ -19,7 +19,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Khatovar\Bundle\PhotoBundle\Entity;
+namespace Khatovar\Bundle\WebBundle\Entity;
 
 use Khatovar\Bundle\WebBundle\Entity\Appearance;
 use Khatovar\Bundle\WebBundle\Entity\Contact;
@@ -382,7 +382,7 @@ class Photo
      */
     protected function getUploadRootDir()
     {
-        return __DIR__.'/../../../../../www/'.$this->getUploadDir();
+        return __DIR__ . '/../../../../../www/' .$this->getUploadDir();
     }
 
     /**

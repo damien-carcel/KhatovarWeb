@@ -79,7 +79,7 @@ Khatovar\Bundle\WebBundle\Entity\Member:
             nullable: false
     oneToOne:
         portrait:
-            targetEntity: Khatovar\Bundle\PhotoBundle\Entity\Photo
+            targetEntity: Khatovar\Bundle\WebBundle\Entity\Photo
             JoinColumn:
                 name: portrait_id
                 referencedColumnName: id
@@ -94,5 +94,5 @@ Khatovar\Bundle\WebBundle\Entity\Member:
                 onDelete: 'SET NULL'
     oneToMany:
         photos:
-            targetEntity: Khatovar\Bundle\PhotoBundle\Entity\Photo
+            targetEntity: Khatovar\Bundle\WebBundle\Entity\Photo
             mappedBy: member

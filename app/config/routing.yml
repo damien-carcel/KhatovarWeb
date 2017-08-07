@@ -1,7 +1,3 @@
-khatovar_photo:
-    resource: '@KhatovarPhotoBundle/Resources/config/routing.yml'
-    prefix:   /photos
-
 fos_user:
     resource: '@FOSUserBundle/Resources/config/routing/all.xml'
 

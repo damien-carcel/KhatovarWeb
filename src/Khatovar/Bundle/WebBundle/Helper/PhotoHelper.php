@@ -19,7 +19,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Khatovar\Bundle\PhotoBundle\Helper;
+namespace Khatovar\Bundle\WebBundle\Helper;
 
 use Khatovar\Bundle\WebBundle\Helper\EntityHelper;
 

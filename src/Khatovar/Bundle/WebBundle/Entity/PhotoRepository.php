@@ -19,7 +19,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Khatovar\Bundle\PhotoBundle\Entity;
+namespace Khatovar\Bundle\WebBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 use Khatovar\Bundle\WebBundle\Entity\Member;

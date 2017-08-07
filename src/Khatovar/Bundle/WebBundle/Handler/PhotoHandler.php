@@ -19,12 +19,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Khatovar\Bundle\PhotoBundle\Handler;
+namespace Khatovar\Bundle\WebBundle\Handler;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Khatovar\Bundle\PhotoBundle\Entity\Photo;
-use Khatovar\Bundle\PhotoBundle\Helper\PhotoHelper;
-use Khatovar\Bundle\PhotoBundle\Manager\PhotoManager;
+use Khatovar\Bundle\WebBundle\Entity\Photo;
+use Khatovar\Bundle\WebBundle\Helper\PhotoHelper;
+use Khatovar\Bundle\WebBundle\Manager\PhotoManager;
 use Symfony\Component\Routing\RouterInterface;
 
 /**

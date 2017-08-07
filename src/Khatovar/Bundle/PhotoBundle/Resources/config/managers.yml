@@ -1,7 +1,0 @@
-services:
-    khatovar_photo.manager.photo:
-        class: Khatovar\Bundle\PhotoBundle\Manager\PhotoManager
-        arguments:
-            - '@doctrine.orm.entity_manager'
-            - '@security.authorization_checker'
-            - '@security.token_storage'

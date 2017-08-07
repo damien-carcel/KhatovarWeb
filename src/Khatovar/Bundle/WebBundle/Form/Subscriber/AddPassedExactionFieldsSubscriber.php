@@ -66,7 +66,7 @@ class AddPassedExactionFieldsSubscriber implements EventSubscriberInterface
                     'image',
                     EntityType::class,
                     [
-                        'class' => 'Khatovar\Bundle\PhotoBundle\Entity\Photo',
+                        'class' => 'Khatovar\Bundle\WebBundle\Entity\Photo',
                         'label' => 'L\'image de la fête',
                         'required' => false,
                         'query_builder' => function (EntityRepository $repository) use ($exaction) {

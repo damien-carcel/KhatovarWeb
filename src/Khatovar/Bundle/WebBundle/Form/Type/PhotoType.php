@@ -19,9 +19,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Khatovar\Bundle\PhotoBundle\Form\Type;
+namespace Khatovar\Bundle\WebBundle\Form\Type;
 
-use Khatovar\Bundle\PhotoBundle\Helper\PhotoHelper;
+use Khatovar\Bundle\WebBundle\Helper\PhotoHelper;
 use Khatovar\Bundle\WebBundle\Helper\EntityHelper;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\AbstractType;
@@ -86,6 +86,6 @@ class PhotoType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(['data_class' => 'Khatovar\Bundle\PhotoBundle\Entity\Photo']);
+        $resolver->setDefaults(['data_class' => 'Khatovar\Bundle\WebBundle\Entity\Photo']);
     }
 }

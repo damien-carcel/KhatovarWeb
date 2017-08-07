@@ -12,3 +12,9 @@ services:
         class: Khatovar\Bundle\WebBundle\Form\Subscriber\RemoveOwnerSubscriber
         arguments:
             - '@security.token_storage'
+
+    khatovar_photo.form.subscriber.add_fields:
+        class: Khatovar\Bundle\WebBundle\Form\Subscriber\AddPhotoFieldsSubscriber
+
+    khatovar_photo.form.subscriber.add_authorized:
+        class: Khatovar\Bundle\WebBundle\Form\Subscriber\AddAuthorizedFieldsSubscriber

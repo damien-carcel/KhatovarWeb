@@ -53,12 +53,12 @@ Khatovar\Bundle\WebBundle\Entity\Exaction:
             nullable: false
     oneToOne:
         image:
-            targetEntity: Khatovar\Bundle\PhotoBundle\Entity\Photo
+            targetEntity: Khatovar\Bundle\WebBundle\Entity\Photo
             JoinColumn:
                 name: image_id
                 referencedColumnName: id
                 onDelete: 'SET NULL'
     oneToMany:
         photos:
-            targetEntity: Khatovar\Bundle\PhotoBundle\Entity\Photo
+            targetEntity: Khatovar\Bundle\WebBundle\Entity\Photo
             mappedBy: exaction

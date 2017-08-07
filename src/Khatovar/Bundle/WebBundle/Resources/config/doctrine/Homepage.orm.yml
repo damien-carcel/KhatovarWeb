@@ -25,5 +25,5 @@ Khatovar\Bundle\WebBundle\Entity\Homepage:
             nullable: false
     oneToMany:
         photos:
-            targetEntity: Khatovar\Bundle\PhotoBundle\Entity\Photo
+            targetEntity: Khatovar\Bundle\WebBundle\Entity\Photo
             mappedBy: homepage

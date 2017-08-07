@@ -25,12 +25,12 @@ Khatovar\Bundle\WebBundle\Entity\Contact:
             nullable: false
     oneToOne:
         visitCard:
-            targetEntity: Khatovar\Bundle\PhotoBundle\Entity\Photo
+            targetEntity: Khatovar\Bundle\WebBundle\Entity\Photo
             joinColumn:
                 name: visit_card_id
                 referencedColumnName: id
                 onDelete: 'SET NULL'
     oneToMany:
         photos:
-            targetEntity: Khatovar\Bundle\PhotoBundle\Entity\Photo
+            targetEntity: Khatovar\Bundle\WebBundle\Entity\Photo
             mappedBy: contact

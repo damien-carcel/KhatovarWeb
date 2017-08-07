@@ -22,7 +22,7 @@
 namespace Khatovar\Bundle\WebBundle\Twig;
 
 use Doctrine\Common\Collections\Collection;
-use Khatovar\Bundle\PhotoBundle\Entity\Photo;
+use Khatovar\Bundle\WebBundle\Entity\Photo;
 
 /**
  * Twig extension for photo disposition in text.

@@ -73,7 +73,7 @@ class MemberController extends Controller
         $currentUser = $this->getUser();
 
         $photos = $this->get('doctrine.orm.entity_manager')
-            ->getRepository('KhatovarPhotoBundle:Photo')
+            ->getRepository('KhatovarWebBundle:Photo')
             ->getAllButPortrait($member);
 
         return $this->render(

@@ -14,7 +14,7 @@
 
         {{ form_row(form.file, { 'attr': {'class': 'form-element'}, tip: 'khatovar_photo.tips.contact'|trans }) }}
 
-        {% include 'KhatovarPhotoBundle:Photo:_form.html.twig' with {'form': form} %}
+        {% include 'KhatovarWebBundle:Photo:_form.html.twig' with {'form': form} %}
 
         {{ form_rest(form) }}
         {{ form_end(form) }}

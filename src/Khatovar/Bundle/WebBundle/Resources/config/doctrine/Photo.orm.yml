@@ -1,7 +1,7 @@
-Khatovar\Bundle\PhotoBundle\Entity\Photo:
+Khatovar\Bundle\WebBundle\Entity\Photo:
     type: entity
     table: khatovar_web_photo
-    repositoryClass: Khatovar\Bundle\PhotoBundle\Entity\PhotoRepository
+    repositoryClass: Khatovar\Bundle\WebBundle\Entity\PhotoRepository
     id:
         id:
             type: integer

@@ -23,7 +23,7 @@ namespace Khatovar\Bundle\WebBundle\Entity;
 
 use Carcel\Bundle\UserBundle\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
-use Khatovar\Bundle\PhotoBundle\Entity\Photo;
+use Khatovar\Bundle\WebBundle\Entity\Photo;
 
 /**
  * @author Damien Carcel <damien.carcel@gmail.com>

@@ -3,8 +3,8 @@ khatovar_appearance:
     prefix:   /prestations
 
 khatovar_camp:
-    path:     /camp
-    defaults: { _controller: KhatovarWebBundle:Web:camp }
+    resource: '@KhatovarWebBundle/Resources/config/routing/camp.yml'
+    prefix:   /camp
 
 khatovar_contact:
     resource: '@KhatovarWebBundle/Resources/config/routing/contact.yml'
@@ -19,5 +19,9 @@ khatovar_homepage:
     prefix:   /accueil
 
 khatovar_member:
-    resource: '@KhatovarWebBundle/Resources/config/members.yml'
+    resource: '@KhatovarWebBundle/Resources/config/routing/member.yml'
     prefix:   /membres
+
+khatovar_photo:
+    resource: '@KhatovarWebBundle/Resources/config/routing/photo.yml'
+    prefix:   /photos

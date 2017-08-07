@@ -10,3 +10,10 @@ services:
         arguments:
             - '@doctrine.orm.entity_manager'
             - 'Khatovar\Bundle\WebBundle\Entity\Homepage'
+
+    khatovar_photo.handler.photo:
+        class: Khatovar\Bundle\WebBundle\Handler\PhotoHandler
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@khatovar_photo.manager.photo'
+            - '@router'

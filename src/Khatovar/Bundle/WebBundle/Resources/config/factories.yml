@@ -1,6 +1,6 @@
 services:
     khatovar_photo.factory.photo:
-        class: Khatovar\Bundle\PhotoBundle\Factory\PhotoFactory
+        class: Khatovar\Bundle\WebBundle\Factory\PhotoFactory
         arguments:
             - '@security.authorization_checker'
             - '@security.token_storage'

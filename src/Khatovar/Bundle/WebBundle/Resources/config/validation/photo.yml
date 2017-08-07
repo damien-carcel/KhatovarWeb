@@ -1,4 +1,4 @@
-Khatovar\Bundle\PhotoBundle\Entity\Photo:
+Khatovar\Bundle\WebBundle\Entity\Photo:
     properties:
         alt:
             - Length:

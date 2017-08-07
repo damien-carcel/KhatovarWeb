@@ -1,0 +1,3 @@
+khatovar_web_camp:
+    path:     /
+    defaults: { _controller: KhatovarWebBundle:Web:camp }

@@ -19,10 +19,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Khatovar\Bundle\PhotoBundle\Factory;
+namespace Khatovar\Bundle\WebBundle\Factory;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Khatovar\Bundle\PhotoBundle\Entity\Photo;
+use Khatovar\Bundle\WebBundle\Entity\Photo;
 use Khatovar\Bundle\WebBundle\Helper\EntityHelper;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;

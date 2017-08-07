@@ -21,8 +21,8 @@
 
 namespace Khatovar\Bundle\WebBundle\Twig;
 
-use Khatovar\Bundle\PhotoBundle\Entity\Photo;
-use Khatovar\Bundle\PhotoBundle\Manager\PhotoManager;
+use Khatovar\Bundle\WebBundle\Entity\Photo;
+use Khatovar\Bundle\WebBundle\Manager\PhotoManager;
 
 /**
  * Twig extension for the side panel.

@@ -19,9 +19,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Khatovar\Bundle\PhotoBundle\Form\Subscriber;
+namespace Khatovar\Bundle\WebBundle\Form\Subscriber;
 
-use Khatovar\Bundle\PhotoBundle\Entity\Photo;
+use Khatovar\Bundle\WebBundle\Entity\Photo;
 use Khatovar\Bundle\WebBundle\Helper\EntityHelper;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;

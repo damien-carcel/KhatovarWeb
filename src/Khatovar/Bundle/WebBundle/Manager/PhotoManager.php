@@ -19,12 +19,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Khatovar\Bundle\PhotoBundle\Manager;
+namespace Khatovar\Bundle\WebBundle\Manager;
 
 use Carcel\Bundle\UserBundle\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
-use Khatovar\Bundle\PhotoBundle\Entity\Photo;
-use Khatovar\Bundle\PhotoBundle\Helper\PhotoHelper;
+use Khatovar\Bundle\WebBundle\Entity\Photo;
+use Khatovar\Bundle\WebBundle\Helper\PhotoHelper;
 use Khatovar\Bundle\WebBundle\Helper\EntityHelper;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -70,7 +70,7 @@ class PhotoManager
         $text = $this->insertTagsInText($text);
         $paths = $this->getPhotoPaths($text);
 
-        $repository = $this->entityManager->getRepository('KhatovarPhotoBundle:Photo');
+        $repository = $this->entityManager->getRepository('KhatovarWebBundle:Photo');
 
         $photos = [];
 
@@ -144,7 +144,7 @@ class PhotoManager
         $sortedPhotos = [
             'Photos orphelines' => [
                 'Liste des photos n\'appartenant à aucune page' => $this->entityManager
-                    ->getRepository('KhatovarPhotoBundle:Photo')
+                    ->getRepository('KhatovarWebBundle:Photo')
                     ->getOrphans(),
             ],
         ];
@@ -188,7 +188,7 @@ class PhotoManager
      * @param string $action
      * @param string $slugOrId
      *
-     * @return \Khatovar\Bundle\PhotoBundle\Entity\Photo[]
+     * @return \Khatovar\Bundle\WebBundle\Entity\Photo[]
      */
     public function getControllerPhotos($controller, $action, $slugOrId)
     {

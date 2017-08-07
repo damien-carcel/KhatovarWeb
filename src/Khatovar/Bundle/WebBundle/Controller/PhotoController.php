@@ -19,9 +19,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Khatovar\Bundle\PhotoBundle\Controller;
+namespace Khatovar\Bundle\WebBundle\Controller;
 
-use Khatovar\Bundle\PhotoBundle\Entity\Photo;
+use Khatovar\Bundle\WebBundle\Entity\Photo;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -56,7 +56,7 @@ class PhotoController extends Controller
         }
 
         return $this->render(
-            'KhatovarPhotoBundle:Photo:index.html.twig',
+            'KhatovarWebBundle:Photo:index.html.twig',
             [
                 'sorted_photos' => $photos,
                 'delete_forms' => $this->createDeleteForms($photos),
@@ -79,7 +79,7 @@ class PhotoController extends Controller
         $form = $this->createCreateForm($photo);
 
         return $this->render(
-            'KhatovarPhotoBundle:Photo:new.html.twig',
+            'KhatovarWebBundle:Photo:new.html.twig',
             ['form' => $form->createView()]
         );
     }
@@ -121,7 +121,7 @@ class PhotoController extends Controller
         }
 
         return $this->render(
-            'KhatovarPhotoBundle:Photo:new.html.twig',
+            'KhatovarWebBundle:Photo:new.html.twig',
             ['form' => $form->createView()]
         );
     }
@@ -138,7 +138,7 @@ class PhotoController extends Controller
     public function editAction($id)
     {
         $photo = $this->get('doctrine.orm.entity_manager')
-            ->getRepository('KhatovarPhotoBundle:Photo')
+            ->getRepository('KhatovarWebBundle:Photo')
             ->findByIdOr404($id);
 
         $this->userHasEditRights($photo);
@@ -146,7 +146,7 @@ class PhotoController extends Controller
         $editForm = $this->createEditForm($photo);
 
         return $this->render(
-            'KhatovarPhotoBundle:Photo:edit.html.twig',
+            'KhatovarWebBundle:Photo:edit.html.twig',
             [
                 'edit_form' => $editForm->createView(),
                 'photo' => $photo,
@@ -167,7 +167,7 @@ class PhotoController extends Controller
     public function updateAction(Request $request, $id)
     {
         $photo = $this->get('doctrine.orm.entity_manager')
-            ->getRepository('KhatovarPhotoBundle:Photo')
+            ->getRepository('KhatovarWebBundle:Photo')
             ->findByIdOr404($id);
 
         $this->userHasEditRights($photo);
@@ -185,7 +185,7 @@ class PhotoController extends Controller
         }
 
         return $this->render(
-            'KhatovarPhotoBundle:Photo:edit.html.twig',
+            'KhatovarWebBundle:Photo:edit.html.twig',
             [
                 'edit_form' => $editForm->createView(),
                 'photo' => $photo,
@@ -206,7 +206,7 @@ class PhotoController extends Controller
     public function deleteAction(Request $request, $id)
     {
         $photo = $this->get('doctrine.orm.entity_manager')
-            ->getRepository('KhatovarPhotoBundle:Photo')
+            ->getRepository('KhatovarWebBundle:Photo')
             ->findByIdOr404($id);
 
         $this->userHasEditRights($photo);
@@ -235,7 +235,7 @@ class PhotoController extends Controller
     protected function createCreateForm(Photo $photo)
     {
         $form = $this->createForm(
-            'Khatovar\Bundle\PhotoBundle\Form\Type\PhotoType',
+            'Khatovar\Bundle\WebBundle\Form\Type\PhotoType',
             $photo,
             [
                 'action' => $this->generateUrl('khatovar_web_photo_create'),
@@ -258,7 +258,7 @@ class PhotoController extends Controller
     protected function createEditForm(Photo $photo)
     {
         $form = $this->createForm(
-            'Khatovar\Bundle\PhotoBundle\Form\Type\PhotoType',
+            'Khatovar\Bundle\WebBundle\Form\Type\PhotoType',
             $photo,
             [
                 'action' => $this->generateUrl('khatovar_web_photo_update', ['id' => $photo->getId()]),

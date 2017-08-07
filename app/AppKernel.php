@@ -18,7 +18,6 @@ class AppKernel extends Kernel
         $bundles = [
             new Khatovar\Bundle\DocumentsBundle\KhatovarDocumentsBundle(),
             new Khatovar\Bundle\WebBundle\KhatovarWebBundle(),
-            new Khatovar\Bundle\PhotoBundle\KhatovarPhotoBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

@@ -8,3 +8,10 @@ services:
         class: Khatovar\Bundle\WebBundle\Manager\ExactionManager
         arguments:
             - '@doctrine.orm.entity_manager'
+
+    khatovar_photo.manager.photo:
+        class: Khatovar\Bundle\WebBundle\Manager\PhotoManager
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@security.authorization_checker'
+            - '@security.token_storage'
