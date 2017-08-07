@@ -58,7 +58,7 @@ Khatovar\Bundle\PhotoBundle\Entity\Photo:
                 referencedColumnName: id
                 onDelete: 'SET NULL'
         contact:
-            targetEntity: Khatovar\Bundle\ContactBundle\Entity\Contact
+            targetEntity: Khatovar\Bundle\WebBundle\Entity\Contact
             cascade:
                 - detach
             inversedBy: photos

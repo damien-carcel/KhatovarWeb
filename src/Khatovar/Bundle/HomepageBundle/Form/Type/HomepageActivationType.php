@@ -78,7 +78,7 @@ class HomepageActivationType extends AbstractType
     }
 
     /**
-     * @return \Khatovar\Bundle\ContactBundle\Entity\Contact
+     * @return \Khatovar\Bundle\WebBundle\Entity\Contact
      */
     protected function getPreviousActiveContact()
     {

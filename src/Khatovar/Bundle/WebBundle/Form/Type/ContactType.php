@@ -19,7 +19,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Khatovar\Bundle\ContactBundle\Form\Type;
+namespace Khatovar\Bundle\WebBundle\Form\Type;
 
 use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -68,6 +68,6 @@ class ContactType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(['data_class' => 'Khatovar\Bundle\ContactBundle\Entity\Contact']);
+        $resolver->setDefaults(['data_class' => 'Khatovar\Bundle\WebBundle\Entity\Contact']);
     }
 }

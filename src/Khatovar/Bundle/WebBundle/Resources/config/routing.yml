@@ -5,3 +5,7 @@ khatovar_web_camp:
 khatovar_appearance:
     resource: '@KhatovarWebBundle/Resources/config/routing/appearance.yml'
     prefix:   /prestations
+
+khatovar_contact:
+    resource: '@KhatovarWebBundle/Resources/config/routing/contact.yml'
+    prefix:   /contact

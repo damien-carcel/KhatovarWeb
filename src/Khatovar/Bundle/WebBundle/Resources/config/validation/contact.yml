@@ -1,4 +1,4 @@
-Khatovar\Bundle\ContactBundle\Entity\Contact:
+Khatovar\Bundle\WebBundle\Entity\Contact:
     constraints:
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: name
     properties:

@@ -19,9 +19,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Khatovar\Bundle\ContactBundle\Controller;
+namespace Khatovar\Bundle\WebBundle\Controller;
 
-use Khatovar\Bundle\ContactBundle\Entity\Contact;
+use Khatovar\Bundle\WebBundle\Entity\Contact;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -40,11 +40,11 @@ class ContactController extends Controller
     public function indexAction()
     {
         $activeContact = $this->get('doctrine.orm.entity_manager')
-            ->getRepository('KhatovarContactBundle:Contact')
+            ->getRepository('KhatovarWebBundle:Contact')
             ->findActiveOr404();
 
         return $this->render(
-            'KhatovarContactBundle:Contact:show.html.twig',
+            'KhatovarWebBundle:Contact:show.html.twig',
             ['contact' => $activeContact]
         );
     }
@@ -59,11 +59,11 @@ class ContactController extends Controller
     public function showAction($id)
     {
         $contact = $this->get('doctrine.orm.entity_manager')
-            ->getRepository('KhatovarContactBundle:Contact')
+            ->getRepository('KhatovarWebBundle:Contact')
             ->findByIdOr404($id);
 
         return $this->render(
-            'KhatovarContactBundle:Contact:show.html.twig',
+            'KhatovarWebBundle:Contact:show.html.twig',
             ['contact' => $contact]
         );
     }
@@ -79,7 +79,7 @@ class ContactController extends Controller
      */
     public function listAction(Request $request)
     {
-        $form = $this->createForm('Khatovar\Bundle\ContactBundle\Form\Type\ContactActivationType');
+        $form = $this->createForm('Khatovar\Bundle\WebBundle\Form\Type\ContactActivationType');
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -91,13 +91,13 @@ class ContactController extends Controller
         }
 
         $contacts = $this->get('doctrine.orm.entity_manager')
-            ->getRepository('KhatovarContactBundle:Contact')
+            ->getRepository('KhatovarWebBundle:Contact')
             ->findAll();
 
         $deleteForms = $this->createDeleteForms($contacts);
 
         return $this->render(
-            'KhatovarContactBundle:Contact:list.html.twig',
+            'KhatovarWebBundle:Contact:list.html.twig',
             [
                 'contacts' => $contacts,
                 'activation_form' => $form->createView(),
@@ -120,7 +120,7 @@ class ContactController extends Controller
         $form = $this->createCreateForm($contact);
 
         return $this->render(
-            'KhatovarContactBundle:Contact:new.html.twig',
+            'KhatovarWebBundle:Contact:new.html.twig',
             ['form' => $form->createView()]
         );
     }
@@ -157,7 +157,7 @@ class ContactController extends Controller
         }
 
         return $this->render(
-            'KhatovarContactBundle:Contact:new.html.twig',
+            'KhatovarWebBundle:Contact:new.html.twig',
             ['form' => $form->createView()]
         );
     }
@@ -174,13 +174,13 @@ class ContactController extends Controller
     public function editAction($id)
     {
         $contact = $this->get('doctrine.orm.entity_manager')
-            ->getRepository('KhatovarContactBundle:Contact')
+            ->getRepository('KhatovarWebBundle:Contact')
             ->findByIdOr404($id);
 
         $editForm = $this->createEditForm($contact);
 
         return $this->render(
-            'KhatovarContactBundle:Contact:edit.html.twig',
+            'KhatovarWebBundle:Contact:edit.html.twig',
             ['edit_form' => $editForm->createView()]
         );
     }
@@ -198,7 +198,7 @@ class ContactController extends Controller
     public function updateAction(Request $request, $id)
     {
         $contact = $this->get('doctrine.orm.entity_manager')
-            ->getRepository('KhatovarContactBundle:Contact')
+            ->getRepository('KhatovarWebBundle:Contact')
             ->findByIdOr404($id);
 
         $editForm = $this->createEditForm($contact);
@@ -218,7 +218,7 @@ class ContactController extends Controller
         }
 
         return $this->render(
-            'KhatovarContactBundle:Contact:edit.html.twig',
+            'KhatovarWebBundle:Contact:edit.html.twig',
             ['edit_form' => $editForm->createView()]
         );
     }
@@ -236,7 +236,7 @@ class ContactController extends Controller
     public function deleteAction(Request $request, $id)
     {
         $contact = $this->get('doctrine.orm.entity_manager')
-            ->getRepository('KhatovarContactBundle:Contact')
+            ->getRepository('KhatovarWebBundle:Contact')
             ->findByIdOr404($id);
 
         if ($contact->isActive()) {
@@ -267,7 +267,7 @@ class ContactController extends Controller
     protected function createCreateForm(Contact $contact)
     {
         $form = $this->createForm(
-            'Khatovar\Bundle\ContactBundle\Form\Type\ContactType',
+            'Khatovar\Bundle\WebBundle\Form\Type\ContactType',
             $contact,
             [
                 'action' => $this->generateUrl('khatovar_web_contact_create'),
@@ -290,7 +290,7 @@ class ContactController extends Controller
     protected function createEditForm(Contact $contact)
     {
         $form = $this->createForm(
-            'Khatovar\Bundle\ContactBundle\Form\Type\ContactType',
+            'Khatovar\Bundle\WebBundle\Form\Type\ContactType',
             $contact,
             [
                 'action' => $this->generateUrl('khatovar_web_contact_update', ['id' => $contact->getId()]),

@@ -1,3 +1,0 @@
-services:
-    khatovar_contact.form.subscriber.add_visit_card:
-        class: Khatovar\Bundle\ContactBundle\Form\Subscriber\AddVisitCardSubscriber

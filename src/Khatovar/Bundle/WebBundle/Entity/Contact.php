@@ -19,7 +19,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Khatovar\Bundle\ContactBundle\Entity;
+namespace Khatovar\Bundle\WebBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Khatovar\Bundle\PhotoBundle\Entity\Photo;

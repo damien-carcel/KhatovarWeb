@@ -1,7 +1,7 @@
-Khatovar\Bundle\ContactBundle\Entity\Contact:
+Khatovar\Bundle\WebBundle\Entity\Contact:
     type: entity
     table: khatovar_web_contact
-    repositoryClass: Khatovar\Bundle\ContactBundle\Entity\ContactRepository
+    repositoryClass: Khatovar\Bundle\WebBundle\Entity\ContactRepository
     id:
         id:
             type: integer

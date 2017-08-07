@@ -19,10 +19,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Khatovar\Bundle\ContactBundle\Form\Subscriber;
+namespace Khatovar\Bundle\WebBundle\Form\Subscriber;
 
 use Doctrine\ORM\EntityRepository;
-use Khatovar\Bundle\ContactBundle\Entity\Contact;
+use Khatovar\Bundle\WebBundle\Entity\Contact;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;

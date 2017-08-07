@@ -3,3 +3,17 @@ services:
         class: Khatovar\Bundle\WebBundle\Form\Type\AppearanceType
         tags:
             - { name: form.type }
+
+    khatovar_contact.form.type.contact:
+        class: Khatovar\Bundle\WebBundle\Form\Type\ContactType
+        arguments:
+            - '@khatovar_contact.form.subscriber.add_visit_card'
+        tags:
+            - { name: form.type }
+
+    khatovar_contact.form.type.contact_activation:
+        class: Khatovar\Bundle\WebBundle\Form\Type\ContactActivationType
+        arguments:
+            - '@doctrine.orm.entity_manager'
+        tags:
+            - { name: form.type }

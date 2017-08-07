@@ -19,7 +19,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Khatovar\Bundle\ContactBundle\Form\Type;
+namespace Khatovar\Bundle\WebBundle\Form\Type;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -56,7 +56,7 @@ class ContactActivationType extends AbstractType
                 'active',
                 EntityType::class,
                 [
-                    'class' => 'Khatovar\Bundle\ContactBundle\Entity\Contact',
+                    'class' => 'Khatovar\Bundle\WebBundle\Entity\Contact',
                     'label' => false,
                     'choice_label' => 'name',
                     'preferred_choices' => [$previousActive],
@@ -72,16 +72,16 @@ class ContactActivationType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'Khatovar\Bundle\ContactBundle\Entity\Contact',
+            'data_class' => 'Khatovar\Bundle\WebBundle\Entity\Contact',
             'validation_groups' => false,
         ]);
     }
 
     /**
-     * @return \Khatovar\Bundle\ContactBundle\Entity\Contact
+     * @return \Khatovar\Bundle\WebBundle\Entity\Contact
      */
     protected function getPreviousActiveContact()
     {
-        return $this->entityManager->getRepository('KhatovarContactBundle:Contact')->findOneBy(['active' => true]);
+        return $this->entityManager->getRepository('KhatovarWebBundle:Contact')->findOneBy(['active' => true]);
     }
 }
