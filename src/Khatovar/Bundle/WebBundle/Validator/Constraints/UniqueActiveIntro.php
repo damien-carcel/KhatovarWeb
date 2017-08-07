@@ -19,28 +19,32 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Khatovar\Bundle\WebBundle\DependencyInjection;
+namespace Khatovar\Bundle\WebBundle\Validator\Constraints;
 
-use Symfony\Component\Config\FileLocator;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Loader;
-use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Symfony\Component\Validator\Constraint;
 
 /**
+ * Checks that only one camp description is active at a time.
+ *
  * @author Damien Carcel <damien.carcel@gmail.com>
  */
-class KhatovarWebExtension extends Extension
+class UniqueActiveIntro extends Constraint
 {
+    public $message = 'La page de d\'introduction « %name% » est déjà active. Désactivez-là avant d\'activer celle-ci.';
+
     /**
      * {@inheritdoc}
      */
-    public function load(array $configs, ContainerBuilder $container)
+    public function getTargets()
     {
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('form_types.yml');
-        $loader->load('managers.yml');
-        $loader->load('menus.yml');
-        $loader->load('twig.yml');
-        $loader->load('validators.yml');
+        return self::CLASS_CONSTRAINT;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function validatedBy()
+    {
+        return 'khatovar_unique_active_intro_validator';
     }
 }

@@ -1,7 +1,0 @@
-services:
-    khatovar_appearance.twig.normalizer.link:
-        class: Khatovar\Bundle\AppearanceBundle\Twig\LinkNormalizer
-        arguments:
-            - '@router'
-        tags:
-            - { name: twig.extension }

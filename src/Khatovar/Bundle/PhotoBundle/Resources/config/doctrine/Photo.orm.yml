@@ -67,7 +67,7 @@ Khatovar\Bundle\PhotoBundle\Entity\Photo:
                 referencedColumnName: id
                 onDelete: 'SET NULL'
         appearance:
-            targetEntity: Khatovar\Bundle\AppearanceBundle\Entity\Appearance
+            targetEntity: Khatovar\Bundle\WebBundle\Entity\Appearance
             cascade:
                 - detach
             inversedBy: photos

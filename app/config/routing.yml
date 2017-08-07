@@ -1,7 +1,3 @@
-khatovar_appearance:
-    resource: '@KhatovarAppearanceBundle/Resources/config/routing.yml'
-    prefix:   /prestations
-
 khatovar_contact:
     resource: '@KhatovarContactBundle/Resources/config/routing.yml'
     prefix:   /contact

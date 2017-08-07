@@ -1,0 +1,5 @@
+services:
+    khatovar_appearance.form.type.appearance:
+        class: Khatovar\Bundle\WebBundle\Form\Type\AppearanceType
+        tags:
+            - { name: form.type }

@@ -1,0 +1,48 @@
+khatovar_web_appearance:
+    path:     /
+    defaults: { _controller: KhatovarWebBundle:Appearance:index }
+
+khatovar_web_appearance_workshop:
+    path:     /ateliers
+    defaults: { _controller: KhatovarWebBundle:Appearance:workshop }
+
+khatovar_web_appearance_camp:
+    path:     /campement
+    defaults: { _controller: KhatovarWebBundle:Appearance:camp }
+
+khatovar_web_appearance_list:
+    path:     /list
+    defaults: { _controller: KhatovarWebBundle:Appearance:list }
+
+khatovar_web_appearance_show:
+    path:     /prestation/{slug}
+    defaults: { _controller: KhatovarWebBundle:Appearance:show }
+    requirements:
+        slug: '[a-zA-Z0-9-_/]+'
+
+khatovar_web_appearance_new:
+    path:     /new
+    defaults: { _controller: KhatovarWebBundle:Appearance:new }
+
+khatovar_web_appearance_create:
+    path:     /create
+    defaults: { _controller: KhatovarWebBundle:Appearance:create }
+    methods:  POST
+
+khatovar_web_appearance_edit_index:
+    path:     /index/edit
+    defaults: { _controller: KhatovarWebBundle:Appearance:editIndex }
+
+khatovar_web_appearance_edit:
+    path:     /{id}/edit
+    defaults: { _controller: KhatovarWebBundle:Appearance:edit }
+
+khatovar_web_appearance_update:
+    path:     /{id}/update
+    defaults: { _controller: KhatovarWebBundle:Appearance:update }
+    methods:  [POST, PUT]
+
+khatovar_web_appearance_delete:
+    path:     /{id}/delete
+    defaults: { _controller: KhatovarWebBundle:Appearance:delete }
+    methods:  [POST, DELETE]

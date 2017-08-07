@@ -21,7 +21,7 @@
 
 namespace Khatovar\Bundle\PhotoBundle\Entity;
 
-use Khatovar\Bundle\AppearanceBundle\Entity\Appearance;
+use Khatovar\Bundle\WebBundle\Entity\Appearance;
 use Khatovar\Bundle\ContactBundle\Entity\Contact;
 use Khatovar\Bundle\ExactionBundle\Entity\Exaction;
 use Khatovar\Bundle\HomepageBundle\Entity\Homepage;

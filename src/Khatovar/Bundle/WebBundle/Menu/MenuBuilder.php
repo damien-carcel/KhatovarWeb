@@ -36,7 +36,7 @@ use Knp\Menu\ItemInterface;
  */
 class MenuBuilder
 {
-    /** @var \Khatovar\Bundle\AppearanceBundle\Entity\Appearance[] */
+    /** @var \Khatovar\Bundle\WebBundle\Entity\Appearance[] */
     protected $appearances;
 
     /** @var array */
@@ -45,7 +45,7 @@ class MenuBuilder
     /** @var FactoryInterface */
     protected $menuFactory;
 
-    /** @var \Khatovar\Bundle\AppearanceBundle\Entity\Appearance[] */
+    /** @var \Khatovar\Bundle\WebBundle\Entity\Appearance[] */
     protected $programmes;
 
     /**
@@ -59,7 +59,7 @@ class MenuBuilder
         ExactionManager $exactionManager
     ) {
         $this->menuFactory = $menuFactory;
-        $appearanceRepository = $entityManager->getRepository('KhatovarAppearanceBundle:Appearance');
+        $appearanceRepository = $entityManager->getRepository('KhatovarWebBundle:Appearance');
 
         $this->exactionYears = $exactionManager->getSortedYears();
         $this->appearances = $appearanceRepository->findActiveWorkshopsSortedBySlug();

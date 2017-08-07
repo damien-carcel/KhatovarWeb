@@ -1,0 +1,5 @@
+services:
+    khatovar_appearance.manager.appearance:
+        class: Khatovar\Bundle\WebBundle\Manager\AppearanceManager
+        arguments:
+            - '@doctrine.orm.entity_manager'

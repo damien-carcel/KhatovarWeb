@@ -1,0 +1,12 @@
+Khatovar\Bundle\WebBundle\Entity\Appearance:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: name
+        - Khatovar\Bundle\WebBundle\Validator\Constraints\UniqueActiveCamp: ~
+        - Khatovar\Bundle\WebBundle\Validator\Constraints\UniqueActiveIntro: ~
+    properties:
+        name:
+            - NotBlank: ~
+            - Length:
+                max: 255
+        content:
+            - NotBlank: ~
