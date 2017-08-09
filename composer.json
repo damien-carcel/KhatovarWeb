@@ -48,7 +48,6 @@
         "behat-extension/doctrine-data-fixtures-extension": "^4.0",
         "friendsofphp/php-cs-fixer": "^2.0",
         "phpmd/phpmd": "^2.4",
-        "phpspec/phpspec": "^4.0",
         "phpunit/phpunit": "^6.0",
         "sensio/generator-bundle": "^3.0",
         "squizlabs/php_codesniffer": "^3.0",
