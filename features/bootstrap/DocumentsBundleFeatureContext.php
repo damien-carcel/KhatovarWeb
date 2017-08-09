@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of CarcelDocumentsBundle.
  *
@@ -11,10 +13,13 @@
 
 namespace Context;
 
+use Behat\Mink\Element\NodeElement;
+use Behat\Mink\Exception\ExpectationException;
 use Behat\MinkExtension\Context\MinkContext;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\ORM\Tools\SchemaTool;
+use PHPUnit\Framework\Assert;
 use Symfony\Bridge\Doctrine\DataFixtures\ContainerAwareLoader as DataFixturesLoader;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -84,7 +89,7 @@ class DocumentsBundleFeatureContext extends MinkContext
      *
      * @Given /^I set role "(?P<role>[^"]*)" for user "(?P<username>[^"]*)"$/
      */
-    public function iSetRoleForUser($role, $username)
+    public function iSetRoleForUser(string $role, string $username)
     {
         $user = $this->container
             ->get('doctrine.orm.entity_manager')
@@ -103,11 +108,44 @@ class DocumentsBundleFeatureContext extends MinkContext
     }
 
     /**
+     * @param string $action
+     * @param string $rowText
+     *
+     * @Given /^I click on "(?P<action>[^"]*)" in the row "(?P<rowText>[^"]*)"$/
+     */
+    public function iClickInTheRow(string $action, string $rowText)
+    {
+        $row = $this->findRowByText($rowText);
+
+        $button = $row->findButton($action);
+        Assert::assertNotNull($button, sprintf('Cannot find a button "%s" in the row "%s"', $action, $rowText));
+
+        $button->click();
+    }
+
+    /**
+     * Finds a table row by its content.
+     *
+     * @param string $rowText
+     *
+     * @throws ExpectationException
+     *
+     * @return NodeElement
+     */
+    private function findRowByText(string $rowText): NodeElement
+    {
+        $row = $this->getSession()->getPage()->find('css', sprintf('table tr:contains("%s")', $rowText));
+        Assert::assertNotNull($row, sprintf('Cannot find a table row with "%s"', $rowText));
+
+        return $row;
+    }
+
+    /**
      * Removes all files and folders from a given directory.
      *
      * @param string|null $directory
      */
-    private function removeUploadedFiles($directory = null)
+    private function removeUploadedFiles(string $directory = null)
     {
         $root = false;
         if (null === $directory) {

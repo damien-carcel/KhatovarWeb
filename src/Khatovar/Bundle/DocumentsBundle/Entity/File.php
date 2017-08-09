@@ -123,7 +123,7 @@ class File
             return;
         }
 
-        $this->filePath->move($this->uploadDir.'/'.$this->getRelativeDir(), $this->fileName);
+        $this->filePath->move($this->getAbsoluteDir(), $this->fileName);
     }
 
     /**
@@ -132,7 +132,7 @@ class File
      */
     public function preRemoveUpload()
     {
-        $this->tempFile = $this->getRelativeDir().'/'.$this->getFileName();
+        $this->tempFile = $this->getAbsoluteDir().'/'.$this->getFileName();
     }
 
     /**
@@ -154,7 +154,7 @@ class File
      */
     public function getWebDir()
     {
-        return 'uploaded/'.$this->getRelativeDir();
+        return basename($this->uploadDir).'/'.$this->getRelativeDir();
     }
 
     /**
@@ -164,7 +164,7 @@ class File
      */
     public function getAbsolutePath()
     {
-        return $this->uploadDir.'/'.$this->getRelativeDir().'/'.$this->fileName;
+        return $this->getAbsoluteDir().'/'.$this->fileName;
     }
 
     /**
@@ -321,7 +321,7 @@ class File
      *
      * @param string $file the path to the file that have been deleted
      */
-    protected function removeDir($file)
+    private function removeDir($file)
     {
         $path = substr($file, 0, -strlen(strrchr($file, '/')));
         $content = array_diff(scandir($path), ['..', '.']);
@@ -344,11 +344,22 @@ class File
     }
 
     /**
-     * Get the absolute path to the directory that contain the file.
+     * Gets the absolute path of the directory that contains the file.
      *
      * @return string
      */
-    protected function getRelativeDir()
+    private function getAbsoluteDir()
+    {
+        return $this->uploadDir.'/'.$this->getRelativeDir();
+    }
+
+    /**
+     * Gets the relative (to the configured upload directory) path of the
+     * directory that contain the file.
+     *
+     * @return string
+     */
+    private function getRelativeDir()
     {
         return  $this->created->format('Y').'/'.$this->created->format('m').'/'.$this->created->format('d');
     }
