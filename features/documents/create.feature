@@ -10,14 +10,13 @@ Feature: Create files and folders
     And I press "Connexion"
     And I am on "documents"
 
-#  @fixtures-minimal
-#  Scenario: I can create a file at root
-#    Given  I am on the homepage
-#    When I follow "Ajouter un ficher"
-#    And I attach the file "features/bootstrap/fixtures/black_cat.jpg" to "file_filePath"
-#    And I press "file_submit"
-#    Then I should be on the homepage
-#    And I should see "black_cat.jpg" in the ".file_black_cat_jpg .file_name" element
+  @fixtures-minimal
+  Scenario: I can create a file at root
+    Given I follow "Ajouter un fichier"
+    And I attach the file "features/bootstrap/fixtures/black_cat.jpg" to "file_filePath"
+    When I press "file_submit"
+    Then I should be on "documents/"
+    And I should see "black_cat.jpg" in the ".file_black_cat_jpg .file_name" element
 
   @fixtures-minimal
   Scenario: I can create a folder at root
@@ -27,14 +26,14 @@ Feature: Create files and folders
     Then I should be on "documents/"
     And I should see "A newly created folder" in the ".folder_a_newly_created_folder .folder_name" element
 
-#  @fixtures-with-folders
-#  Scenario: I can create a file inside an existing folder
-#    Given I follow "A folder at root"
-#    When I follow "Ajouter un ficher"
-#    And I attach the file "features/bootstrap/fixtures/black_cat.jpg" to "file_filePath"
-#    And I press "file_submit"
-#    Then I should see "A folder at root" in the "nav" element
-#    And I should see "black_cat.jpg" in the ".file_black_cat_jpg .file_name" element
+  @fixtures-with-folders
+  Scenario: I can create a file inside an existing folder
+    Given I follow "A folder at root"
+    When I follow "Ajouter un fichier"
+    And I attach the file "features/bootstrap/fixtures/black_cat.jpg" to "file_filePath"
+    And I press "file_submit"
+    Then I should see "A folder at root" in the "nav" element
+    And I should see "black_cat.jpg" in the ".file_black_cat_jpg .file_name" element
 
   @fixtures-with-folders
   Scenario: I can create a folder an existing folder

@@ -22,13 +22,13 @@
 
     {% if is_granted('ROLE_UPLOADER') %}
         <aside class="col-md-2">
-            {% if is_granted('ROLE_ADMIN') %}
-                {% if 'khatovar_documents_homepage' != app.request.attributes.get('_route') and current_folder is defined %}
-                    {% set folder_id = current_folder.id %}
-                {% else %}
-                    {% set folder_id = 0 %}
-                {% endif %}
+            {% if 'khatovar_documents_homepage' != app.request.attributes.get('_route') and current_folder is defined %}
+                {% set folder_id = current_folder.id %}
+            {% else %}
+                {% set folder_id = 0 %}
+            {% endif %}
 
+            {% if is_granted('ROLE_ADMIN') %}
                 <div class="btn-group">
                     <a class="text-center btn btn-default"
                        href="{{ path('khatovar_documents_add_folder', {'parentId': folder_id}) }}">
