@@ -35,7 +35,6 @@ security:
                 csrf_token_generator: security.csrf.token_manager
                 use_referer: true
                 use_forward: true
-                always_use_default_target_path: true
             logout:
                 path: fos_user_security_logout
                 target: /
