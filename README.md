@@ -6,25 +6,6 @@
 
 This repository contain the source code of the CMS handling the web site of the medieval association : [“La compagnie franche du Khatovar”](http://www.compagniefranchedukhatovar.fr/)
 
-## TODO
-
-### Features
-- Synchronize ending date with starting date when creating a new exaction
-- Make time switch between exaction photos random
-- Optimize presentation on the photo admin page (accordion)
-- Optimize mobile theme (especially the menu)
-- Use photos instead of links in listing/index pages
-- Customize login page using the Khatovar theme
-- Make it possible to edit/organize the menu
-- RSS feeds
-- Connection to the facebook page and the blog for automatic posts when adding a new appearance
-
-### Technical
-- Use SASS
-- Use Foundation for the forms, buttons and accordion
-- Form fields that depends from one another must be dynamic (for example: hidding a field as long as an other one has not the correct value for it to be display)
-- Add behat tests
-
 ## Requirements
 
 - PHP 7.1+
