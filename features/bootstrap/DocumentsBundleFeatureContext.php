@@ -3,12 +3,22 @@
 declare(strict_types=1);
 
 /*
- * This file is part of CarcelDocumentsBundle.
+ * This file is part of KhatovarWeb.
  *
- * Copyright (c) 2017 Damien Carcel <damien.carcel@gmail.com>
+ * Copyright (c) 2017 Damien Carcel (https://github.com/damien-carcel)
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace Context;
@@ -16,13 +26,8 @@ namespace Context;
 use Behat\Mink\Element\NodeElement;
 use Behat\Mink\Exception\ExpectationException;
 use Behat\MinkExtension\Context\MinkContext;
-use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
-use Doctrine\Common\DataFixtures\Purger\ORMPurger;
-use Doctrine\ORM\Tools\SchemaTool;
 use PHPUnit\Framework\Assert;
-use Symfony\Bridge\Doctrine\DataFixtures\ContainerAwareLoader as DataFixturesLoader;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * Defines application features from the specific context.
@@ -34,77 +39,12 @@ class DocumentsBundleFeatureContext extends MinkContext
     /** @var ContainerInterface */
     protected $container;
 
-    /** @var SessionInterface */
-    protected $session;
-
     /**
-     * @param SessionInterface   $session
      * @param ContainerInterface $container
      */
-    public function __construct(SessionInterface $session, ContainerInterface $container)
+    public function __construct(ContainerInterface $container)
     {
-        $this->session = $session;
         $this->container = $container;
-
-        $entityManager = $this->container->get('doctrine.orm.entity_manager');
-
-        $schemaTool = new SchemaTool($entityManager);
-        $schemaTool->dropDatabase();
-        $schemaTool->createSchema($entityManager->getMetadataFactory()->getAllMetadata());
-
-        $this->removeUploadedFiles();
-    }
-
-    /**
-     * @BeforeScenario @fixtures-minimal
-     */
-    public function loadFixturesWithOnlyUsers(): void
-    {
-        $userFixtures = $this->container
-                ->getParameter('kernel.project_dir').'/features/bootstrap/DataFixtures/ORM/LoadUserData.php';
-
-        $this->loadDoctrineFixtures([
-            'files' => [$userFixtures],
-        ]);
-    }
-
-    /**
-     * @BeforeScenario @fixtures-with-folders
-     */
-    public function loadFixturesWithFolders(): void
-    {
-        $fixtures = $this->container
-                ->getParameter('kernel.project_dir').'/features/bootstrap/DataFixtures/ORM';
-
-        $this->loadDoctrineFixtures([
-            'directories' => [$fixtures],
-        ]);
-    }
-
-    /**
-     * Sets a new role to a user.
-     *
-     * @param string $role
-     * @param string $username
-     *
-     * @Given /^I set role "(?P<role>[^"]*)" for user "(?P<username>[^"]*)"$/
-     */
-    public function iSetRoleForUser(string $role, string $username): void
-    {
-        $user = $this->container
-            ->get('doctrine.orm.entity_manager')
-            ->getRepository('CarcelUserBundle:User')
-            ->findOneBy(['username' => $username]);
-
-        if (null === $user) {
-            throw new  \InvalidArgumentException(
-                sprintf('The user with the name %s does not exists', $username),
-                0,
-                static::class
-            );
-        }
-
-        $this->container->get('carcel_user.manager.users')->setRole($user, ['roles' => $role]);
     }
 
     /**
@@ -210,33 +150,5 @@ class DocumentsBundleFeatureContext extends MinkContext
                 rmdir($directory);
             }
         }
-    }
-
-    /**
-     * Loads Doctrine data fixtures, from directories and/or files.
-     *
-     * @param array $fixturePaths
-     */
-    private function loadDoctrineFixtures(array $fixturePaths): void
-    {
-        $entityManager = $this->container->get('doctrine.orm.entity_manager');
-
-        $loader = new DataFixturesLoader($this->container);
-
-        if (isset($fixturePaths['directories']) && is_array($fixturePaths['directories'])) {
-            foreach ($fixturePaths['directories'] as $directory) {
-                $loader->loadFromDirectory($directory);
-            }
-        }
-
-        if (isset($fixturePaths['files']) && is_array($fixturePaths['files'])) {
-            foreach ($fixturePaths['files'] as $file) {
-                $loader->loadFromFile($file);
-            }
-        }
-
-        $purger = new ORMPurger($entityManager);
-        $executor = new ORMExecutor($entityManager, $purger);
-        $executor->execute($loader->getFixtures());
     }
 }
