@@ -1,8 +1,8 @@
 @fixtures-with-folders
-Feature: Navigate through the application
+Feature: Display files and folders information
   In order to use files and folders
   As a regular user
-  I need to be able go in and out folders
+  I need to be able to see files and folders information
 
   Background:
     Given I am on "login"
@@ -23,3 +23,18 @@ Feature: Navigate through the application
     And I press "file_submit"
 
   Scenario: I can see files and folders information
+    When I am on "documents"
+    Then I should see "Dossier" in table row "A folder at root"
+    And I should see "3 éléments" in table row "A folder at root"
+    And I should see "Dossier" in table row "An other folder without parent"
+    And I should see "0 élément" in table row "An other folder without parent"
+    And I should see "image/jpeg" in table row "black_cat.jpg"
+    And I should see "113.4 ko" in table row "black_cat.jpg"
+    When I follow "A folder at root"
+    Then I should see "Dossier" in table row "A folder inside a folder"
+    And I should see "1 élément" in table row "A folder inside a folder"
+    And I should see "Dossier" in table row "Another folder inside a folder"
+    And I should see "1 élément" in table row "Another folder inside a folder"
+    And I should see "image/jpeg" in table row "white_cat.jpg"
+    And I should see "56.6 ko" in table row "white_cat.jpg"
+

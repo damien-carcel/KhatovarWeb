@@ -58,7 +58,7 @@ class DocumentsBundleFeatureContext extends MinkContext
     /**
      * @BeforeScenario @fixtures-minimal
      */
-    public function loadFixturesWithOnlyUsers()
+    public function loadFixturesWithOnlyUsers(): void
     {
         $userFixtures = $this->container
                 ->getParameter('kernel.project_dir').'/features/bootstrap/DataFixtures/ORM/LoadUserData.php';
@@ -71,7 +71,7 @@ class DocumentsBundleFeatureContext extends MinkContext
     /**
      * @BeforeScenario @fixtures-with-folders
      */
-    public function loadFixturesWithFoldersAndFiles()
+    public function loadFixturesWithFolders(): void
     {
         $fixtures = $this->container
                 ->getParameter('kernel.project_dir').'/features/bootstrap/DataFixtures/ORM';
@@ -89,7 +89,7 @@ class DocumentsBundleFeatureContext extends MinkContext
      *
      * @Given /^I set role "(?P<role>[^"]*)" for user "(?P<username>[^"]*)"$/
      */
-    public function iSetRoleForUser(string $role, string $username)
+    public function iSetRoleForUser(string $role, string $username): void
     {
         $user = $this->container
             ->get('doctrine.orm.entity_manager')
@@ -108,19 +108,60 @@ class DocumentsBundleFeatureContext extends MinkContext
     }
 
     /**
-     * @param string $action
+     * @param string $buttonText
      * @param string $rowText
      *
-     * @Given /^I click on "(?P<action>[^"]*)" in the row "(?P<rowText>[^"]*)"$/
+     * @Given /^I click on "(?P<buttonText>[^"]*)" in table row "(?P<rowText>[^"]*)"$/
      */
-    public function iClickInTheRow(string $action, string $rowText)
+    public function iClickInTheRow(string $buttonText, string $rowText): void
+    {
+        $button = $this->findButtonForTableRow($buttonText, $rowText);
+
+        $button->click();
+    }
+
+    /**
+     * Checks that a specific table row contains a specific text.
+     *
+     * @param string $text
+     * @param string $rowText
+     *
+     * @Then /^I should see "(?P<text>[^"]*)" in table row "(?P<rowText>[^"]*)"$/
+     */
+    public function iShouldSeeTheTextInTheTableRow(string $text, string $rowText): void
+    {
+        $row = sprintf('table tr:contains("%s")', $rowText);
+
+        $this->assertElementContainsText($row, $text);
+    }
+
+    /**
+     * Checks that a specific table row contains a specific text.
+     *
+     * @param string $buttonText
+     * @param string $rowText
+     *
+     * @Then /^I should see the button "(?P<buttonText>[^"]*)" in table row "(?P<rowText>[^"]*)"$/
+     */
+    public function iShouldSeeTheButtonInTheTableRow(string $buttonText, string $rowText): void
+    {
+        $this->findButtonForTableRow($buttonText, $rowText);
+    }
+
+    /**
+     * @param string $buttonText
+     * @param string $rowText
+     *
+     * @return NodeElement
+     */
+    private function findButtonForTableRow(string $buttonText, string $rowText): NodeElement
     {
         $row = $this->findRowByText($rowText);
 
-        $button = $row->findButton($action);
-        Assert::assertNotNull($button, sprintf('Cannot find a button "%s" in the row "%s"', $action, $rowText));
+        $button = $row->findButton($buttonText);
+        Assert::assertNotNull($button, sprintf('Cannot find a button "%s" in the row "%s"', $buttonText, $rowText));
 
-        $button->click();
+        return $button;
     }
 
     /**
@@ -145,7 +186,7 @@ class DocumentsBundleFeatureContext extends MinkContext
      *
      * @param string|null $directory
      */
-    private function removeUploadedFiles(string $directory = null)
+    private function removeUploadedFiles(string $directory = null): void
     {
         $root = false;
         if (null === $directory) {
@@ -176,7 +217,7 @@ class DocumentsBundleFeatureContext extends MinkContext
      *
      * @param array $fixturePaths
      */
-    private function loadDoctrineFixtures(array $fixturePaths)
+    private function loadDoctrineFixtures(array $fixturePaths): void
     {
         $entityManager = $this->container->get('doctrine.orm.entity_manager');
 

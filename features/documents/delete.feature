@@ -20,20 +20,20 @@ Feature: Delete files and folders
 
   Scenario: I can delete a file from root
     Given I am on "documents"
-    When I click on "Supprimer" in the row "black_cat.jpg"
+    When I click on "Supprimer" in table row "black_cat.jpg"
     Then I should be on "documents/"
     And I should not see "black_cat.jpg"
 
   Scenario: I can delete a folder from root
     Given I am on "documents"
-    When I click on "Supprimer" in the row "An other folder without parent"
+    When I click on "Supprimer" in table row "An other folder without parent"
     Then I should be on "documents/"
     And I should not see "An other folder without parent"
 
   Scenario: I can delete a file from an existing folder
     Given I am on "documents"
     And I follow "A folder at root"
-    When I click on "Supprimer" in the row "siamese_cat.jpg"
+    When I click on "Supprimer" in table row "siamese_cat.jpg"
     And I am on "documents"
     And I follow "A folder at root"
     Then I should not see "siamese_cat.jpg"
@@ -41,13 +41,13 @@ Feature: Delete files and folders
   Scenario: I can delete a folder from existing folder
     Given I am on "documents"
     And I follow "A folder at root"
-    When I click on "Supprimer" in the row "Another folder inside a folder"
+    When I click on "Supprimer" in table row "Another folder inside a folder"
     And I am on "documents"
     And I follow "A folder at root"
     Then I should not see "Another folder inside a folder"
 
   Scenario: I can delete a folder and all its content
     Given I am on "documents"
-    When I click on "Supprimer" in the row "A folder at root"
+    When I click on "Supprimer" in table row "A folder at root"
     Then I should be on "documents/"
     And I should not see "A folder at root"
