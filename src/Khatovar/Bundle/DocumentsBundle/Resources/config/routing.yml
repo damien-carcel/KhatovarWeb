@@ -1,5 +1,5 @@
 khatovar_folder:
-    resource: "@KhatovarDocumentsBundle/Resources/config/routing/folder.yml"
+    resource: '@KhatovarDocumentsBundle/Resources/config/routing/folder.yml'
 
 khatovar_file:
-    resource: "@KhatovarDocumentsBundle/Resources/config/routing/file.yml"
+    resource: '@KhatovarDocumentsBundle/Resources/config/routing/file.yml'

@@ -1,12 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
 /*
- * This file is part of CarcelUserBundle.
+ * This file is part of KhatovarWeb.
  *
- * Copyright (c) 2016 Damien Carcel <damien.carcel@gmail.com>
+ * Copyright (c) 2016 Damien Carcel (https://github.com/damien-carcel)
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace Context\DataFixtures\ORM;
@@ -14,14 +26,15 @@ namespace Context\DataFixtures\ORM;
 use Carcel\Bundle\UserBundle\Entity\User;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use FOS\UserBundle\Model\UserInterface;
 
 /**
  * @author Damien Carcel (damien.carcel@gmail.com)
  */
 class LoadUserData implements FixtureInterface
 {
-    /** @var array */
-    protected static $userData = [
+    /** @const array */
+    private const USER_DATA = [
         [
             'username' => 'admin',
             'password' => 'admin',
@@ -47,6 +60,13 @@ class LoadUserData implements FixtureInterface
             'username' => 'lilith',
             'password' => 'lilith',
             'email' => 'lilith@documents.bundle',
+            'role' => 'ROLE_VIEWER',
+            'enabled' => true,
+        ],
+        [
+            'username' => 'damien',
+            'password' => 'damien',
+            'email' => 'damien@documents.bundle',
             'role' => '',
             'enabled' => true,
         ],
@@ -55,9 +75,9 @@ class LoadUserData implements FixtureInterface
     /**
      * {@inheritdoc}
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
-        foreach (static::$userData as $data) {
+        foreach (static::USER_DATA as $data) {
             $user = $this->createUser($data);
             $manager->persist($user);
         }
@@ -68,9 +88,9 @@ class LoadUserData implements FixtureInterface
     /**
      * @param array $userData
      *
-     * @return User
+     * @return UserInterface
      */
-    protected function createUser(array $userData)
+    private function createUser(array $userData): UserInterface
     {
         $user = new User();
 

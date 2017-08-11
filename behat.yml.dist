@@ -5,17 +5,14 @@ default:
                 default:
                     symfony2: ~
         Behat\Symfony2Extension: ~
-        BehatExtension\DoctrineDataFixturesExtension\Extension:
-            lifetime: scenario
-            autoload: false
-            directories: ~
-            fixtures:
-                - Carcel\Bundle\UserBundle\DataFixtures\ORM\LoadUserData
     suites:
         default:
             contexts:
+                - Context\DocumentsBundleFixtureContext:
+                    container: '@service_container'
                 - Context\DocumentsBundleFeatureContext:
-                    session: '@session'
+                    container: '@service_container'
+                - Context\DocumentsBundleDownloadContext:
                     container: '@service_container'
             paths:
                 - '%paths.base%/features'

@@ -19,4 +19,4 @@ parameters:
     secret: ThisTokenIsNotSoSecretChangeIt
 
     # Khatovar specific configuration
-    khatovar_document.upload_dir: '%kernel.project_dir%/web/uploaded'
+    khatovar_document.upload_dir: '%kernel.project_dir%/www/uploaded'

@@ -10,10 +10,10 @@ Feature: Manipulate files and folders when it is allowed
     And I fill in "Mot de passe" with "freya"
     And I press "Connexion"
     And I am on "documents"
-#    And I follow "Ajouter un ficher"
-#    And I attach the file "features/bootstrap/fixtures/black_cat.jpg" to "file_filePath"
-#    And I press "file_submit"
-#    And I follow "Log out"
+    And I follow "Ajouter un fichier"
+    And I attach the file "features/bootstrap/fixtures/black_cat.jpg" to "file_filePath"
+    And I press "file_submit"
+    And I follow "Déconnexion"
 
   Scenario: I cannot create a file if I am not an uploader
 

@@ -55,4 +55,7 @@ khatovar_documents:
         folder.title: Renommer un dossier
     root: Racine
 
+ROLE_VIEWER: Lecture seule
 ROLE_UPLOADER: Téléverseur
+ROLE_EDITOR: Éditeur
+ROLE_ALLOWED_TO_SWITCH: Peut changer de rôle

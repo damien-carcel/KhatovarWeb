@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "28552b3dfb354dd3e7ea32273cd52091",
+    "content-hash": "866360b73b2deb8cc67805bec6d2d887",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -56,12 +56,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/damien-carcel/UserBundle.git",
-                "reference": "68dd1015c6fdd89dfc76f9e41ff9ed40fef6bfe8"
+                "reference": "b67449ea21f3977d639469238b2ce22e7d40120a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/damien-carcel/UserBundle/zipball/68dd1015c6fdd89dfc76f9e41ff9ed40fef6bfe8",
-                "reference": "68dd1015c6fdd89dfc76f9e41ff9ed40fef6bfe8",
+                "url": "https://api.github.com/repos/damien-carcel/UserBundle/zipball/b67449ea21f3977d639469238b2ce22e7d40120a",
+                "reference": "b67449ea21f3977d639469238b2ce22e7d40120a",
                 "shasum": ""
             },
             "require": {
@@ -110,7 +110,7 @@
             "keywords": [
                 "User management"
             ],
-            "time": "2017-08-05T09:06:53+00:00"
+            "time": "2017-08-09T13:30:03+00:00"
         },
         {
             "name": "composer/ca-bundle",
@@ -585,23 +585,23 @@
         },
         {
             "name": "doctrine/doctrine-bundle",
-            "version": "1.6.8",
+            "version": "1.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/DoctrineBundle.git",
-                "reference": "6e96577cbbdbb5b6dcca2ff203d665976b51beb0"
+                "reference": "629d2a8b16f99a0b2ba6868f7af9986afee5fea7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineBundle/zipball/6e96577cbbdbb5b6dcca2ff203d665976b51beb0",
-                "reference": "6e96577cbbdbb5b6dcca2ff203d665976b51beb0",
+                "url": "https://api.github.com/repos/doctrine/DoctrineBundle/zipball/629d2a8b16f99a0b2ba6868f7af9986afee5fea7",
+                "reference": "629d2a8b16f99a0b2ba6868f7af9986afee5fea7",
                 "shasum": ""
             },
             "require": {
-                "doctrine/dbal": "~2.3",
+                "doctrine/dbal": "^2.5.12",
                 "doctrine/doctrine-cache-bundle": "~1.2",
                 "jdorn/sql-formatter": "~1.1",
-                "php": ">=5.5.9",
+                "php": "^7.1",
                 "symfony/console": "~2.7|~3.0|~4.0",
                 "symfony/dependency-injection": "~2.7|~3.0|~4.0",
                 "symfony/doctrine-bridge": "~2.7|~3.0|~4.0",
@@ -609,7 +609,7 @@
             },
             "require-dev": {
                 "doctrine/orm": "~2.3",
-                "phpunit/phpunit": "~4",
+                "phpunit/phpunit": "^6.1",
                 "satooshi/php-coveralls": "^1.0",
                 "symfony/phpunit-bridge": "~2.7|~3.0|~4.0",
                 "symfony/property-info": "~2.8|~3.0|~4.0",
@@ -624,7 +624,7 @@
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.6.x-dev"
+                    "dev-master": "1.7.x-dev"
                 }
             },
             "autoload": {
@@ -662,7 +662,7 @@
                 "orm",
                 "persistence"
             ],
-            "time": "2017-05-18T08:15:18+00:00"
+            "time": "2017-07-28T20:57:50+00:00"
         },
         {
             "name": "doctrine/doctrine-cache-bundle",

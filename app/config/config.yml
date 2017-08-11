@@ -85,7 +85,7 @@ ivory_ck_editor:
     configs:
         basic_config:
             toolbar: standard
-            uiColor: "#f5f1dc"
+            uiColor: '#f5f1dc'
             #filebrowserUploadRoute: "my_route"
 
 # Doctrine extensions

@@ -1,12 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
 /*
- * This file is part of CarcelDocumentsBundle.
+ * This file is part of KhatovarWeb.
  *
- * Copyright (c) 2017 Damien Carcel <damien.carcel@gmail.com>
+ * Copyright (c) 2017 Damien Carcel (https://github.com/damien-carcel)
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace Context\DataFixtures\ORM;
@@ -23,8 +35,8 @@ use Khatovar\Bundle\DocumentsBundle\Entity\Folder;
  */
 class LoadFolderData implements FixtureInterface
 {
-    /** @var array */
-    protected static $foldersData = [
+    /** @const array */
+    private const FOLDER_DATA = [
         [
             'name' => 'A folder at root',
         ],
@@ -51,9 +63,9 @@ class LoadFolderData implements FixtureInterface
     /**
      * {@inheritdoc}
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
-        foreach (static::$foldersData as $folderData) {
+        foreach (static::FOLDER_DATA as $folderData) {
             $this->createdFolders[$folderData['name']] = $this->createFolder($folderData);
         }
 
@@ -69,7 +81,7 @@ class LoadFolderData implements FixtureInterface
      *
      * @return Folder
      */
-    private function createFolder(array $folderData)
+    private function createFolder(array $folderData): Folder
     {
         $folder = new Folder();
 

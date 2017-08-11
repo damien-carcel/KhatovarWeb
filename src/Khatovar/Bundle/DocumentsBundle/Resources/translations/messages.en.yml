@@ -55,4 +55,7 @@ khatovar_documents:
         folder.title: Rename a folder
     root: Root
 
+ROLE_VIEWER: Viewer
 ROLE_UPLOADER: Uploader
+ROLE_EDITOR: Editor
+ROLE_ALLOWED_TO_SWITCH: Allowed to switch role
