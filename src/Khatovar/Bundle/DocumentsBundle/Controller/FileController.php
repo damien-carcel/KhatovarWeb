@@ -52,7 +52,7 @@ class FileController extends Controller
         $filename = str_replace(' ', '_', $file->getName());
         $response = new Response();
 
-        $response->setContent(file_get_contents($file->getWebDir().'/'.$file->getFileName()));
+        $response->setContent(file_get_contents($file->getAbsolutePath()));
         $response->headers->set('Content-Type', 'application/force-download');
         $response->headers->set('Content-disposition', 'filename='.$filename);
 

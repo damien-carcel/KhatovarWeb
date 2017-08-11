@@ -12,6 +12,8 @@ default:
                     container: '@service_container'
                 - Context\DocumentsBundleFeatureContext:
                     container: '@service_container'
+                - Context\DocumentsBundleDownloadContext:
+                    container: '@service_container'
             paths:
                 - '%paths.base%/features'
         users:

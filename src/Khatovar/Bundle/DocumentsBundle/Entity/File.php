@@ -148,16 +148,6 @@ class File
     }
 
     /**
-     * Get the relative path to the directory that contain the file.
-     *
-     * @return string
-     */
-    public function getWebDir()
-    {
-        return basename($this->uploadDir).'/'.$this->getRelativeDir();
-    }
-
-    /**
      * Return the absolute path to the file.
      *
      * @return string

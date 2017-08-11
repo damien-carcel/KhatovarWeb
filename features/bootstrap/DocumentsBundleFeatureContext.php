@@ -24,7 +24,6 @@ declare(strict_types=1);
 namespace Context;
 
 use Behat\Mink\Element\NodeElement;
-use Behat\Mink\Exception\ExpectationException;
 use Behat\MinkExtension\Context\MinkContext;
 use PHPUnit\Framework\Assert;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -108,8 +107,6 @@ class DocumentsBundleFeatureContext extends MinkContext
      * Finds a table row by its content.
      *
      * @param string $rowText
-     *
-     * @throws ExpectationException
      *
      * @return NodeElement
      */
