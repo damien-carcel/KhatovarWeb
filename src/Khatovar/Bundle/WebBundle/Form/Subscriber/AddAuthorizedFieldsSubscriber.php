@@ -61,7 +61,7 @@ class AddAuthorizedFieldsSubscriber implements EventSubscriberInterface
         $photo = $event->getData();
 
         if ($photo instanceof Photo && null !== $entityName = $photo->getEntity()) {
-            if ($entityName === EntityHelper::HOMEPAGE_CODE) {
+            if (EntityHelper::HOMEPAGE_CODE === $entityName) {
                 $form->add(
                     'class',
                     ChoiceType::class,
@@ -85,7 +85,7 @@ class AddAuthorizedFieldsSubscriber implements EventSubscriberInterface
                 EntityType::class,
                 [
                     'class' => 'Khatovar'.ucfirst($entityName).'Bundle:'.ucfirst($entityName),
-                    'choice_label' => $entityName === EntityHelper::EXACTION_CODE ? 'completeName' : 'name',
+                    'choice_label' => EntityHelper::EXACTION_CODE === $entityName ? 'completeName' : 'name',
                     'label' => 'Page',
                 ]
             );

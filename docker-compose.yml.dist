@@ -3,27 +3,29 @@ version: '2'
 services:
   node:
     image: node:8
+    environment:
+      YARN_CACHE_FOLDER: '/home/node/.yarn-cache'
     user: node
     volumes:
       - ./:/srv/application
-      - ~/.npm:/home/node/.npm
+      - ~/.cache/yarn:/home/node/.yarn-cache
     working_dir: /srv/application
     networks:
       - khatovar
 
   fpm:
-    image: akeneo/fpm:7.1
-    depends_on:
-      - mysql
+    image: akeneo/fpm:php-7.1
     environment:
-      COMPOSER_HOME: /home/docker/.composer
+      COMPOSER_CACHE_DIR: '/home/docker/.cache/composer'
+      COMPOSER_HOME: '/home/docker/.config/composer'
       PHP_IDE_CONFIG: 'serverName=khatovar-cli'
       PHP_XDEBUG_ENABLED: 0
       XDEBUG_CONFIG: 'remote_host=xxx.xxx.xxx.xxx'
     user: docker
     volumes:
       - ./:/srv/application
-      - ~/.composer:/home/docker/.composer
+      - ~/.cache/composer:/home/docker/.cache/composer
+      - ~/.config/composer:/home/docker/.config/composer
     working_dir: /srv/application
     networks:
       - khatovar

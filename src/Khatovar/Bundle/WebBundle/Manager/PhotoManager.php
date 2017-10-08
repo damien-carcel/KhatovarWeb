@@ -231,11 +231,11 @@ class PhotoManager
         $currentlyRendered = null;
         $repo = $this->getRepository($controller);
 
-        if (null === $repo || $controller === 'photo') {
+        if (null === $repo || 'photo' === $controller) {
             return null;
         }
 
-        if (in_array($controller, EntityHelper::getActivables()) && null == $slugOrId && $action === 'index') {
+        if (in_array($controller, EntityHelper::getActivables()) && null == $slugOrId && 'index' === $action) {
             $currentlyRendered = $repo->findOneBy(['active' => true]);
         } elseif (null != $slugOrId) {
             if (is_string($slugOrId)) {
