@@ -134,7 +134,7 @@ class DocumentsBundleFeatureContext extends MinkContext
         if (is_dir($directory)) {
             $objects = scandir($directory);
             foreach ($objects as $object) {
-                if ($object != '.' && $object != '..') {
+                if ('.' != $object && '..' != $object) {
                     if (is_dir($directory.'/'.$object)) {
                         $this->removeUploadedFiles($directory.'/'.$object);
                     } else {

@@ -316,17 +316,17 @@ class File
         $path = substr($file, 0, -strlen(strrchr($file, '/')));
         $content = array_diff(scandir($path), ['..', '.']);
         //Erase DAY folder if empty
-        if (scandir($path) === true && empty($content)) {
+        if (true === scandir($path) && empty($content)) {
             rmdir($path);
             $path = substr($path, 0, -strlen(strrchr($path, '/')));
             $content = array_diff(scandir($path), ['..', '.']);
             // Erase MONTH folder if empty
-            if (scandir($path) === true && empty($content)) {
+            if (true === scandir($path) && empty($content)) {
                 rmdir($path);
                 $path = substr($path, 0, -strlen(strrchr($path, '/')));
                 $content = array_diff(scandir($path), ['..', '.']);
                 // Erase YEAR folder if empty
-                if (scandir($path) === true && empty($content)) {
+                if (true === scandir($path) && empty($content)) {
                     rmdir($path);
                 }
             }

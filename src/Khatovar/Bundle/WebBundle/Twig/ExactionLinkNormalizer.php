@@ -53,9 +53,9 @@ class ExactionLinkNormalizer extends \Twig_Extension
     {
         $explodedLink = explode('|', $link);
 
-        if (count($explodedLink) === 3) {
+        if (3 === count($explodedLink)) {
             $formattedLink = $this->formatLink($explodedLink[1], $explodedLink[0], $explodedLink[2]);
-        } elseif (count($explodedLink) === 2) {
+        } elseif (2 === count($explodedLink)) {
             $formattedLink = $this->formatLink($explodedLink[1], $explodedLink[0]);
         } else {
             $formattedLink = $this->formatLink($explodedLink[0], $explodedLink[0]);

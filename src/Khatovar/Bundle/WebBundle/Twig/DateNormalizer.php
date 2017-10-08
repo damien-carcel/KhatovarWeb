@@ -122,7 +122,7 @@ class DateNormalizer extends \Twig_Extension
      */
     protected function getDay(\DateTime $date)
     {
-        if ($date->format('d') === '1') {
+        if ('1' === $date->format('d')) {
             return '1er';
         }
 
