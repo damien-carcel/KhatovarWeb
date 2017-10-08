@@ -5,6 +5,12 @@ default:
                 default:
                     symfony2: ~
         Behat\Symfony2Extension: ~
+        BehatExtension\DoctrineDataFixturesExtension\Extension:
+            lifetime: scenario
+            autoload: false
+            directories: ~
+            fixtures:
+                - Carcel\Bundle\UserBundle\DataFixtures\ORM\LoadUserData
     suites:
         default:
             contexts:

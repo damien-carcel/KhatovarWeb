@@ -62,7 +62,7 @@ class DocumentsBundleFixtureContext implements Context
     public function loadFixturesWithOnlyUsers(): void
     {
         $userFixtures = $this->container
-                ->getParameter('kernel.project_dir').'/features/bootstrap/DataFixtures/ORM/LoadUserData.php';
+                ->getParameter('kernel.project_dir').'/features/Context/DataFixtures/ORM/LoadUserData.php';
 
         $this->loadDoctrineFixtures([
             'files' => [$userFixtures],
@@ -75,7 +75,7 @@ class DocumentsBundleFixtureContext implements Context
     public function loadFixturesWithFolders(): void
     {
         $fixtures = $this->container
-                ->getParameter('kernel.project_dir').'/features/bootstrap/DataFixtures/ORM';
+                ->getParameter('kernel.project_dir').'/features/Context/DataFixtures/ORM';
 
         $this->loadDoctrineFixtures([
             'directories' => [$fixtures],
