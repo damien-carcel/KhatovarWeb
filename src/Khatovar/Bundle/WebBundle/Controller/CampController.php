@@ -26,7 +26,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 /**
  * @author Damien Carcel <damien.carcel@gmail.com>
  */
-class WebController extends Controller
+class CampController extends Controller
 {
     /**
      * Displays a page with links for redirection.

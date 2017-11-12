@@ -8,27 +8,27 @@ khatovar_web_homepage_show:
 
 khatovar_web_homepage_list:
     path:       /list
-    defaults:   { _controller: KhatovarWebBundle:Homepage:list }
+    defaults:   { _controller: KhatovarWebBundle:Admin\Homepage:list }
 
 khatovar_web_homepage_new:
     path:       /new
-    defaults:   { _controller: KhatovarWebBundle:Homepage:new }
+    defaults:   { _controller: KhatovarWebBundle:Admin\Homepage:new }
 
 khatovar_web_homepage_create:
     path:       /create
-    defaults:   { _controller: KhatovarWebBundle:Homepage:create }
+    defaults:   { _controller: KhatovarWebBundle:Admin\Homepage:create }
     methods:  [POST]
 
 khatovar_web_homepage_edit:
     path:       /{id}/edit
-    defaults:   { _controller: KhatovarWebBundle:Homepage:edit }
+    defaults:   { _controller: KhatovarWebBundle:Admin\Homepage:edit }
 
 khatovar_web_homepage_update:
     path:       /{id}/update
-    defaults:   { _controller: KhatovarWebBundle:Homepage:update }
+    defaults:   { _controller: KhatovarWebBundle:Admin\Homepage:update }
     methods:  [POST, PUT]
 
 khatovar_web_homepage_delete:
     path:       /{id}/delete
-    defaults:   { _controller: KhatovarWebBundle:Homepage:delete }
+    defaults:   { _controller: KhatovarWebBundle:Admin\Homepage:delete }
     methods:  [POST, DELETE]

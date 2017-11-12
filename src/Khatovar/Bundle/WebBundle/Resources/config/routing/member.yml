@@ -10,23 +10,23 @@ khatovar_web_member_show:
 
 khatovar_web_member_new:
     path:       /new
-    defaults:   { _controller: KhatovarWebBundle:Member:new }
+    defaults:   { _controller: KhatovarWebBundle:Admin\Member:new }
 
 khatovar_web_member_create:
     path:       /create
-    defaults:   { _controller: KhatovarWebBundle:Member:create }
+    defaults:   { _controller: KhatovarWebBundle:Admin\Member:create }
     methods:  [POST]
 
 khatovar_web_member_edit:
     path:       /{id}/edit
-    defaults:   { _controller: KhatovarWebBundle:Member:edit }
+    defaults:   { _controller: KhatovarWebBundle:Admin\Member:edit }
 
 khatovar_web_member_update:
     path:       /{id}/update
-    defaults:   { _controller: KhatovarWebBundle:Member:update }
+    defaults:   { _controller: KhatovarWebBundle:Admin\Member:update }
     methods:  [POST, PUT]
 
 khatovar_web_member_delete:
     path:       /{id}/delete
-    defaults:   { _controller: KhatovarWebBundle:Member:delete }
+    defaults:   { _controller: KhatovarWebBundle:Admin\Member:delete }
     methods:  [POST, DELETE]

@@ -1,26 +1,26 @@
 khatovar_web_photo:
     path:       /
-    defaults:   { _controller: KhatovarWebBundle:Photo:index }
+    defaults:   { _controller: KhatovarWebBundle:Admin\Photo:index }
 
 khatovar_web_photo_new:
     path:       /new
-    defaults:   { _controller: KhatovarWebBundle:Photo:new }
+    defaults:   { _controller: KhatovarWebBundle:Admin\Photo:new }
 
 khatovar_web_photo_create:
     path:     /create
-    defaults: { _controller: KhatovarWebBundle:Photo:create }
+    defaults: { _controller: KhatovarWebBundle:Admin\Photo:create }
     methods:  [POST]
 
 khatovar_web_photo_edit:
     path:       /{id}/edit
-    defaults:   { _controller: KhatovarWebBundle:Photo:edit }
+    defaults:   { _controller: KhatovarWebBundle:Admin\Photo:edit }
 
 khatovar_web_photo_update:
     path:     /{id}/update
-    defaults: { _controller: KhatovarWebBundle:Photo:update }
+    defaults: { _controller: KhatovarWebBundle:Admin\Photo:update }
     methods:  [POST, PUT]
 
 khatovar_web_photo_delete:
     path:       /{id}/delete
-    defaults:   { _controller: KhatovarWebBundle:Photo:delete }
+    defaults:   { _controller: KhatovarWebBundle:Admin\Photo:delete }
     methods:  [POST, DELETE]
