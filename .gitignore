@@ -9,5 +9,3 @@
 behat.yml
 docker-compose.yml
 .php_cs.cache
-package-lock.json
-yarn.lock
