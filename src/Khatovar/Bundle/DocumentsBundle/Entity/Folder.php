@@ -179,7 +179,7 @@ class Folder
      *
      * @return Folder
      */
-    public function addChild(Folder $children)
+    public function addChild(self $children)
     {
         $this->children[] = $children;
 
@@ -191,7 +191,7 @@ class Folder
      *
      * @return Folder
      */
-    public function removeChild(Folder $children)
+    public function removeChild(self $children)
     {
         $this->children->removeElement($children);
 
@@ -211,7 +211,7 @@ class Folder
      *
      * @return Folder
      */
-    public function setParent(Folder $parent)
+    public function setParent(self $parent)
     {
         $this->parent = $parent;
 
