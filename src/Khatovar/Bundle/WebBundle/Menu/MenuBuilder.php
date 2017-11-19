@@ -21,7 +21,7 @@
 
 namespace Khatovar\Bundle\WebBundle\Menu;
 
-use Doctrine\ORM\EntityManagerInterface;
+use Khatovar\Bundle\WebBundle\Entity\AppearanceRepository;
 use Khatovar\Bundle\WebBundle\Manager\ExactionManager;
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
@@ -30,40 +30,31 @@ use Knp\Menu\ItemInterface;
  * Build the web site menu.
  *
  * @author Damien Carcel <damien.carcel@gmail.com>
- *
- * @todo   Inject directly the needed repositories (define them as services).
- * @todo   $appareances and $programmes should be get directly in the methods that needs them.
  */
 class MenuBuilder
 {
-    /** @var \Khatovar\Bundle\WebBundle\Entity\Appearance[] */
-    protected $appearances;
-
-    /** @var array */
-    protected $exactionYears;
+    /** @var ExactionManager */
+    private $exactionManager;
 
     /** @var FactoryInterface */
-    protected $menuFactory;
+    private $menuFactory;
 
-    /** @var \Khatovar\Bundle\WebBundle\Entity\Appearance[] */
-    protected $programmes;
+    /** @var AppearanceRepository */
+    private $appearanceRepository;
 
     /**
-     * @param FactoryInterface       $menuFactory
-     * @param ExactionManager        $exactionManager
-     * @param EntityManagerInterface $entityManager
+     * @param FactoryInterface     $menuFactory
+     * @param AppearanceRepository $appearanceRepository
+     * @param ExactionManager      $exactionManager
      */
     public function __construct(
         FactoryInterface $menuFactory,
-        EntityManagerInterface $entityManager,
+        AppearanceRepository $appearanceRepository,
         ExactionManager $exactionManager
     ) {
         $this->menuFactory = $menuFactory;
-        $appearanceRepository = $entityManager->getRepository('KhatovarWebBundle:Appearance');
-
-        $this->exactionYears = $exactionManager->getSortedYears();
-        $this->appearances = $appearanceRepository->findActiveWorkshopsSortedBySlug();
-        $this->programmes = $appearanceRepository->findActiveProgrammesSortedBySlug();
+        $this->appearanceRepository = $appearanceRepository;
+        $this->exactionManager = $exactionManager;
     }
 
     /**
@@ -88,7 +79,7 @@ class MenuBuilder
     /**
      * @param ItemInterface $menu
      */
-    protected function addHome(ItemInterface $menu)
+    private function addHome(ItemInterface $menu)
     {
         $menu->addChild(
             'home',
@@ -102,7 +93,7 @@ class MenuBuilder
     /**
      * @param ItemInterface $menu
      */
-    protected function addAppearances(ItemInterface $menu)
+    private function addAppearances(ItemInterface $menu)
     {
         $menu->addChild(
             'programmes',
@@ -112,7 +103,8 @@ class MenuBuilder
             ]
         );
 
-        foreach ($this->programmes as $programme) {
+        $programmes = $this->appearanceRepository->findActiveProgrammesSortedBySlug();
+        foreach ($programmes as $programme) {
             $menu['programmes']->addChild(
                 $programme->getSlug(),
                 [
@@ -131,7 +123,8 @@ class MenuBuilder
             ]
         );
 
-        foreach ($this->appearances as $appearance) {
+        $appearances = $this->appearanceRepository->findActiveWorkshopsSortedBySlug();
+        foreach ($appearances as $appearance) {
             $menu['programmes']['appearances']->addChild(
                 $appearance->getSlug(),
                 [
@@ -146,7 +139,7 @@ class MenuBuilder
     /**
      * @param ItemInterface $menu
      */
-    protected function addDates(ItemInterface $menu)
+    private function addDates(ItemInterface $menu)
     {
         $menu->addChild(
             'dates',
@@ -172,7 +165,8 @@ class MenuBuilder
             ]
         );
 
-        foreach ($this->exactionYears as $year) {
+        $sortedYears = $this->exactionManager->getSortedYears();
+        foreach ($sortedYears as $year) {
             $menu['dates']['references']->addChild(
                 $year,
                 [
@@ -187,7 +181,7 @@ class MenuBuilder
     /**
      * @param ItemInterface $menu
      */
-    protected function addCamp(ItemInterface $menu)
+    private function addCamp(ItemInterface $menu)
     {
         $menu->addChild(
             'camp',
@@ -217,7 +211,7 @@ class MenuBuilder
     /**
      * @param ItemInterface $menu
      */
-    protected function addContact(ItemInterface $menu)
+    private function addContact(ItemInterface $menu)
     {
         $menu->addChild(
             'links',

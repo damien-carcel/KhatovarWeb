@@ -133,8 +133,9 @@ class AppearanceManager
         }
 
         $appearances = [];
+        $numberOfAppearances = count($sortedAppearances);
 
-        for ($position = 0; $position < count($sortedAppearances); ++$position) {
+        for ($position = 0; $position < $numberOfAppearances; ++$position) {
             if ($slug === $sortedAppearances[$position]->getSlug()) {
                 $appearances['previous'] = $this->getPreviousActiveAppearance($sortedAppearances, $position);
                 $appearances['current'] = $sortedAppearances[$position];
@@ -155,7 +156,9 @@ class AppearanceManager
      */
     protected function getPreviousActiveAppearance(array $sortedAppearances, $currentPosition)
     {
-        for ($position = $currentPosition - 1; $position >= 0; --$position) {
+        $previousPosition = $currentPosition - 1;
+
+        for ($position = $previousPosition; $position >= 0; --$position) {
             if (isset($sortedAppearances[$position]) && $sortedAppearances[$position]->isActive()) {
                 return $sortedAppearances[$position];
             }
@@ -172,7 +175,10 @@ class AppearanceManager
      */
     protected function getNextActiveAppearance(array $sortedAppearances, $currentPosition)
     {
-        for ($position = $currentPosition + 1; $position < count($sortedAppearances); ++$position) {
+        $nextPosition = $currentPosition + 1;
+        $numberOfAppearances = count($sortedAppearances);
+
+        for ($position = $nextPosition; $position < $numberOfAppearances; ++$position) {
             if (isset($sortedAppearances[$position]) && $sortedAppearances[$position]->isActive()) {
                 return $sortedAppearances[$position];
             }

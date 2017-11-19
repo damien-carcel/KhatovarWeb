@@ -40,13 +40,13 @@ class IframeSizeValidator extends ConstraintValidator
      */
     public function validate($iframe, Constraint $constraint)
     {
-        if (null != $iframe) {
+        if (null !== $iframe) {
             $dimensions = $this->getIframeDimensions($iframe);
 
             if (empty($dimensions)) {
                 $this->context->buildViolation($constraint->noSizeMessage)->addViolation();
-            } elseif (static::IFRAME_EXPECTED_WIDTH != $dimensions['width'] ||
-                static::IFRAME_EXPECTED_HEIGHT != $dimensions['height']
+            } elseif (static::IFRAME_EXPECTED_WIDTH !== $dimensions['width'] ||
+                static::IFRAME_EXPECTED_HEIGHT !== $dimensions['height']
             ) {
                 $this->context->buildViolation($constraint->wrongSizeMessage)
                     ->setParameter('%width%', $dimensions['width'])

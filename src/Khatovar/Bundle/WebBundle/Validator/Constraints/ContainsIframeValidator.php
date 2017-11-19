@@ -42,7 +42,7 @@ class ContainsIframeValidator extends ConstraintValidator
      */
     public function validate($iframe, Constraint $constraint)
     {
-        if (null != $iframe) {
+        if (null !== $iframe) {
             if (strlen($iframe) < strlen(static::IFRAME_OPENING_TAG.static::IFRAME_CLOSING_TAG)) {
                 $this->context->buildViolation($constraint->messageLength)->addViolation();
             } else {

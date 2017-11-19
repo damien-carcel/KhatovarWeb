@@ -22,6 +22,7 @@
 namespace Khatovar\Bundle\WebBundle\Handler;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Khatovar\Bundle\WebBundle\Entity\ActivableEntity;
 
 /**
  * Handles the activation of an entity and deactivation of the previous active one.
@@ -47,20 +48,21 @@ class ActivationHandler
     }
 
     /**
-     * @param object $newActiveEntity
+     * @param ActivableEntity $newActiveEntity
      */
-    public function handle($newActiveEntity)
+    public function handle(ActivableEntity $newActiveEntity)
     {
         $repository = $this->entityManager->getRepository($this->entity);
         $oldContact = $repository->findOneBy(['active' => true]);
 
         if (null !== $oldContact) {
-            $oldContact->setActive(false);
+            $oldContact->deactivate();
             $this->entityManager->persist($oldContact);
         }
 
-        $newActiveEntity->setActive(true);
+        $newActiveEntity->activate();
         $this->entityManager->persist($newActiveEntity);
+
         $this->entityManager->flush();
     }
 }

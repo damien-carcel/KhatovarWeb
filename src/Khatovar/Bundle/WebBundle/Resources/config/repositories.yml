@@ -1,0 +1,36 @@
+services:
+    khatovar_web.repositories.appearance:
+        class: Khatovar\Bundle\WebBundle\Entity\AppearanceRepository
+        factory: ['@doctrine', getRepository]
+        arguments:
+            - 'KhatovarWebBundle:Appearance'
+
+    khatovar_web.repositories.contact:
+        class: Khatovar\Bundle\WebBundle\Entity\ContactRepository
+        factory: ['@doctrine', getRepository]
+        arguments:
+            - 'KhatovarWebBundle:Contact'
+
+    khatovar_web.repositories.exaction:
+        class: Khatovar\Bundle\WebBundle\Entity\ExactionRepository
+        factory: ['@doctrine', getRepository]
+        arguments:
+            - 'KhatovarWebBundle:Exaction'
+
+    khatovar_web.repositories.homepage:
+        class: Khatovar\Bundle\WebBundle\Entity\HomepageRepository
+        factory: ['@doctrine', getRepository]
+        arguments:
+            - 'KhatovarWebBundle:Homepage'
+
+    khatovar_web.repositories.member:
+        class: Khatovar\Bundle\WebBundle\Entity\MemberRepository
+        factory: ['@doctrine', getRepository]
+        arguments:
+            - 'KhatovarWebBundle:Member'
+
+    khatovar_web.repositories.photo:
+        class: Khatovar\Bundle\WebBundle\Entity\PhotoRepository
+        factory: ['@doctrine', getRepository]
+        arguments:
+            - 'KhatovarWebBundle:Photo'
