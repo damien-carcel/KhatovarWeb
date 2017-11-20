@@ -4,7 +4,9 @@ default:
             sessions:
                 default:
                     symfony2: ~
-        Behat\Symfony2Extension: ~
+        Behat\Symfony2Extension:
+            kernel:
+                bootstrap: vendor/autoload.php
         BehatExtension\DoctrineDataFixturesExtension\Extension:
             lifetime: scenario
             autoload: false
