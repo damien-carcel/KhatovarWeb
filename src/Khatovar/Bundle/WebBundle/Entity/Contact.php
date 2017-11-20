@@ -26,7 +26,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * @author Damien Carcel <damien.carcel@gmail.com>
  */
-class Contact
+class Contact implements ActivableEntity
 {
     /** @var int */
     protected $id;
@@ -123,15 +123,19 @@ class Contact
     }
 
     /**
-     * @param bool $active
-     *
-     * @return Contact
+     * {@inheritdoc}
      */
-    public function setActive($active)
+    public function activate()
     {
-        $this->active = $active;
+        $this->active = true;
+    }
 
-        return $this;
+    /**
+     * {@inheritdoc}
+     */
+    public function deactivate()
+    {
+        $this->active = false;
     }
 
     /**

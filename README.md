@@ -35,7 +35,7 @@ docker-compose up -d
 and install dependencies with
 
 ```bash
-docker-compose exec fpm composer update
+docker-compose exec fpm composer install
 ```
 
 Composer will ask you for your application configuration (database name, user and password).
@@ -44,7 +44,7 @@ You can now populate this database with a basic set of [doctrine fixtures](https
 
 ```bash
 docker-compose exec fpm bin/console doctrine:schema:update --force
-docker-compose exec fpm bin/console doctrine:fixtures:load
+docker-compose exec fpm bin/console doctrine:fixtures:load --fixtures=vendor/carcel/user-bundle/features/Context/DataFixtures/ORM/LoadUserData.php
 ```
 
 ### Deploy the assets
@@ -52,8 +52,9 @@ docker-compose exec fpm bin/console doctrine:fixtures:load
 Run the following command:
 
 ```bash
-docker-compose exec fpm bin/console assets:install --symlink --relative
-docker-compose run node npm run assets
+docker-compose exec fpm bin/console assets:install www --symlink --relative
+docker-compose run node yarn install
+docker-compose run node yarn run assets
 ```
 
 You should now be able to access the application and login with `localhost:8080/login`.

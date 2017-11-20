@@ -16,23 +16,23 @@ khatovar_web_exaction_list_by_year:
 
 khatovar_web_exaction_new:
     path:     /new
-    defaults: { _controller: KhatovarWebBundle:Exaction:new }
+    defaults: { _controller: KhatovarWebBundle:Admin\Exaction:new }
 
 khatovar_web_exaction_create:
     path:     /create
-    defaults: { _controller: KhatovarWebBundle:Exaction:create }
+    defaults: { _controller: KhatovarWebBundle:Admin\Exaction:create }
     methods:  [POST]
 
 khatovar_web_exaction_edit:
     path:     /{id}/edit
-    defaults: { _controller: KhatovarWebBundle:Exaction:edit }
+    defaults: { _controller: KhatovarWebBundle:Admin\Exaction:edit }
 
 khatovar_web_exaction_update:
     path:     /{id}/update
-    defaults: { _controller: KhatovarWebBundle:Exaction:update }
+    defaults: { _controller: KhatovarWebBundle:Admin\Exaction:update }
     methods:  [POST, PUT]
 
 khatovar_web_exaction_delete:
     path:     /{id}/delete
-    defaults: { _controller: KhatovarWebBundle:Exaction:delete }
+    defaults: { _controller: KhatovarWebBundle:Admin\Exaction:delete }
     methods:  [POST, DELETE]

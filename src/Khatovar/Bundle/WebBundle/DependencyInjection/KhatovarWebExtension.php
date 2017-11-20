@@ -43,6 +43,7 @@ class KhatovarWebExtension extends Extension
         $loader->load('handlers.yml');
         $loader->load('managers.yml');
         $loader->load('menus.yml');
+        $loader->load('repositories.yml');
         $loader->load('twig.yml');
         $loader->load('validators.yml');
     }

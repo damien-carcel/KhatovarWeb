@@ -19,14 +19,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Khatovar\Bundle\WebBundle\Controller;
+namespace Khatovar\Bundle\WebBundle\Controller\Admin;
 
 use Khatovar\Bundle\WebBundle\Entity\Photo;
+use Khatovar\Bundle\WebBundle\Form\Type\PhotoType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * Main controller for Photo bundle.
@@ -230,12 +231,12 @@ class PhotoController extends Controller
      *
      * @param Photo $photo
      *
-     * @return \Symfony\Component\Form\Form
+     * @return \Symfony\Component\Form\FormInterface
      */
     protected function createCreateForm(Photo $photo)
     {
         $form = $this->createForm(
-            'Khatovar\Bundle\WebBundle\Form\Type\PhotoType',
+            PhotoType::class,
             $photo,
             [
                 'action' => $this->generateUrl('khatovar_web_photo_create'),
@@ -258,7 +259,7 @@ class PhotoController extends Controller
     protected function createEditForm(Photo $photo)
     {
         $form = $this->createForm(
-            'Khatovar\Bundle\WebBundle\Form\Type\PhotoType',
+            PhotoType::class,
             $photo,
             [
                 'action' => $this->generateUrl('khatovar_web_photo_update', ['id' => $photo->getId()]),
@@ -276,7 +277,7 @@ class PhotoController extends Controller
      *
      * @param int $id
      *
-     * @return \Symfony\Component\Form\Form The form
+     * @return \Symfony\Component\Form\FormInterface
      */
     protected function createDeleteForm($id)
     {
@@ -300,7 +301,7 @@ class PhotoController extends Controller
      *
      * @param Photo[] $sortedPhotos
      *
-     * @return \Symfony\Component\Form\Form[]
+     * @return \Symfony\Component\Form\FormInterface[]
      */
     protected function createDeleteForms(array $sortedPhotos)
     {
@@ -326,7 +327,7 @@ class PhotoController extends Controller
      *
      * @param Photo $photo
      *
-     * @throws AccessDeniedHttpException
+     * @throws AccessDeniedException
      *
      * @return bool
      */
@@ -341,14 +342,14 @@ class PhotoController extends Controller
         }
 
         if (null === $member) {
-            throw new AccessDeniedHttpException(
+            throw new AccessDeniedException(
                 'Désolé, vous n\'avez pas de page de membre, et ne pouvez donc pas manipuler les photos.'
             );
         } elseif (null !== $photo) {
             if (null === $photo->getMember() ||
                 $member->getId() !== $photo->getMember()->getId()
             ) {
-                throw new AccessDeniedHttpException(
+                throw new AccessDeniedException(
                     'Désolé, vous n\'avez pas les droits requis pour modifier cette photo.'
                 );
             }

@@ -4,15 +4,17 @@ default:
             sessions:
                 default:
                     symfony2: ~
-        Behat\Symfony2Extension: ~
+        Behat\Symfony2Extension:
+            kernel:
+                bootstrap: vendor/autoload.php
         BehatExtension\DoctrineDataFixturesExtension\Extension:
             lifetime: scenario
             autoload: false
             directories: ~
             fixtures:
-                - Carcel\Bundle\UserBundle\DataFixtures\ORM\LoadUserData
+                - UserBundleContext\DataFixtures\ORM\LoadUserData
     suites:
-        default:
+        documents:
             contexts:
                 - Context\DocumentsBundleFixtureContext:
                     container: '@service_container'
@@ -22,9 +24,9 @@ default:
                     container: '@service_container'
             paths:
                 - '%paths.base%/features'
-        users:
-            contexts:
-                - UserBundleContext\UserBundleFeatureContext:
-                    session: '@session'
-            paths:
-                - '%paths.base%/vendor/carcel/user-bundle/features'
+#        users:
+#            contexts:
+#                - UserBundleContext\UserBundleFeatureContext:
+#                    session: '@session'
+#            paths:
+#                - '%paths.base%/vendor/carcel/user-bundle/features'

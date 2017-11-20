@@ -3,7 +3,7 @@ services:
         class: Khatovar\Bundle\WebBundle\Menu\MenuBuilder
         arguments:
             - '@knp_menu.factory'
-            - '@doctrine.orm.entity_manager'
+            - '@khatovar_web.repositories.appearance'
             - '@khatovar_exaction.manager.exaction'
 
     khatovar_web.menu.main:

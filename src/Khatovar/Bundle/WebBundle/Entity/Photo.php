@@ -331,7 +331,7 @@ class Photo
     }
 
     /**
-     * @return Photo
+     * @return Contact
      */
     public function getContact()
     {

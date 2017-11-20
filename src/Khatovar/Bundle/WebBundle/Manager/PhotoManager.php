@@ -201,7 +201,7 @@ class PhotoManager
         $currentlyRendered = $this->getCurrentlyRendered($controller, $action, $slugOrId);
 
         $owner = null;
-        if (EntityHelper::MEMBER_CODE === $controller && null != $slugOrId) {
+        if (EntityHelper::MEMBER_CODE === $controller && null !== $slugOrId) {
             $owner = $currentlyRendered->getOwner();
         }
 
@@ -220,32 +220,33 @@ class PhotoManager
      * Return the entity which content is currently rendered by the
      * application.
      *
-     * @param $controller
-     * @param $action
+     * @param string $controller
+     * @param string $action
      * @param $slugOrId
      *
      * @return null|object
      */
     protected function getCurrentlyRendered($controller, $action, $slugOrId)
     {
-        $currentlyRendered = null;
         $repo = $this->getRepository($controller);
 
         if (null === $repo || 'photo' === $controller) {
             return null;
         }
 
-        if (in_array($controller, EntityHelper::getActivables()) && null == $slugOrId && 'index' === $action) {
-            $currentlyRendered = $repo->findOneBy(['active' => true]);
-        } elseif (null != $slugOrId) {
-            if (is_string($slugOrId)) {
-                $currentlyRendered = $repo->findOneBy(['slug' => $slugOrId]);
-            } elseif (is_int($slugOrId)) {
-                $currentlyRendered = $repo->find($slugOrId);
-            }
+        if (in_array($controller, EntityHelper::getActivables()) && null === $slugOrId && 'index' === $action) {
+            return $repo->findOneBy(['active' => true]);
         }
 
-        return $currentlyRendered;
+        if (is_string($slugOrId)) {
+            return $repo->findOneBy(['slug' => $slugOrId]);
+        }
+
+        if (is_int($slugOrId)) {
+            return $repo->find($slugOrId);
+        }
+
+        return null;
     }
 
     /**
@@ -253,7 +254,7 @@ class PhotoManager
      *
      * @param string $controller
      *
-     * @return \Doctrine\ORM\EntityRepository|null
+     * @return \Doctrine\Common\Persistence\ObjectRepository|null
      */
     protected function getRepository($controller)
     {
