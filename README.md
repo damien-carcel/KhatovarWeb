@@ -44,7 +44,7 @@ You can now populate this database with a basic set of [doctrine fixtures](https
 
 ```bash
 docker-compose exec fpm bin/console doctrine:schema:update --force
-docker-compose exec fpm bin/console doctrine:fixtures:load --fixtures=vendor/carcel/user-bundle/features/Context/DataFixtures/ORM/LoadUserData.php
+docker-compose exec fpm bin/console doctrine:fixtures:load --fixtures=features/Context/DataFixtures/ORM/LoadUserData.php
 ```
 
 ### Deploy the assets

@@ -6,10 +6,10 @@
     {% endif %}
     "
    class="btn btn-default pull-right">
-    {{ 'carcel_user.button.back'|trans }}
+    {{ 'khatovar_user.button.back'|trans }}
 </a>
 
-<h1>{{ 'carcel_user.profile.show'|trans({'%username%': app.user.username}) }}</h1>
+<h1>{{ 'khatovar_user.profile.show'|trans({'%username%': app.user.username}) }}</h1>
 
 <div class="fos_user_user_show well">
     <p>
@@ -20,9 +20,9 @@
         {{ 'profile.show.email'|trans({}, 'FOSUserBundle') }}: {{ user.email }}
     </p>
     <p>
-        <a href="{{ path('fos_user_profile_edit') }}">{{ 'carcel_user.profile.edit.link'|trans }}</a>
+        <a href="{{ path('fos_user_profile_edit') }}">{{ 'khatovar_user.profile.edit.link'|trans }}</a>
     </p>
     <p>
-        <a href="{{ path('fos_user_change_password') }}">{{ 'carcel_user.profile.password.link'|trans }}</a>
+        <a href="{{ path('fos_user_change_password') }}">{{ 'khatovar_user.profile.password.link'|trans }}</a>
     </p>
 </div>

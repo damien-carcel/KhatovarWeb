@@ -7,20 +7,20 @@ Feature: Edit user profiles
     Given I am on the homepage
     And I am anonymous
     And I go to "login"
-    And I fill in "Username" with "aurore"
-    And I fill in "Password" with "aurore"
-    And I press "Log in"
+    And I fill in "Nom d'utilisateur" with "aurore"
+    And I fill in "Mot de passe" with "aurore"
+    And I press "Connexion"
 
   Scenario: I can edit a user profile
     Given I am on "admin"
-    When I follow "Edit" for "damien" profile
-    Then I should see "Edit user damien profile"
+    When I follow "Éditer" for "damien" profile
+    Then I should see "Édition du profil de l'utilisateur damien"
     When I fill in the following:
-      | User name     | pandore           |
-      | Email address | pandore@gmail.com |
-    And I press "Update"
-    Then I should see "User profile has been updated"
-    And I should see the users "pandore, freya and lilith"
+      | Nom d'utilisateur | pandore           |
+      | Adresse e-mail    | pandore@gmail.com |
+    And I press "Mettre à jour"
+    Then I should see "Le profil utilisateur a été mis à jour"
+    And I should see the users "pandore, freya, hegor, lilith and chips"
 
   Scenario: I cannot edit the profile of the super admin
     When I am on "admin/admin/edit"

@@ -7,24 +7,24 @@ Feature: Change users status
     Given I am on the homepage
     And I am anonymous
     And I go to "login"
-    And I fill in "Username" with "aurore"
-    And I fill in "Password" with "aurore"
-    And I press "Log in"
+    And I fill in "Nom d'utilisateur" with "aurore"
+    And I fill in "Mot de passe" with "aurore"
+    And I press "Connexion"
 
   Scenario: I can deactivate a user
     Given I am on "admin"
-    When I follow "Deactivate" for "damien" profile
-    Then I should see "User has been deactivated"
+    When I follow "Désactiver" for "damien" profile
+    Then I should see "L'utilisateur a été désactivé"
     And user "damien" should be disabled
 
   Scenario: I can activate a user
     Given I am on "admin"
-    When I follow "Activate" for "lilith" profile
-    Then I should see "User has been activated"
-    And user "lilith" should be enabled
+    When I follow "Activer" for "chips" profile
+    Then I should see "L'utilisateur a été activé"
+    And user "chips" should be enabled
 
   Scenario: I cannot change an administrator status
     When I am on "admin"
-    Then I should not see "Deactivate" in the table line containing "freya"
-    When I am on "admin/freya/status"
+    Then I should not see "Désactiver" in the table line containing "hegor"
+    When I am on "admin/hegor/status"
     Then I should see "403 Forbidden"

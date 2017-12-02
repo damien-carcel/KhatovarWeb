@@ -21,6 +21,7 @@
 
 namespace Khatovar\Bundle\WebBundle\Form\Type;
 
+use Carcel\Bundle\UserBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -92,7 +93,7 @@ class MemberType extends AbstractType
                 EntityType::class,
                 [
                     'label' => 'Utilisateur lié',
-                    'class' => 'Carcel\Bundle\UserBundle\Entity\User',
+                    'class' => User::class,
                     'choice_label' => 'username',
                     'required' => false,
                     'query_builder' => function (EntityRepository $er) {

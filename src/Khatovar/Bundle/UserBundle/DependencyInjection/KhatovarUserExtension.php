@@ -21,7 +21,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
  *
  * @author Damien Carcel <damien.carcel@gmail.com>
  */
-class CarcelUserExtension extends Extension
+class KhatovarUserExtension extends Extension
 {
     /**
      * {@inheritdoc}

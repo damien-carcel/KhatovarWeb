@@ -50,6 +50,13 @@ class LoadUserData implements FixtureInterface
             'enabled' => true,
         ],
         [
+            'username' => 'hegor',
+            'password' => 'hegor',
+            'email' => 'hegor@khatovar.fr',
+            'role' => 'ROLE_ADMIN',
+            'enabled' => true,
+        ],
+        [
             'username' => 'freya',
             'password' => 'freya',
             'email' => 'freya@khatovar.fr',
@@ -69,6 +76,13 @@ class LoadUserData implements FixtureInterface
             'email' => 'damien@khatovar.fr',
             'role' => '',
             'enabled' => true,
+        ],
+        [
+            'username' => 'chips',
+            'password' => 'chips',
+            'email' => 'chips@khatovar.fr',
+            'role' => '',
+            'enabled' => false,
         ],
     ];
 

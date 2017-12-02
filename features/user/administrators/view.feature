@@ -7,16 +7,16 @@ Feature: See user profiles
     Given I am on the homepage
     And I am anonymous
     And I go to "login"
-    And I fill in "Username" with "aurore"
-    And I fill in "Password" with "aurore"
-    And I press "Log in"
+    And I fill in "Nom d'utilisateur" with "aurore"
+    And I fill in "Mot de passe" with "aurore"
+    And I press "Connexion"
 
   Scenario: I can see a user profile
     Given I am on "admin"
-    When I follow "View" for "damien" profile
-    Then I should see "damien user profile"
-    And I should see "Username: damien"
-    And I should see "Email: damien@khatovar.fr"
+    When I follow "Visualiser" for "damien" profile
+    Then I should see "Profil de l'utilisateur damien"
+    And I should see "Nom d'utilisateur: damien"
+    And I should see "Adresse e-mail: damien@khatovar.fr"
 
   Scenario: I cannot see the profile of the super admin
     When I am on "admin/admin/show"

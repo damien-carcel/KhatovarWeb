@@ -24,9 +24,9 @@ default:
                     container: '@service_container'
             paths:
                 - '%paths.base%/features/documents'
-#        users:
-#            contexts:
-#                - Context\UserBundleFeatureContext:
-#                    session: '@session'
-#            paths:
-#                - '%paths.base%/features/user'
+        user:
+            contexts:
+                - Context\UserBundleFeatureContext:
+                    session: '@session'
+            paths:
+                - '%paths.base%/features/user'

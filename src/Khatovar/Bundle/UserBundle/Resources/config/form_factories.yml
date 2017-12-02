@@ -1,5 +1,5 @@
 services:
-    carcel_user.factory.user_form:
+    khatovar_user.factory.user_form:
         class: Khatovar\Bundle\UserBundle\Form\Factory\UserFormFactory
         arguments:
             - '@form.factory'

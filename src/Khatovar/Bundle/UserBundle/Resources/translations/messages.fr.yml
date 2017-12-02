@@ -1,4 +1,4 @@
-carcel_user:
+khatovar_user:
     admin:
         edit.title: Édition du profil de l'utilisateur %name%
         index:
@@ -25,7 +25,7 @@ carcel_user:
     form:
         name.label: Nom d'utilisateur
         email.label: Adresse e-mail
-        role.label: Roles
+        role.label: Rôles
     notice:
         activated: L'utilisateur a été activé
         deactivated: L'utilisateur a été désactivé
@@ -37,7 +37,7 @@ carcel_user:
     profile:
         show: Profil de l'utilisateur %username%
         edit: Édition du profil de l'utilisateur %username%
-        edit.link: Editer le profil
+        edit.link: Éditer le profil
         password.link: Changer le mot de passe
     security:
         forgotten_password: Mot de passe oublié ?
