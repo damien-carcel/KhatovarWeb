@@ -12,7 +12,7 @@ default:
             autoload: false
             directories: ~
             fixtures:
-                - UserBundleContext\DataFixtures\ORM\LoadUserData
+                - Context\DataFixtures\ORM\LoadUserData
     suites:
         documents:
             contexts:
@@ -23,10 +23,10 @@ default:
                 - Context\DocumentsBundleDownloadContext:
                     container: '@service_container'
             paths:
-                - '%paths.base%/features'
+                - '%paths.base%/features/documents'
 #        users:
 #            contexts:
-#                - UserBundleContext\UserBundleFeatureContext:
+#                - Context\UserBundleFeatureContext:
 #                    session: '@session'
 #            paths:
-#                - '%paths.base%/vendor/carcel/user-bundle/features'
+#                - '%paths.base%/features/user'

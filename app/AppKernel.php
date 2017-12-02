@@ -16,6 +16,7 @@ class AppKernel extends Kernel
     public function registerBundles()
     {
         $bundles = [
+            new Khatovar\Bundle\UserBundle\KhatovarUserBundle(),
             new Khatovar\Bundle\DocumentsBundle\KhatovarDocumentsBundle(),
             new Khatovar\Bundle\WebBundle\KhatovarWebBundle(),
         ];

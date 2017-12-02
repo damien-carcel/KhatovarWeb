@@ -1,0 +1,39 @@
+{% extends "KhatovarUserBundle::layout.html.twig" %}
+
+{% block fos_user_content %}
+    {% if error %}
+        <div class="alert">{{ error.messageKey|trans(error.messageData) }}</div>
+    {% endif %}
+
+    <div class="login-wall panel panel-default">
+        <form action="{{ path("fos_user_security_check") }}" method="post">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+
+            <div class="form-group">
+                <label for="username">{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}</label>
+                <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label for="password">{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}</label>
+                <input type="password" id="password" name="_password" required="required" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <div class="checkbox checkbox-inline">
+                    <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+                    <label for="remember_me">{{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}</label>
+                </div>
+
+                <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}" class="btn btn-default pull-right" />
+            </div>
+
+            <br />
+
+            <div class="text-center">
+                <a href="{{ path('fos_user_registration_register') }}" class="center-block text-center">{{ 'carcel_user.security.new_user'|trans }}</a>
+                <a href="{{ path('fos_user_resetting_request') }}" class="center-block text-center">{{ 'carcel_user.security.forgotten_password'|trans }}</a>
+            </div>
+        </form>
+    </div>
+{% endblock fos_user_content %}

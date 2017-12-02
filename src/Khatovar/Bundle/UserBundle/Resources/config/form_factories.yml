@@ -1,0 +1,8 @@
+services:
+    carcel_user.factory.user_form:
+        class: Khatovar\Bundle\UserBundle\Form\Factory\UserFormFactory
+        arguments:
+            - '@form.factory'
+            - '@router'
+            - '@translator'
+            - '@carcel_user.manager.roles'

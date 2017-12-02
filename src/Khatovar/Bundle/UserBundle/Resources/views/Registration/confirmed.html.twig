@@ -1,0 +1,10 @@
+{% extends "KhatovarUserBundle::layout.html.twig" %}
+
+{% block fos_user_content %}
+    <div class="well text-center">
+        <p>{{ 'registration.confirmed'|trans({'%username%': user.username}, 'FOSUserBundle') }}</p>
+        {% if app.session is not empty and targetUrl is not empty %}
+            <p><a href="{{ targetUrl }}">{{ 'registration.back'|trans({}, 'FOSUserBundle') }}</a></p>
+        {% endif %}
+    </div>
+{% endblock fos_user_content %}

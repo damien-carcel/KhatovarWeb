@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <title>{% block title %}User Bundle{% endblock %}</title>
+
+    <link href="{{ asset('favicon.ico') }}" type="image/x-icon" rel="shortcut icon" />
+
+    <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame -->
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    {% block stylesheets %}
+        <link href="{{ asset('assets/vendor/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet" />
+        <link href="{{ asset('assets/vendor/bootstrap/dist/css/bootstrap-theme.min.css') }}" rel="stylesheet" />
+    {% endblock %}
+
+    {% block javascript %}
+        <script src="{{ asset('assets/vendor/jquery/dist/jquery.min.js') }}"></script>
+        <script src="{{ asset('assets/vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    {% endblock %}
+</head>
+<body>
+<div class="{% block container %}{% endblock %}">
+    {% block header %}
+        <header class="page-header">
+            <h1>UserBundle</h1>
+        </header>
+    {% endblock %}
+
+    <section>
+        <div class="row">
+            {% block insection %}{% endblock %}
+        </div>
+    </section>
+
+    {% block footer %}{% endblock %}
+</div>
+</body>
+</html>

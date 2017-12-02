@@ -1,0 +1,25 @@
+.login-wall {
+    max-width: 320px;
+    margin: 0 auto;
+    padding: 20px;
+    -moz-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.30);
+    -webkit-box-shadow: 5px 5px 5px rgba(0,0,0,0.3);
+    box-shadow: 5px 5px 5px rgba(0,0,0,0.3);
+    background-color: white;
+}
+
+.btn {
+    margin: 4px;
+}
+
+section {
+    margin-bottom: 20px;
+}
+
+.user-list .button-inline {
+    display: inline-block;
+}
+
+.user-list .btn-change-status {
+    width: 82px;
+}

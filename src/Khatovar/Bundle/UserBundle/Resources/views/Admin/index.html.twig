@@ -1,0 +1,68 @@
+{% extends "KhatovarUserBundle::layout.html.twig" %}
+
+{% block fos_user_content %}
+    <a href="
+    {% if previous is defined %}
+        {{ previous }}
+    {% else %}
+        {{ path('root') }}
+    {% endif %}
+    "
+       class="btn btn-default pull-right">
+        {{ 'carcel_user.button.back'|trans }}
+    </a>
+
+    <h2>{{ 'carcel_user.admin.index.title'|trans }}</h2>
+
+    <article class="col-md-12 table-responsive">
+        <table title="{{ 'carcel_user.admin.index.list'|trans }}" class="table user-list">
+            <thead>
+            <tr>
+                <th class="col-lg-1">{{ 'carcel_user.admin.index.name'|trans }}</th>
+                <th class="col-lg-3">{{ 'carcel_user.admin.index.role'|trans }}</th>
+                <th class="col-lg-8">{{ 'carcel_user.admin.index.action'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                {% set delete_form = delete_forms[user.username] %}
+                {% if user.enabled %}
+                    {% set activation_message = 'carcel_user.admin.index.deactivate' %}
+                {% else %}
+                    {% set activation_message = 'carcel_user.admin.index.activate' %}
+                {% endif %}
+
+                <tr>
+                    <td class="col-lg-1">
+                        {{ user.username }}
+                    </td>
+                    <td class="col-lg-3">
+                        {{ user.roles.0|trans }}
+                    </td>
+                    <td class="col-lg-8">
+                        <a class="btn btn-sm btn-default btn-view-profile"
+                           href="{{ path('carcel_user_admin_show', { 'username': user.username }) }}">
+                            {{ 'carcel_user.admin.index.view'|trans }}
+                        </a>
+                        <a class="btn btn-sm btn-default btn-edit-profile"
+                           href="{{ path('carcel_user_admin_edit', { 'username': user.username }) }}">
+                            {{ 'carcel_user.admin.index.edit'|trans }}
+                        </a>
+                        {% if not user.hasRole('ROLE_ADMIN') or is_granted('ROLE_SUPER_ADMIN') %}
+                            <a class="btn btn-sm btn-default btn-set-role"
+                               href="{{ path('carcel_user_admin_set_role', { 'username': user.username }) }}">
+                                {{ 'carcel_user.admin.index.change_role'|trans }}
+                            </a>
+                            <a class="btn btn-sm btn-default btn-change-status"
+                               href="{{ path('carcel_user_admin_change_status', { 'username': user.username }) }}">
+                                {{ activation_message|trans }}
+                            </a>
+                        {% endif %}
+                        {{ form(delete_form, { 'attr': {'class': 'button-inline'}}) }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </article>
+{% endblock fos_user_content %}

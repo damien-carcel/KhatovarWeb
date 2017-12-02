@@ -1,0 +1,21 @@
+{% extends "KhatovarUserBundle::layout.html.twig" %}
+
+{% block fos_user_content %}
+    <a href="{{ path('carcel_user_admin_index') }}"
+       class="btn btn-default pull-right">
+        {{ 'carcel_user.button.back'|trans }}
+    </a>
+
+    <h2>{{ 'carcel_user.admin.show.title'|trans({ '%name%': user.username }) }}</h2>
+
+    <div class="fos_user_user_show well">
+        <p>
+            {{ 'profile.show.username'|trans({}, 'FOSUserBundle') }}: {{ user.username }}
+        </p>
+
+        <p>
+            {{ 'profile.show.email'|trans({}, 'FOSUserBundle') }}: {{ user.email }}
+        </p>
+    </div>
+
+{% endblock fos_user_content %}

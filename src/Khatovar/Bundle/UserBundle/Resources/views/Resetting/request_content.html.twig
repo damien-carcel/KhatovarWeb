@@ -1,0 +1,13 @@
+<div class="login-wall panel panel-default">
+    <form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="form-group fos_user_resetting_request">
+        <div class="form-group">
+            <label for="username">{{ 'resetting.request.username'|trans({}, 'FOSUserBundle') }}</label>
+            <input type="text" id="username" name="username" required="required" class="form-control" />
+        </div>
+
+        <div class="text-center">
+            <a href="{{ path('fos_user_security_login') }}">{{ 'carcel_user.button.back'|trans }}</a>
+            <input type="submit" value="{{ 'resetting.request.submit'|trans({}, 'FOSUserBundle')}}" class="btn btn-default" />
+        </div>
+    </form>
+</div>
