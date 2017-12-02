@@ -7,19 +7,19 @@ Feature: Delete a user account
     Given I am on the homepage
     And I am anonymous
     And I go to "login"
-    And I fill in "Username" with "aurore"
-    And I fill in "Password" with "aurore"
-    And I press "Log in"
+    And I fill in "Nom d'utilisateur" with "aurore"
+    And I fill in "Mot de passe" with "aurore"
+    And I press "Connexion"
 
   Scenario: I can delete a user
     Given I am on "admin"
-    When I press "Delete" for "damien" profile
-    Then I should see "The user has been deleted"
-    And I should see the users "freya and lilith"
+    When I press "Supprimer" for "damien" profile
+    Then I should see "L'utilisateur a bien été effacé"
+    And I should see the users "freya, hegor, lilith and chips"
 
   Scenario: I can delete a user
     Given I am on "admin"
     When I stop following redirections
-    And I press "Delete" for "damien" profile
-    Then I should get a confirmation email with subject "Account deletion"
+    And I press "Supprimer" for "damien" profile
+    Then I should get a confirmation email with subject "Suppression de compte"
     And I start following redirections

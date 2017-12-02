@@ -7,21 +7,21 @@ Feature: Manage user accounts
     Given I am on the homepage
     And I am anonymous
     And I go to "login"
-    And I fill in "Username" with "aurore"
-    And I fill in "Password" with "aurore"
-    And I press "Log in"
+    And I fill in "Nom d'utilisateur" with "aurore"
+    And I fill in "Mot de passe" with "aurore"
+    And I press "Connexion"
 
   Scenario: I can see all users on the admin page
     Given I am on "profile/"
-    When I follow "Administration page"
-    Then I should see "Administration of the users"
-    And I should see the users "damien, freya and lilith"
+    When I follow "Page d'administration"
+    Then I should see "Administration des utilisateurs"
+    And I should see the users "damien, freya, hegor, lilith and chips"
 
   Scenario: A regular user should not be able to access the admin page
     Given I am on "admin"
-    And I follow "Log out"
-    And I fill in "Username" with "damien"
-    And I fill in "Password" with "damien"
-    When I press "Log in"
+    And I follow "Déconnexion"
+    And I fill in "Nom d'utilisateur" with "damien"
+    And I fill in "Mot de passe" with "damien"
+    When I press "Connexion"
     Then I should be on "admin/"
     And I should see "403 Forbidden"
