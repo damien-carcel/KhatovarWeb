@@ -50,19 +50,19 @@ class UserType extends AbstractType
         $builder->add(
             'username',
             TextType::class,
-            ['label' => $this->translator->trans('carcel_user.form.name.label')]
+            ['label' => $this->translator->trans('khatovar_user.form.name.label')]
         );
 
         $builder->add(
             'email',
             EmailType::class,
-            ['label' => $this->translator->trans('carcel_user.form.email.label')]
+            ['label' => $this->translator->trans('khatovar_user.form.email.label')]
         );
 
         $builder->add(
             'submit',
             SubmitType::class,
-            ['label' => $this->translator->trans('carcel_user.button.update')]
+            ['label' => $this->translator->trans('khatovar_user.button.update')]
         );
     }
 

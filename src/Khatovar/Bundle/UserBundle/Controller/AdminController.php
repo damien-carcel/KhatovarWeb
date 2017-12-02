@@ -116,7 +116,7 @@ class AdminController extends Controller
 
             $this->addFlash(
                 'notice',
-                $this->get('translator')->trans('carcel_user.notice.update')
+                $this->get('translator')->trans('khatovar_user.notice.update')
             );
 
             return $this->redirect($this->generateUrl('carcel_user_admin_index'));
@@ -165,7 +165,7 @@ class AdminController extends Controller
 
             $this->addFlash(
                 'notice',
-                $this->get('translator')->trans('carcel_user.notice.set_role')
+                $this->get('translator')->trans('khatovar_user.notice.set_role')
             );
 
             return $this->redirect($this->generateUrl('carcel_user_admin_index'));
@@ -199,10 +199,10 @@ class AdminController extends Controller
 
         if ($user->isEnabled()) {
             $this->get('carcel_user.handler.user_status')->disable($user);
-            $notice = 'carcel_user.notice.deactivated';
+            $notice = 'khatovar_user.notice.deactivated';
         } else {
             $this->get('carcel_user.handler.user_status')->enable($user);
-            $notice = 'carcel_user.notice.activated';
+            $notice = 'khatovar_user.notice.activated';
         }
 
         $this->addFlash(
@@ -238,7 +238,7 @@ class AdminController extends Controller
 
             $this->addFlash(
                 'notice',
-                $this->get('translator')->trans('carcel_user.notice.delete.label')
+                $this->get('translator')->trans('khatovar_user.notice.delete.label')
             );
         }
 
@@ -261,7 +261,7 @@ class AdminController extends Controller
     {
         $user = $this
             ->get('doctrine.orm.entity_manager')
-            ->getRepository('KhatovarUserBundle:User')
+            ->getRepository('CarcelUserBundle:User')
             ->findOneBy(['username' => $username]);
 
         if (!$this->getUser()->isSuperAdmin() && $user->isSuperAdmin()) {
@@ -283,6 +283,6 @@ class AdminController extends Controller
      */
     protected function getUserFormFactory()
     {
-        return $this->get('carcel_user.factory.user_form');
+        return $this->get('khatovar_user.factory.user_form');
     }
 }

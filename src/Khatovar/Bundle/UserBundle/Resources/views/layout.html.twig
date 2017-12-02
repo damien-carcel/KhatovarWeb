@@ -1,8 +1,22 @@
-{% extends "KhatovarUserBundle::base.html.twig" %}
+{% extends "::layout.html.twig" %}
 
 {% block stylesheets %}
     {{ parent() }}
-    <link href="{{ asset('bundles/carceluser/css/user.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/vendor/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/vendor/bootstrap/dist/css/bootstrap-theme.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('bundles/khatovaruser/css/user.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script src="{{ asset('assets/vendor/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+{% endblock %}
+
+{% block header %}
+    <header class="page-header">
+        <h1>UserBundle</h1>
+    </header>
 {% endblock %}
 
 {% block container %}container-fluid{% endblock %}
@@ -33,7 +47,7 @@
                 {{ 'layout.logged_in_as'|trans({'%username%': ''}, 'FOSUserBundle') }}<a href="{{ path('fos_user_profile_show') }}">{{ app.user.username }}</a>
                 |
                 {% if is_granted('ROLE_ADMIN') %}
-                    <a href="{{ path('carcel_user_admin_index') }}">{{ 'carcel_user.admin.footer_link'|trans() }}</a>
+                    <a href="{{ path('carcel_user_admin_index') }}">{{ 'khatovar_user.admin.footer_link'|trans() }}</a>
                     |
                 {% endif %}
                 <a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a>

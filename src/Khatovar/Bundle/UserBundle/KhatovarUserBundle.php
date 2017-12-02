@@ -21,8 +21,6 @@
 
 namespace Khatovar\Bundle\UserBundle;
 
-use Khatovar\Bundle\DocumentsBundle\DependencyInjection\Compiler\DoctrineEntityListenerPass;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
@@ -33,10 +31,8 @@ class KhatovarUserBundle extends Bundle
     /**
      * {@inheritdoc}
      */
-    public function build(ContainerBuilder $container)
+    public function getParent()
     {
-        parent::build($container);
-
-        $container->addCompilerPass(new DoctrineEntityListenerPass());
+        return 'CarcelUserBundle';
     }
 }
