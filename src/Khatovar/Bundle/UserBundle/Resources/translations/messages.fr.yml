@@ -1,0 +1,45 @@
+carcel_user:
+    admin:
+        edit.title: Édition du profil de l'utilisateur %name%
+        index:
+            action: Action
+            activate: Activer
+            change_role: Changer le rôle
+            deactivate: Désactiver
+            edit: Éditer
+            list: Liste des utilisateurs
+            name: Nom
+            role: Rôle
+            title: Administration des utilisateurs
+            view: Visualiser
+        footer_link: Page d'administration
+        set_role.title: Changement du rôle de l'utilisateur %name%
+        show.title: Profil de l'utilisateur %name%
+    button:
+        back: Retour
+        change: Modifier
+        delete: Supprimer
+        update: Mettre à jour
+    change_password:
+        title: Changement du mot de passe de %name%
+    form:
+        name.label: Nom d'utilisateur
+        email.label: Adresse e-mail
+        role.label: Roles
+    notice:
+        activated: L'utilisateur a été activé
+        deactivated: L'utilisateur a été désactivé
+        delete:
+            confirmation: Êtes-vous sûr ?
+            label: L'utilisateur a bien été effacé
+        set_role: Le rôle de l'utilisateur a été modifié
+        update: Le profil utilisateur a été mis à jour
+    profile:
+        show: Profil de l'utilisateur %username%
+        edit: Édition du profil de l'utilisateur %username%
+        edit.link: Editer le profil
+        password.link: Changer le mot de passe
+    security:
+        forgotten_password: Mot de passe oublié ?
+        new_user: Nouvel utilisateur
+        no_role: Désolé, aucun rôle n'a encore été attribué à votre compte. Attendez l'email de confirmation.

@@ -1,0 +1,30 @@
+carcel_user_admin_index:
+    path: /
+    defaults: { _controller: KhatovarUserBundle:Admin:index }
+
+carcel_user_admin_show:
+    path: /{username}/show
+    defaults: { _controller: KhatovarUserBundle:Admin:showProfile }
+
+carcel_user_admin_edit:
+    path: /{username}/edit
+    defaults: { _controller: KhatovarUserBundle:Admin:editProfile }
+
+carcel_user_admin_update:
+    path: /{username}/update
+    defaults: { _controller: KhatovarUserBundle:Admin:updateProfile }
+    methods:  [POST, PUT]
+
+carcel_user_admin_set_role:
+    path: /{username}/role
+    defaults: { _controller: KhatovarUserBundle:Admin:setRole }
+    methods:  [GET, POST, PUT]
+
+carcel_user_admin_change_status:
+    path: /{username}/status
+    defaults: { _controller: KhatovarUserBundle:Admin:changeStatus }
+
+carcel_user_admin_remove:
+    path: /{username}/delete
+    defaults: { _controller: KhatovarUserBundle:Admin:removeUser }
+    methods:  [POST, DELETE]

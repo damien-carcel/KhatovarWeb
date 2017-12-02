@@ -48,7 +48,7 @@ class FolderController extends Controller
         }
 
         if (!$this->isGranted('ROLE_VIEWER')) {
-            return $this->render('CarcelUserBundle:Security:no_role.html.twig');
+            return $this->render('KhatovarUserBundle:Security:no_role.html.twig');
         }
 
         $rootChildren = $this->get('khatovar_documents.repositories.folder')->findFoldersWithoutParentsOrderedByName();
@@ -92,7 +92,7 @@ class FolderController extends Controller
         }
 
         if (!$this->isGranted('ROLE_VIEWER')) {
-            return $this->render('CarcelUserBundle:Security:no_role.html.twig');
+            return $this->render('KhatovarUserBundle:Security:no_role.html.twig');
         }
 
         $currentFolder = $this->findFolderByIdWithOrderedFilesOr404($id);

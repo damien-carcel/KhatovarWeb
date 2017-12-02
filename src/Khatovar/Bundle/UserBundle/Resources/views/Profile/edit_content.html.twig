@@ -1,0 +1,26 @@
+<a href="{{ path('fos_user_profile_show') }}"
+   class="btn btn-default pull-right">
+    {{ 'carcel_user.button.back'|trans }}
+</a>
+
+<h1>{{ 'carcel_user.profile.edit'|trans({'%username%': app.user.username}) }}</h1>
+
+{{ form_start(form, { 'action': path('fos_user_profile_edit'), 'attr': { 'class': 'fos_user_profile_edit well col-lg-3 col-md-3 col-sm-4' } }) }}
+    {{ form_errors(form) }}
+
+    <div class="form-group">
+        {{ form_row(form.username, { 'attr': {'class': 'form-control'} }) }}
+    </div>
+    <div class="form-group">
+        {{ form_row(form.email, { 'attr': {'class': 'form-control'} }) }}
+    </div>
+    <div class="form-group">
+        {{ form_row(form.current_password, { 'attr': {'class': 'form-control'} }) }}
+    </div>
+
+    {{ form_rest(form) }}
+
+    <div class="form-group">
+        <input type="submit" value="{{ 'profile.edit.submit'|trans({}, 'FOSUserBundle') }}" class="btn btn-default" />
+    </div>
+{{ form_end(form) }}
