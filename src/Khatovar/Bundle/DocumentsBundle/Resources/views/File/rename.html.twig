@@ -2,7 +2,7 @@
 
 {% block insection %}
 
-    {% if 0 != previousId %}
+    {% if previousId %}
         {% set href_link = path('khatovar_documents_folder', {'id': previousId}) %}
     {% else %}
         {% set href_link = path('khatovar_documents_homepage') %}

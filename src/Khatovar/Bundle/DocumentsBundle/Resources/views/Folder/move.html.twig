@@ -1,8 +1,13 @@
 {% extends "KhatovarDocumentsBundle::layout.html.twig" %}
 
 {% block insection %}
+    {% if previousId %}
+        {% set href_link = path('khatovar_documents_folder', {'id': previousId}) %}
+    {% else %}
+        {% set href_link = path('khatovar_documents_homepage') %}
+    {% endif %}
 
-    <a href="{{ path('khatovar_documents_folder', {'id': previousId}) }}"
+    <a href="{{ href_link }}"
        class="btn btn-default pull-right">
         {{ 'khatovar_documents.button.back'|trans }}
     </a>

@@ -150,7 +150,7 @@ class FileController extends Controller
             'KhatovarDocumentsBundle:File:move.html.twig',
             [
                 'form' => $form->createView(),
-                'previousId' => $file->getFolder()->getId(),
+                'previousId' => $file->getFolder() ? $file->getFolder()->getId() : null,
             ]
         );
     }
@@ -199,7 +199,7 @@ class FileController extends Controller
             'KhatovarDocumentsBundle:File:rename.html.twig',
             [
                 'form' => $form->createView(),
-                'previousId' => $file->getFolder()->getId(),
+                'previousId' => $file->getFolder() ? $file->getFolder()->getId() : null,
             ]
         );
     }
@@ -209,6 +209,8 @@ class FileController extends Controller
      *
      * @param Request $request
      * @param string  $id
+     *
+     * @throws \Doctrine\ORM\OptimisticLockException
      *
      * @return Response
      *

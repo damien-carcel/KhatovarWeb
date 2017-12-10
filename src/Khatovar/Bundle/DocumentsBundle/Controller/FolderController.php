@@ -212,7 +212,7 @@ class FolderController extends Controller
             'KhatovarDocumentsBundle:Folder:move.html.twig',
             [
                 'form' => $form->createView(),
-                'previousId' => $folder->getParent()->getId(),
+                'previousId' => $folder->getParent() ? $folder->getParent()->getId() : null,
             ]
         );
     }
@@ -261,7 +261,7 @@ class FolderController extends Controller
             'KhatovarDocumentsBundle:Folder:rename.html.twig',
             [
                 'form' => $form->createView(),
-                'previousId' => $folder->getParent()->getId(),
+                'previousId' => $folder->getParent() ? $folder->getParent()->getId() : null,
             ]
         );
     }
@@ -271,6 +271,8 @@ class FolderController extends Controller
      *
      * @param Request $request
      * @param string  $id
+     *
+     * @throws \Doctrine\ORM\OptimisticLockException
      *
      * @return Response
      *
