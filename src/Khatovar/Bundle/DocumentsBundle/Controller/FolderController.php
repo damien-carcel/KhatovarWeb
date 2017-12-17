@@ -325,7 +325,7 @@ class FolderController extends Controller
         $folder = $this->get('khatovar_documents.repositories.folder')->find($id);
 
         if (null === $folder) {
-            throw new NotFoundHttpException(sprintf('The folder with the ID %d does not exists', $id));
+            throw new NotFoundHttpException(sprintf('Le dossier avec l\'identifiant "%d" n\'existe pas', $id));
         }
 
         return $folder;
@@ -346,7 +346,7 @@ class FolderController extends Controller
         $folder = $this->get('khatovar_documents.repositories.folder')->findOneWithOrderedFiles($id);
 
         if (null === $folder) {
-            throw new NotFoundHttpException(sprintf('The folder with the ID %d does not exists', $id));
+            throw new NotFoundHttpException(sprintf('Le dossier avec l\'identifiant "%d" n\'existe pas', $id));
         }
 
         return $folder;

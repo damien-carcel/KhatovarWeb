@@ -42,6 +42,7 @@ class KhatovarDocumentsExtension extends Extension
         $loader->load('entity_listeners.yml');
         $loader->load('factories.yml');
         $loader->load('form_creators.yml');
+        $loader->load('form_data_transformer.yml');
         $loader->load('form_types.yml');
         $loader->load('repositories.yml');
         $loader->load('savers.yml');

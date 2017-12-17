@@ -18,6 +18,7 @@ services:
         arguments:
             - '@translator'
             - '@khatovar_documents.repositories.folder'
+            - '@khatovar_documents.form.data_transformer.folder_to_number'
         tags:
             - { name: form.type }
 
@@ -26,5 +27,6 @@ services:
         arguments:
             - '@translator'
             - '@khatovar_documents.repositories.folder'
+            - '@khatovar_documents.form.data_transformer.folder_to_number'
         tags:
             - { name: form.type }

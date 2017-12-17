@@ -1,0 +1,5 @@
+services:
+    khatovar_documents.form.data_transformer.folder_to_number:
+        class: Khatovar\Bundle\DocumentsBundle\Form\DataTransformer\FolderToNumberTransformer
+        arguments:
+            - '@khatovar_documents.repositories.folder'

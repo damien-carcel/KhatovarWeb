@@ -212,11 +212,11 @@ class Folder
     }
 
     /**
-     * @param Folder $parent
+     * @param null|Folder $parent
      *
      * @return Folder
      */
-    public function setParent(self $parent)
+    public function setParent(?self $parent)
     {
         $this->parent = $parent;
 
@@ -224,7 +224,7 @@ class Folder
     }
 
     /**
-     * @return Folder
+     * @return null|Folder
      */
     public function getParent()
     {

@@ -257,7 +257,7 @@ class FileController extends Controller
         $file = $this->get('khatovar_documents.repositories.file')->find($id);
 
         if (null === $file) {
-            throw new NotFoundHttpException(sprintf('The file with the ID %d does not exists', $id));
+            throw new NotFoundHttpException(sprintf('Le fichier avec l\'identifiant "%d" n\'existe pas', $id));
         }
 
         return $file;

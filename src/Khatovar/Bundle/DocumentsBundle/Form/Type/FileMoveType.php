@@ -26,6 +26,7 @@ namespace Khatovar\Bundle\DocumentsBundle\Form\Type;
 use Khatovar\Bundle\DocumentsBundle\Entity\File;
 use Khatovar\Bundle\DocumentsBundle\Entity\Folder;
 use Khatovar\Bundle\DocumentsBundle\Entity\FolderRepository;
+use Khatovar\Bundle\DocumentsBundle\Form\DataTransformer\FolderToNumberTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -41,6 +42,9 @@ class FileMoveType extends AbstractType
 {
     private const LEVEL_DISPLAY = '- ';
 
+    /** @var FolderToNumberTransformer */
+    private $folderToNumberTransformer;
+
     /** @var FolderRepository */
     private $repository;
 
@@ -48,13 +52,18 @@ class FileMoveType extends AbstractType
     private $translator;
 
     /**
-     * @param TranslatorInterface $translator
-     * @param FolderRepository    $repository
+     * @param TranslatorInterface       $translator
+     * @param FolderRepository          $repository
+     * @param FolderToNumberTransformer $folderToNumberTransformer
      */
-    public function __construct(TranslatorInterface $translator, FolderRepository $repository)
-    {
+    public function __construct(
+        TranslatorInterface $translator,
+        FolderRepository $repository,
+        FolderToNumberTransformer $folderToNumberTransformer
+    ) {
         $this->translator = $translator;
         $this->repository = $repository;
+        $this->folderToNumberTransformer = $folderToNumberTransformer;
     }
 
     /**
@@ -66,6 +75,8 @@ class FileMoveType extends AbstractType
             'label' => $this->translator->trans('khatovar_documents.form.move.label'),
             'choices' => $this->getMoveList(),
         ]);
+
+        $builder->get('folder')->addModelTransformer($this->folderToNumberTransformer);
     }
 
     /**
