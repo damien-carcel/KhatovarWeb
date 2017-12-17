@@ -98,6 +98,9 @@ class DocumentsBundleFeatureContext extends MinkContext
         $row = $this->findRowByText($rowText);
 
         $button = $row->findButton($buttonText);
+        if (null === $button) {
+            $button = $row->findLink($buttonText);
+        }
         Assert::assertNotNull($button, sprintf('Cannot find a button "%s" in the row "%s"', $buttonText, $rowText));
 
         return $button;

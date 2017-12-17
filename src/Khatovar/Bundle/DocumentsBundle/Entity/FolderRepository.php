@@ -57,7 +57,7 @@ class FolderRepository extends EntityRepository
     {
         $folder = $this->find($id);
         if (null === $folder) {
-            return;
+            [];
         }
 
         $parentFolders = [];
@@ -76,6 +76,8 @@ class FolderRepository extends EntityRepository
      * Returns a folder with all the files it contains, ordered by name.
      *
      * @param string $id
+     *
+     * @throws \Doctrine\ORM\NonUniqueResultException
      *
      * @return null|Folder
      */

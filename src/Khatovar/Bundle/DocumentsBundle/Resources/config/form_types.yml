@@ -9,20 +9,24 @@ services:
     khatovar_documents.form.type.file:
         class: Khatovar\Bundle\DocumentsBundle\Form\Type\FileType
         arguments:
-            - '@khatovar_documents.form.subscriber.file'
+            - '@translator'
         tags:
             - { name: form.type }
 
     khatovar_documents.form.type.move_folder:
         class: Khatovar\Bundle\DocumentsBundle\Form\Type\FolderMoveType
         arguments:
-            - '@khatovar_documents.form.subscriber.add_parent'
+            - '@translator'
+            - '@khatovar_documents.repositories.folder'
+            - '@khatovar_documents.form.data_transformer.folder_to_number'
         tags:
             - { name: form.type }
 
     khatovar_documents.form.type.move_file:
         class: Khatovar\Bundle\DocumentsBundle\Form\Type\FileMoveType
         arguments:
-            - '@khatovar_documents.form.subscriber.add_parent'
+            - '@translator'
+            - '@khatovar_documents.repositories.folder'
+            - '@khatovar_documents.form.data_transformer.folder_to_number'
         tags:
             - { name: form.type }

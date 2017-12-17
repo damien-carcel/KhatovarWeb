@@ -1,8 +1,13 @@
 {% extends "KhatovarDocumentsBundle::layout.html.twig" %}
 
 {% block insection %}
+    {% if previousId %}
+        {% set href_link = path('khatovar_documents_folder', {'id': previousId}) %}
+    {% else %}
+        {% set href_link = path('khatovar_documents_homepage') %}
+    {% endif %}
 
-    <a href="{{ path('khatovar_documents_folder', {'id': previousId}) }}"
+    <a href="{{ href_link }}"
        class="btn btn-default pull-right">
         {{ 'khatovar_documents.button.back'|trans }}
     </a>
@@ -10,17 +15,15 @@
     <h2>{{ 'khatovar_documents.move.folder.title'|trans }}</h2>
 
     <div class="col-lg-3 col-md-4 col-sm-5">
-        <div class="form-group">
-            {{ form_start(form) }}
-            {{ form_errors(form) }}
+        {{ form_start(form) }}
+        {{ form_errors(form) }}
 
+        <div class="form-group">
             {{ form_row(form.parent, { 'attr': {'class': 'form-control'} }) }}
         </div>
 
-        <div class="form-group">
-            {{ form_row(form.submit, { 'attr': {'class': 'btn btn-default'} }) }}
-            {{ form_end(form) }}
-        </div>
+        {{ form_row(form.submit, { 'attr': {'class': 'btn btn-default'} }) }}
+        {{ form_end(form) }}
     </div>
 
 {% endblock %}

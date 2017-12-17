@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of KhatovarWeb.
  *
@@ -22,10 +24,12 @@
 namespace Khatovar\Bundle\DocumentsBundle\Form\Type;
 
 use Khatovar\Bundle\DocumentsBundle\Entity\File;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType as SymfonyFileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Form type to edit files.
@@ -34,29 +38,45 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class FileType extends AbstractType
 {
-    /** @var EventSubscriberInterface */
-    protected $fileSubscriber;
+    /** @var TranslatorInterface */
+    private $translator;
 
     /**
-     * @param EventSubscriberInterface $fileSubscriber
+     * @param TranslatorInterface $translator
      */
-    public function __construct(EventSubscriberInterface $fileSubscriber)
+    public function __construct(TranslatorInterface $translator)
     {
-        $this->fileSubscriber = $fileSubscriber;
+        $this->translator = $translator;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->addEventSubscriber($this->fileSubscriber);
+        $file = $builder->getData();
+
+        if ($file instanceof File) {
+            if (null === $file->getId()) {
+                $builder->add(
+                    'filePath',
+                    SymfonyFileType::class,
+                    ['label' => $this->translator->trans('khatovar_documents.form.add.file.label')]
+                );
+            } else {
+                $builder->add(
+                    'name',
+                    TextType::class,
+                    ['label' => $this->translator->trans('khatovar_documents.form.rename.label')]
+                );
+            }
+        }
     }
 
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(['data_class' => File::class]);
     }

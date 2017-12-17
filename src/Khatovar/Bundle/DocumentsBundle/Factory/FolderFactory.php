@@ -21,9 +21,8 @@
 
 namespace Khatovar\Bundle\DocumentsBundle\Factory;
 
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Common\Persistence\ObjectRepository;
 use Khatovar\Bundle\DocumentsBundle\Entity\Folder;
-use Khatovar\Bundle\DocumentsBundle\Entity\FolderRepository;
 
 /**
  * Creates a new instance of Folder, with parent folder set.
@@ -32,15 +31,15 @@ use Khatovar\Bundle\DocumentsBundle\Entity\FolderRepository;
  */
 class FolderFactory
 {
-    /** @var FolderRepository */
+    /** @var ObjectRepository */
     protected $repository;
 
     /**
-     * @param EntityManagerInterface $entityManager
+     * @param ObjectRepository $repository
      */
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(ObjectRepository $repository)
     {
-        $this->repository = $entityManager->getRepository('KhatovarDocumentsBundle:Folder');
+        $this->repository = $repository;
     }
 
     /**

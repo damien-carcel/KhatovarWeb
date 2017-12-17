@@ -21,7 +21,7 @@
 
 namespace Khatovar\Bundle\DocumentsBundle\Factory;
 
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Common\Persistence\ObjectRepository;
 use Khatovar\Bundle\DocumentsBundle\Entity\File;
 
 /**
@@ -32,8 +32,8 @@ use Khatovar\Bundle\DocumentsBundle\Entity\File;
  */
 class FileFactory
 {
-    /** @var EntityManagerInterface */
-    protected $entityManager;
+    /** @var ObjectRepository */
+    protected $repository;
 
     /**
      * The path to upload the file.
@@ -45,12 +45,12 @@ class FileFactory
     /**.
      * FileFactory constructor.
      *
-     * @param EntityManagerInterface $entityManager
-     * @param string                 $uploadDirectory
+     * @param ObjectRepository $repository
+     * @param string           $uploadDirectory
      */
-    public function __construct(EntityManagerInterface $entityManager, $uploadDirectory)
+    public function __construct(ObjectRepository $repository, $uploadDirectory)
     {
-        $this->repository = $entityManager->getRepository('KhatovarDocumentsBundle:Folder');
+        $this->repository = $repository;
 
         if ('/' === substr($uploadDirectory, -1)) {
             $uploadDirectory = substr($uploadDirectory, 0, -1);

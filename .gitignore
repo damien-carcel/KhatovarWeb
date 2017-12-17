@@ -1,8 +1,8 @@
 /app/config/parameters.yml
 /node_modules
 /var
-!var/SymfonyRequirements.php
-/vendor/
+!/var/SymfonyRequirements.php
+/vendor
 /www/assets
 /www/bundles
 /www/uploaded

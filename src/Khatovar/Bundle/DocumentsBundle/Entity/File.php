@@ -284,11 +284,11 @@ class File
     }
 
     /**
-     * @param Folder $folder
+     * @param null|Folder $folder
      *
      * @return File
      */
-    public function setFolder(Folder $folder)
+    public function setFolder(?Folder $folder)
     {
         $this->folder = $folder;
 
@@ -298,7 +298,7 @@ class File
     /**
      * Get folder.
      *
-     * @return Folder
+     * @return null|Folder
      */
     public function getFolder()
     {

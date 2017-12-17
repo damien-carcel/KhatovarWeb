@@ -36,9 +36,6 @@ class Folder
     /** @var string */
     protected $name;
 
-    /** @var string */
-    protected $tempName;
-
     /** @var Folder */
     protected $parent;
 
@@ -64,6 +61,14 @@ class Folder
         $this->updated = new \DateTime();
         $this->files = new ArrayCollection();
         $this->children = new ArrayCollection();
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getName();
     }
 
     /**
@@ -207,11 +212,11 @@ class Folder
     }
 
     /**
-     * @param Folder $parent
+     * @param null|Folder $parent
      *
      * @return Folder
      */
-    public function setParent(self $parent)
+    public function setParent(?self $parent)
     {
         $this->parent = $parent;
 
@@ -219,30 +224,10 @@ class Folder
     }
 
     /**
-     * @return Folder
+     * @return null|Folder
      */
     public function getParent()
     {
         return $this->parent;
-    }
-
-    /**
-     * @param string $tempName
-     *
-     * @return Folder
-     */
-    public function setTempName($tempName)
-    {
-        $this->tempName = $tempName;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTempName()
-    {
-        return $this->tempName;
     }
 }

@@ -17,7 +17,7 @@
 | Changelog updated | Todo
 | Migration script  | -
 | Documentation     | -
-| Fixed tickets     | #... <!-- #-prefixed issue number(s), if any -->
+| Related tickets   | #... <!-- #-prefixed issue number(s), if any -->
 
 `Todo`: Pending / Work in progress
 `OK`: Done / Validated

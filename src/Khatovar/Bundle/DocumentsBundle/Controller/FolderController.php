@@ -83,6 +83,8 @@ class FolderController extends Controller
      *
      * @param string $id
      *
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     *
      * @return Response
      */
     public function folderAction($id)
@@ -212,7 +214,7 @@ class FolderController extends Controller
             'KhatovarDocumentsBundle:Folder:move.html.twig',
             [
                 'form' => $form->createView(),
-                'previousId' => $folder->getParent()->getId(),
+                'previousId' => $folder->getParent() ? $folder->getParent()->getId() : null,
             ]
         );
     }
@@ -261,7 +263,7 @@ class FolderController extends Controller
             'KhatovarDocumentsBundle:Folder:rename.html.twig',
             [
                 'form' => $form->createView(),
-                'previousId' => $folder->getParent()->getId(),
+                'previousId' => $folder->getParent() ? $folder->getParent()->getId() : null,
             ]
         );
     }
@@ -272,7 +274,10 @@ class FolderController extends Controller
      * @param Request $request
      * @param string  $id
      *
+     * @throws \Doctrine\ORM\OptimisticLockException
+     *
      * @return Response
+     *
      *
      * @Security("has_role('ROLE_ADMIN')")
      */
@@ -320,7 +325,7 @@ class FolderController extends Controller
         $folder = $this->get('khatovar_documents.repositories.folder')->find($id);
 
         if (null === $folder) {
-            throw new NotFoundHttpException(sprintf('The folder with the ID %d does not exists', $id));
+            throw new NotFoundHttpException(sprintf('Le dossier avec l\'identifiant "%d" n\'existe pas', $id));
         }
 
         return $folder;
@@ -332,6 +337,7 @@ class FolderController extends Controller
      * @param string $id
      *
      * @throws NotFoundHttpException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      *
      * @return Folder
      */
@@ -340,7 +346,7 @@ class FolderController extends Controller
         $folder = $this->get('khatovar_documents.repositories.folder')->findOneWithOrderedFiles($id);
 
         if (null === $folder) {
-            throw new NotFoundHttpException(sprintf('The folder with the ID %d does not exists', $id));
+            throw new NotFoundHttpException(sprintf('Le dossier avec l\'identifiant "%d" n\'existe pas', $id));
         }
 
         return $folder;
@@ -363,17 +369,11 @@ class FolderController extends Controller
      *
      * @param string $id
      *
-     * @throws NotFoundHttpException
-     *
      * @return Folder[]
      */
     protected function getFolderParentsByFolderIdOr404($id)
     {
         $folders = $this->get('khatovar_documents.repositories.folder')->getParents($id);
-
-        if (null === $folders) {
-            throw new NotFoundHttpException(sprintf('The folder with the ID %d does not exists', $id));
-        }
 
         return $folders;
     }
