@@ -83,6 +83,8 @@ class FolderController extends Controller
      *
      * @param string $id
      *
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     *
      * @return Response
      */
     public function folderAction($id)
@@ -276,6 +278,7 @@ class FolderController extends Controller
      *
      * @return Response
      *
+     *
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function removeFolderAction(Request $request, $id)
@@ -334,6 +337,7 @@ class FolderController extends Controller
      * @param string $id
      *
      * @throws NotFoundHttpException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      *
      * @return Folder
      */
@@ -365,17 +369,11 @@ class FolderController extends Controller
      *
      * @param string $id
      *
-     * @throws NotFoundHttpException
-     *
      * @return Folder[]
      */
     protected function getFolderParentsByFolderIdOr404($id)
     {
         $folders = $this->get('khatovar_documents.repositories.folder')->getParents($id);
-
-        if (null === $folders) {
-            throw new NotFoundHttpException(sprintf('The folder with the ID %d does not exists', $id));
-        }
 
         return $folders;
     }

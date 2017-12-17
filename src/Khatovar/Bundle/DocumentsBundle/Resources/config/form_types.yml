@@ -16,13 +16,13 @@ services:
     khatovar_documents.form.type.move_folder:
         class: Khatovar\Bundle\DocumentsBundle\Form\Type\FolderMoveType
         arguments:
-            - '@khatovar_documents.form.subscriber.add_parent'
+            - '@khatovar_documents.form.subscriber.add_folder_to_parent'
         tags:
             - { name: form.type }
 
     khatovar_documents.form.type.move_file:
         class: Khatovar\Bundle\DocumentsBundle\Form\Type\FileMoveType
         arguments:
-            - '@khatovar_documents.form.subscriber.add_parent'
+            - '@khatovar_documents.form.subscriber.add_file_to_folder'
         tags:
             - { name: form.type }

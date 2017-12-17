@@ -35,14 +35,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class FolderMoveType extends AbstractType
 {
     /** @var EventSubscriberInterface */
-    protected $addParentSubscriber;
+    protected $addFolderToParentSubscriber;
 
     /**
      * @param EventSubscriberInterface $addParentSubscriber
      */
     public function __construct(EventSubscriberInterface $addParentSubscriber)
     {
-        $this->addParentSubscriber = $addParentSubscriber;
+        $this->addFolderToParentSubscriber = $addParentSubscriber;
     }
 
     /**
@@ -50,7 +50,7 @@ class FolderMoveType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->addEventSubscriber($this->addParentSubscriber);
+        $builder->addEventSubscriber($this->addFolderToParentSubscriber);
     }
 
     /**

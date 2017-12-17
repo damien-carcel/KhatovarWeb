@@ -35,14 +35,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class FileMoveType extends AbstractType
 {
     /** @var EventSubscriberInterface */
-    protected $addParentSubscriber;
+    protected $addFileToFolderSubscriber;
 
     /**
      * @param EventSubscriberInterface $addParentSubscriber
      */
     public function __construct(EventSubscriberInterface $addParentSubscriber)
     {
-        $this->addParentSubscriber = $addParentSubscriber;
+        $this->addFileToFolderSubscriber = $addParentSubscriber;
     }
 
     /**
@@ -50,7 +50,7 @@ class FileMoveType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->addEventSubscriber($this->addParentSubscriber);
+        $builder->addEventSubscriber($this->addFileToFolderSubscriber);
     }
 
     /**

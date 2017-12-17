@@ -17,7 +17,7 @@ khatovar_documents:
             file.label: Fichier
             folder.label: Nom
         move:
-            folder.label: Choisissez un dossier
+            label: Choisissez un dossier
         rename:
             label: Nom
     index:
