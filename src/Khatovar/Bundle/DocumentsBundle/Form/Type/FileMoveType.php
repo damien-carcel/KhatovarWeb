@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of KhatovarWeb.
  *
@@ -22,10 +24,13 @@
 namespace Khatovar\Bundle\DocumentsBundle\Form\Type;
 
 use Khatovar\Bundle\DocumentsBundle\Entity\File;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Khatovar\Bundle\DocumentsBundle\Entity\Folder;
+use Khatovar\Bundle\DocumentsBundle\Entity\FolderRepository;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Form type to move files.
@@ -34,30 +39,82 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class FileMoveType extends AbstractType
 {
-    /** @var EventSubscriberInterface */
-    protected $addFileToFolderSubscriber;
+    private const LEVEL_DISPLAY = '- ';
+
+    /** @var FolderRepository */
+    private $repository;
+
+    /** @var TranslatorInterface */
+    private $translator;
 
     /**
-     * @param EventSubscriberInterface $addParentSubscriber
+     * @param TranslatorInterface $translator
+     * @param FolderRepository    $repository
      */
-    public function __construct(EventSubscriberInterface $addParentSubscriber)
+    public function __construct(TranslatorInterface $translator, FolderRepository $repository)
     {
-        $this->addFileToFolderSubscriber = $addParentSubscriber;
+        $this->translator = $translator;
+        $this->repository = $repository;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->addEventSubscriber($this->addFileToFolderSubscriber);
+        $builder->add('folder', ChoiceType::class, [
+            'label' => $this->translator->trans('khatovar_documents.form.move.label'),
+            'choices' => $this->getMoveList(),
+        ]);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(['data_class' => File::class]);
+    }
+
+    /**
+     * Returns a hierarchic, formatted list of all folders.
+     *
+     * @return Folder[]
+     */
+    private function getMoveList(): array
+    {
+        $list = ['Racine' => 0];
+        $parentlessFolders = $this->repository->findFoldersWithoutParentsOrderedByName();
+
+        foreach ($parentlessFolders as $folder) {
+            $listLabel = static::LEVEL_DISPLAY.$folder->getName();
+
+            $list[$listLabel] = $folder->getId();
+            $list = $this->addFolderChildrenToList($folder, $list, 2);
+        }
+
+        return $list;
+    }
+
+    /**
+     * @param Folder $folder
+     * @param array  $list
+     * @param int    $level
+     *
+     * @return array
+     */
+    private function addFolderChildrenToList(Folder $folder, array $list, int $level): array
+    {
+        $folders = $this->repository->findChildrenOrderedByName($folder->getId());
+
+        foreach ($folders as $folder) {
+            $newLevel = $level + 1;
+            $listLabel = str_repeat(static::LEVEL_DISPLAY, $level).$folder->getName();
+            $list[$listLabel] = $folder->getId();
+
+            $list = $this->addFolderChildrenToList($folder, $list, $newLevel);
+        }
+
+        return $list;
     }
 }
