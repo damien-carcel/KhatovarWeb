@@ -6,6 +6,5 @@
 /www/assets
 /www/bundles
 /www/uploaded
-behat.yml
-docker-compose.yml
+.env
 .php_cs.cache

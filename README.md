@@ -1,8 +1,7 @@
 # What is KhatovarWeb?
 
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/fac2a2f9-450c-48be-af44-d797ae4b3618/mini.png)](https://insight.sensiolabs.com/projects/fac2a2f9-450c-48be-af44-d797ae4b3618)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/damien-carcel/khatovar-web/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/damien-carcel/khatovar-web/?branch=master)
 [![Build Status](https://travis-ci.org/damien-carcel/khatovar-web.svg?branch=master)](https://travis-ci.org/damien-carcel/khatovar-web)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/damien-carcel/khatovar-web/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/damien-carcel/khatovar-web/?branch=master)
 
 This repository contain the source code of the CMS handling the web site of the medieval association : [“La compagnie franche du Khatovar”](http://www.compagniefranchedukhatovar.fr/)
 

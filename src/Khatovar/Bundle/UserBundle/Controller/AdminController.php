@@ -110,7 +110,7 @@ class AdminController extends Controller
         if ($form->isValid()) {
             $this->get('event_dispatcher')->dispatch(UserEvents::PRE_UPDATE, new GenericEvent($user));
 
-            $this->get('doctrine.orm.entity_manager')->flush();
+            $this->get('doctrine')->getManager()->flush();
 
             $this->get('event_dispatcher')->dispatch(UserEvents::POST_UPDATE, new GenericEvent($user));
 
@@ -231,8 +231,8 @@ class AdminController extends Controller
         if ($form->isValid()) {
             $this->get('event_dispatcher')->dispatch(UserEvents::PRE_REMOVE, new GenericEvent($user));
 
-            $this->get('doctrine.orm.entity_manager')->remove($user);
-            $this->get('doctrine.orm.entity_manager')->flush();
+            $this->get('doctrine')->getManager()->remove($user);
+            $this->get('doctrine')->getManager()->flush();
 
             $this->get('event_dispatcher')->dispatch(UserEvents::POST_REMOVE);
 
@@ -260,7 +260,7 @@ class AdminController extends Controller
     protected function findUserByUsernameOr404($username)
     {
         $user = $this
-            ->get('doctrine.orm.entity_manager')
+            ->get('doctrine')
             ->getRepository('CarcelUserBundle:User')
             ->findOneBy(['username' => $username]);
 
