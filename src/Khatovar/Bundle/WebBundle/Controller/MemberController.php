@@ -35,7 +35,7 @@ class MemberController extends Controller
      */
     public function indexAction()
     {
-        $memberRepository = $this->get('doctrine.orm.entity_manager')->getRepository('KhatovarWebBundle:Member');
+        $memberRepository = $this->get('doctrine')->getRepository('KhatovarWebBundle:Member');
         $activeMembers = $memberRepository->findBy(['active' => true]);
         $pastMembers = $memberRepository->findBy(['active' => false]);
         $activeDeleteForms = $this->createDeleteForms($activeMembers);
@@ -61,13 +61,13 @@ class MemberController extends Controller
      */
     public function showAction($slug)
     {
-        $member = $this->get('doctrine.orm.entity_manager')
+        $member = $this->get('doctrine')
             ->getRepository('KhatovarWebBundle:Member')
             ->findBySlugOr404($slug);
 
         $currentUser = $this->getUser();
 
-        $photos = $this->get('doctrine.orm.entity_manager')
+        $photos = $this->get('doctrine')
             ->getRepository('KhatovarWebBundle:Photo')
             ->getAllButPortrait($member);
 

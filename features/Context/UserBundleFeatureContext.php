@@ -408,7 +408,6 @@ class UserBundleFeatureContext extends MinkContext implements KernelAwareContext
     {
         return $this->kernel->getContainer()
             ->get('doctrine')
-            ->getManager()
             ->getRepository('KhatovarUserBundle:User');
     }
 }

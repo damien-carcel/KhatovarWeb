@@ -18,5 +18,5 @@ services:
         class: Khatovar\Bundle\UserBundle\Manager\UserManager
         arguments:
             - '@security.token_storage'
-            - '@doctrine.orm.entity_manager'
+            - '@doctrine'
             - '@khatovar_user.manager.roles'

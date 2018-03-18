@@ -11,9 +11,9 @@
 
 namespace Khatovar\Bundle\UserBundle\Handler;
 
-use Doctrine\ORM\EntityManagerInterface;
 use FOS\UserBundle\Model\UserInterface;
 use Khatovar\Bundle\UserBundle\Event\UserEvents;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
 
@@ -25,17 +25,17 @@ class UserStatusHandler implements UserStatusHandlerInterface
     /** @var EventDispatcherInterface */
     protected $eventDispatcher;
 
-    /** @var EntityManagerInterface */
-    protected $entityManager;
+    /** @var RegistryInterface */
+    protected $doctrine;
 
     /**
      * @param EventDispatcherInterface $eventDispatcher
-     * @param EntityManagerInterface   $entityManager
+     * @param RegistryInterface        $doctrine
      */
-    public function __construct(EventDispatcherInterface $eventDispatcher, EntityManagerInterface $entityManager)
+    public function __construct(EventDispatcherInterface $eventDispatcher, RegistryInterface $doctrine)
     {
         $this->eventDispatcher = $eventDispatcher;
-        $this->entityManager = $entityManager;
+        $this->doctrine = $doctrine;
     }
 
     /**
@@ -47,7 +47,7 @@ class UserStatusHandler implements UserStatusHandlerInterface
 
         $user->setEnabled(true);
 
-        $this->entityManager->flush();
+        $this->doctrine->getManager()->flush();
 
         $this->eventDispatcher->dispatch(UserEvents::POST_ACTIVATE, new GenericEvent($user));
     }
@@ -61,7 +61,7 @@ class UserStatusHandler implements UserStatusHandlerInterface
 
         $user->setEnabled(false);
 
-        $this->entityManager->flush();
+        $this->doctrine->getManager()->flush();
 
         $this->eventDispatcher->dispatch(UserEvents::POST_DEACTIVATE, new GenericEvent($user));
     }

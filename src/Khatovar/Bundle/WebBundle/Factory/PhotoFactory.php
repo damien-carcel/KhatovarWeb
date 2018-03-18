@@ -21,9 +21,9 @@
 
 namespace Khatovar\Bundle\WebBundle\Factory;
 
-use Doctrine\ORM\EntityManagerInterface;
 use Khatovar\Bundle\WebBundle\Entity\Photo;
 use Khatovar\Bundle\WebBundle\Helper\EntityHelper;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
@@ -35,8 +35,8 @@ class PhotoFactory
     /** @var AuthorizationCheckerInterface */
     protected $authorizationChecker;
 
-    /** @var EntityManagerInterface */
-    protected $entityManager;
+    /** @var RegistryInterface */
+    protected $doctrine;
 
     /** @var TokenStorageInterface */
     protected $tokenStorage;
@@ -44,16 +44,16 @@ class PhotoFactory
     /**
      * @param AuthorizationCheckerInterface $authorizationChecker
      * @param TokenStorageInterface         $tokenStorage
-     * @param EntityManagerInterface        $entityManager
+     * @param RegistryInterface             $doctrine
      */
     public function __construct(
         AuthorizationCheckerInterface $authorizationChecker,
         TokenStorageInterface $tokenStorage,
-        EntityManagerInterface $entityManager
+        RegistryInterface $doctrine
     ) {
         $this->authorizationChecker = $authorizationChecker;
         $this->tokenStorage = $tokenStorage;
-        $this->entityManager = $entityManager;
+        $this->doctrine = $doctrine;
     }
 
     /**
@@ -68,7 +68,7 @@ class PhotoFactory
 
         if (!$this->authorizationChecker->isGranted('ROLE_EDITOR')) {
             $user = $this->tokenStorage->getToken()->getUser();
-            $loggedMember = $this->entityManager
+            $loggedMember = $this->doctrine
                 ->getRepository('KhatovarWebBundle:Member')
                 ->getLoggedMember($user->getId());
 

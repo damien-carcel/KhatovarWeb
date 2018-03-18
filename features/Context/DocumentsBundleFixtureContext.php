@@ -96,7 +96,6 @@ class DocumentsBundleFixtureContext implements Context
     {
         $user = $this->container
             ->get('doctrine')
-            ->getManager()
             ->getRepository('KhatovarUserBundle:User')
             ->findOneBy(['username' => $username]);
 

@@ -45,7 +45,7 @@ class AppearanceController extends Controller
      */
     public function listAction()
     {
-        $appearances = $this->get('doctrine.orm.entity_manager')
+        $appearances = $this->get('doctrine')
             ->getRepository('KhatovarWebBundle:Appearance')
             ->findAll();
 
@@ -97,7 +97,7 @@ class AppearanceController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $entityManager = $this->get('doctrine.orm.entity_manager');
+            $entityManager = $this->get('doctrine')->getManager();
             $entityManager->persist($appearance);
             $entityManager->flush();
 
@@ -126,7 +126,7 @@ class AppearanceController extends Controller
      */
     public function editIndexAction()
     {
-        $introduction = $this->get('doctrine.orm.entity_manager')
+        $introduction = $this->get('doctrine')
             ->getRepository('KhatovarWebBundle:Appearance')
             ->findActiveIntroduction();
 
@@ -144,7 +144,7 @@ class AppearanceController extends Controller
      */
     public function editAction($id)
     {
-        $appearance = $this->get('doctrine.orm.entity_manager')
+        $appearance = $this->get('doctrine')
             ->getRepository('KhatovarWebBundle:Appearance')
             ->findByIdOr404($id);
 
@@ -172,7 +172,7 @@ class AppearanceController extends Controller
      */
     public function updateAction(Request $request, $id)
     {
-        $appearance = $this->get('doctrine.orm.entity_manager')
+        $appearance = $this->get('doctrine')
             ->getRepository('KhatovarWebBundle:Appearance')
             ->findByIdOr404($id);
 
@@ -181,7 +181,7 @@ class AppearanceController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
-            $this->get('doctrine.orm.entity_manager')->flush();
+            $this->get('doctrine')->getManager()->flush();
 
             $this->addFlash('notice', 'Prestation modifiée');
 
@@ -218,11 +218,11 @@ class AppearanceController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $appearance = $this->get('doctrine.orm.entity_manager')
+            $appearance = $this->get('doctrine')
                 ->getRepository('KhatovarWebBundle:Appearance')
                 ->findByIdOr404($id);
 
-            $entityManager = $this->get('doctrine.orm.entity_manager');
+            $entityManager = $this->get('doctrine')->getManager();
             $entityManager->remove($appearance);
             $entityManager->flush();
 
@@ -331,7 +331,7 @@ class AppearanceController extends Controller
         $workshops = [];
 
         if (AppearanceHelper::PROGRAMME_TYPE_CODE === $appearance->getPageType()) {
-            $workshops = $this->get('doctrine.orm.entity_manager')
+            $workshops = $this->get('doctrine')
                 ->getRepository('KhatovarWebBundle:Appearance')
                 ->findActiveWorkshopsSortedBySlug();
         }

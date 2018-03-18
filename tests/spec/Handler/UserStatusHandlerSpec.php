@@ -18,6 +18,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use FOS\UserBundle\Model\UserInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -25,9 +26,9 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 class UserStatusHandlerSpec extends ObjectBehavior
 {
-    function let(EventDispatcherInterface $eventDispatcher, EntityManagerInterface $entityManager)
+    function let(EventDispatcherInterface $eventDispatcher, RegistryInterface $doctrine)
     {
-        $this->beConstructedWith($eventDispatcher, $entityManager);
+        $this->beConstructedWith($eventDispatcher, $doctrine);
     }
 
     function it_is_initializable()
@@ -40,23 +41,33 @@ class UserStatusHandlerSpec extends ObjectBehavior
         $this->shouldImplement(UserStatusHandlerInterface::class);
     }
 
-    function it_enables_a_user($eventDispatcher, $entityManager, UserInterface $user)
-    {
+    function it_enables_a_user(
+        $eventDispatcher,
+        $doctrine,
+        EntityManagerInterface $entityManager,
+        UserInterface $user
+    ) {
         $eventDispatcher->dispatch(UserEvents::PRE_ACTIVATE, Argument::any())->shouldBeCalled();
         $eventDispatcher->dispatch(UserEvents::POST_ACTIVATE, Argument::any())->shouldBeCalled();
 
         $user->setEnabled(true)->shouldBeCalled();
+        $doctrine->getManager()->willReturn($entityManager);
         $entityManager->flush()->shouldBeCalled();
 
         $this->enable($user);
     }
 
-    function it_disables_a_user($eventDispatcher, $entityManager, UserInterface $user)
-    {
+    function it_disables_a_user(
+        $eventDispatcher,
+        $doctrine,
+        EntityManagerInterface $entityManager,
+        UserInterface $user
+    ) {
         $eventDispatcher->dispatch(UserEvents::PRE_DEACTIVATE, Argument::any())->shouldBeCalled();
         $eventDispatcher->dispatch(UserEvents::POST_DEACTIVATE, Argument::any())->shouldBeCalled();
 
         $user->setEnabled(false)->shouldBeCalled();
+        $doctrine->getManager()->willReturn($entityManager);
         $entityManager->flush()->shouldBeCalled();
 
         $this->disable($user);

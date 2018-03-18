@@ -72,7 +72,7 @@ class MemberController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $entityManager = $this->get('doctrine.orm.entity_manager');
+            $entityManager = $this->get('doctrine')->getManager();
             $entityManager->persist($member);
             $entityManager->flush();
 
@@ -112,7 +112,7 @@ class MemberController extends Controller
      */
     public function editAction($id)
     {
-        $contact = $this->get('doctrine.orm.entity_manager')
+        $contact = $this->get('doctrine')
             ->getRepository('KhatovarWebBundle:Member')
             ->findByIdOr404($id);
 
@@ -139,7 +139,7 @@ class MemberController extends Controller
      */
     public function updateAction(Request $request, $id)
     {
-        $member = $this->get('doctrine.orm.entity_manager')
+        $member = $this->get('doctrine')
             ->getRepository('KhatovarWebBundle:Member')
             ->findByIdOr404($id);
 
@@ -147,7 +147,7 @@ class MemberController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
-            $this->get('doctrine.orm.entity_manager')->flush();
+            $this->get('doctrine')->getManager()->flush();
 
             $this->addFlash('notice', 'Page de membre modifiée');
 
@@ -180,7 +180,7 @@ class MemberController extends Controller
      */
     public function deleteAction(Request $request, $id)
     {
-        $member = $this->get('doctrine.orm.entity_manager')
+        $member = $this->get('doctrine')
             ->getRepository('KhatovarWebBundle:Member')
             ->findByIdOr404($id);
 
@@ -188,7 +188,7 @@ class MemberController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $entityManager = $this->get('doctrine.orm.entity_manager');
+            $entityManager = $this->get('doctrine')->getManager();
             $entityManager->remove($member);
             $entityManager->flush();
 

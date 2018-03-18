@@ -21,11 +21,11 @@
 
 namespace Khatovar\Bundle\WebBundle\Manager;
 
-use Doctrine\ORM\EntityManagerInterface;
 use Khatovar\Bundle\UserBundle\Entity\User;
 use Khatovar\Bundle\WebBundle\Entity\Photo;
 use Khatovar\Bundle\WebBundle\Helper\EntityHelper;
 use Khatovar\Bundle\WebBundle\Helper\PhotoHelper;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
@@ -37,23 +37,23 @@ class PhotoManager
     /** @var AuthorizationCheckerInterface */
     protected $authorizationChecker;
 
-    /** @var EntityManagerInterface */
-    protected $entityManager;
+    /** @var RegistryInterface */
+    protected $doctrine;
 
     /** @var TokenStorageInterface */
     protected $tokenStorage;
 
     /**
-     * @param EntityManagerInterface        $entityManager
+     * @param RegistryInterface             $doctrine
      * @param AuthorizationCheckerInterface $authorizationChecker
      * @param TokenStorageInterface         $tokenStorage
      */
     public function __construct(
-        EntityManagerInterface $entityManager,
+        RegistryInterface $doctrine,
         AuthorizationCheckerInterface $authorizationChecker,
         TokenStorageInterface $tokenStorage
     ) {
-        $this->entityManager = $entityManager;
+        $this->doctrine = $doctrine;
         $this->authorizationChecker = $authorizationChecker;
         $this->tokenStorage = $tokenStorage;
     }
@@ -70,7 +70,7 @@ class PhotoManager
         $text = $this->insertTagsInText($text);
         $paths = $this->getPhotoPaths($text);
 
-        $repository = $this->entityManager->getRepository('KhatovarWebBundle:Photo');
+        $repository = $this->doctrine->getRepository('KhatovarWebBundle:Photo');
 
         $photos = [];
 
@@ -143,7 +143,7 @@ class PhotoManager
     {
         $sortedPhotos = [
             'Photos orphelines' => [
-                'Liste des photos n\'appartenant à aucune page' => $this->entityManager
+                'Liste des photos n\'appartenant à aucune page' => $this->doctrine
                     ->getRepository('KhatovarWebBundle:Photo')
                     ->getOrphans(),
             ],
@@ -167,7 +167,7 @@ class PhotoManager
     {
         $sortedPhotos = [];
 
-        $member = $this->entityManager
+        $member = $this->doctrine
             ->getRepository('KhatovarWebBundle:Member')
             ->findOneBy(['owner' => $currentUser]);
 
@@ -260,7 +260,7 @@ class PhotoManager
     {
         $entity = 'Khatovar'.ucfirst($controller).'Bundle:'.ucfirst($controller);
 
-        return $this->entityManager->getRepository($entity);
+        return $this->doctrine->getRepository($entity);
     }
 
     /**
@@ -303,7 +303,7 @@ class PhotoManager
     {
         $sortedPhotos = [];
 
-        $entities = $this->entityManager
+        $entities = $this->doctrine
             ->getRepository('Khatovar'.ucfirst($entityCode).'Bundle:'.ucfirst($entityCode))
             ->findAll();
 

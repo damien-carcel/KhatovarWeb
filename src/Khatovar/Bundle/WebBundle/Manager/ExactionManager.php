@@ -21,28 +21,27 @@
 
 namespace Khatovar\Bundle\WebBundle\Manager;
 
-use Doctrine\ORM\EntityManagerInterface;
 use Khatovar\Bundle\WebBundle\Entity\Exaction;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
  * @author Damien Carcel <damien.carcel@gmail.com>
  */
 class ExactionManager
 {
-    /** @var EntityManagerInterface */
-    protected $entityManager;
+    /** @var RegistryInterface */
+    protected $doctrine;
 
     /**
-     * @param EntityManagerInterface $entityManager
+     * @param RegistryInterface $doctrine
      */
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(RegistryInterface $doctrine)
     {
-        $this->entityManager = $entityManager;
+        $this->doctrine = $doctrine;
     }
 
     /**
-     * Return a sorted array of all years having exactions, most recent
-     * first.
+     * Returns a sorted array of all years having exactions, most recent first.
      *
      * @return array
      */
@@ -50,7 +49,7 @@ class ExactionManager
     {
         $yearList = [];
 
-        $exactions = $this->entityManager
+        $exactions = $this->doctrine
             ->getRepository('KhatovarWebBundle:Exaction')
             ->findAll();
 
@@ -70,7 +69,7 @@ class ExactionManager
     }
 
     /**
-     * Check if the exaction is already passed or still to come.
+     * Checks if the exaction is already passed or still to come.
      *
      * @param Exaction $exaction
      *

@@ -22,7 +22,7 @@
 namespace Khatovar\Bundle\DocumentsBundle\Saver;
 
 use Doctrine\Common\Util\ClassUtils;
-use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
 
 /**
@@ -33,26 +33,26 @@ use Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
  */
 class BaseSaver implements SaverInterface
 {
-    /** @var string */
-    protected $entityClass;
-
-    /** @var EntityManagerInterface */
-    protected $entityManager;
+    /** @var RegistryInterface */
+    protected $doctrine;
 
     /** @var SavingOptionsResolverInterface */
     protected $optionsResolver;
 
+    /** @var string */
+    protected $entityClass;
+
     /**
-     * @param EntityManagerInterface         $entityManager   the entity Manager
-     * @param SavingOptionsResolverInterface $optionsResolver the option resolver
-     * @param string                         $entityClass     the namespace of the entity class
+     * @param RegistryInterface              $doctrine
+     * @param SavingOptionsResolverInterface $optionsResolver
+     * @param string                         $entityClass
      */
     public function __construct(
-        EntityManagerInterface $entityManager,
+        RegistryInterface $doctrine,
         SavingOptionsResolverInterface $optionsResolver,
         $entityClass
     ) {
-        $this->entityManager = $entityManager;
+        $this->doctrine = $doctrine;
         $this->optionsResolver = $optionsResolver;
         $this->entityClass = $entityClass;
     }
@@ -74,10 +74,10 @@ class BaseSaver implements SaverInterface
 
         $options = $this->optionsResolver->resolveSaveOptions($options);
 
-        $this->entityManager->persist($object);
+        $this->doctrine->getManager()->persist($object);
 
         if (true === $options['flush']) {
-            $this->entityManager->flush();
+            $this->doctrine->getManager()->flush();
         }
     }
 }

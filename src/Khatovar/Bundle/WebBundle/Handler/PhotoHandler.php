@@ -21,10 +21,10 @@
 
 namespace Khatovar\Bundle\WebBundle\Handler;
 
-use Doctrine\ORM\EntityManagerInterface;
 use Khatovar\Bundle\WebBundle\Entity\Photo;
 use Khatovar\Bundle\WebBundle\Helper\PhotoHelper;
 use Khatovar\Bundle\WebBundle\Manager\PhotoManager;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
@@ -37,8 +37,8 @@ class PhotoHandler
     /** @staticvar string */
     const MAX_PHOTO_HEIGHT = 720;
 
-    /** @var EntityManagerInterface */
-    protected $entityManager;
+    /** @var RegistryInterface */
+    protected $doctrine;
 
     /** @var PhotoManager */
     protected $photoManager;
@@ -47,16 +47,16 @@ class PhotoHandler
     protected $router;
 
     /**
-     * @param EntityManagerInterface $entityManager
-     * @param PhotoManager           $photoManager
-     * @param RouterInterface        $router
+     * @param RegistryInterface $doctrine
+     * @param PhotoManager      $photoManager
+     * @param RouterInterface   $router
      */
     public function __construct(
-        EntityManagerInterface $entityManager,
+        RegistryInterface $doctrine,
         PhotoManager $photoManager,
         RouterInterface $router
     ) {
-        $this->entityManager = $entityManager;
+        $this->doctrine = $doctrine;
         $this->photoManager = $photoManager;
         $this->router = $router;
     }
@@ -68,8 +68,8 @@ class PhotoHandler
      */
     public function handleCreation(Photo $photo)
     {
-        $this->entityManager->persist($photo);
-        $this->entityManager->flush();
+        $this->doctrine->getManager()->persist($photo);
+        $this->doctrine->getManager()->flush();
 
         $this->photoManager->imageResize(
             $photo->getAbsolutePath(),
@@ -91,7 +91,7 @@ class PhotoHandler
      */
     public function handleUpdate(Photo $photo, $entity)
     {
-        $this->entityManager->persist($photo);
+        $this->doctrine->getManager()->persist($photo);
 
         if ($photo->getEntity() !== $entity) {
             foreach (PhotoHelper::getPhotoEntities() as $code) {
@@ -107,7 +107,7 @@ class PhotoHandler
             $route = $this->router->generate('khatovar_web_photo');
         }
 
-        $this->entityManager->flush();
+        $this->doctrine->getManager()->flush();
 
         return $route;
     }

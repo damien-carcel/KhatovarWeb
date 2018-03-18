@@ -19,6 +19,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use FOS\UserBundle\Model\UserInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Validator\Exception\InvalidArgumentException;
@@ -28,9 +29,9 @@ use Symfony\Component\Validator\Exception\InvalidArgumentException;
  */
 class UserManagerSpec extends ObjectBehavior
 {
-    function let(TokenStorageInterface $tokenStorage, EntityManagerInterface $entityManager, RolesManager $rolesManager)
+    function let(TokenStorageInterface $tokenStorage, RegistryInterface $doctrine, RolesManager $rolesManager)
     {
-        $this->beConstructedWith($tokenStorage, $entityManager, $rolesManager);
+        $this->beConstructedWith($tokenStorage, $doctrine, $rolesManager);
     }
 
     function it_is_initializable()
@@ -40,14 +41,14 @@ class UserManagerSpec extends ObjectBehavior
 
     function it_returns_all_users_but_the_current_one_and_the_super_admin(
         $tokenStorage,
-        $entityManager,
+        $doctrine,
         UserRepositoryInterface $userRepository,
         TokenInterface $token,
         UserInterface $currentUser,
         UserInterface $superAdmin,
         UserInterface $regularUser
     ) {
-        $entityManager->getRepository(User::class)->willReturn($userRepository);
+        $doctrine->getRepository(User::class)->willReturn($userRepository);
 
         $currentUser->setRoles(['ROLE_ADMIN']);
         $superAdmin->setRoles(['ROLE_SUPER_ADMIN']);
@@ -65,14 +66,15 @@ class UserManagerSpec extends ObjectBehavior
 
     function it_returns_all_users_but_the_current_one_being_the_super_admin(
         $tokenStorage,
-        $entityManager,
+        $doctrine,
+         $entityManager,
         UserRepositoryInterface $userRepository,
         TokenInterface $token,
         UserInterface $currentUser,
         UserInterface $regularAdmin,
         UserInterface $regularUser
     ) {
-        $entityManager->getRepository(User::class)->willReturn($userRepository);
+        $doctrine->getRepository(User::class)->willReturn($userRepository);
 
         $currentUser->setRoles(['ROLE_SUPER_ADMIN']);
         $regularAdmin->setRoles(['ROLE_ADMIN']);
@@ -89,8 +91,9 @@ class UserManagerSpec extends ObjectBehavior
     }
 
     function it_sets_role_to_a_user(
-        $entityManager,
         $rolesManager,
+        $doctrine,
+        EntityManagerInterface $entityManager,
         UserInterface $user
     ) {
         $rolesManager->getChoices()->willReturn([
@@ -100,14 +103,16 @@ class UserManagerSpec extends ObjectBehavior
         ]);
 
         $user->setRoles(['ROLE_ADMIN'])->shouldBeCalled();
+        $doctrine->getManager()->willReturn($entityManager);
         $entityManager->flush()->shouldBeCalled();
 
         $this->setRole($user, ['roles' => 'ROLE_ADMIN']);
     }
 
     function it_throws_an_exception_if_role_is_not_in_choices_list(
-        $entityManager,
         $rolesManager,
+        $doctrine,
+        EntityManagerInterface $entityManager,
         UserInterface $user
     ) {
         $rolesManager->getChoices()->willReturn([
@@ -116,6 +121,7 @@ class UserManagerSpec extends ObjectBehavior
         ]);
 
         $user->setRoles([Argument::any()])->shouldNotBeCalled();
+        $doctrine->getManager()->willReturn($entityManager);
         $entityManager->flush()->shouldNotBeCalled();
 
         $this

@@ -11,9 +11,9 @@
 
 namespace Khatovar\Bundle\UserBundle\Manager;
 
-use Doctrine\ORM\EntityManagerInterface;
 use FOS\UserBundle\Model\UserInterface;
 use Khatovar\Bundle\UserBundle\Entity\User;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Validator\Exception\InvalidArgumentException;
 
@@ -24,8 +24,8 @@ use Symfony\Component\Validator\Exception\InvalidArgumentException;
  */
 class UserManager
 {
-    /** @var EntityManagerInterface */
-    protected $entityManager;
+    /** @var RegistryInterface */
+    protected $doctrine;
 
     /** @var RolesManager */
     protected $rolesManager;
@@ -34,17 +34,17 @@ class UserManager
     protected $tokenStorage;
 
     /**
-     * @param TokenStorageInterface  $tokenStorage
-     * @param EntityManagerInterface $entityManager
-     * @param RolesManager           $rolesManager
+     * @param TokenStorageInterface $tokenStorage
+     * @param RegistryInterface     $doctrine
+     * @param RolesManager          $rolesManager
      */
     public function __construct(
         TokenStorageInterface $tokenStorage,
-        EntityManagerInterface $entityManager,
+        RegistryInterface $doctrine,
         RolesManager $rolesManager
     ) {
         $this->tokenStorage = $tokenStorage;
-        $this->entityManager = $entityManager;
+        $this->doctrine = $doctrine;
         $this->rolesManager = $rolesManager;
     }
 
@@ -55,7 +55,7 @@ class UserManager
     {
         $users = [];
 
-        $userRepository = $this->entityManager->getRepository(User::class);
+        $userRepository = $this->doctrine->getRepository(User::class);
         $currentUser = $this->tokenStorage->getToken()->getUser();
         $users[] = $currentUser;
 
@@ -90,6 +90,6 @@ class UserManager
 
         $user->setRoles([$choices[$selectedRole['roles']]]);
 
-        $this->entityManager->flush();
+        $this->doctrine->getManager()->flush();
     }
 }

@@ -60,10 +60,10 @@ class FileSaver extends BaseSaver
 
         $message = $this->replaceExistingFile($file, $options);
 
-        $this->entityManager->persist($file);
+        $this->doctrine->getManager()->persist($file);
 
         if (true === $options['flush']) {
-            $this->entityManager->flush();
+            $this->doctrine->getManager()->flush();
         }
 
         return $message;
@@ -81,7 +81,7 @@ class FileSaver extends BaseSaver
     protected function replaceExistingFile(File $file, array $options)
     {
         if (isset($options['folder'])) {
-            $fileExists = $this->entityManager->getRepository('KhatovarDocumentsBundle:File')->findOneBy(
+            $fileExists = $this->doctrine->getRepository('KhatovarDocumentsBundle:File')->findOneBy(
                 [
                     'name' => $file->getFilePath()->getClientOriginalName(),
                     'folder' => $options['folder'],
@@ -90,7 +90,7 @@ class FileSaver extends BaseSaver
 
             if (null !== $fileExists) {
                 $file->setCreated($fileExists->getCreated());
-                $this->entityManager->remove($fileExists);
+                $this->doctrine->getManager()->remove($fileExists);
 
                 return 'khatovar_documents.notice.add.file.replace';
             }

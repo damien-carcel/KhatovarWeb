@@ -10,4 +10,4 @@ services:
         class: Khatovar\Bundle\UserBundle\Handler\UserStatusHandler
         arguments:
             - '@event_dispatcher'
-            - '@doctrine.orm.entity_manager'
+            - '@doctrine'

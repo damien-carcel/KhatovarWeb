@@ -56,7 +56,7 @@ class HomepageController extends Controller
             return $this->redirect($this->generateUrl('khatovar_web_homepage_list'));
         }
 
-        $homepages = $this->get('doctrine.orm.entity_manager')
+        $homepages = $this->get('doctrine')
             ->getRepository('KhatovarWebBundle:Homepage')
             ->findAll();
 
@@ -107,7 +107,7 @@ class HomepageController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $entityManager = $this->get('doctrine.orm.entity_manager');
+            $entityManager = $this->get('doctrine')->getManager();
             $entityManager->persist($homepage);
             $entityManager->flush();
 
@@ -138,7 +138,7 @@ class HomepageController extends Controller
      */
     public function editAction($id)
     {
-        $homepage = $this->get('doctrine.orm.entity_manager')
+        $homepage = $this->get('doctrine')
             ->getRepository('KhatovarWebBundle:Homepage')
             ->findByIdOr404($id);
 
@@ -162,7 +162,7 @@ class HomepageController extends Controller
      */
     public function updateAction(Request $request, $id)
     {
-        $homepage = $this->get('doctrine.orm.entity_manager')
+        $homepage = $this->get('doctrine')
             ->getRepository('KhatovarWebBundle:Homepage')
             ->findByIdOr404($id);
 
@@ -170,7 +170,7 @@ class HomepageController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $this->get('doctrine.orm.entity_manager')->flush();
+            $this->get('doctrine')->getManager()->flush();
 
             $this->addFlash('notice', 'Page d\'accueil modifiée');
 
@@ -200,7 +200,7 @@ class HomepageController extends Controller
      */
     public function deleteAction(Request $request, $id)
     {
-        $homepage = $this->get('doctrine.orm.entity_manager')
+        $homepage = $this->get('doctrine')
             ->getRepository('KhatovarWebBundle:Homepage')
             ->findByIdOr404($id);
 
@@ -211,7 +211,7 @@ class HomepageController extends Controller
             $form->handleRequest($request);
 
             if ($form->isValid()) {
-                $entityManager = $this->get('doctrine.orm.entity_manager');
+                $entityManager = $this->get('doctrine')->getManager();
                 $entityManager->remove($homepage);
                 $entityManager->flush();
 
