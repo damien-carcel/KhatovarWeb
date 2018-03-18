@@ -21,10 +21,8 @@
 
 namespace Khatovar\Bundle\WebBundle\Validator\Constraints;
 
-use Doctrine\ORM\EntityManagerInterface;
-use Khatovar\Bundle\WebBundle\Entity\Appearance;
-use Khatovar\Bundle\WebBundle\Entity\AppearanceRepository;
 use Khatovar\Bundle\WebBundle\Helper\AppearanceHelper;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
@@ -35,15 +33,15 @@ use Symfony\Component\Validator\ConstraintValidator;
  */
 class UniqueActiveIntroValidator extends ConstraintValidator
 {
-    /** @var AppearanceRepository */
-    protected $appearanceRepository;
+    /** @var RegistryInterface */
+    protected $doctrine;
 
     /**
-     * @param EntityManagerInterface $entityManager
+     * @param RegistryInterface $doctrine
      */
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(RegistryInterface $doctrine)
     {
-        $this->appearanceRepository = $entityManager->getRepository('KhatovarWebBundle:Appearance');
+        $this->doctrine = $doctrine;
     }
 
     /**
@@ -52,7 +50,9 @@ class UniqueActiveIntroValidator extends ConstraintValidator
     public function validate($appearance, Constraint $constraint)
     {
         if (AppearanceHelper::INTRO_TYPE_CODE === $appearance->getPageType() && true === $appearance->isActive()) {
-            $activeIntro = $this->appearanceRepository->findActiveIntroduction();
+            $activeIntro = $this->doctrine
+                ->getRepository('KhatovarWebBundle:Appearance')
+                ->findActiveIntroduction();
 
             if (null !== $activeIntro && $activeIntro->getId() !== $appearance->getId()) {
                 $this->context->buildViolation($constraint->message)

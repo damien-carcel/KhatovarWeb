@@ -2,6 +2,7 @@ language: php
 
 php:
     - '7.1'
+    - '7.2'
 
 git:
     depth: 10
@@ -18,7 +19,6 @@ before_install:
 
 install:
     - cp app/config/parameters.yml.dist app/config/parameters.yml
-    - cp behat.yml.dist behat.yml
     - composer install --no-interaction --no-scripts
     - mysql -e 'CREATE DATABASE symfony;'
     - bin/console doctrine:schema:update --force --env=test > /dev/null
@@ -29,4 +29,5 @@ install:
 script:
     - vendor/bin/phpcs -p --standard=PSR2 --extensions=php features src
     - vendor/bin/php-cs-fixer fix --dry-run -v --diff --config=.php_cs.php
+    - vendor/bin/phpspec run
     - vendor/bin/behat

@@ -25,8 +25,8 @@ namespace Context;
 
 use Behat\Mink\Element\NodeElement;
 use Behat\MinkExtension\Context\MinkContext;
-use PHPUnit\Framework\Assert;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Webmozart\Assert\Assert;
 
 /**
  * Defines application features from the specific context.
@@ -101,7 +101,8 @@ class DocumentsBundleFeatureContext extends MinkContext
         if (null === $button) {
             $button = $row->findLink($buttonText);
         }
-        Assert::assertNotNull($button, sprintf('Cannot find a button "%s" in the row "%s"', $buttonText, $rowText));
+
+        Assert::notNull($button, sprintf('Cannot find a button "%s" in the row "%s"', $buttonText, $rowText));
 
         return $button;
     }
@@ -116,7 +117,8 @@ class DocumentsBundleFeatureContext extends MinkContext
     private function findRowByText(string $rowText): NodeElement
     {
         $row = $this->getSession()->getPage()->find('css', sprintf('table tr:contains("%s")', $rowText));
-        Assert::assertNotNull($row, sprintf('Cannot find a table row with "%s"', $rowText));
+
+        Assert::notNull($row, sprintf('Cannot find a table row with "%s"', $rowText));
 
         return $row;
     }

@@ -224,8 +224,8 @@ class FileController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $this->get('doctrine.orm.entity_manager')->remove($file);
-            $this->get('doctrine.orm.entity_manager')->flush();
+            $this->get('doctrine')->getManager()->remove($file);
+            $this->get('doctrine')->getManager()->flush();
 
             $this->addFlash(
                 'notice',

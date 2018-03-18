@@ -21,8 +21,8 @@
 
 namespace Khatovar\Bundle\WebBundle\Handler;
 
-use Doctrine\ORM\EntityManagerInterface;
 use Khatovar\Bundle\WebBundle\Entity\ActivableEntity;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
  * Handles the activation of an entity and deactivation of the previous active one.
@@ -31,19 +31,19 @@ use Khatovar\Bundle\WebBundle\Entity\ActivableEntity;
  */
 class ActivationHandler
 {
+    /** @var RegistryInterface */
+    protected $doctrine;
+
     /** @var string */
     protected $entity;
 
-    /** @var EntityManagerInterface */
-    protected $entityManager;
-
     /**
-     * @param EntityManagerInterface $entityManager
-     * @param string                 $entity
+     * @param RegistryInterface $doctrine
+     * @param string            $entity
      */
-    public function __construct(EntityManagerInterface $entityManager, $entity)
+    public function __construct(RegistryInterface $doctrine, $entity)
     {
-        $this->entityManager = $entityManager;
+        $this->doctrine = $doctrine;
         $this->entity = $entity;
     }
 
@@ -52,17 +52,17 @@ class ActivationHandler
      */
     public function handle(ActivableEntity $newActiveEntity)
     {
-        $repository = $this->entityManager->getRepository($this->entity);
+        $repository = $this->doctrine->getRepository($this->entity);
         $oldContact = $repository->findOneBy(['active' => true]);
 
         if (null !== $oldContact) {
             $oldContact->deactivate();
-            $this->entityManager->persist($oldContact);
+            $this->doctrine->getManager()->persist($oldContact);
         }
 
         $newActiveEntity->activate();
-        $this->entityManager->persist($newActiveEntity);
+        $this->doctrine->getManager()->persist($newActiveEntity);
 
-        $this->entityManager->flush();
+        $this->doctrine->getManager()->flush();
     }
 }

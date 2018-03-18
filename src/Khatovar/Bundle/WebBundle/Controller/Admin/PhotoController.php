@@ -138,7 +138,7 @@ class PhotoController extends Controller
      */
     public function editAction($id)
     {
-        $photo = $this->get('doctrine.orm.entity_manager')
+        $photo = $this->get('doctrine')
             ->getRepository('KhatovarWebBundle:Photo')
             ->findByIdOr404($id);
 
@@ -167,7 +167,7 @@ class PhotoController extends Controller
      */
     public function updateAction(Request $request, $id)
     {
-        $photo = $this->get('doctrine.orm.entity_manager')
+        $photo = $this->get('doctrine')
             ->getRepository('KhatovarWebBundle:Photo')
             ->findByIdOr404($id);
 
@@ -206,7 +206,7 @@ class PhotoController extends Controller
      */
     public function deleteAction(Request $request, $id)
     {
-        $photo = $this->get('doctrine.orm.entity_manager')
+        $photo = $this->get('doctrine')
             ->getRepository('KhatovarWebBundle:Photo')
             ->findByIdOr404($id);
 
@@ -216,7 +216,7 @@ class PhotoController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $entityManager = $this->get('doctrine.orm.entity_manager');
+            $entityManager = $this->get('doctrine')->getManager();
             $entityManager->remove($photo);
             $entityManager->flush();
 
@@ -333,7 +333,7 @@ class PhotoController extends Controller
      */
     protected function userHasEditRights(Photo $photo = null)
     {
-        $member = $this->get('doctrine.orm.entity_manager')
+        $member = $this->get('doctrine')
             ->getRepository('KhatovarWebBundle:Member')
             ->getLoggedMember($this->getUser()->getId());
 

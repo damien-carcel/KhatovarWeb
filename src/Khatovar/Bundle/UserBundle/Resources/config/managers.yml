@@ -1,0 +1,22 @@
+services:
+    khatovar_user.manager.mail:
+        class: Khatovar\Bundle\UserBundle\Manager\MailManager
+        arguments:
+            - '@mailer'
+            - '@translator'
+            - '@khatovar_user.factory.swift_message'
+            - '%mailer_user%'
+
+    khatovar_user.manager.roles:
+        class: Khatovar\Bundle\UserBundle\Manager\RolesManager
+        arguments:
+            - '@security.token_storage'
+            - '@translator'
+            - '%security.role_hierarchy.roles%'
+
+    khatovar_user.manager.users:
+        class: Khatovar\Bundle\UserBundle\Manager\UserManager
+        arguments:
+            - '@security.token_storage'
+            - '@doctrine'
+            - '@khatovar_user.manager.roles'

@@ -37,7 +37,7 @@ class AppearanceController extends Controller
      */
     public function indexAction()
     {
-        $appearancesRepo = $this->get('doctrine.orm.entity_manager')
+        $appearancesRepo = $this->get('doctrine')
             ->getRepository('KhatovarWebBundle:Appearance');
 
         $appearances = $appearancesRepo->findActiveProgrammesSortedBySlug();
@@ -59,7 +59,7 @@ class AppearanceController extends Controller
      */
     public function workshopAction()
     {
-        $appearances = $this->get('doctrine.orm.entity_manager')
+        $appearances = $this->get('doctrine')
             ->getRepository('KhatovarWebBundle:Appearance')
             ->findActiveWorkshopsSortedBySlug();
 
@@ -81,7 +81,7 @@ class AppearanceController extends Controller
      */
     public function campAction()
     {
-        $camp = $this->get('doctrine.orm.entity_manager')
+        $camp = $this->get('doctrine')
             ->getRepository('KhatovarWebBundle:Appearance')
             ->findActiveCamp();
 

@@ -21,8 +21,8 @@
 
 namespace Khatovar\Bundle\WebBundle\Form\Type;
 
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -33,15 +33,15 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class HomepageActivationType extends AbstractType
 {
-    /** @var EntityManagerInterface */
-    protected $entityManager;
+    /** @var RegistryInterface */
+    protected $doctrine;
 
     /**
-     * @param EntityManagerInterface $entityManager
+     * @param RegistryInterface $doctrine
      */
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(RegistryInterface $doctrine)
     {
-        $this->entityManager = $entityManager;
+        $this->doctrine = $doctrine;
     }
 
     /**
@@ -82,6 +82,6 @@ class HomepageActivationType extends AbstractType
      */
     protected function getPreviousActiveContact()
     {
-        return $this->entityManager->getRepository('KhatovarWebBundle:Homepage')->findOneBy(['active' => true]);
+        return $this->doctrine->getRepository('KhatovarWebBundle:Homepage')->findOneBy(['active' => true]);
     }
 }

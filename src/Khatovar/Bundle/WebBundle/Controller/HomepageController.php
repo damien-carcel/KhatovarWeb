@@ -35,7 +35,7 @@ class HomepageController extends Controller
      */
     public function indexAction()
     {
-        $homepage = $this->get('doctrine.orm.entity_manager')
+        $homepage = $this->get('doctrine')
             ->getRepository('KhatovarWebBundle:Homepage')
             ->findActiveOr404();
 
@@ -57,7 +57,7 @@ class HomepageController extends Controller
      */
     public function showAction($id)
     {
-        $homepage = $this->get('doctrine.orm.entity_manager')
+        $homepage = $this->get('doctrine')
             ->getRepository('KhatovarWebBundle:Homepage')
             ->findByIdOr404($id);
 

@@ -47,7 +47,7 @@
                 {{ 'layout.logged_in_as'|trans({'%username%': ''}, 'FOSUserBundle') }}<a href="{{ path('fos_user_profile_show') }}">{{ app.user.username }}</a>
                 |
                 {% if is_granted('ROLE_ADMIN') %}
-                    <a href="{{ path('carcel_user_admin_index') }}">{{ 'khatovar_user.admin.footer_link'|trans() }}</a>
+                    <a href="{{ path('khatovar_user_admin_index') }}">{{ 'khatovar_user.admin.footer_link'|trans() }}</a>
                     |
                 {% endif %}
                 <a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a>

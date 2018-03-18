@@ -11,7 +11,7 @@
 
 namespace Khatovar\Bundle\UserBundle\Form\Factory;
 
-use Carcel\Bundle\UserBundle\Manager\RolesManager;
+use Khatovar\Bundle\UserBundle\Manager\RolesManager;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormFactoryInterface;

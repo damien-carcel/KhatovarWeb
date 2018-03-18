@@ -35,7 +35,7 @@ class ContactController extends Controller
      */
     public function indexAction()
     {
-        $activeContact = $this->get('doctrine.orm.entity_manager')
+        $activeContact = $this->get('doctrine')
             ->getRepository('KhatovarWebBundle:Contact')
             ->findActiveOr404();
 
@@ -54,7 +54,7 @@ class ContactController extends Controller
      */
     public function showAction($id)
     {
-        $contact = $this->get('doctrine.orm.entity_manager')
+        $contact = $this->get('doctrine')
             ->getRepository('KhatovarWebBundle:Contact')
             ->findByIdOr404($id);
 

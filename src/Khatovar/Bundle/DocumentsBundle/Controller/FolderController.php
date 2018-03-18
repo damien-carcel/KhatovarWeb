@@ -291,7 +291,7 @@ class FolderController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $entityManager = $this->get('doctrine.orm.entity_manager');
+            $entityManager = $this->get('doctrine')->getManager();
             $entityManager->remove($folder);
             $entityManager->flush();
 

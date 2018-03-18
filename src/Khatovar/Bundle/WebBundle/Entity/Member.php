@@ -21,8 +21,8 @@
 
 namespace Khatovar\Bundle\WebBundle\Entity;
 
-use Carcel\Bundle\UserBundle\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
+use Khatovar\Bundle\UserBundle\Entity\User;
 
 /**
  * @author Damien Carcel <damien.carcel@gmail.com>

@@ -33,6 +33,6 @@ class KhatovarUserBundle extends Bundle
      */
     public function getParent()
     {
-        return 'CarcelUserBundle';
+        return 'FOSUserBundle';
     }
 }

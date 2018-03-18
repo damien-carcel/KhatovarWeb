@@ -2,18 +2,18 @@ services:
     khatovar_contact.handler.contact_activation:
         class: Khatovar\Bundle\WebBundle\Handler\ActivationHandler
         arguments:
-            - '@doctrine.orm.entity_manager'
+            - '@doctrine'
             - 'Khatovar\Bundle\WebBundle\Entity\Contact'
 
     khatovar_homepage.handler.homepage_activation:
         class: Khatovar\Bundle\WebBundle\Handler\ActivationHandler
         arguments:
-            - '@doctrine.orm.entity_manager'
+            - '@doctrine'
             - 'Khatovar\Bundle\WebBundle\Entity\Homepage'
 
     khatovar_photo.handler.photo:
         class: Khatovar\Bundle\WebBundle\Handler\PhotoHandler
         arguments:
-            - '@doctrine.orm.entity_manager'
+            - '@doctrine'
             - '@khatovar_photo.manager.photo'
             - '@router'

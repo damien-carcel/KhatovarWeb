@@ -23,10 +23,10 @@ declare(strict_types=1);
 
 namespace Context\DataFixtures\ORM;
 
-use Carcel\Bundle\UserBundle\Entity\User;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use FOS\UserBundle\Model\UserInterface;
+use Khatovar\Bundle\UserBundle\Entity\User;
 
 /**
  * @author Damien Carcel (damien.carcel@gmail.com)

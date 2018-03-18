@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of KhatovarWeb.
  *
@@ -24,9 +25,9 @@
 
 namespace Khatovar\Bundle\WebBundle\Manager;
 
-use Doctrine\ORM\EntityManagerInterface;
 use Khatovar\Bundle\WebBundle\Entity\Appearance;
 use Khatovar\Bundle\WebBundle\Helper\AppearanceHelper;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -36,15 +37,15 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class AppearanceManager
 {
-    /** @var \Khatovar\Bundle\WebBundle\Entity\AppearanceRepository */
-    protected $appareanceRepository;
+    /** @var RegistryInterface */
+    protected $doctrine;
 
     /**
-     * @param EntityManagerInterface $entityManager
+     * @param RegistryInterface $doctrine
      */
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(RegistryInterface $doctrine)
     {
-        $this->appareanceRepository = $entityManager->getRepository('KhatovarWebBundle:Appearance');
+        $this->doctrine = $doctrine;
     }
 
     /**
@@ -85,7 +86,9 @@ class AppearanceManager
      */
     protected function isPageType($pageType, $slug)
     {
-        $appearance = $this->appareanceRepository->findOneBy(['slug' => $slug]);
+        $appearance = $this->doctrine
+            ->getRepository('KhatovarWebBundle:Appearance')
+            ->findOneBy(['slug' => $slug]);
 
         if (!($appearance instanceof Appearance)) {
             throw new NotFoundHttpException(
@@ -108,7 +111,9 @@ class AppearanceManager
      */
     protected function getCampOrIntro($slug)
     {
-        $camp = $this->appareanceRepository->findOneBy(['slug' => $slug]);
+        $camp = $this->doctrine
+            ->getRepository('KhatovarWebBundle:Appearance')
+            ->findOneBy(['slug' => $slug]);
 
         return [
             'previous' => null,
@@ -127,9 +132,13 @@ class AppearanceManager
     protected function getAppearances($slug)
     {
         if ($this->isPageType(AppearanceHelper::PROGRAMME_TYPE_CODE, $slug)) {
-            $sortedAppearances = $this->appareanceRepository->findAllProgrammesSortedBySlug();
+            $sortedAppearances = $this->doctrine
+                ->getRepository('KhatovarWebBundle:Appearance')
+                ->findAllProgrammesSortedBySlug();
         } else {
-            $sortedAppearances = $this->appareanceRepository->findAllWorkshopsSortedBySlug();
+            $sortedAppearances = $this->doctrine
+                ->getRepository('KhatovarWebBundle:Appearance')
+                ->findAllWorkshopsSortedBySlug();
         }
 
         $appearances = [];

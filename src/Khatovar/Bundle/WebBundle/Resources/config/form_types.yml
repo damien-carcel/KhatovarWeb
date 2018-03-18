@@ -14,7 +14,7 @@ services:
     khatovar_contact.form.type.contact_activation:
         class: Khatovar\Bundle\WebBundle\Form\Type\ContactActivationType
         arguments:
-            - '@doctrine.orm.entity_manager'
+            - '@doctrine'
         tags:
             - { name: form.type }
 
@@ -33,7 +33,7 @@ services:
     khatovar_homepage.form.type.homepage_activation:
         class: Khatovar\Bundle\WebBundle\Form\Type\HomepageActivationType
         arguments:
-            - '@doctrine.orm.entity_manager'
+            - '@doctrine'
         tags:
             - { name: form.type }
 

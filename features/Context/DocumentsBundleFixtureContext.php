@@ -42,12 +42,14 @@ class DocumentsBundleFixtureContext implements Context
 
     /**
      * @param ContainerInterface $container
+     *
+     * @throws \Doctrine\ORM\Tools\ToolsException
      */
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
 
-        $entityManager = $this->container->get('doctrine.orm.entity_manager');
+        $entityManager = $this->container->get('doctrine')->getManager();
 
         $schemaTool = new SchemaTool($entityManager);
         $schemaTool->dropDatabase();
@@ -93,8 +95,8 @@ class DocumentsBundleFixtureContext implements Context
     public function iSetRoleForUser(string $role, string $username): void
     {
         $user = $this->container
-            ->get('doctrine.orm.entity_manager')
-            ->getRepository('CarcelUserBundle:User')
+            ->get('doctrine')
+            ->getRepository('KhatovarUserBundle:User')
             ->findOneBy(['username' => $username]);
 
         if (null === $user) {
@@ -105,7 +107,7 @@ class DocumentsBundleFixtureContext implements Context
             );
         }
 
-        $this->container->get('carcel_user.manager.users')->setRole($user, ['roles' => $role]);
+        $this->container->get('khatovar_user.manager.users')->setRole($user, ['roles' => $role]);
     }
 
     /**
@@ -146,7 +148,7 @@ class DocumentsBundleFixtureContext implements Context
      */
     private function loadDoctrineFixtures(array $fixturePaths): void
     {
-        $entityManager = $this->container->get('doctrine.orm.entity_manager');
+        $entityManager = $this->container->get('doctrine')->getManager();
 
         $loader = new DataFixturesLoader($this->container);
 

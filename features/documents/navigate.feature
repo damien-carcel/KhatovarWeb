@@ -11,8 +11,6 @@ Feature: Navigate through the application
     And I press "Connexion"
     And I am on "documents"
 
-  Scenario: I can access the root of the application
-
   Scenario: I can go back from a folder
 
   Scenario: I can go several folder back at once

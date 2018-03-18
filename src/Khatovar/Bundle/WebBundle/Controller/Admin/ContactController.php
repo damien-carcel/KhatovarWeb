@@ -56,7 +56,7 @@ class ContactController extends Controller
             return $this->redirect($this->generateUrl('khatovar_web_contact_list'));
         }
 
-        $contacts = $this->get('doctrine.orm.entity_manager')
+        $contacts = $this->get('doctrine')
             ->getRepository('KhatovarWebBundle:Contact')
             ->findAll();
 
@@ -108,7 +108,7 @@ class ContactController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $entityManager = $this->get('doctrine.orm.entity_manager');
+            $entityManager = $this->get('doctrine')->getManager();
             $entityManager->persist($contact);
             $entityManager->flush();
 
@@ -139,7 +139,7 @@ class ContactController extends Controller
      */
     public function editAction($id)
     {
-        $contact = $this->get('doctrine.orm.entity_manager')
+        $contact = $this->get('doctrine')
             ->getRepository('KhatovarWebBundle:Contact')
             ->findByIdOr404($id);
 
@@ -163,7 +163,7 @@ class ContactController extends Controller
      */
     public function updateAction(Request $request, $id)
     {
-        $contact = $this->get('doctrine.orm.entity_manager')
+        $contact = $this->get('doctrine')
             ->getRepository('KhatovarWebBundle:Contact')
             ->findByIdOr404($id);
 
@@ -171,7 +171,7 @@ class ContactController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
-            $this->get('doctrine.orm.entity_manager')->flush();
+            $this->get('doctrine')->getManager()->flush();
 
             $this->addFlash('notice', 'Page de contact modifiée');
 
@@ -201,7 +201,7 @@ class ContactController extends Controller
      */
     public function deleteAction(Request $request, $id)
     {
-        $contact = $this->get('doctrine.orm.entity_manager')
+        $contact = $this->get('doctrine')
             ->getRepository('KhatovarWebBundle:Contact')
             ->findByIdOr404($id);
 
@@ -212,7 +212,7 @@ class ContactController extends Controller
             $form->handleRequest($request);
 
             if ($form->isValid()) {
-                $entityManager = $this->get('doctrine.orm.entity_manager');
+                $entityManager = $this->get('doctrine')->getManager();
                 $entityManager->remove($contact);
                 $entityManager->flush();
 

@@ -67,7 +67,7 @@ class ExactionController extends Controller
      */
     public function toComeAction()
     {
-        $futureExactions = $this->get('doctrine.orm.entity_manager')
+        $futureExactions = $this->get('doctrine')
             ->getRepository('KhatovarWebBundle:Exaction')
             ->getFutureExactions();
 
@@ -91,7 +91,7 @@ class ExactionController extends Controller
      */
     public function viewByYearAction($year)
     {
-        $exactions = $this->get('doctrine.orm.entity_manager')
+        $exactions = $this->get('doctrine')
             ->getRepository('KhatovarWebBundle:Exaction')
             ->getExactionsByYear($year);
 

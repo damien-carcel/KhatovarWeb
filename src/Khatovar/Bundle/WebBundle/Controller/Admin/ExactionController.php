@@ -73,7 +73,7 @@ class ExactionController extends Controller
         if ($form->isValid()) {
             $exaction->setOnlyPhotos(true);
 
-            $entityManager = $this->get('doctrine.orm.entity_manager');
+            $entityManager = $this->get('doctrine')->getManager();
             $entityManager->persist($exaction);
             $entityManager->flush();
 
@@ -102,7 +102,7 @@ class ExactionController extends Controller
      */
     public function editAction($id)
     {
-        $exaction = $this->get('doctrine.orm.entity_manager')
+        $exaction = $this->get('doctrine')
             ->getRepository('KhatovarWebBundle:Exaction')
             ->findByIdOr404($id);
 
@@ -134,7 +134,7 @@ class ExactionController extends Controller
      */
     public function updateAction(Request $request, $id)
     {
-        $exaction = $this->get('doctrine.orm.entity_manager')
+        $exaction = $this->get('doctrine')
             ->getRepository('KhatovarWebBundle:Exaction')
             ->findByIdOr404($id);
 
@@ -147,7 +147,7 @@ class ExactionController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
-            $this->get('doctrine.orm.entity_manager')->flush();
+            $this->get('doctrine')->getManager()->flush();
 
             $this->addFlash('notice', 'Exaction modifiée');
 
@@ -175,7 +175,7 @@ class ExactionController extends Controller
      */
     public function deleteAction(Request $request, $id)
     {
-        $exaction = $this->get('doctrine.orm.entity_manager')
+        $exaction = $this->get('doctrine')
             ->getRepository('KhatovarWebBundle:Exaction')
             ->findByIdOr404($id);
 
@@ -183,7 +183,7 @@ class ExactionController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $entityManager = $this->get('doctrine.orm.entity_manager');
+            $entityManager = $this->get('doctrine')->getManager();
             $entityManager->remove($exaction);
             $entityManager->flush();
 
