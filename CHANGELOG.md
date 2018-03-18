@@ -5,6 +5,7 @@
 - **Issue 34**: Reintegrate DocumentsBundle in the application, keep only UserBundle (vO.3) as a dependency.
                 Merge all "Khatovar" bundles in `KhatovarWebBundle`.
 - **Issue 46**: Remove the need for a root folder in database with ID "0".
+- **Issue 78**: Bring back the UserBundle inside the application.
 - Migrate on Symfony 3
 - Form fields that were added through EventSubscriber in the form types or in the controllers are now added in form subscribers
 - Activation of the default homepage and contact page are now manage through an "activation handler" called from the controller

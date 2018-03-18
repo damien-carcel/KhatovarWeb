@@ -2,6 +2,7 @@ language: php
 
 php:
     - '7.1'
+    - '7.2'
 
 git:
     depth: 10
@@ -28,4 +29,5 @@ install:
 script:
     - vendor/bin/phpcs -p --standard=PSR2 --extensions=php features src
     - vendor/bin/php-cs-fixer fix --dry-run -v --diff --config=.php_cs.php
+    - vendor/bin/phpspec run
     - vendor/bin/behat

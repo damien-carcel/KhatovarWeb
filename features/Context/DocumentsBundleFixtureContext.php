@@ -42,6 +42,8 @@ class DocumentsBundleFixtureContext implements Context
 
     /**
      * @param ContainerInterface $container
+     *
+     * @throws \Doctrine\ORM\Tools\ToolsException
      */
     public function __construct(ContainerInterface $container)
     {

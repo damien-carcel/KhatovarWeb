@@ -30,7 +30,10 @@ phpcs :
 php-cs-fixer :
 	docker-compose exec fpm vendor/bin/php-cs-fixer fix --dry-run -v --diff --config=.php_cs.php
 
+phpspec :
+	docker-compose exec fpm vendor/bin/phpspec run
+
 behats :
 	docker-compose exec fpm vendor/bin/behat
 
-tests : phpcs php-cs-fixer behats
+tests : phpcs php-cs-fixer phpspec behats

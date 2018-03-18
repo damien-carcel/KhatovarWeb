@@ -24,8 +24,8 @@ declare(strict_types=1);
 namespace Context;
 
 use Behat\MinkExtension\Context\RawMinkContext;
-use PHPUnit\Framework\Assert;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Webmozart\Assert\Assert;
 
 /**
  * @author Damien Carcel <damien.carcel@gmail.com>
@@ -58,7 +58,7 @@ class DocumentsBundleDownloadContext extends RawMinkContext
         $path = $file->getAbsolutePath();
         $rawFile = file_get_contents($path);
 
-        Assert::assertSame($rawFile, $content, sprintf(
+        Assert::same($rawFile, $content, sprintf(
             'Expected to download file "%s", get the following content "%s"',
             $fileName,
             $content
