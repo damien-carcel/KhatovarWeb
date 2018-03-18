@@ -1,0 +1,13 @@
+services:
+    khatovar_user.handler.logout_success_handler:
+        class: Khatovar\Bundle\UserBundle\Handler\LogoutSuccessHandler
+        arguments:
+            - '@khatovar_user.factory.redirect_response'
+        tags:
+            - { name: 'monolog_logger', channel: 'security' }
+
+    khatovar_user.handler.user_status:
+        class: Khatovar\Bundle\UserBundle\Handler\UserStatusHandler
+        arguments:
+            - '@event_dispatcher'
+            - '@doctrine.orm.entity_manager'

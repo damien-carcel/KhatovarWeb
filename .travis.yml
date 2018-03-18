@@ -18,7 +18,6 @@ before_install:
 
 install:
     - cp app/config/parameters.yml.dist app/config/parameters.yml
-    - cp behat.yml.dist behat.yml
     - composer install --no-interaction --no-scripts
     - mysql -e 'CREATE DATABASE symfony;'
     - bin/console doctrine:schema:update --force --env=test > /dev/null

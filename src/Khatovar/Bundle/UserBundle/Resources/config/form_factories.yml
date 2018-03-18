@@ -5,4 +5,4 @@ services:
             - '@form.factory'
             - '@router'
             - '@translator'
-            - '@carcel_user.manager.roles'
+            - '@khatovar_user.manager.roles'

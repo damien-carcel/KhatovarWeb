@@ -85,7 +85,7 @@ Khatovar\Bundle\WebBundle\Entity\Member:
                 referencedColumnName: id
                 onDelete: 'SET NULL'
         owner:
-            targetEntity: Carcel\Bundle\UserBundle\Entity\User
+            targetEntity: Khatovar\Bundle\UserBundle\Entity\User
             cascade:
                 - detach
             JoinColumn:

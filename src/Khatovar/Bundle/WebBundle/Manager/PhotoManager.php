@@ -21,8 +21,8 @@
 
 namespace Khatovar\Bundle\WebBundle\Manager;
 
-use Carcel\Bundle\UserBundle\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use Khatovar\Bundle\UserBundle\Entity\User;
 use Khatovar\Bundle\WebBundle\Entity\Photo;
 use Khatovar\Bundle\WebBundle\Helper\EntityHelper;
 use Khatovar\Bundle\WebBundle\Helper\PhotoHelper;

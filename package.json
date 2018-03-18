@@ -8,7 +8,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/damien-carcel/documents-bundle-dev.git"
+        "url": "git+https://github.com/damien-carcel/khatovar-web.git"
     },
     "keywords": [
         "document management"
@@ -19,9 +19,9 @@
     },
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/damien-carcel/documents-bundle-dev/issues"
+        "url": "https://github.com/damien-carcel/khatovar-web/issues"
     },
-    "homepage": "https://github.com/damien-carcel/documents-bundle-dev#readme",
+    "homepage": "https://github.com/damien-carcel/khatovar-web#readme",
     "dependencies": {
         "bower": "^1.8.0"
     },

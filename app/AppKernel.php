@@ -78,7 +78,6 @@ class AppKernel extends Kernel
     protected function getAdditionalBundles()
     {
         return [
-            new Carcel\Bundle\UserBundle\CarcelUserBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),

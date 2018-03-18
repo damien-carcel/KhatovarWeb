@@ -72,7 +72,7 @@ swiftmailer:
 fos_user:
     db_driver: orm
     firewall_name: main
-    user_class: Carcel\Bundle\UserBundle\Entity\User
+    user_class: Khatovar\Bundle\UserBundle\Entity\User
     from_email:
         address: noreply@compagniefranchedukhatovar.fr
         sender_name: Master Knight

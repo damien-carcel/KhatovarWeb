@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of CarcelUserBundle.
+ * This file is part of KhatovarWeb.
  *
  * Copyright (c) 2016 Damien Carcel <damien.carcel@gmail.com>
  *
@@ -16,9 +16,9 @@ use Behat\Mink\Exception\DriverException;
 use Behat\MinkExtension\Context\MinkContext;
 use Behat\Symfony2Extension\Context\KernelAwareContext;
 use Behat\Symfony2Extension\Driver\KernelDriver;
-use Carcel\Bundle\UserBundle\Entity\Repository\UserRepositoryInterface;
-use Carcel\Bundle\UserBundle\Manager\UserManager;
 use FOS\UserBundle\Model\UserManagerInterface;
+use Khatovar\Bundle\UserBundle\Entity\Repository\UserRepositoryInterface;
+use Khatovar\Bundle\UserBundle\Manager\UserManager;
 use PHPUnit\Framework\Assert;
 use Symfony\Component\BrowserKit\Client;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -200,6 +200,8 @@ class UserBundleFeatureContext extends MinkContext implements KernelAwareContext
      *
      * @param string $subject
      *
+     * @throws DriverException
+     *
      * @Then /^I should get a confirmation email with subject "(?P<subject>[^"]*)"$/
      */
     public function iShouldGetConfirmationEmailWithSubject($subject)
@@ -217,6 +219,8 @@ class UserBundleFeatureContext extends MinkContext implements KernelAwareContext
     /**
      * Disables the automatic following of redirections.
      *
+     * @throws DriverException
+     *
      * @When /^I stop following redirections$/
      */
     public function disableFollowRedirects()
@@ -226,6 +230,8 @@ class UserBundleFeatureContext extends MinkContext implements KernelAwareContext
 
     /**
      * Enables the automatic following of redirections.
+     *
+     * @throws DriverException
      *
      * @When /^I start following redirections$/
      */
@@ -290,6 +296,7 @@ class UserBundleFeatureContext extends MinkContext implements KernelAwareContext
      * Gets the current Symfony profile.
      *
      * @throws \RuntimeException
+     * @throws DriverException
      *
      * @return Profile
      */
@@ -377,7 +384,7 @@ class UserBundleFeatureContext extends MinkContext implements KernelAwareContext
      */
     protected function getCarcelUserManager()
     {
-        return $this->kernel->getContainer()->get('carcel_user.manager.users');
+        return $this->kernel->getContainer()->get('khatovar_user.manager.users');
     }
 
     /**
@@ -400,7 +407,8 @@ class UserBundleFeatureContext extends MinkContext implements KernelAwareContext
     protected function getUserRepository()
     {
         return $this->kernel->getContainer()
-            ->get('doctrine.orm.entity_manager')
-            ->getRepository('CarcelUserBundle:User');
+            ->get('doctrine')
+            ->getManager()
+            ->getRepository('KhatovarUserBundle:User');
     }
 }

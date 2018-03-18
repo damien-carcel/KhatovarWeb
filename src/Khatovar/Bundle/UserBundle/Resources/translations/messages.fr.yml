@@ -26,6 +26,15 @@ khatovar_user:
         name.label: Nom d'utilisateur
         email.label: Adresse e-mail
         role.label: Rôles
+    mail:
+        remove:
+            subject: Suppression de compte
+            body: |
+                Bonjour %username%.
+
+                Votre compte utilisateur a été supprimée.
+
+                Bonne journée à vous.
     notice:
         activated: L'utilisateur a été activé
         deactivated: L'utilisateur a été désactivé
@@ -43,3 +52,7 @@ khatovar_user:
         forgotten_password: Mot de passe oublié ?
         new_user: Nouvel utilisateur
         no_role: Désolé, aucun rôle n'a encore été attribué à votre compte. Attendez l'email de confirmation.
+
+ROLE_USER: Utilisateur basique
+ROLE_ADMIN: Administrateur
+ROLE_SUPER_ADMIN: Super administrateur

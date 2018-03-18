@@ -2,7 +2,7 @@
 # http://symfony.com/doc/current/security.html
 security:
     encoders:
-        FOS\UserBundle\Model\UserInterface: sha512 #TODO see if that can be change for `bcrypt` without impacts
+        FOS\UserBundle\Model\UserInterface: sha512
 
     role_hierarchy:
         ROLE_VIEWER:        [ROLE_USER]
@@ -38,7 +38,7 @@ security:
             logout:
                 path: fos_user_security_logout
                 target: /
-                success_handler: carcel_user.handler.logout_success_handler
+                success_handler: khatovar_user.handler.logout_success_handler
             anonymous: true
             remember_me:
                 secret: '%secret%'

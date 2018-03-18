@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "884ad50804fda1d07963136b6a6cac39",
+    "content-hash": "c34b7d3f1b6ee6b5ab769bb85943b4ee",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -49,68 +49,6 @@
                 "transliterator"
             ],
             "time": "2017-04-04T11:38:05+00:00"
-        },
-        {
-            "name": "carcel/user-bundle",
-            "version": "v0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/damien-carcel/UserBundle.git",
-                "reference": "7b78c42ca67c597e6d5d3f8c00c4fc4edff85c54"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/damien-carcel/UserBundle/zipball/7b78c42ca67c597e6d5d3f8c00c4fc4edff85c54",
-                "reference": "7b78c42ca67c597e6d5d3f8c00c4fc4edff85c54",
-                "shasum": ""
-            },
-            "require": {
-                "doctrine/orm": "^2.5",
-                "friendsofsymfony/user-bundle": "^2.0",
-                "php": ">=7.1",
-                "symfony/framework-bundle": "^3.4",
-                "symfony/security": "^3.4",
-                "symfony/swiftmailer-bundle": "^3.1",
-                "symfony/translation": "^3.4",
-                "symfony/validator": "^3.4"
-            },
-            "require-dev": {
-                "doctrine/doctrine-fixtures-bundle": "^2.3",
-                "friendsofphp/php-cs-fixer": "^2.0",
-                "phpmd/phpmd": "^2.4",
-                "phpspec/phpspec": "^4.0",
-                "phpunit/phpunit": "^6.0",
-                "squizlabs/php_codesniffer": "^3.0"
-            },
-            "type": "symfony-bundle",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "0.3.x-dev",
-                    "dev-0.2": "0.2.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Carcel\\Bundle\\UserBundle\\": "src",
-                    "UserBundleContext\\": "features/Context"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Damien Carcel",
-                    "email": "damien.carcel@gmail.com"
-                }
-            ],
-            "description": "A ready to use UserBundle",
-            "homepage": "https://github.com/damien-carcel/user-bundle-dev",
-            "keywords": [
-                "User management"
-            ],
-            "time": "2017-12-02T11:45:06+00:00"
         },
         {
             "name": "composer/ca-bundle",

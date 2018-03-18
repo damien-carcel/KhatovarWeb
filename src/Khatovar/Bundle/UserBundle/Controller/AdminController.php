@@ -11,8 +11,8 @@
 
 namespace Khatovar\Bundle\UserBundle\Controller;
 
-use Carcel\Bundle\UserBundle\Event\UserEvents;
 use FOS\UserBundle\Model\UserInterface;
+use Khatovar\Bundle\UserBundle\Event\UserEvents;
 use Khatovar\Bundle\UserBundle\Form\Factory\UserFormFactoryInterface;
 use Khatovar\Bundle\UserBundle\Form\Type\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -37,8 +37,8 @@ class AdminController extends Controller
      */
     public function indexAction()
     {
-        $users = $this->get('carcel_user.manager.users')->getAdministrableUsers();
-        $deleteForms = $this->getUserFormFactory()->createDeleteFormViews($users, 'carcel_user_admin_remove');
+        $users = $this->get('khatovar_user.manager.users')->getAdministrableUsers();
+        $deleteForms = $this->getUserFormFactory()->createDeleteFormViews($users, 'khatovar_user_admin_remove');
 
         return $this->render(
             'KhatovarUserBundle:Admin:index.html.twig',
@@ -79,7 +79,7 @@ class AdminController extends Controller
         $form = $this->getUserFormFactory()->createEditForm(
             $user,
             UserType::class,
-            'carcel_user_admin_update'
+            'khatovar_user_admin_update'
         );
 
         return $this->render(
@@ -102,7 +102,7 @@ class AdminController extends Controller
         $form = $this->getUserFormFactory()->createEditForm(
             $user,
             UserType::class,
-            'carcel_user_admin_update'
+            'khatovar_user_admin_update'
         );
 
         $form->handleRequest($request);
@@ -119,7 +119,7 @@ class AdminController extends Controller
                 $this->get('translator')->trans('khatovar_user.notice.update')
             );
 
-            return $this->redirect($this->generateUrl('carcel_user_admin_index'));
+            return $this->redirect($this->generateUrl('khatovar_user_admin_index'));
         }
 
         return $this->render(
@@ -146,8 +146,8 @@ class AdminController extends Controller
             throw $this->createAccessDeniedException();
         }
 
-        $rolesManager = $this->get('carcel_user.manager.roles');
-        $userManager = $this->get('carcel_user.manager.users');
+        $rolesManager = $this->get('khatovar_user.manager.roles');
+        $userManager = $this->get('khatovar_user.manager.users');
 
         $userRole = $rolesManager->getUserRole($user);
 
@@ -168,7 +168,7 @@ class AdminController extends Controller
                 $this->get('translator')->trans('khatovar_user.notice.set_role')
             );
 
-            return $this->redirect($this->generateUrl('carcel_user_admin_index'));
+            return $this->redirect($this->generateUrl('khatovar_user_admin_index'));
         }
 
         return $this->render(
@@ -198,10 +198,10 @@ class AdminController extends Controller
         }
 
         if ($user->isEnabled()) {
-            $this->get('carcel_user.handler.user_status')->disable($user);
+            $this->get('khatovar_user.handler.user_status')->disable($user);
             $notice = 'khatovar_user.notice.deactivated';
         } else {
-            $this->get('carcel_user.handler.user_status')->enable($user);
+            $this->get('khatovar_user.handler.user_status')->enable($user);
             $notice = 'khatovar_user.notice.activated';
         }
 
@@ -210,7 +210,7 @@ class AdminController extends Controller
             $this->get('translator')->trans($notice)
         );
 
-        return $this->redirect($this->generateUrl('carcel_user_admin_index'));
+        return $this->redirect($this->generateUrl('khatovar_user_admin_index'));
     }
 
     /**
@@ -225,7 +225,7 @@ class AdminController extends Controller
     public function removeUserAction(Request $request, $username)
     {
         $user = $this->findUserByUsernameOr404($username);
-        $form = $this->getUserFormFactory()->createDeleteForm($username, 'carcel_user_admin_remove');
+        $form = $this->getUserFormFactory()->createDeleteForm($username, 'khatovar_user_admin_remove');
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -242,7 +242,7 @@ class AdminController extends Controller
             );
         }
 
-        return $this->redirect($this->generateUrl('carcel_user_admin_index'));
+        return $this->redirect($this->generateUrl('khatovar_user_admin_index'));
     }
 
     /**
@@ -261,7 +261,7 @@ class AdminController extends Controller
     {
         $user = $this
             ->get('doctrine')
-            ->getRepository('CarcelUserBundle:User')
+            ->getRepository('KhatovarUserBundle:User')
             ->findOneBy(['username' => $username]);
 
         if (!$this->getUser()->isSuperAdmin() && $user->isSuperAdmin()) {
