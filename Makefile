@@ -5,27 +5,24 @@ down :
 	docker-compose down -v
 
 composer :
-	docker-compose exec fpm composer update --prefer-dist --optimize-autoloader
+	docker-compose exec fpm composer install --prefer-dist --optimize-autoloader
 
 yarn :
-	docker-compose run node yarn install
+	docker-compose run --rm node yarn install
 
 schema :
 	docker-compose exec fpm bin/console doctrine:schema:update --force
 
-fixtures :
-	docker-compose exec fpm bin/console doctrine:fixtures:load --fixtures=features/Context/DataFixtures/ORM/LoadUserData.php
-
 assets :
 	docker-compose exec fpm bin/console assets:install www --symlink --relative
 
-jsassets :
+bower :
 	docker-compose run node yarn run assets
 
-initialize : composer yarn schema fixtures assets jsassets
+initialize : composer yarn schema assets bower
 
 phpcs :
-	docker-compose exec fpm vendor/bin/phpcs -p --standard=PSR2 --extensions=php src
+	docker-compose exec fpm vendor/bin/phpcs -p --standard=PSR2 --extensions=php src tests/acceptance tests/integration tests/system
 
 php-cs-fixer :
 	docker-compose exec fpm vendor/bin/php-cs-fixer fix --dry-run -v --diff --config=.php_cs.php
@@ -33,7 +30,13 @@ php-cs-fixer :
 phpspec :
 	docker-compose exec fpm vendor/bin/phpspec run
 
-behats :
-	docker-compose exec fpm vendor/bin/behat
+integration :
+	docker-compose exec fpm vendor/bin/behat --profile=integration
 
-tests : phpcs php-cs-fixer phpspec behats
+acceptance :
+	docker-compose exec fpm vendor/bin/behat --profile=acceptance
+
+system :
+	docker-compose exec fpm vendor/bin/behat --profile=system
+
+tests : phpcs php-cs-fixer phpspec integration acceptance system

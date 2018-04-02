@@ -19,6 +19,12 @@
         "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
     },
     "autoload-dev": {
+        "psr-4": {
+            "Khatovar\\Tests\\Acceptance\\": "tests/acceptance/",
+            "Khatovar\\Tests\\Fixtures\\": "tests/fixtures/",
+            "Khatovar\\Tests\\Integration\\": "tests/integration/",
+            "Khatovar\\Tests\\System\\": "tests/system/"
+        },
         "files": [ "vendor/symfony/symfony/src/Symfony/Component/VarDumper/Resources/functions/dump.php" ]
     },
     "require": {
@@ -70,9 +76,6 @@
     },
     "config": {
         "bin-dir": "vendor/bin",
-        "platform": {
-            "php": "7.1"
-        },
         "sort-packages": true
     },
     "minimum-stability": "stable",
@@ -80,7 +83,7 @@
         "symfony-app-dir": "app",
         "symfony-bin-dir": "bin",
         "symfony-var-dir": "var",
-        "symfony-web-dir": "web",
+        "symfony-web-dir": "www",
         "symfony-tests-dir": "tests",
         "symfony-assets-install": "relative",
         "incenteev-parameters": {

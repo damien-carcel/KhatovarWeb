@@ -1,4 +1,30 @@
-default:
+integration:
+    extensions:
+        Behat\Symfony2Extension:
+            kernel:
+                bootstrap: vendor/autoload.php
+                env: test
+    suites:
+        default:
+            paths:
+                - '%paths.base%/tests/integration/features'
+            contexts:
+                - Khatovar\Tests\Integration\Context\FeatureContext: ~
+
+acceptance:
+    extensions:
+        Behat\Symfony2Extension:
+            kernel:
+                bootstrap: vendor/autoload.php
+                env: acceptance
+    suites:
+        default:
+            paths:
+                - '%paths.base%/tests/features'
+            contexts:
+                - Khatovar\Tests\Acceptance\Context\FeatureContext: ~
+
+system:
     extensions:
         Behat\MinkExtension:
             sessions:
@@ -7,6 +33,7 @@ default:
         Behat\Symfony2Extension:
             kernel:
                 bootstrap: vendor/autoload.php
+                env: test
         BehatExtension\DoctrineDataFixturesExtension\Extension:
             lifetime: scenario
             autoload: false

@@ -20,14 +20,17 @@ before_install:
 install:
     - cp app/config/parameters.yml.dist app/config/parameters.yml
     - composer install --no-interaction --no-scripts
-    - mysql -e 'CREATE DATABASE symfony;'
+    - npm install
+    - mysql -e 'CREATE DATABASE khatovar;'
+    - mysql -e 'GRANT ALL PRIVILEGES ON khatovar.* TO khatovar@localhost IDENTIFIED BY "khatovar"'
     - bin/console doctrine:schema:update --force --env=test > /dev/null
     - bin/console assets:install www
-    - npm install
     - npm run assets
 
 script:
-    - vendor/bin/phpcs -p --standard=PSR2 --extensions=php features src
+    - vendor/bin/phpcs -p --standard=PSR2 --extensions=php src tests/acceptance tests/integration tests/system
     - vendor/bin/php-cs-fixer fix --dry-run -v --diff --config=.php_cs.php
     - vendor/bin/phpspec run
-    - vendor/bin/behat
+    - vendor/bin/behat --profile=integration
+    - vendor/bin/behat --profile=acceptance
+    - vendor/bin/behat --profile=system
