@@ -2,28 +2,27 @@ version: '2'
 
 services:
   node:
-    image: 'node:${NODE_TAG}'
+    image: 'node:8'
     environment:
       YARN_CACHE_FOLDER: '/home/node/.yarn-cache'
     user: 'node'
     volumes:
       - './:/srv/khatovar'
-      - '${YARN_HOST_CACHE}:/home/node/.yarn-cache'
+      - '~/.cache/yarn:/home/node/.yarn-cache'
     working_dir: '/srv/khatovar'
 
   fpm:
-    image: 'akeneo/fpm:php-${PHP_TAG}'
+    image: 'akeneo/fpm:php-7.1'
     environment:
       COMPOSER_CACHE_DIR: '/home/docker/.cache/composer'
       COMPOSER_HOME: '/home/docker/.config/composer'
-      PHP_IDE_CONFIG: 'serverName=${SERVER_CLI_KEY}'
-      PHP_XDEBUG_ENABLED: '${XDEBUG_IS_ACTIVATED}'
-      XDEBUG_CONFIG: 'remote_host=${HOST_IP}'
-    user: '${CONTAINER_USER}:${CONTAINER_GROUP}'
+      PHP_IDE_CONFIG: 'serverName=khatovar-cli'
+      XDEBUG_CONFIG: 'remote_host=172.17.0.1'
+    user: 'docker:docker'
     volumes:
       - './:/srv/khatovar'
-      - '${COMPOSER_HOST_CACHE}:/home/docker/.cache/composer'
-      - '${COMPOSER_HOST_HOME}:/home/docker/.config/composer'
+      - '~/.cache/composer:/home/docker/.cache/composer'
+      - '~/.config/composer:/home/docker/.config/composer'
     working_dir: '/srv/khatovar'
 
   nginx:
@@ -31,9 +30,9 @@ services:
     depends_on:
       - 'fpm'
     environment:
-      PHP_IDE_CONFIG: 'serverName=${SERVER_WEB_KEY}'
+      PHP_IDE_CONFIG: 'serverName=khatovar-web'
     ports:
-      - '${NGINX_OUTPUT_PORT}:80'
+      - '8000:80'
     volumes:
       - './:/srv/khatovar:ro'
       - './docker/nginx.conf:/etc/nginx/conf.d/default.conf:ro'
@@ -46,5 +45,3 @@ services:
       MYSQL_USER: 'khatovar'
       MYSQL_PASSWORD: 'khatovar'
       MYSQL_DATABASE: 'khatovar'
-    ports:
-      - '${MYSQL_OUTPUT_PORT}:3306'

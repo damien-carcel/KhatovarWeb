@@ -6,5 +6,5 @@
 /www/assets
 /www/bundles
 /www/uploaded
-.env
-.php_cs.cache
+/docker-compose.override.yaml
+/.php_cs.cache
