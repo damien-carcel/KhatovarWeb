@@ -288,7 +288,7 @@ class PhotosExtension extends \Twig_Extension
                         $photos[$currentPhoto],
                         $currentPhoto % 2 ? 'left' : 'right'
                     );
-                    $currentPhoto += 1;
+                    ++$currentPhoto;
                 }
             } elseif ($p + 1 < $paragraphs) {
                 $exploded[$p + 1] = $exploded[$p].$exploded[$p + 1];
