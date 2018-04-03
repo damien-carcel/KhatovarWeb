@@ -34,3 +34,4 @@ script:
     - vendor/bin/behat --profile=integration
     - vendor/bin/behat --profile=acceptance
     - vendor/bin/behat --profile=system
+    - vendor/bin/behat --profile=legacy

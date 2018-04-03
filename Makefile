@@ -39,4 +39,7 @@ acceptance :
 system :
 	docker-compose exec fpm vendor/bin/behat --profile=system
 
-tests : phpcs php-cs-fixer phpspec integration acceptance system
+legacy :
+	docker-compose exec fpm vendor/bin/behat --profile=legacy
+
+tests : phpcs php-cs-fixer phpspec integration acceptance system legacy
