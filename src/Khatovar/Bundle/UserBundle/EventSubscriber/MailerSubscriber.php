@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of KhatovarWeb.
  *
@@ -13,9 +15,10 @@ namespace Khatovar\Bundle\UserBundle\EventSubscriber;
 
 use FOS\UserBundle\Model\UserInterface;
 use Khatovar\Bundle\UserBundle\Event\UserEvents;
-use Khatovar\Bundle\UserBundle\Manager\MailManager;
+use Khatovar\Bundle\UserBundle\Factory\SwiftMessageFactory;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Subscriber that sends email to a user when its account has been removed.
@@ -24,21 +27,34 @@ use Symfony\Component\EventDispatcher\GenericEvent;
  */
 class MailerSubscriber implements EventSubscriberInterface
 {
-    /** @var string */
-    protected $mailAddress;
+    /** @var TranslatorInterface */
+    protected $translator;
 
-    /** @var MailManager */
-    protected $mailManager;
+    /** @var \Swift_Mailer */
+    private $mailer;
+
+    /** @var SwiftMessageFactory */
+    private $messageFactory;
 
     /** @var string */
-    protected $username;
+    private $mailerAddress;
 
     /**
-     * @param MailManager $mailManager
+     * @param \Swift_Mailer       $mailer
+     * @param TranslatorInterface $translator
+     * @param SwiftMessageFactory $messageFactory
+     * @param string              $mailerAddress
      */
-    public function __construct(MailManager $mailManager)
-    {
-        $this->mailManager = $mailManager;
+    public function __construct(
+        \Swift_Mailer $mailer,
+        TranslatorInterface $translator,
+        SwiftMessageFactory $messageFactory,
+        $mailerAddress
+    ) {
+        $this->mailer = $mailer;
+        $this->translator = $translator;
+        $this->messageFactory = $messageFactory;
+        $this->mailerAddress = $mailerAddress;
     }
 
     /**
@@ -47,38 +63,38 @@ class MailerSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            UserEvents::PRE_REMOVE => 'getUserEmail',
             UserEvents::POST_REMOVE => 'sendMessage',
         ];
     }
 
     /**
-     * Gets the username and mail address of the user to be removed.
+     * Sends an email to the removed user.
      *
      * @param GenericEvent $event
      */
-    public function getUserEmail(GenericEvent $event)
+    public function sendMessage(GenericEvent $event)
     {
         $user = $event->getSubject();
 
         if (!$user instanceof UserInterface) {
-            throw new \InvalidArgumentException('MailerSubscriber event is expected to contain an instance of User');
+            return;
         }
 
-        $this->mailAddress = $user->getEmail();
-        $this->username = $user->getUsername();
-    }
-
-    /**
-     * Sends an email to the removed user.
-     */
-    public function sendMessage()
-    {
-        $this->mailManager->send(
-            $this->mailAddress,
-            $this->username,
-            'khatovar_user.mail.remove.subject',
-            'khatovar_user.mail.remove.body'
+        $subject = $this->translator->trans('khatovar_user.mail.remove.subject');
+        $body = $this->translator->trans(
+            'khatovar_user.mail.remove.body',
+            [
+                '%username%' => $user->getUsername(),
+            ]
         );
+
+        $message = $this->messageFactory->create(
+            $this->mailerAddress,
+            $user->getEmail(),
+            $subject,
+            $body
+        );
+
+        $this->mailer->send($message);
     }
 }

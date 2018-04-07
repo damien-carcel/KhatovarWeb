@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of KhatovarWeb.
  *
@@ -19,10 +21,22 @@ namespace Khatovar\Bundle\UserBundle\Factory;
 class SwiftMessageFactory
 {
     /**
+     * @param string $fromAddress
+     * @param string $toAddress
+     * @param string $subject
+     * @param string $body
+     *
      * @return \Swift_Message
      */
-    public function create()
+    public function create(string $fromAddress, string $toAddress, string $subject, string $body): \Swift_Message
     {
-        return new \Swift_Message();
+        $message = new \Swift_Message();
+
+        $message->setFrom($fromAddress);
+        $message->setTo($toAddress);
+        $message->setSubject($subject);
+        $message->setBody($body);
+
+        return $message;
     }
 }

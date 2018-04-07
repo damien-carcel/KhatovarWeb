@@ -24,8 +24,11 @@ initialize : composer yarn schema assets bower
 phpcs :
 	docker-compose exec fpm vendor/bin/phpcs -p --standard=PSR2 --extensions=php src tests/acceptance tests/integration tests/system
 
-php-cs-fixer :
+php-cs-fixer-dry-run :
 	docker-compose exec fpm vendor/bin/php-cs-fixer fix --dry-run -v --diff --config=.php_cs.php
+
+php-cs-fixer :
+	docker-compose exec fpm vendor/bin/php-cs-fixer fix -v --diff --config=.php_cs.php
 
 phpspec :
 	docker-compose exec fpm vendor/bin/phpspec run
@@ -42,4 +45,4 @@ system :
 legacy :
 	docker-compose exec fpm vendor/bin/behat --profile=legacy
 
-tests : phpcs php-cs-fixer phpspec integration acceptance system legacy
+tests : phpcs php-cs-fixer-dry-run phpspec integration acceptance system legacy

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of KhatovarWeb.
  *
@@ -12,71 +14,71 @@
 namespace spec\Khatovar\Bundle\UserBundle\EventSubscriber;
 
 use Khatovar\Bundle\UserBundle\Event\UserEvents;
-use Khatovar\Bundle\UserBundle\EventSubscriber\MailerSubscriber;
-use Khatovar\Bundle\UserBundle\Manager\MailManager;
+use Khatovar\Bundle\UserBundle\Factory\SwiftMessageFactory;
 use FOS\UserBundle\Model\UserInterface;
 use PhpSpec\ObjectBehavior;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * @author Damien Carcel <damien.carcel@gmail.com>
  */
 class MailerSubscriberSpec extends ObjectBehavior
 {
-    function let(MailManager $mailManager)
-    {
-        $this->beConstructedWith($mailManager);
-    }
-
-    function it_is_initializable()
-    {
-        $this->shouldHaveType(MailerSubscriber::class);
-    }
-
-    function it_is_an_event_subscriber()
-    {
-        $this->shouldImplement(EventSubscriberInterface::class);
+    function let(
+        \Swift_Mailer $mailer,
+        TranslatorInterface $translator,
+        SwiftMessageFactory $messageFactory
+    ) {
+        $this->beConstructedWith($mailer, $translator, $messageFactory, 'mailer@mail.address');
     }
 
     function it_subscribes_to_user_remove_events()
     {
         $this->getSubscribedEvents()->shouldReturn([
-            UserEvents::PRE_REMOVE  => 'getUserEmail',
             UserEvents::POST_REMOVE => 'sendMessage',
         ]);
     }
 
-    function it_gets_user_mail_address_and_username(
+    function it_sends_an_email_to_a_user(
+        $mailer,
+        $translator,
+        $messageFactory,
         GenericEvent $event,
-        UserInterface $user
+        UserInterface $user,
+        \Swift_Message $message
     ) {
         $event->getSubject()->willReturn($user);
 
-        $user->getEmail()->shouldBeCalled();
-        $user->getUsername()->shouldBeCalled();
+        $user->getEmail()->willReturn('user@mail.address');
+        $user->getUsername()->willReturn('user_name');
 
-        $this->getUserEmail($event);
+        $translator->trans('khatovar_user.mail.remove.subject')->willReturn('A translated subject');
+        $translator->trans(
+            'khatovar_user.mail.remove.body',
+            [
+                '%username%' => 'user_name',
+            ]
+        )->willReturn('A translated body for "user_name"');
+
+        $messageFactory->create(
+            'mailer@mail.address',
+            'user@mail.address',
+            'A translated subject',
+            'A translated body for "user_name"'
+        )->willReturn($message);
+
+        $mailer->send($message)->shouldBeCalled();
+
+        $this->sendMessage($event);
     }
 
-    function it_throws_an_exception_if_subject_is_not_a_user(GenericEvent $event)
-    {
-        $event->getSubject()->willReturn('foobar');
+    function it_does_not_send_an_email_if_the_event_does_not_contains_a_user(
+        GenericEvent $event,
+        \StdClass $object
+    ) {
+        $event->getSubject()->willReturn($object);
 
-        $this->shouldThrow(
-            new \InvalidArgumentException('MailerSubscriber event is expected to contain an instance of User')
-        )->during('getUserEmail', [$event]);
-    }
-
-    function it_sends_an_email_to_a_user($mailManager)
-    {
-        $mailManager->send(
-            null,
-            null,
-            'khatovar_user.mail.remove.subject',
-            'khatovar_user.mail.remove.body'
-        )->shouldBeCalled();
-
-        $this->sendMessage();
+        $this->sendMessage($event);
     }
 }

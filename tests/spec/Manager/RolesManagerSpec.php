@@ -16,18 +16,16 @@ use FOS\UserBundle\Model\UserInterface;
 use PhpSpec\ObjectBehavior;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * @author Damien Carcel <damien.carcel@gmail.com>
  */
 class RolesManagerSpec extends ObjectBehavior
 {
-    function let(TokenStorageInterface $tokenStorage, TranslatorInterface $translator)
+    function let(TokenStorageInterface $tokenStorage)
     {
         $this->beConstructedWith(
             $tokenStorage,
-            $translator,
             [
                 'ROLE_VIEWER'      => ['ROLE_USER'],
                 'ROLE_ADMIN'       => ['ROLE_VIEWER'],

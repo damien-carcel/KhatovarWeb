@@ -13,7 +13,6 @@ namespace Khatovar\Bundle\UserBundle\Manager;
 
 use FOS\UserBundle\Model\UserInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * User roles manager.
@@ -28,18 +27,13 @@ class RolesManager
     /** @var TokenStorageInterface */
     protected $tokenStorage;
 
-    /** @var TranslatorInterface */
-    protected $translator;
-
     /**
      * @param TokenStorageInterface $tokenStorage
-     * @param TranslatorInterface   $translator
      * @param string[]              $roles
      */
-    public function __construct(TokenStorageInterface $tokenStorage, TranslatorInterface $translator, array $roles)
+    public function __construct(TokenStorageInterface $tokenStorage, array $roles)
     {
         $this->tokenStorage = $tokenStorage;
-        $this->translator = $translator;
         $this->roles = $roles;
     }
 

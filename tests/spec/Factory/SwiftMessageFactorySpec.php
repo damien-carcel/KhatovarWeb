@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace spec\Khatovar\Bundle\UserBundle\Factory;
 
 use Khatovar\Bundle\UserBundle\Factory\SwiftMessageFactory;
@@ -14,8 +16,12 @@ class SwiftMessageFactorySpec extends ObjectBehavior
 
     function it_creates_a_swift_message()
     {
-        $message = $this->create();
+        $message = $this->create('from@something.somewhere', 'to@something.somewhere', 'subject', 'body');
 
         $message->shouldBeAnInstanceOf(\Swift_Message::class);
+        $message->getFrom()->shouldBe(['from@something.somewhere' => null]);
+        $message->getTo()->shouldBe(['to@something.somewhere' => null]);
+        $message->getSubject()->shouldBe('subject');
+        $message->getBody()->shouldBe('body');
     }
 }

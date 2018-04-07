@@ -229,12 +229,10 @@ class AdminController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $this->get('event_dispatcher')->dispatch(UserEvents::PRE_REMOVE, new GenericEvent($user));
-
             $this->get('doctrine')->getManager()->remove($user);
             $this->get('doctrine')->getManager()->flush();
 
-            $this->get('event_dispatcher')->dispatch(UserEvents::POST_REMOVE);
+            $this->get('event_dispatcher')->dispatch(UserEvents::POST_REMOVE, new GenericEvent($user));
 
             $this->addFlash(
                 'notice',
