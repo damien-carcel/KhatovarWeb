@@ -9,5 +9,6 @@ services:
         class: Khatovar\Bundle\UserBundle\Manager\UserManager
         arguments:
             - '@security.token_storage'
+            - '@Khatovar\Bundle\UserBundle\Entity\Repository\UserRepository'
             - '@doctrine'
             - '@khatovar_user.manager.roles'

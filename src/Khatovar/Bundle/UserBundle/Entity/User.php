@@ -18,7 +18,7 @@ use FOS\UserBundle\Model\User as BaseUser;
  *
  * @author Damien Carcel <damien.carcel@gmail.com>
  */
-class User extends BaseUser
+class User extends BaseUser implements UserInterface
 {
     /** @var int */
     protected $id;

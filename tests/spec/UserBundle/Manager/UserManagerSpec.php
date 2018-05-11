@@ -29,12 +29,16 @@ use Symfony\Component\Validator\Exception\InvalidArgumentException;
  */
 class UserManagerSpec extends ObjectBehavior
 {
-    function let(TokenStorageInterface $tokenStorage, RegistryInterface $doctrine, RolesManager $rolesManager)
-    {
-        $this->beConstructedWith($tokenStorage, $doctrine, $rolesManager);
+    function let(
+        TokenStorageInterface $tokenStorage,
+        UserRepositoryInterface $userRepository,
+        RegistryInterface $doctrine,
+        RolesManager $rolesManager
+    ) {
+        $this->beConstructedWith($tokenStorage, $userRepository, $doctrine, $rolesManager);
     }
 
-    function it_is_initializable()
+    function it_is_a_user_manager()
     {
         $this->shouldHaveType(UserManager::class);
     }
@@ -67,7 +71,6 @@ class UserManagerSpec extends ObjectBehavior
     function it_returns_all_users_but_the_current_one_being_the_super_admin(
         $tokenStorage,
         $doctrine,
-         $entityManager,
         UserRepositoryInterface $userRepository,
         TokenInterface $token,
         UserInterface $currentUser,
@@ -96,11 +99,13 @@ class UserManagerSpec extends ObjectBehavior
         EntityManagerInterface $entityManager,
         UserInterface $user
     ) {
-        $rolesManager->getChoices()->willReturn([
-            'ROLE_USER'   => 'ROLE_USER',
-            'ROLE_VIEWER' => 'ROLE_VIEWER',
-            'ROLE_ADMIN'  => 'ROLE_ADMIN',
-        ]);
+        $rolesManager->getChoices()->willReturn(
+            [
+                'ROLE_USER' => 'ROLE_USER',
+                'ROLE_VIEWER' => 'ROLE_VIEWER',
+                'ROLE_ADMIN' => 'ROLE_ADMIN',
+            ]
+        );
 
         $user->setRoles(['ROLE_ADMIN'])->shouldBeCalled();
         $doctrine->getManager()->willReturn($entityManager);
@@ -115,10 +120,12 @@ class UserManagerSpec extends ObjectBehavior
         EntityManagerInterface $entityManager,
         UserInterface $user
     ) {
-        $rolesManager->getChoices()->willReturn([
-            'ROLE_USER'   => 'ROLE_USER',
-            'ROLE_VIEWER' => 'ROLE_VIEWER',
-        ]);
+        $rolesManager->getChoices()->willReturn(
+            [
+                'ROLE_USER' => 'ROLE_USER',
+                'ROLE_VIEWER' => 'ROLE_VIEWER',
+            ]
+        );
 
         $user->setRoles([Argument::any()])->shouldNotBeCalled();
         $doctrine->getManager()->willReturn($entityManager);

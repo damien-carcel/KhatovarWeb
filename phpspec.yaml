@@ -1,6 +1,6 @@
 suites:
     user-bundle:
-        namespace: Khatovar\Bundle\UserBundle
-        psr4_prefix: Khatovar\Bundle\UserBundle
+        namespace: Khatovar\Bundle
+        psr4_prefix: Khatovar\Bundle
         src_path: src
         spec_path: tests

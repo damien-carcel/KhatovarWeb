@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of KhatovarWeb.
  *
@@ -15,6 +17,7 @@ use Khatovar\Bundle\UserBundle\Manager\RolesManager;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -24,7 +27,7 @@ use Symfony\Component\Translation\TranslatorInterface;
  *
  * @author Damien Carcel <damien.carcel@gmail.com>
  */
-class UserFormFactory implements UserFormFactoryInterface
+class UserFormFactory
 {
     /** @var FormFactoryInterface */
     protected $formFactory;
@@ -57,9 +60,15 @@ class UserFormFactory implements UserFormFactoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Creates a form to create a new entity.
+     *
+     * @param UserInterface $item the entity to create
+     * @param string        $type The form type to use with the entity
+     * @param string        $url  The route used to create the entity
+     *
+     * @return FormInterface
      */
-    public function createCreateForm(UserInterface $item, $type, $url)
+    public function createCreateForm(UserInterface $item, string $type, string $url): FormInterface
     {
         $form = $this->formFactory->create(
             $type,
@@ -74,9 +83,15 @@ class UserFormFactory implements UserFormFactoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Creates a form to edit an entity.
+     *
+     * @param UserInterface $item the entity to edit
+     * @param string        $type The form type to use with the entity
+     * @param string        $url  The route used to edit the entity
+     *
+     * @return FormInterface
      */
-    public function createEditForm(UserInterface $item, $type, $url)
+    public function createEditForm(UserInterface $item, string $type, string $url): FormInterface
     {
         $form = $this->formFactory->create(
             $type,
@@ -91,9 +106,14 @@ class UserFormFactory implements UserFormFactoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Creates a form to delete an entity.
+     *
+     * @param string $username The ID of the entity to delete
+     * @param string $url      The route used to delete the entity
+     *
+     * @return FormInterface
      */
-    public function createDeleteForm($username, $url)
+    public function createDeleteForm(string $username, string $url): FormInterface
     {
         $formBuilder = $this->formFactory->createBuilder();
 
@@ -118,9 +138,14 @@ class UserFormFactory implements UserFormFactoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Return a list of delete forms for a set entities.
+     *
+     * @param UserInterface[] $items The list of entities to delete
+     * @param string          $url   The route used to delete the entities
+     *
+     * @return FormInterface[]
      */
-    public function createDeleteFormViews(array $items, $url)
+    public function createDeleteFormViews(array $items, string $url): array
     {
         $deleteForms = [];
 
@@ -132,9 +157,13 @@ class UserFormFactory implements UserFormFactoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Creates a form to set user's roles.
+     *
+     * @param string $currentRole
+     *
+     * @return FormInterface
      */
-    public function createSetRoleForm($currentRole)
+    public function createSetRoleForm(string $currentRole): FormInterface
     {
         $form = $this->formFactory
             ->createBuilder()

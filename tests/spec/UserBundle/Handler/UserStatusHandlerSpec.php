@@ -31,13 +31,9 @@ class UserStatusHandlerSpec extends ObjectBehavior
         $this->beConstructedWith($eventDispatcher, $doctrine);
     }
 
-    function it_is_initializable()
-    {
-        $this->shouldHaveType(UserStatusHandler::class);
-    }
-
     function it_is_a_user_status_handler()
     {
+        $this->shouldHaveType(UserStatusHandler::class);
         $this->shouldImplement(UserStatusHandlerInterface::class);
     }
 

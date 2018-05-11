@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class RedirectResponseFactorySpec extends ObjectBehavior
 {
-    function it_is_initializable()
+    function it_is_a_redirect_response_factory()
     {
         $this->shouldHaveType(RedirectResponseFactory::class);
     }

@@ -1,7 +1,6 @@
 Khatovar\Bundle\UserBundle\Entity\User:
     type:  entity
     table: khatovar_user_user
-    repositoryClass: Khatovar\Bundle\UserBundle\Entity\Repository\UserRepository
     id:
         id:
             type: integer

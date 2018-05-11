@@ -9,7 +9,7 @@ use PhpSpec\ObjectBehavior;
 
 class SwiftMessageFactorySpec extends ObjectBehavior
 {
-    function it_is_initializable()
+    function it_is_swift_message_factory()
     {
         $this->shouldHaveType(SwiftMessageFactory::class);
     }

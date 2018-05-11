@@ -34,7 +34,7 @@ class RolesManagerSpec extends ObjectBehavior
         );
     }
 
-    function it_is_initializable()
+    function it_is_a_roles_manager()
     {
         $this->shouldHaveType(RolesManager::class);
     }

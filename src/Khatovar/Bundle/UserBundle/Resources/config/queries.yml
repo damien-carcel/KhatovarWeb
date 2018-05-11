@@ -1,0 +1,5 @@
+services:
+    Khatovar\Bundle\UserBundle\Application\Query\GetUser:
+        arguments:
+            - '@Khatovar\Bundle\UserBundle\Entity\Repository\UserRepository'
+            - '@security.token_storage'

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of KhatovarWeb.
  *
@@ -11,19 +13,32 @@
 
 namespace Khatovar\Bundle\UserBundle\Entity\Repository;
 
-use Doctrine\ORM\EntityRepository;
+use Khatovar\Bundle\UserBundle\Entity\User;
+use Khatovar\Bundle\UserBundle\Entity\UserInterface;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
  * User repository.
  *
  * @author Damien Carcel <damien.carcel@gmail.com>
  */
-class UserRepository extends EntityRepository implements UserRepositoryInterface
+class UserRepository implements UserRepositoryInterface
 {
+    /** @var RegistryInterface */
+    private $doctrine;
+
+    /**
+     * @param RegistryInterface $doctrine
+     */
+    public function __construct(RegistryInterface $doctrine)
+    {
+        $this->doctrine = $doctrine;
+    }
+
     /**
      * {@inheritdoc}
      */
-    public function findAllBut(array $users)
+    public function findAllBut(array $users): array
     {
         $userNames = [];
 
@@ -31,7 +46,7 @@ class UserRepository extends EntityRepository implements UserRepositoryInterface
             $userNames[] = $user->getUsername();
         }
 
-        $queryBuilder = $this->createQueryBuilder('u');
+        $queryBuilder = $this->doctrine->getRepository(User::class)->createQueryBuilder('u');
 
         $query = $queryBuilder
             ->where($queryBuilder->expr()->notIn('u.username', $userNames))
@@ -44,13 +59,23 @@ class UserRepository extends EntityRepository implements UserRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function findByRole($role)
+    public function findByRole($role): array
     {
-        $query = $this->createQueryBuilder('u')
+        $queryBuilder = $this->doctrine->getRepository(User::class)->createQueryBuilder('u');
+
+        $query = $queryBuilder
             ->where('u.roles LIKE :roles')
             ->setParameter('roles', '%"'.$role.'"%')
             ->getQuery();
 
         return $query->getResult();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function findOneByUsername(string $username): UserInterface
+    {
+        return $this->doctrine->getRepository(User::class)->findOneBy(['username' => $username]);
     }
 }

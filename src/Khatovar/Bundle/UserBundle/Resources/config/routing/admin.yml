@@ -1,30 +1,30 @@
 khatovar_user_admin_index:
     path: /
-    defaults: { _controller: KhatovarUserBundle:Admin:index }
+    defaults: { _controller: 'Khatovar\Bundle\UserBundle\Controller\Admin\IndexController' }
 
 khatovar_user_admin_show:
     path: /{username}/show
-    defaults: { _controller: KhatovarUserBundle:Admin:showProfile }
+    defaults: { _controller: 'Khatovar\Bundle\UserBundle\Controller\Admin\ShowController' }
 
 khatovar_user_admin_edit:
     path: /{username}/edit
-    defaults: { _controller: KhatovarUserBundle:Admin:editProfile }
+    defaults: { _controller: 'Khatovar\Bundle\UserBundle\Controller\Admin\EditController' }
 
 khatovar_user_admin_update:
     path: /{username}/update
-    defaults: { _controller: KhatovarUserBundle:Admin:updateProfile }
+    defaults: { _controller: 'Khatovar\Bundle\UserBundle\Controller\Admin\UpdateController' }
     methods:  [POST, PUT]
 
 khatovar_user_admin_set_role:
     path: /{username}/role
-    defaults: { _controller: KhatovarUserBundle:Admin:setRole }
+    defaults: { _controller: 'Khatovar\Bundle\UserBundle\Controller\Admin\SetRoleController' }
     methods:  [GET, POST, PUT]
 
 khatovar_user_admin_change_status:
     path: /{username}/status
-    defaults: { _controller: KhatovarUserBundle:Admin:changeStatus }
+    defaults: { _controller: 'Khatovar\Bundle\UserBundle\Controller\Admin\ChangeStatusController' }
 
 khatovar_user_admin_remove:
     path: /{username}/delete
-    defaults: { _controller: KhatovarUserBundle:Admin:removeUser }
+    defaults: { _controller: 'Khatovar\Bundle\UserBundle\Controller\Admin\RemoveController' }
     methods:  [POST, DELETE]

@@ -1,6 +1,9 @@
 up :
 	docker-compose up -d
 
+restart :
+	docker-compose stop fpm && docker-compose rm -f fpm && docker-compose up -d
+
 down :
 	docker-compose down -v
 

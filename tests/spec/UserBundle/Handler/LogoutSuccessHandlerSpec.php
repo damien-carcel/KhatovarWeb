@@ -29,13 +29,9 @@ class LogoutSuccessHandlerSpec extends ObjectBehavior
         $this->beConstructedWith($factory);
     }
 
-    function it_is_initializable()
-    {
-        $this->shouldHaveType(LogoutSuccessHandler::class);
-    }
-
     function it_is_a_logout_success_handler()
     {
+        $this->shouldHaveType(LogoutSuccessHandler::class);
         $this->shouldImplement(LogoutSuccessHandlerInterface::class);
     }
 

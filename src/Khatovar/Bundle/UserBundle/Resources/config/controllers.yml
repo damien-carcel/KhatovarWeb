@@ -1,0 +1,62 @@
+services:
+    Khatovar\Bundle\UserBundle\Controller\Admin\IndexController:
+        arguments:
+            - '@khatovar_user.manager.users'
+            - '@khatovar_user.factory.user_form'
+            - '@twig'
+
+    Khatovar\Bundle\UserBundle\Controller\Admin\ShowController:
+        arguments:
+            - '@Khatovar\Bundle\UserBundle\Application\Query\GetUser'
+            - '@khatovar_user.factory.user_form'
+            - '@twig'
+
+    Khatovar\Bundle\UserBundle\Controller\Admin\EditController:
+        arguments:
+            - '@Khatovar\Bundle\UserBundle\Application\Query\GetUser'
+            - '@khatovar_user.factory.user_form'
+            - '@twig'
+
+    Khatovar\Bundle\UserBundle\Controller\Admin\UpdateController:
+        arguments:
+            - '@Khatovar\Bundle\UserBundle\Application\Query\GetUser'
+            - '@khatovar_user.factory.user_form'
+            - '@event_dispatcher'
+            - '@doctrine'
+            - '@session'
+            - '@translator'
+            - '@router'
+            - '@twig'
+
+    Khatovar\Bundle\UserBundle\Controller\Admin\SetRoleController:
+        arguments:
+            - '@Khatovar\Bundle\UserBundle\Application\Query\GetUser'
+            - '@khatovar_user.factory.user_form'
+            - '@khatovar_user.manager.users'
+            - '@khatovar_user.manager.roles'
+            - '@security.token_storage'
+            - '@event_dispatcher'
+            - '@session'
+            - '@translator'
+            - '@router'
+            - '@twig'
+
+    Khatovar\Bundle\UserBundle\Controller\Admin\ChangeStatusController:
+        arguments:
+            - '@Khatovar\Bundle\UserBundle\Application\Query\GetUser'
+            - '@khatovar_user.factory.user_form'
+            - '@khatovar_user.handler.user_status'
+            - '@security.token_storage'
+            - '@session'
+            - '@translator'
+            - '@router'
+
+    Khatovar\Bundle\UserBundle\Controller\Admin\RemoveController:
+        arguments:
+            - '@Khatovar\Bundle\UserBundle\Application\Query\GetUser'
+            - '@khatovar_user.factory.user_form'
+            - '@event_dispatcher'
+            - '@doctrine'
+            - '@session'
+            - '@translator'
+            - '@router'

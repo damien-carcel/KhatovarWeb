@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of KhatovarWeb.
  *
@@ -11,31 +13,39 @@
 
 namespace Khatovar\Bundle\UserBundle\Entity\Repository;
 
-use Doctrine\Common\Persistence\ObjectRepository;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Khatovar\Bundle\UserBundle\Entity\UserInterface;
 
 /**
  * User repository interface.
  *
  * @author Damien Carcel <damien.carcel@gmail.com>
  */
-interface UserRepositoryInterface extends ObjectRepository
+interface UserRepositoryInterface
 {
     /**
-     * Retrieves all users but one.
+     * Returns all users but provided ones.
      *
      * @param UserInterface[] $users the users we don\'t want to be returned
      *
      * @return UserInterface[]
      */
-    public function findAllBut(array $users);
+    public function findAllBut(array $users): array;
 
     /**
-     * Retrieves all users having a specific role.
+     * Returns all users having a specific role.
      *
      * @param string $role
      *
      * @return UserInterface[]
      */
-    public function findByRole($role);
+    public function findByRole($role): array;
+
+    /**
+     * Returns a user from its username.
+     *
+     * @param string $username
+     *
+     * @return UserInterface|null
+     */
+    public function findOneByUsername(string $username): ?UserInterface;
 }
