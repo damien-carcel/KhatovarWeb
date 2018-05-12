@@ -13,8 +13,8 @@ namespace Khatovar\Bundle\UserBundle\Manager;
 
 use FOS\UserBundle\Model\UserInterface;
 use Khatovar\Bundle\UserBundle\Entity\Repository\UserRepositoryInterface;
+use Khatovar\Bundle\UserBundle\Security\Core\Authentication\CurrentUser;
 use Symfony\Bridge\Doctrine\RegistryInterface;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Validator\Exception\InvalidArgumentException;
 
 /**
@@ -24,8 +24,8 @@ use Symfony\Component\Validator\Exception\InvalidArgumentException;
  */
 class UserManager
 {
-    /** @var TokenStorageInterface */
-    private $tokenStorage;
+    /** @var CurrentUser */
+    private $currentUser;
 
     /** @var UserRepositoryInterface */
     private $userRepository;
@@ -37,18 +37,18 @@ class UserManager
     private $rolesManager;
 
     /**
-     * @param TokenStorageInterface   $tokenStorage
+     * @param CurrentUser             $currentUser
      * @param UserRepositoryInterface $userRepository
      * @param RegistryInterface       $doctrine
      * @param RolesManager            $rolesManager
      */
     public function __construct(
-        TokenStorageInterface $tokenStorage,
+        CurrentUser $currentUser,
         UserRepositoryInterface $userRepository,
         RegistryInterface $doctrine,
         RolesManager $rolesManager
     ) {
-        $this->tokenStorage = $tokenStorage;
+        $this->currentUser = $currentUser;
         $this->userRepository = $userRepository;
         $this->doctrine = $doctrine;
         $this->rolesManager = $rolesManager;
@@ -61,12 +61,12 @@ class UserManager
     {
         $users = [];
 
-        $currentUser = $this->tokenStorage->getToken()->getUser();
+        $currentUser = $this->currentUser->getFromTokenStorage();
         $users[] = $currentUser;
 
         if (!$currentUser->isSuperAdmin()) {
-            $superAdmin = $this->userRepository->findByRole('ROLE_SUPER_ADMIN');
-            $users = array_merge($users, $superAdmin);
+            $superAdmins = $this->userRepository->findByRole('ROLE_SUPER_ADMIN');
+            $users = array_merge($users, $superAdmins);
         }
 
         return $this->userRepository->findAllBut($users);

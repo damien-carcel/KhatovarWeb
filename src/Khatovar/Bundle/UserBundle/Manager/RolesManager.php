@@ -12,7 +12,7 @@
 namespace Khatovar\Bundle\UserBundle\Manager;
 
 use FOS\UserBundle\Model\UserInterface;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Khatovar\Bundle\UserBundle\Security\Core\Authentication\CurrentUser;
 
 /**
  * User roles manager.
@@ -21,19 +21,21 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
  */
 class RolesManager
 {
-    /** @var array */
-    protected $roles;
+    /** @var CurrentUser */
+    private $currentUser;
 
-    /** @var TokenStorageInterface */
-    protected $tokenStorage;
+    /** @var array */
+    private $roles;
 
     /**
-     * @param TokenStorageInterface $tokenStorage
-     * @param string[]              $roles
+     * @param CurrentUser $currentUser
+     * @param array       $roles
      */
-    public function __construct(TokenStorageInterface $tokenStorage, array $roles)
-    {
-        $this->tokenStorage = $tokenStorage;
+    public function __construct(
+        CurrentUser $currentUser,
+        array $roles
+    ) {
+        $this->currentUser = $currentUser;
         $this->roles = $roles;
     }
 
@@ -50,7 +52,7 @@ class RolesManager
             unset($choices['ROLE_SUPER_ADMIN']);
         }
 
-        if (isset($choices['ROLE_ADMIN']) && !$this->isCurrentUserSuperAdmin()) {
+        if (isset($choices['ROLE_ADMIN']) && !$this->currentUser->isSuperAdmin()) {
             unset($choices['ROLE_ADMIN']);
         }
 
@@ -96,7 +98,7 @@ class RolesManager
      *
      * @return string[]
      */
-    protected function getOrderedRoles()
+    private function getOrderedRoles()
     {
         $choices = [];
 
@@ -109,27 +111,5 @@ class RolesManager
         }
 
         return $choices;
-    }
-
-    /**
-     * Checks that current user is super administrator or not.
-     *
-     * If this manager is used from command line (i.e. no token), then it is
-     * considered as used by a super administrator.
-     * Anonymous user, however, is not considered as a super administrator.
-     *
-     * @return bool true if he is, false if not
-     */
-    protected function isCurrentUserSuperAdmin()
-    {
-        if (null === $token = $this->tokenStorage->getToken()) {
-            return true;
-        }
-
-        if (!is_object($user = $token->getUser())) {
-            return false;
-        }
-
-        return $user->isSuperAdmin();
     }
 }

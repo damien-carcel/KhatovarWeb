@@ -12,16 +12,14 @@
 namespace spec\Khatovar\Bundle\UserBundle\Manager;
 
 use Khatovar\Bundle\UserBundle\Entity\Repository\UserRepositoryInterface;
-use Khatovar\Bundle\UserBundle\Entity\User;
+use Khatovar\Bundle\UserBundle\Entity\UserInterface;
 use Khatovar\Bundle\UserBundle\Manager\RolesManager;
 use Khatovar\Bundle\UserBundle\Manager\UserManager;
 use Doctrine\ORM\EntityManagerInterface;
-use FOS\UserBundle\Model\UserInterface;
+use Khatovar\Bundle\UserBundle\Security\Core\Authentication\CurrentUser;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Symfony\Bridge\Doctrine\RegistryInterface;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Validator\Exception\InvalidArgumentException;
 
 /**
@@ -30,12 +28,12 @@ use Symfony\Component\Validator\Exception\InvalidArgumentException;
 class UserManagerSpec extends ObjectBehavior
 {
     function let(
-        TokenStorageInterface $tokenStorage,
+        CurrentUser $currentUserInStorage,
         UserRepositoryInterface $userRepository,
         RegistryInterface $doctrine,
         RolesManager $rolesManager
     ) {
-        $this->beConstructedWith($tokenStorage, $userRepository, $doctrine, $rolesManager);
+        $this->beConstructedWith($currentUserInStorage, $userRepository, $doctrine, $rolesManager);
     }
 
     function it_is_a_user_manager()
@@ -44,24 +42,15 @@ class UserManagerSpec extends ObjectBehavior
     }
 
     function it_returns_all_users_but_the_current_one_and_the_super_admin(
-        $tokenStorage,
-        $doctrine,
-        UserRepositoryInterface $userRepository,
-        TokenInterface $token,
-        UserInterface $currentUser,
+        $currentUserInStorage,
+        $userRepository,
         UserInterface $superAdmin,
+        UserInterface $currentUser,
         UserInterface $regularUser
     ) {
-        $doctrine->getRepository(User::class)->willReturn($userRepository);
+        $currentUserInStorage->getFromTokenStorage()->willReturn($currentUser);
+        $currentUserInStorage->isSuperAdmin()->willReturn(false);
 
-        $currentUser->setRoles(['ROLE_ADMIN']);
-        $superAdmin->setRoles(['ROLE_SUPER_ADMIN']);
-        $regularUser->setRoles(['ROLE_USER']);
-
-        $tokenStorage->getToken()->willReturn($token);
-        $token->getUser()->willReturn($currentUser);
-
-        $currentUser->isSuperAdmin()->willReturn(false);
         $userRepository->findByRole('ROLE_SUPER_ADMIN')->willReturn([$superAdmin]);
         $userRepository->findAllBut([$currentUser, $superAdmin])->willReturn([$regularUser]);
 
@@ -69,25 +58,16 @@ class UserManagerSpec extends ObjectBehavior
     }
 
     function it_returns_all_users_but_the_current_one_being_the_super_admin(
-        $tokenStorage,
-        $doctrine,
+        $currentUserInStorage,
         UserRepositoryInterface $userRepository,
-        TokenInterface $token,
-        UserInterface $currentUser,
         UserInterface $regularAdmin,
+        UserInterface $currentUser,
         UserInterface $regularUser
     ) {
-        $doctrine->getRepository(User::class)->willReturn($userRepository);
-
-        $currentUser->setRoles(['ROLE_SUPER_ADMIN']);
-        $regularAdmin->setRoles(['ROLE_ADMIN']);
-        $regularUser->setRoles(['ROLE_USER']);
-
-        $tokenStorage->getToken()->willReturn($token);
-        $token->getUser()->willReturn($currentUser);
+        $currentUserInStorage->getFromTokenStorage()->willReturn($currentUser);
 
         $currentUser->isSuperAdmin()->willReturn(true);
-        $userRepository->findByRole()->shouldNotBeCalled();
+        $userRepository->findByRole(Argument::any())->shouldNotBeCalled();
         $userRepository->findAllBut([$currentUser])->willReturn([$regularAdmin, $regularUser]);
 
         $this->getAdministrableUsers()->shouldReturn([$regularAdmin, $regularUser]);

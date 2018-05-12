@@ -1,0 +1,10 @@
+services:
+    Khatovar\Bundle\UserBundle\Security\Core\Authentication\Token\Storage\UserInSecurityTokenStorage:
+        arguments:
+            - '@security.token_storage'
+
+    Khatovar\Bundle\UserBundle\Security\Http\Logout\LogoutSuccessHandler:
+        arguments:
+            - '@khatovar_user.factory.redirect_response'
+        tags:
+            - { name: 'monolog_logger', channel: 'security' }

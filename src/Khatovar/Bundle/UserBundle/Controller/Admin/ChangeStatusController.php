@@ -23,11 +23,11 @@ declare(strict_types=1);
 
 namespace Khatovar\Bundle\UserBundle\Controller\Admin;
 
-use Khatovar\Bundle\UserBundle\Application\Query\GetUser;
 use Khatovar\Bundle\UserBundle\Entity\Exception\UserDoesNotExist;
 use Khatovar\Bundle\UserBundle\Entity\UserInterface;
 use Khatovar\Bundle\UserBundle\Form\Factory\UserFormFactory;
 use Khatovar\Bundle\UserBundle\Handler\UserStatusHandlerInterface;
+use Khatovar\Bundle\UserBundle\Query\GetUser;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -108,7 +108,7 @@ class ChangeStatusController
             throw new NotFoundHttpException($e->getMessage(), $e);
         }
 
-        if (!$this->getUserFromTokenStorage()->isSuperAdmin() && $user->hasRole('ROLE_ADMIN')) {
+        if (!$this->getFromTokenStorage()->isSuperAdmin() && $user->hasRole('ROLE_ADMIN')) {
             throw new AccessDeniedException('You do not have the permission to change the role of an administrator.');
         }
 
@@ -139,7 +139,7 @@ class ChangeStatusController
      *
      * @return UserInterface|null
      */
-    private function getUserFromTokenStorage(): ?UserInterface
+    private function getFromTokenStorage(): ?UserInterface
     {
         if (null === $token = $this->tokenStorage->getToken()) {
             return null;

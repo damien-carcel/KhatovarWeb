@@ -21,12 +21,12 @@ declare(strict_types=1);
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Khatovar\Bundle\UserBundle\Application\Query;
+namespace Khatovar\Bundle\UserBundle\Query;
 
 use Khatovar\Bundle\UserBundle\Entity\Exception\UserDoesNotExist;
 use Khatovar\Bundle\UserBundle\Entity\Repository\UserRepositoryInterface;
 use Khatovar\Bundle\UserBundle\Entity\UserInterface;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Khatovar\Bundle\UserBundle\Security\Core\Authentication\CurrentUser;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
@@ -37,17 +37,19 @@ class GetUser
     /** @var UserRepositoryInterface */
     private $userRepository;
 
-    /** @var TokenStorageInterface */
-    private $tokenStorage;
+    /** @var CurrentUser */
+    private $currentUser;
 
     /**
      * @param UserRepositoryInterface $userRepository
-     * @param TokenStorageInterface   $tokenStorage
+     * @param CurrentUser             $currentUser
      */
-    public function __construct(UserRepositoryInterface $userRepository, TokenStorageInterface $tokenStorage)
-    {
+    public function __construct(
+        UserRepositoryInterface $userRepository,
+        CurrentUser $currentUser
+    ) {
         $this->userRepository = $userRepository;
-        $this->tokenStorage = $tokenStorage;
+        $this->currentUser = $currentUser;
     }
 
     /**
@@ -70,33 +72,13 @@ class GetUser
             throw new  UserDoesNotExist($username);
         }
 
-        if ($user->isSuperAdmin()) {
-            $userInTokenStorage = $this->getUserFromTokenStorage();
-
-            if (null !== $userInTokenStorage && !$userInTokenStorage->isSuperAdmin()) {
-                throw new AccessDeniedException(sprintf(
+        if ($user->isSuperAdmin() && !$this->currentUser->isSuperAdmin()) {
+            throw new AccessDeniedException(
+                sprintf(
                     'You do not have the permission to get user "%s".',
                     $username
-                ));
-            }
-        }
-
-        return $user;
-    }
-
-    /**
-     * Gets a user from the Security Token Storage.
-     *
-     * @return UserInterface|null
-     */
-    private function getUserFromTokenStorage(): ?UserInterface
-    {
-        if (null === $token = $this->tokenStorage->getToken()) {
-            return null;
-        }
-
-        if (!is_object($user = $token->getUser())) {
-            return null;
+                )
+            );
         }
 
         return $user;

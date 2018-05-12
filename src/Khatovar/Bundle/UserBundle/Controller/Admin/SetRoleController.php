@@ -23,13 +23,13 @@ declare(strict_types=1);
 
 namespace Khatovar\Bundle\UserBundle\Controller\Admin;
 
-use Khatovar\Bundle\UserBundle\Application\Query\GetUser;
 use Khatovar\Bundle\UserBundle\Entity\Exception\UserDoesNotExist;
 use Khatovar\Bundle\UserBundle\Entity\UserInterface;
 use Khatovar\Bundle\UserBundle\Event\UserEvents;
 use Khatovar\Bundle\UserBundle\Form\Factory\UserFormFactory;
 use Khatovar\Bundle\UserBundle\Manager\RolesManager;
 use Khatovar\Bundle\UserBundle\Manager\UserManager;
+use Khatovar\Bundle\UserBundle\Query\GetUser;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -136,7 +136,7 @@ class SetRoleController
             throw new NotFoundHttpException($e->getMessage(), $e);
         }
 
-        if (!$this->getUserFromTokenStorage()->isSuperAdmin() && $user->hasRole('ROLE_ADMIN')) {
+        if (!$this->getFromTokenStorage()->isSuperAdmin() && $user->hasRole('ROLE_ADMIN')) {
             throw new AccessDeniedException('You do not have the permission to change the role of an administrator.');
         }
 
@@ -167,6 +167,7 @@ class SetRoleController
 
             return new RedirectResponse($redirectRoute, 302);
         }
+
         $content = $this->twig->render(
             'KhatovarUserBundle:Admin:set_role.html.twig',
             [
@@ -183,7 +184,7 @@ class SetRoleController
      *
      * @return UserInterface|null
      */
-    private function getUserFromTokenStorage(): ?UserInterface
+    private function getFromTokenStorage(): ?UserInterface
     {
         if (null === $token = $this->tokenStorage->getToken()) {
             return null;

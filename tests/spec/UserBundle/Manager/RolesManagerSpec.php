@@ -13,19 +13,18 @@ namespace spec\Khatovar\Bundle\UserBundle\Manager;
 
 use Khatovar\Bundle\UserBundle\Manager\RolesManager;
 use FOS\UserBundle\Model\UserInterface;
+use Khatovar\Bundle\UserBundle\Security\Core\Authentication\CurrentUser;
 use PhpSpec\ObjectBehavior;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 /**
  * @author Damien Carcel <damien.carcel@gmail.com>
  */
 class RolesManagerSpec extends ObjectBehavior
 {
-    function let(TokenStorageInterface $tokenStorage)
+    function let(CurrentUser $currentUser)
     {
         $this->beConstructedWith(
-            $tokenStorage,
+            $currentUser,
             [
                 'ROLE_VIEWER'      => ['ROLE_USER'],
                 'ROLE_ADMIN'       => ['ROLE_VIEWER'],
@@ -39,13 +38,8 @@ class RolesManagerSpec extends ObjectBehavior
         $this->shouldHaveType(RolesManager::class);
     }
 
-    function it_returns_the_list_of_roles_for_the_super_admin(
-        $tokenStorage,
-        TokenInterface $token,
-        UserInterface $currentUser
-    ) {
-        $tokenStorage->getToken()->willReturn($token);
-        $token->getUser()->willReturn($currentUser);
+    function it_returns_the_list_of_roles_for_the_super_admin($currentUser)
+    {
         $currentUser->isSuperAdmin()->willReturn(true);
 
         $this->getChoices()->shouldReturn([
@@ -55,40 +49,13 @@ class RolesManagerSpec extends ObjectBehavior
         ]);
     }
 
-    function it_returns_the_list_of_roles_for_regular_admin(
-        $tokenStorage,
-        TokenInterface $token,
-        UserInterface $currentUser
-    ) {
-        $tokenStorage->getToken()->willReturn($token);
-        $token->getUser()->willReturn($currentUser);
+    function it_returns_the_list_of_roles_for_regular_admin($currentUser)
+    {
         $currentUser->isSuperAdmin()->willReturn(false);
 
         $this->getChoices()->shouldReturn([
             'ROLE_USER'   => 'ROLE_USER',
             'ROLE_VIEWER' => 'ROLE_VIEWER',
-        ]);
-    }
-
-    function it_returns_the_list_of_roles_for_anonymous_user($tokenStorage, TokenInterface $token)
-    {
-        $tokenStorage->getToken()->willReturn($token);
-        $token->getUser()->willReturn('anonymous');
-
-        $this->getChoices()->shouldReturn([
-            'ROLE_USER'   => 'ROLE_USER',
-            'ROLE_VIEWER' => 'ROLE_VIEWER',
-        ]);
-    }
-
-    function it_returns_the_list_of_roles_from_command_line($tokenStorage)
-    {
-        $tokenStorage->getToken()->willReturn(null);
-
-        $this->getChoices()->shouldReturn([
-            'ROLE_USER'   => 'ROLE_USER',
-            'ROLE_VIEWER' => 'ROLE_VIEWER',
-            'ROLE_ADMIN'  => 'ROLE_ADMIN',
         ]);
     }
 

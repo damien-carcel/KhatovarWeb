@@ -38,5 +38,6 @@ class KhatovarUserExtension extends Extension
         $loader->load('managers.yml');
         $loader->load('queries.yml');
         $loader->load('repositories.yml');
+        $loader->load('security_services.yml');
     }
 }
