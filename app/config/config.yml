@@ -80,8 +80,8 @@ fos_user:
         confirmation:
             enabled: true
 
-# IvoryCKEditorBundle configuration
-ivory_ck_editor:
+# FOSCKEditorBundle configuration
+fos_ck_editor:
     configs:
         basic_config:
             toolbar: standard
