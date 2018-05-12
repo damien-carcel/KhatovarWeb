@@ -23,35 +23,15 @@ declare(strict_types=1);
 
 namespace Khatovar\Bundle\UserBundle\Query;
 
-use Khatovar\Bundle\UserBundle\Entity\Exception\UserDoesNotExist;
-use Khatovar\Bundle\UserBundle\Entity\Repository\UserRepositoryInterface;
 use Khatovar\Bundle\UserBundle\Entity\UserInterface;
-use Khatovar\Bundle\UserBundle\Security\Core\Authentication\CurrentUser;
+use Khatovar\Bundle\UserBundle\Query\Exception\UserDoesNotExist;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * @author Damien Carcel <damien.carcel@gmail.com>
  */
-class GetUser
+interface GetUser
 {
-    /** @var UserRepositoryInterface */
-    private $userRepository;
-
-    /** @var CurrentUser */
-    private $currentUser;
-
-    /**
-     * @param UserRepositoryInterface $userRepository
-     * @param CurrentUser             $currentUser
-     */
-    public function __construct(
-        UserRepositoryInterface $userRepository,
-        CurrentUser $currentUser
-    ) {
-        $this->userRepository = $userRepository;
-        $this->currentUser = $currentUser;
-    }
-
     /**
      * Returns a User from its username.
      *
@@ -64,23 +44,5 @@ class GetUser
      *
      * @return UserInterface
      */
-    public function byUsername(string $username): UserInterface
-    {
-        $user = $this->userRepository->findOneByUsername($username);
-
-        if (null === $user) {
-            throw new  UserDoesNotExist($username);
-        }
-
-        if ($user->isSuperAdmin() && !$this->currentUser->isSuperAdmin()) {
-            throw new AccessDeniedException(
-                sprintf(
-                    'You do not have the permission to get user "%s".',
-                    $username
-                )
-            );
-        }
-
-        return $user;
-    }
+    public function byUsername(string $username): UserInterface;
 }

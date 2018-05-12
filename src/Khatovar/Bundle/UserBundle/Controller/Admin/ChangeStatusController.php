@@ -23,11 +23,11 @@ declare(strict_types=1);
 
 namespace Khatovar\Bundle\UserBundle\Controller\Admin;
 
-use Khatovar\Bundle\UserBundle\Entity\Exception\UserDoesNotExist;
 use Khatovar\Bundle\UserBundle\Entity\UserInterface;
 use Khatovar\Bundle\UserBundle\Form\Factory\UserFormFactory;
 use Khatovar\Bundle\UserBundle\Handler\UserStatusHandlerInterface;
-use Khatovar\Bundle\UserBundle\Query\GetUser;
+use Khatovar\Bundle\UserBundle\Query\Exception\UserDoesNotExist;
+use Khatovar\Bundle\UserBundle\Query\GetUserFromDatabase;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -45,7 +45,7 @@ use Symfony\Component\Translation\TranslatorInterface;
  */
 class ChangeStatusController
 {
-    /** @var GetUser */
+    /** @var GetUserFromDatabase */
     private $getUser;
 
     /** @var UserFormFactory */
@@ -67,7 +67,7 @@ class ChangeStatusController
     private $router;
 
     /**
-     * @param GetUser                    $getUser
+     * @param GetUserFromDatabase        $getUser
      * @param UserFormFactory            $userFormFactory
      * @param UserStatusHandlerInterface $userStatusHandler
      * @param TokenStorageInterface      $tokenStorage
@@ -76,7 +76,7 @@ class ChangeStatusController
      * @param RouterInterface            $router
      */
     public function __construct(
-        GetUser $getUser,
+        GetUserFromDatabase $getUser,
         UserFormFactory $userFormFactory,
         UserStatusHandlerInterface $userStatusHandler,
         TokenStorageInterface $tokenStorage,

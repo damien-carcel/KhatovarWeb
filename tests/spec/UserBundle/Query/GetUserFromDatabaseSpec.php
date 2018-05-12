@@ -4,15 +4,16 @@ declare(strict_types=1);
 
 namespace spec\Khatovar\Bundle\UserBundle\Query;
 
+use Khatovar\Bundle\UserBundle\Query\Exception\UserDoesNotExist;
 use Khatovar\Bundle\UserBundle\Query\GetUser;
-use Khatovar\Bundle\UserBundle\Entity\Exception\UserDoesNotExist;
+use Khatovar\Bundle\UserBundle\Query\GetUserFromDatabase;
 use Khatovar\Bundle\UserBundle\Entity\Repository\UserRepositoryInterface;
 use Khatovar\Bundle\UserBundle\Entity\UserInterface;
 use Khatovar\Bundle\UserBundle\Security\Core\Authentication\CurrentUser;
 use PhpSpec\ObjectBehavior;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-class GetUserSpec extends ObjectBehavior
+class GetUserFromDatabaseSpec extends ObjectBehavior
 {
     function let(UserRepositoryInterface $userRepository, CurrentUser $currentUser)
     {
@@ -21,7 +22,8 @@ class GetUserSpec extends ObjectBehavior
 
     function it_is_a_get_user_query()
     {
-        $this->shouldHaveType(GetUser::class);
+        $this->shouldHaveType(GetUserFromDatabase::class);
+        $this->shouldImplement(GetUser::class);
     }
 
     function it_gets_a_regular_user_by_its_username(

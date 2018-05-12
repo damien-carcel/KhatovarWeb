@@ -1,8 +1,8 @@
 <?php
 
-namespace spec\Khatovar\Bundle\UserBundle\Entity\Exception;
+namespace spec\Khatovar\Bundle\UserBundle\Query\Exception;
 
-use Khatovar\Bundle\UserBundle\Entity\Exception\UserDoesNotExist;
+use Khatovar\Bundle\UserBundle\Query\Exception\UserDoesNotExist;
 use PhpSpec\ObjectBehavior;
 
 class UserDoesNotExistSpec extends ObjectBehavior

@@ -23,13 +23,13 @@ declare(strict_types=1);
 
 namespace Khatovar\Bundle\UserBundle\Controller\Admin;
 
-use Khatovar\Bundle\UserBundle\Entity\Exception\UserDoesNotExist;
 use Khatovar\Bundle\UserBundle\Entity\UserInterface;
 use Khatovar\Bundle\UserBundle\Event\UserEvents;
 use Khatovar\Bundle\UserBundle\Form\Factory\UserFormFactory;
 use Khatovar\Bundle\UserBundle\Manager\RolesManager;
 use Khatovar\Bundle\UserBundle\Manager\UserManager;
-use Khatovar\Bundle\UserBundle\Query\GetUser;
+use Khatovar\Bundle\UserBundle\Query\Exception\UserDoesNotExist;
+use Khatovar\Bundle\UserBundle\Query\GetUserFromDatabase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -51,7 +51,7 @@ use Twig\Environment;
  */
 class SetRoleController
 {
-    /** @var GetUser */
+    /** @var GetUserFromDatabase */
     private $getUser;
 
     /** @var UserFormFactory */
@@ -82,7 +82,7 @@ class SetRoleController
     private $twig;
 
     /**
-     * @param GetUser                  $getUser
+     * @param GetUserFromDatabase      $getUser
      * @param UserFormFactory          $userFormFactory
      * @param UserManager              $userManager
      * @param RolesManager             $rolesManager
@@ -94,7 +94,7 @@ class SetRoleController
      * @param Environment              $twig
      */
     public function __construct(
-        GetUser $getUser,
+        GetUserFromDatabase $getUser,
         UserFormFactory $userFormFactory,
         UserManager $userManager,
         RolesManager $rolesManager,

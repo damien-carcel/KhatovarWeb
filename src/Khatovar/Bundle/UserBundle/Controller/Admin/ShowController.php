@@ -23,9 +23,9 @@ declare(strict_types=1);
 
 namespace Khatovar\Bundle\UserBundle\Controller\Admin;
 
-use Khatovar\Bundle\UserBundle\Entity\Exception\UserDoesNotExist;
 use Khatovar\Bundle\UserBundle\Form\Factory\UserFormFactory;
-use Khatovar\Bundle\UserBundle\Query\GetUser;
+use Khatovar\Bundle\UserBundle\Query\Exception\UserDoesNotExist;
+use Khatovar\Bundle\UserBundle\Query\GetUserFromDatabase;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Twig\Environment;
@@ -37,7 +37,7 @@ use Twig\Environment;
  */
 class ShowController
 {
-    /** @var GetUser */
+    /** @var GetUserFromDatabase */
     private $getUser;
 
     /** @var UserFormFactory */
@@ -47,11 +47,11 @@ class ShowController
     private $twig;
 
     /**
-     * @param GetUser         $getUser
-     * @param UserFormFactory $userFormFactory
-     * @param Environment     $twig
+     * @param GetUserFromDatabase $getUser
+     * @param UserFormFactory     $userFormFactory
+     * @param Environment         $twig
      */
-    public function __construct(GetUser $getUser, UserFormFactory $userFormFactory, Environment $twig)
+    public function __construct(GetUserFromDatabase $getUser, UserFormFactory $userFormFactory, Environment $twig)
     {
         $this->getUser = $getUser;
         $this->userFormFactory = $userFormFactory;
