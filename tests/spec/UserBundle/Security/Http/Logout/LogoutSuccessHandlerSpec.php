@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace spec\Khatovar\Bundle\UserBundle\Handler;
+namespace spec\Khatovar\Bundle\UserBundle\Security\Http\Logout;
 
 use Khatovar\Bundle\UserBundle\Factory\RedirectResponseFactory;
-use Khatovar\Bundle\UserBundle\Handler\LogoutSuccessHandler;
+use Khatovar\Bundle\UserBundle\Security\Http\Logout\LogoutSuccessHandler;
 use PhpSpec\ObjectBehavior;
 use Symfony\Component\HttpFoundation\HeaderBag;
 use Symfony\Component\HttpFoundation\RedirectResponse;

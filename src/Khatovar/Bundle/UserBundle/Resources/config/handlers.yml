@@ -1,6 +1,6 @@
 services:
     khatovar_user.handler.logout_success_handler:
-        class: Khatovar\Bundle\UserBundle\Handler\LogoutSuccessHandler
+        class: Khatovar\Bundle\UserBundle\Security\Http\Logout\LogoutSuccessHandler
         arguments:
             - '@khatovar_user.factory.redirect_response'
         tags:

@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Khatovar\Bundle\UserBundle\Handler;
+namespace Khatovar\Bundle\UserBundle\Security\Http\Logout;
 
 use Khatovar\Bundle\UserBundle\Factory\RedirectResponseFactory;
 use Symfony\Component\HttpFoundation\Request;
