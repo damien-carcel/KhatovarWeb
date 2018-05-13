@@ -11,12 +11,12 @@
 
 namespace spec\Khatovar\Bundle\UserBundle\Manager;
 
-use Khatovar\Bundle\UserBundle\Entity\Repository\UserRepositoryInterface;
-use Khatovar\Bundle\UserBundle\Entity\UserInterface;
+use Khatovar\Component\User\Domain\Repository\UserRepositoryInterface;
+use Khatovar\Component\User\Domain\Model\UserInterface;
 use Khatovar\Bundle\UserBundle\Manager\RolesManager;
 use Khatovar\Bundle\UserBundle\Manager\UserManager;
 use Doctrine\ORM\EntityManagerInterface;
-use Khatovar\Bundle\UserBundle\Security\Core\Authentication\CurrentUser;
+use Khatovar\Component\User\Application\Query\CurrentUser;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Symfony\Bridge\Doctrine\RegistryInterface;

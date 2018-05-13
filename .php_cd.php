@@ -11,8 +11,16 @@ $finder
     ->in(__DIR__ . '/src');
 
 $rules = [
-    new Rule('Khatovar\Component\User\Domain', [], RuleInterface::TYPE_ONLY),
-    new Rule('Khatovar\Component\User\Application', ['Khatovar\Component\User\Domain'], RuleInterface::TYPE_ONLY),
+    new Rule(
+        'Khatovar\Component\User\Domain',
+        ['FOS\UserBundle\Model\UserInterface'],
+        RuleInterface::TYPE_ONLY
+    ),
+    new Rule(
+        'Khatovar\Component\User\Application',
+        ['Khatovar\Component\User\Domain', 'Symfony\Component\Security\Core\Exception'],
+        RuleInterface::TYPE_ONLY
+    ),
 ];
 
 return new \Akeneo\CouplingDetector\Configuration\Configuration($rules, $finder);

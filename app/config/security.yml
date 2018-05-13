@@ -38,7 +38,7 @@ security:
             logout:
                 path: 'fos_user_security_logout'
                 target: '/'
-                success_handler: 'Khatovar\Bundle\UserBundle\Security\Http\Logout\LogoutSuccessHandler'
+                success_handler: 'Khatovar\Bundle\UserBundle\Security\Logout\LogoutSuccessHandler'
             anonymous: true
             remember_me:
                 secret: '%secret%'

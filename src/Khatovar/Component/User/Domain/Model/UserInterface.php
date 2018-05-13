@@ -21,34 +21,13 @@ declare(strict_types=1);
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Khatovar\Bundle\UserBundle\Security\Core\Authentication;
+namespace Khatovar\Component\User\Domain\Model;
 
-use Khatovar\Bundle\UserBundle\Entity\UserInterface;
+use FOS\UserBundle\Model\UserInterface as FOSUserInterface;
 
 /**
- * Manage the current user state.
- *
  * @author Damien Carcel <damien.carcel@gmail.com>
  */
-interface CurrentUser
+interface UserInterface extends FOSUserInterface
 {
-    /**
-     * Gets a user from the Security Token Storage.
-     *
-     * @return UserInterface|null
-     */
-    public function getFromTokenStorage(): ?UserInterface;
-
-    /**
-     * Checks that current user is super administrator or not.
-     *
-     * If this service is called from command line (i.e. no token), then it is
-     * considered as used by a super administrator.
-     *
-     * However, anonymous user (a token, but no user) is not considered as a
-     * super administrator.
-     *
-     * @return bool true if he is, false if not
-     */
-    public function isSuperAdmin(): bool;
 }

@@ -23,9 +23,9 @@ declare(strict_types=1);
 
 namespace Khatovar\Bundle\UserBundle\Controller\Admin;
 
-use Khatovar\Bundle\UserBundle\Event\UserEvents;
 use Khatovar\Bundle\UserBundle\Form\Factory\UserFormFactory;
-use Khatovar\Bundle\UserBundle\Query\GetUserFromDatabase;
+use Khatovar\Component\User\Application\Query\GetUser;
+use Khatovar\Component\User\Domain\Event\UserEvents;
 use Khatovar\Component\User\Domain\Exception\UserDoesNotExist;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -44,7 +44,7 @@ use Symfony\Component\Translation\TranslatorInterface;
  */
 class RemoveController
 {
-    /** @var GetUserFromDatabase */
+    /** @var GetUser */
     private $getUser;
 
     /** @var UserFormFactory */
@@ -66,7 +66,7 @@ class RemoveController
     private $router;
 
     /**
-     * @param GetUserFromDatabase      $getUser
+     * @param GetUser                  $getUser
      * @param UserFormFactory          $userFormFactory
      * @param EventDispatcherInterface $eventDispatcher
      * @param RegistryInterface        $doctrine
@@ -75,7 +75,7 @@ class RemoveController
      * @param RouterInterface          $router
      */
     public function __construct(
-        GetUserFromDatabase $getUser,
+        GetUser $getUser,
         UserFormFactory $userFormFactory,
         EventDispatcherInterface $eventDispatcher,
         RegistryInterface $doctrine,

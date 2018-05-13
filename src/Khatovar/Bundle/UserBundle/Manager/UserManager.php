@@ -11,9 +11,9 @@
 
 namespace Khatovar\Bundle\UserBundle\Manager;
 
-use Khatovar\Bundle\UserBundle\Entity\Repository\UserRepositoryInterface;
-use Khatovar\Bundle\UserBundle\Entity\UserInterface;
-use Khatovar\Bundle\UserBundle\Security\Core\Authentication\CurrentUser;
+use Khatovar\Component\User\Application\Query\CurrentUser;
+use Khatovar\Component\User\Domain\Model\UserInterface;
+use Khatovar\Component\User\Domain\Repository\UserRepositoryInterface;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Validator\Exception\InvalidArgumentException;
 

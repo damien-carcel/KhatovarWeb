@@ -7,19 +7,19 @@ services:
 
     Khatovar\Bundle\UserBundle\Controller\Admin\ShowController:
         arguments:
-            - '@Khatovar\Bundle\UserBundle\Query\GetUserFromDatabase'
+            - '@Khatovar\Component\User\Application\Query\GetUserFromDatabase'
             - '@khatovar_user.factory.user_form'
             - '@twig'
 
     Khatovar\Bundle\UserBundle\Controller\Admin\EditController:
         arguments:
-            - '@Khatovar\Bundle\UserBundle\Query\GetUserFromDatabase'
+            - '@Khatovar\Component\User\Application\Query\GetUserFromDatabase'
             - '@khatovar_user.factory.user_form'
             - '@twig'
 
     Khatovar\Bundle\UserBundle\Controller\Admin\UpdateController:
         arguments:
-            - '@Khatovar\Bundle\UserBundle\Query\GetUserFromDatabase'
+            - '@Khatovar\Component\User\Application\Query\GetUserFromDatabase'
             - '@khatovar_user.factory.user_form'
             - '@event_dispatcher'
             - '@doctrine'
@@ -30,7 +30,7 @@ services:
 
     Khatovar\Bundle\UserBundle\Controller\Admin\SetRoleController:
         arguments:
-            - '@Khatovar\Bundle\UserBundle\Query\GetUserFromDatabase'
+            - '@Khatovar\Component\User\Application\Query\GetUserFromDatabase'
             - '@khatovar_user.factory.user_form'
             - '@khatovar_user.manager.users'
             - '@khatovar_user.manager.roles'
@@ -43,7 +43,7 @@ services:
 
     Khatovar\Bundle\UserBundle\Controller\Admin\ChangeStatusController:
         arguments:
-            - '@Khatovar\Bundle\UserBundle\Query\GetUserFromDatabase'
+            - '@Khatovar\Component\User\Application\Query\GetUserFromDatabase'
             - '@khatovar_user.factory.user_form'
             - '@khatovar_user.handler.user_status'
             - '@security.token_storage'
@@ -53,7 +53,7 @@ services:
 
     Khatovar\Bundle\UserBundle\Controller\Admin\RemoveController:
         arguments:
-            - '@Khatovar\Bundle\UserBundle\Query\GetUserFromDatabase'
+            - '@Khatovar\Component\User\Application\Query\GetUserFromDatabase'
             - '@khatovar_user.factory.user_form'
             - '@event_dispatcher'
             - '@doctrine'

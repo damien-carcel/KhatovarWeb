@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace spec\Khatovar\Bundle\UserBundle\EventSubscriber;
 
-use Khatovar\Bundle\UserBundle\Entity\UserInterface;
-use Khatovar\Bundle\UserBundle\Event\UserEvents;
+use Khatovar\Component\User\Domain\Model\UserInterface;
+use Khatovar\Component\User\Domain\Event\UserEvents;
 use Khatovar\Bundle\UserBundle\Factory\SwiftMessageFactory;
 use PhpSpec\ObjectBehavior;
 use Symfony\Component\EventDispatcher\GenericEvent;

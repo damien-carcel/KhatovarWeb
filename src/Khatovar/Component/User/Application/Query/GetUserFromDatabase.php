@@ -21,12 +21,11 @@ declare(strict_types=1);
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Khatovar\Bundle\UserBundle\Query;
+namespace Khatovar\Component\User\Application\Query;
 
-use Khatovar\Bundle\UserBundle\Entity\Repository\UserRepositoryInterface;
-use Khatovar\Bundle\UserBundle\Entity\UserInterface;
-use Khatovar\Bundle\UserBundle\Security\Core\Authentication\CurrentUser;
 use Khatovar\Component\User\Domain\Exception\UserDoesNotExist;
+use Khatovar\Component\User\Domain\Model\UserInterface;
+use Khatovar\Component\User\Domain\Repository\UserRepositoryInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**

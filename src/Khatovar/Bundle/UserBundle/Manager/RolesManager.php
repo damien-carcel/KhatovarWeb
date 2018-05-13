@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace Khatovar\Bundle\UserBundle\Manager;
 
-use Khatovar\Bundle\UserBundle\Entity\UserInterface;
-use Khatovar\Bundle\UserBundle\Security\Core\Authentication\CurrentUser;
+use Khatovar\Component\User\Application\Query\CurrentUser;
+use Khatovar\Component\User\Domain\Model\UserInterface;
 
 /**
  * User roles manager.

@@ -21,10 +21,10 @@ declare(strict_types=1);
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Khatovar\Bundle\UserBundle\Security\Core\Authentication\Token\Storage;
+namespace Khatovar\Bundle\UserBundle\Security\Authentication;
 
-use Khatovar\Bundle\UserBundle\Entity\UserInterface;
-use Khatovar\Bundle\UserBundle\Security\Core\Authentication\CurrentUser;
+use Khatovar\Component\User\Application\Query\CurrentUser;
+use Khatovar\Component\User\Domain\Model\UserInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**

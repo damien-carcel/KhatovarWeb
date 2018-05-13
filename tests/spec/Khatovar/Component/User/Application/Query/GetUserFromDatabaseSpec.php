@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace spec\Khatovar\Bundle\UserBundle\Query;
+namespace spec\Khatovar\Component\User\Application\Query;
 
+use Khatovar\Component\User\Application\Query\GetUser;
 use Khatovar\Component\User\Domain\Exception\UserDoesNotExist;
-use Khatovar\Bundle\UserBundle\Query\GetUser;
-use Khatovar\Bundle\UserBundle\Query\GetUserFromDatabase;
-use Khatovar\Bundle\UserBundle\Entity\Repository\UserRepositoryInterface;
-use Khatovar\Bundle\UserBundle\Entity\UserInterface;
-use Khatovar\Bundle\UserBundle\Security\Core\Authentication\CurrentUser;
+use Khatovar\Component\User\Application\Query\GetUserFromDatabase;
+use Khatovar\Component\User\Domain\Repository\UserRepositoryInterface;
+use Khatovar\Component\User\Domain\Model\UserInterface;
+use Khatovar\Component\User\Application\Query\CurrentUser;
 use PhpSpec\ObjectBehavior;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 

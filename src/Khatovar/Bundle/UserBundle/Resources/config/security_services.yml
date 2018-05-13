@@ -1,9 +1,9 @@
 services:
-    Khatovar\Bundle\UserBundle\Security\Core\Authentication\Token\Storage\UserInSecurityTokenStorage:
+    Khatovar\Bundle\UserBundle\Security\Authentication\UserInSecurityTokenStorage:
         arguments:
             - '@security.token_storage'
 
-    Khatovar\Bundle\UserBundle\Security\Http\Logout\LogoutSuccessHandler:
+    Khatovar\Bundle\UserBundle\Security\Logout\LogoutSuccessHandler:
         arguments:
             - '@khatovar_user.factory.redirect_response'
         tags:
