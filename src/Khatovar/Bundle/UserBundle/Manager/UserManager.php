@@ -11,7 +11,7 @@
 
 namespace Khatovar\Bundle\UserBundle\Manager;
 
-use Khatovar\Component\User\Application\Query\CurrentUser;
+use Khatovar\Component\User\Application\Query\CurrentTokenUser;
 use Khatovar\Component\User\Domain\Model\UserInterface;
 use Khatovar\Component\User\Domain\Repository\UserRepositoryInterface;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -24,8 +24,8 @@ use Symfony\Component\Validator\Exception\InvalidArgumentException;
  */
 class UserManager
 {
-    /** @var CurrentUser */
-    private $currentUser;
+    /** @var CurrentTokenUser */
+    private $currentTokenUser;
 
     /** @var UserRepositoryInterface */
     private $userRepository;
@@ -37,18 +37,18 @@ class UserManager
     private $rolesManager;
 
     /**
-     * @param CurrentUser             $currentUser
+     * @param CurrentTokenUser        $currentUser
      * @param UserRepositoryInterface $userRepository
      * @param RegistryInterface       $doctrine
      * @param RolesManager            $rolesManager
      */
     public function __construct(
-        CurrentUser $currentUser,
+        CurrentTokenUser $currentUser,
         UserRepositoryInterface $userRepository,
         RegistryInterface $doctrine,
         RolesManager $rolesManager
     ) {
-        $this->currentUser = $currentUser;
+        $this->currentTokenUser = $currentUser;
         $this->userRepository = $userRepository;
         $this->doctrine = $doctrine;
         $this->rolesManager = $rolesManager;
@@ -61,7 +61,7 @@ class UserManager
     {
         $users = [];
 
-        $currentUser = $this->currentUser->getFromTokenStorage();
+        $currentUser = $this->currentTokenUser->getFromTokenStorage();
         $users[] = $currentUser;
 
         if (!$currentUser->isSuperAdmin()) {

@@ -36,19 +36,19 @@ class GetUserFromDatabase implements GetUser
     /** @var UserRepositoryInterface */
     private $userRepository;
 
-    /** @var CurrentUser */
-    private $currentUser;
+    /** @var CurrentTokenUser */
+    private $currentTokenUser;
 
     /**
      * @param UserRepositoryInterface $userRepository
-     * @param CurrentUser             $currentUser
+     * @param CurrentTokenUser        $currentUser
      */
     public function __construct(
         UserRepositoryInterface $userRepository,
-        CurrentUser $currentUser
+        CurrentTokenUser $currentUser
     ) {
         $this->userRepository = $userRepository;
-        $this->currentUser = $currentUser;
+        $this->currentTokenUser = $currentUser;
     }
 
     /**
@@ -62,7 +62,7 @@ class GetUserFromDatabase implements GetUser
             throw new  UserDoesNotExist($username);
         }
 
-        if ($user->isSuperAdmin() && !$this->currentUser->isSuperAdmin()) {
+        if ($user->isSuperAdmin() && !$this->currentTokenUser->isSuperAdmin()) {
             throw new AccessDeniedException(
                 sprintf(
                     'You do not have the permission to get user "%s".',

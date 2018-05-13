@@ -23,7 +23,7 @@ declare(strict_types=1);
 
 namespace Khatovar\Bundle\UserBundle\Security\Authentication;
 
-use Khatovar\Component\User\Application\Query\CurrentUser;
+use Khatovar\Component\User\Application\Query\CurrentTokenUser;
 use Khatovar\Component\User\Domain\Model\UserInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
@@ -32,7 +32,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
  *
  * @author Damien Carcel <damien.carcel@gmail.com>
  */
-class UserInSecurityTokenStorage implements CurrentUser
+class UserInSecurityTokenStorage implements CurrentTokenUser
 {
     /** @var TokenStorageInterface */
     private $tokenStorage;

@@ -16,7 +16,7 @@ use Khatovar\Component\User\Domain\Model\UserInterface;
 use Khatovar\Bundle\UserBundle\Manager\RolesManager;
 use Khatovar\Bundle\UserBundle\Manager\UserManager;
 use Doctrine\ORM\EntityManagerInterface;
-use Khatovar\Component\User\Application\Query\CurrentUser;
+use Khatovar\Component\User\Application\Query\CurrentTokenUser;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -28,12 +28,12 @@ use Symfony\Component\Validator\Exception\InvalidArgumentException;
 class UserManagerSpec extends ObjectBehavior
 {
     function let(
-        CurrentUser $currentUserInStorage,
+        CurrentTokenUser $currentTokenUser,
         UserRepositoryInterface $userRepository,
         RegistryInterface $doctrine,
         RolesManager $rolesManager
     ) {
-        $this->beConstructedWith($currentUserInStorage, $userRepository, $doctrine, $rolesManager);
+        $this->beConstructedWith($currentTokenUser, $userRepository, $doctrine, $rolesManager);
     }
 
     function it_is_a_user_manager()
@@ -42,14 +42,14 @@ class UserManagerSpec extends ObjectBehavior
     }
 
     function it_returns_all_users_but_the_current_one_and_the_super_admin(
-        $currentUserInStorage,
+        $currentTokenUser,
         $userRepository,
         UserInterface $superAdmin,
         UserInterface $currentUser,
         UserInterface $regularUser
     ) {
-        $currentUserInStorage->getFromTokenStorage()->willReturn($currentUser);
-        $currentUserInStorage->isSuperAdmin()->willReturn(false);
+        $currentTokenUser->getFromTokenStorage()->willReturn($currentUser);
+        $currentTokenUser->isSuperAdmin()->willReturn(false);
 
         $userRepository->findByRole('ROLE_SUPER_ADMIN')->willReturn([$superAdmin]);
         $userRepository->findAllBut([$currentUser, $superAdmin])->willReturn([$regularUser]);
@@ -58,13 +58,13 @@ class UserManagerSpec extends ObjectBehavior
     }
 
     function it_returns_all_users_but_the_current_one_being_the_super_admin(
-        $currentUserInStorage,
+        $currentTokenUser,
         UserRepositoryInterface $userRepository,
         UserInterface $regularAdmin,
         UserInterface $currentUser,
         UserInterface $regularUser
     ) {
-        $currentUserInStorage->getFromTokenStorage()->willReturn($currentUser);
+        $currentTokenUser->getFromTokenStorage()->willReturn($currentUser);
 
         $currentUser->isSuperAdmin()->willReturn(true);
         $userRepository->findByRole(Argument::any())->shouldNotBeCalled();

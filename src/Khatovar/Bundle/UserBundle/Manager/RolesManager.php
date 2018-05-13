@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Khatovar\Bundle\UserBundle\Manager;
 
-use Khatovar\Component\User\Application\Query\CurrentUser;
+use Khatovar\Component\User\Application\Query\CurrentTokenUser;
 use Khatovar\Component\User\Domain\Model\UserInterface;
 
 /**
@@ -23,21 +23,21 @@ use Khatovar\Component\User\Domain\Model\UserInterface;
  */
 class RolesManager
 {
-    /** @var CurrentUser */
-    private $currentUser;
+    /** @var CurrentTokenUser */
+    private $currentTokenUser;
 
     /** @var array */
     private $roles;
 
     /**
-     * @param CurrentUser $currentUser
-     * @param array       $roles
+     * @param CurrentTokenUser $currentUser
+     * @param array            $roles
      */
     public function __construct(
-        CurrentUser $currentUser,
+        CurrentTokenUser $currentUser,
         array $roles
     ) {
-        $this->currentUser = $currentUser;
+        $this->currentTokenUser = $currentUser;
         $this->roles = $roles;
     }
 
@@ -54,7 +54,7 @@ class RolesManager
             unset($choices['ROLE_SUPER_ADMIN']);
         }
 
-        if (isset($choices['ROLE_ADMIN']) && !$this->currentUser->isSuperAdmin()) {
+        if (isset($choices['ROLE_ADMIN']) && !$this->currentTokenUser->isSuperAdmin()) {
             unset($choices['ROLE_ADMIN']);
         }
 

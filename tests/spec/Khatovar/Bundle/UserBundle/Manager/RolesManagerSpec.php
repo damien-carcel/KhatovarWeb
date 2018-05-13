@@ -13,7 +13,7 @@ namespace spec\Khatovar\Bundle\UserBundle\Manager;
 
 use Khatovar\Component\User\Domain\Model\UserInterface;
 use Khatovar\Bundle\UserBundle\Manager\RolesManager;
-use Khatovar\Component\User\Application\Query\CurrentUser;
+use Khatovar\Component\User\Application\Query\CurrentTokenUser;
 use PhpSpec\ObjectBehavior;
 
 /**
@@ -21,10 +21,10 @@ use PhpSpec\ObjectBehavior;
  */
 class RolesManagerSpec extends ObjectBehavior
 {
-    function let(CurrentUser $currentUser)
+    function let(CurrentTokenUser $currentTokenUser)
     {
         $this->beConstructedWith(
-            $currentUser,
+            $currentTokenUser,
             [
                 'ROLE_VIEWER'      => ['ROLE_USER'],
                 'ROLE_ADMIN'       => ['ROLE_VIEWER'],
@@ -38,9 +38,9 @@ class RolesManagerSpec extends ObjectBehavior
         $this->shouldHaveType(RolesManager::class);
     }
 
-    function it_returns_the_list_of_roles_for_the_super_admin($currentUser)
+    function it_returns_the_list_of_roles_for_the_super_admin($currentTokenUser)
     {
-        $currentUser->isSuperAdmin()->willReturn(true);
+        $currentTokenUser->isSuperAdmin()->willReturn(true);
 
         $this->getChoices()->shouldReturn([
             'ROLE_USER'   => 'ROLE_USER',
@@ -49,9 +49,9 @@ class RolesManagerSpec extends ObjectBehavior
         ]);
     }
 
-    function it_returns_the_list_of_roles_for_regular_admin($currentUser)
+    function it_returns_the_list_of_roles_for_regular_admin($currentTokenUser)
     {
-        $currentUser->isSuperAdmin()->willReturn(false);
+        $currentTokenUser->isSuperAdmin()->willReturn(false);
 
         $this->getChoices()->shouldReturn([
             'ROLE_USER'   => 'ROLE_USER',

@@ -3,7 +3,7 @@
 namespace spec\Khatovar\Bundle\UserBundle\Security\Authentication;
 
 use Khatovar\Component\User\Domain\Model\UserInterface;
-use Khatovar\Component\User\Application\Query\CurrentUser;
+use Khatovar\Component\User\Application\Query\CurrentTokenUser;
 use Khatovar\Bundle\UserBundle\Security\Authentication\UserInSecurityTokenStorage;
 use PhpSpec\ObjectBehavior;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -19,7 +19,7 @@ class UserInSecurityTokenStorageSpec extends ObjectBehavior
     function it_provides_the_current_user()
     {
         $this->shouldHaveType(UserInSecurityTokenStorage::class);
-        $this->shouldImplement(CurrentUser::class);
+        $this->shouldImplement(CurrentTokenUser::class);
     }
 
     function it_gets_the_user_in_security_token_storage(

@@ -30,7 +30,7 @@ use Khatovar\Component\User\Domain\Model\UserInterface;
  *
  * @author Damien Carcel <damien.carcel@gmail.com>
  */
-interface CurrentUser
+interface CurrentTokenUser
 {
     /**
      * Gets a user from the Security Token Storage.
