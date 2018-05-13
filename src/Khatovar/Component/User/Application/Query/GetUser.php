@@ -25,13 +25,32 @@ namespace Khatovar\Component\User\Application\Query;
 
 use Khatovar\Component\User\Domain\Exception\UserDoesNotExist;
 use Khatovar\Component\User\Domain\Model\UserInterface;
+use Khatovar\Component\User\Domain\Repository\UserRepositoryInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * @author Damien Carcel <damien.carcel@gmail.com>
  */
-interface GetUser
+class GetUser
 {
+    /** @var UserRepositoryInterface */
+    private $userRepository;
+
+    /** @var CurrentTokenUser */
+    private $currentTokenUser;
+
+    /**
+     * @param UserRepositoryInterface $userRepository
+     * @param CurrentTokenUser        $currentUser
+     */
+    public function __construct(
+        UserRepositoryInterface $userRepository,
+        CurrentTokenUser $currentUser
+    ) {
+        $this->userRepository = $userRepository;
+        $this->currentTokenUser = $currentUser;
+    }
+
     /**
      * Returns a User from its username.
      *
@@ -44,5 +63,23 @@ interface GetUser
      *
      * @return UserInterface
      */
-    public function byUsername(string $username): UserInterface;
+    public function byUsername(string $username): UserInterface
+    {
+        $user = $this->userRepository->findOneByUsername($username);
+
+        if (null === $user) {
+            throw new  UserDoesNotExist($username);
+        }
+
+        if ($user->isSuperAdmin() && !$this->currentTokenUser->isSuperAdmin()) {
+            throw new AccessDeniedException(
+                sprintf(
+                    'You do not have the permission to get user "%s".',
+                    $username
+                )
+            );
+        }
+
+        return $user;
+    }
 }
