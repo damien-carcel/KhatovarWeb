@@ -3,3 +3,7 @@ services:
         arguments:
             - '@Khatovar\Bundle\UserBundle\Entity\Repository\UserRepository'
             - '@Khatovar\Component\User\Application\Query\GetUserRoles'
+
+    Khatovar\Component\User\Application\Command\UserStatusHandler:
+        arguments:
+            - '@Khatovar\Bundle\UserBundle\Entity\Repository\UserRepository'

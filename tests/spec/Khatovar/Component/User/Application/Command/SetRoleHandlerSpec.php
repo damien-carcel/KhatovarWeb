@@ -48,11 +48,12 @@ class SetRoleHandlerSpec extends ObjectBehavior
         $this->shouldHaveType(SetRoleHandler::class);
     }
 
-    function it_sets_role_to_a_user($userRepository, $getUserRoles)
-    {
-        $user = new User();
-        $user->setRoles(['ROLE_USER']);
-        $setRole = new SetRole($user, 'ROLE_ADMIN');
+    function it_sets_role_to_a_user(
+        $userRepository,
+        $getUserRoles,
+        UserInterface $user
+    ) {
+        $setRole = new SetRole($user->getWrappedObject(), 'ROLE_ADMIN');
 
         $getUserRoles->available()->willReturn(
             [
@@ -62,16 +63,18 @@ class SetRoleHandlerSpec extends ObjectBehavior
             ]
         );
 
+        $user->setRoles(['ROLE_ADMIN'])->shouldBeCalled();
         $userRepository->save($user)->shouldBeCalled();
 
         $this->handle($setRole);
     }
 
-    function it_throws_an_exception_if_role_is_not_in_choices_list($userRepository, $getUserRoles)
-    {
-        $user = new User();
-        $user->setRoles(['ROLE_USER']);
-        $setRole = new SetRole($user, 'ROLE_ADMIN');
+    function it_throws_an_exception_if_role_is_not_in_choices_list(
+        $userRepository,
+        $getUserRoles,
+        UserInterface $user
+    ) {
+        $setRole = new SetRole($user->getWrappedObject(), 'ROLE_ADMIN');
 
         $getUserRoles->available()->willReturn(
             [
@@ -80,6 +83,7 @@ class SetRoleHandlerSpec extends ObjectBehavior
             ]
         );
 
+        $user->setRoles(Argument::any())->shouldNotBeCalled();
         $userRepository->save(Argument::any())->shouldNotBeCalled();
 
         $this

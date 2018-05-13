@@ -45,7 +45,7 @@ services:
         arguments:
             - '@Khatovar\Component\User\Application\Query\GetUser'
             - '@Khatovar\Bundle\UserBundle\Form\Factory\UserFormFactory'
-            - '@khatovar_user.handler.user_status'
+            - '@Khatovar\Component\User\Application\Command\UserStatusHandler'
             - '@Khatovar\Bundle\UserBundle\Security\Authentication\UserInSecurityTokenStorage'
             - '@event_dispatcher'
             - '@session'

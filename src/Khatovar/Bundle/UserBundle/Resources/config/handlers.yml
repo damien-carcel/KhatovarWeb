@@ -1,6 +1,0 @@
-services:
-    khatovar_user.handler.user_status:
-        class: Khatovar\Bundle\UserBundle\Handler\UserStatusHandler
-        arguments:
-            - '@event_dispatcher'
-            - '@doctrine'

@@ -24,11 +24,14 @@ declare(strict_types=1);
 namespace Khatovar\Bundle\UserBundle\Controller\Admin;
 
 use Khatovar\Bundle\UserBundle\Form\Factory\UserFormFactory;
-use Khatovar\Bundle\UserBundle\Handler\UserStatusHandler;
+use Khatovar\Component\User\Application\Command\UserStatus;
+use Khatovar\Component\User\Application\Command\UserStatusHandler;
 use Khatovar\Component\User\Application\Query\CurrentTokenUser;
 use Khatovar\Component\User\Application\Query\GetUser;
+use Khatovar\Component\User\Domain\Event\UserEvents;
 use Khatovar\Component\User\Domain\Exception\UserDoesNotExist;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -120,11 +123,19 @@ class ChangeStatusController
         }
 
         if ($user->isEnabled()) {
-            $this->userStatusHandler->disable($user);
+            $this->eventDispatcher->dispatch(UserEvents::PRE_DEACTIVATE, new GenericEvent($user));
+
+            $this->userStatusHandler->handle(new UserStatus($user, false));
             $notice = 'khatovar_user.notice.deactivated';
+
+            $this->eventDispatcher->dispatch(UserEvents::POST_DEACTIVATE, new GenericEvent($user));
         } else {
-            $this->userStatusHandler->enable($user);
+            $this->eventDispatcher->dispatch(UserEvents::PRE_ACTIVATE, new GenericEvent($user));
+
+            $this->userStatusHandler->handle(new UserStatus($user, true));
             $notice = 'khatovar_user.notice.activated';
+
+            $this->eventDispatcher->dispatch(UserEvents::POST_ACTIVATE, new GenericEvent($user));
         }
 
         $this->session->getFlashBag()->add('notice', $this->translator->trans($notice));

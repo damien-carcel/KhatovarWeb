@@ -45,7 +45,6 @@ class KhatovarUserExtension extends Extension
         $loader->load('factories.yml');
         $loader->load('form_factories.yml');
         $loader->load('form_types.yml');
-        $loader->load('handlers.yml');
         $loader->load('queries.yml');
         $loader->load('repositories.yml');
         $loader->load('security_services.yml');
