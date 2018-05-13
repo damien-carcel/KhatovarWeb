@@ -1,0 +1,4 @@
+services:
+    Khatovar\Bundle\UserBundle\Entity\Repository\UserRepository:
+        arguments:
+            - '@doctrine'

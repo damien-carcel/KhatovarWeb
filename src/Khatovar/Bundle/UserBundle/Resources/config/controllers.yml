@@ -1,0 +1,63 @@
+services:
+    Khatovar\Bundle\UserBundle\Controller\Admin\IndexController:
+        arguments:
+            - '@Khatovar\Component\User\Application\Query\GetAdministrableUsers'
+            - '@Khatovar\Bundle\UserBundle\Form\Factory\UserFormFactory'
+            - '@twig'
+
+    Khatovar\Bundle\UserBundle\Controller\Admin\ShowController:
+        arguments:
+            - '@Khatovar\Component\User\Application\Query\GetUser'
+            - '@Khatovar\Bundle\UserBundle\Form\Factory\UserFormFactory'
+            - '@twig'
+
+    Khatovar\Bundle\UserBundle\Controller\Admin\EditController:
+        arguments:
+            - '@Khatovar\Component\User\Application\Query\GetUser'
+            - '@Khatovar\Bundle\UserBundle\Form\Factory\UserFormFactory'
+            - '@twig'
+
+    Khatovar\Bundle\UserBundle\Controller\Admin\UpdateController:
+        arguments:
+            - '@Khatovar\Component\User\Application\Query\GetUser'
+            - '@Khatovar\Bundle\UserBundle\Form\Factory\UserFormFactory'
+            - '@Khatovar\Bundle\UserBundle\Entity\Repository\UserRepository'
+            - '@event_dispatcher'
+            - '@session'
+            - '@translator'
+            - '@router'
+            - '@twig'
+
+    Khatovar\Bundle\UserBundle\Controller\Admin\SetRoleController:
+        arguments:
+            - '@Khatovar\Component\User\Application\Query\GetUser'
+            - '@Khatovar\Bundle\UserBundle\Form\Factory\UserFormFactory'
+            - '@Khatovar\Component\User\Application\Command\SetRoleHandler'
+            - '@Khatovar\Component\User\Application\Query\GetUserRoles'
+            - '@Khatovar\Bundle\UserBundle\Security\Authentication\UserInSecurityTokenStorage'
+            - '@event_dispatcher'
+            - '@session'
+            - '@translator'
+            - '@router'
+            - '@twig'
+
+    Khatovar\Bundle\UserBundle\Controller\Admin\ChangeStatusController:
+        arguments:
+            - '@Khatovar\Component\User\Application\Query\GetUser'
+            - '@Khatovar\Bundle\UserBundle\Form\Factory\UserFormFactory'
+            - '@Khatovar\Component\User\Application\Command\UserStatusHandler'
+            - '@Khatovar\Bundle\UserBundle\Security\Authentication\UserInSecurityTokenStorage'
+            - '@event_dispatcher'
+            - '@session'
+            - '@translator'
+            - '@router'
+
+    Khatovar\Bundle\UserBundle\Controller\Admin\RemoveController:
+        arguments:
+            - '@Khatovar\Component\User\Application\Query\GetUser'
+            - '@Khatovar\Bundle\UserBundle\Form\Factory\UserFormFactory'
+            - '@Khatovar\Bundle\UserBundle\Entity\Repository\UserRepository'
+            - '@event_dispatcher'
+            - '@session'
+            - '@translator'
+            - '@router'

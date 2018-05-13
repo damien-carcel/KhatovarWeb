@@ -78,10 +78,10 @@ class AppKernel extends Kernel
     protected function getAdditionalBundles()
     {
         return [
+            new FOS\CKEditorBundle\FOSCKEditorBundle(),
             new FOS\UserBundle\FOSUserBundle(),
-            new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
-            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
         ];
     }
 

@@ -27,6 +27,7 @@ use Behat\Behat\Context\Context;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\ORM\Tools\SchemaTool;
+use Khatovar\Component\User\Application\Command\SetRole;
 use Symfony\Bridge\Doctrine\DataFixtures\ContainerAwareLoader as DataFixturesLoader;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -95,19 +96,12 @@ class DocumentsBundleFixtureContext implements Context
     public function iSetRoleForUser(string $role, string $username): void
     {
         $user = $this->container
-            ->get('doctrine')
-            ->getRepository('KhatovarUserBundle:User')
-            ->findOneBy(['username' => $username]);
+            ->get('Khatovar\Bundle\UserBundle\Entity\Repository\UserRepository')
+            ->get($username);
 
-        if (null === $user) {
-            throw new  \InvalidArgumentException(
-                sprintf('The user with the name %s does not exists', $username),
-                0,
-                static::class
-            );
-        }
-
-        $this->container->get('khatovar_user.manager.users')->setRole($user, ['roles' => $role]);
+        $this->container
+            ->get('Khatovar\Component\User\Application\Command\SetRoleHandler')
+            ->setRole(new SetRole($user, ['roles' => $role]));
     }
 
     /**

@@ -13,7 +13,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "Khatovar\\Bundle\\": "src/Khatovar/Bundle",
+            "Khatovar\\": "src/Khatovar",
             "Context\\": "features/Context"
         },
         "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
@@ -31,7 +31,7 @@
         "php": ">=7.1.0",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/orm": "^2.5",
-        "egeloen/ckeditor-bundle": "^6.0",
+        "friendsofsymfony/ckeditor-bundle": "^1.0",
         "friendsofsymfony/user-bundle": "^2.0",
         "incenteev/composer-parameter-handler": "^2.0",
         "knplabs/knp-menu-bundle": "^2.1.1",
@@ -44,6 +44,7 @@
         "twig/twig": "^2.0"
     },
     "require-dev": {
+        "akeneo/php-coupling-detector": "^0.2.0",
         "behat-extension/doctrine-data-fixtures-extension": "^4.0",
         "behat/behat": "^3.1",
         "behat/mink": "^1.7",

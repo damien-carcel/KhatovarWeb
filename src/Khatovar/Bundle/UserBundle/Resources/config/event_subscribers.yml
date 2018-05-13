@@ -1,7 +1,9 @@
 services:
-    khatovar_user.event.subscriber.mailer:
-        class: Khatovar\Bundle\UserBundle\EventSubscriber\MailerSubscriber
+    Khatovar\Bundle\UserBundle\EventSubscriber\MailerSubscriber:
         arguments:
-            - '@khatovar_user.manager.mail'
+            - '@Khatovar\Bundle\UserBundle\Factory\SwiftMessageFactory'
+            - '@mailer'
+            - '@translator'
+            - '%mailer_user%'
         tags:
             - { name: kernel.event_subscriber }
