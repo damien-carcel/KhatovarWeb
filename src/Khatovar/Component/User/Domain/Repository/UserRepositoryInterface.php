@@ -61,4 +61,18 @@ interface UserRepositoryInterface
      * @return UserInterface|null
      */
     public function get(string $username): UserInterface;
+
+    /**
+     * Saves a user.
+     *
+     * @param UserInterface $user
+     */
+    public function save(UserInterface $user): void;
+
+    /**
+     * Removes a user.
+     *
+     * @param UserInterface $user
+     */
+    public function remove(UserInterface $user): void;
 }

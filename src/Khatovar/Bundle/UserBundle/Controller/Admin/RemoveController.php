@@ -27,7 +27,7 @@ use Khatovar\Bundle\UserBundle\Form\Factory\UserFormFactory;
 use Khatovar\Component\User\Application\Query\GetUser;
 use Khatovar\Component\User\Domain\Event\UserEvents;
 use Khatovar\Component\User\Domain\Exception\UserDoesNotExist;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Khatovar\Component\User\Domain\Repository\UserRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -50,11 +50,11 @@ class RemoveController
     /** @var UserFormFactory */
     private $userFormFactory;
 
+    /** @var UserRepositoryInterface */
+    private $userRepository;
+
     /** @var EventDispatcherInterface */
     private $eventDispatcher;
-
-    /** @var RegistryInterface */
-    private $doctrine;
 
     /** @var Session */
     private $session;
@@ -68,8 +68,8 @@ class RemoveController
     /**
      * @param GetUser                  $getUser
      * @param UserFormFactory          $userFormFactory
+     * @param UserRepositoryInterface  $userRepository
      * @param EventDispatcherInterface $eventDispatcher
-     * @param RegistryInterface        $doctrine
      * @param Session                  $session
      * @param TranslatorInterface      $translator
      * @param RouterInterface          $router
@@ -77,16 +77,16 @@ class RemoveController
     public function __construct(
         GetUser $getUser,
         UserFormFactory $userFormFactory,
+        UserRepositoryInterface $userRepository,
         EventDispatcherInterface $eventDispatcher,
-        RegistryInterface $doctrine,
         Session $session,
         TranslatorInterface $translator,
         RouterInterface $router
     ) {
         $this->getUser = $getUser;
         $this->userFormFactory = $userFormFactory;
+        $this->userRepository = $userRepository;
         $this->eventDispatcher = $eventDispatcher;
-        $this->doctrine = $doctrine;
         $this->session = $session;
         $this->translator = $translator;
         $this->router = $router;
@@ -114,8 +114,7 @@ class RemoveController
         if ($form->isValid()) {
             $this->eventDispatcher->dispatch(UserEvents::PRE_REMOVE, new GenericEvent($user));
 
-            $this->doctrine->getManager()->remove($user);
-            $this->doctrine->getManager()->flush();
+            $this->userRepository->remove($user);
 
             $this->eventDispatcher->dispatch(UserEvents::POST_REMOVE, new GenericEvent($user));
 

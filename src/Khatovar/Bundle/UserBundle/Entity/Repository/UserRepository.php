@@ -96,4 +96,22 @@ class UserRepository implements UserRepositoryInterface
 
         return $user;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function save(UserInterface $user): void
+    {
+        $this->doctrine->getManager()->persist($user);
+        $this->doctrine->getManager()->flush();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function remove(UserInterface $user): void
+    {
+        $this->doctrine->getManager()->remove($user);
+        $this->doctrine->getManager()->flush();
+    }
 }

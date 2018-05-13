@@ -21,8 +21,8 @@ services:
         arguments:
             - '@Khatovar\Component\User\Application\Query\GetUser'
             - '@Khatovar\Bundle\UserBundle\Form\Factory\UserFormFactory'
+            - '@Khatovar\Bundle\UserBundle\Entity\Repository\UserRepository'
             - '@event_dispatcher'
-            - '@doctrine'
             - '@session'
             - '@translator'
             - '@router'
@@ -54,8 +54,8 @@ services:
         arguments:
             - '@Khatovar\Component\User\Application\Query\GetUser'
             - '@Khatovar\Bundle\UserBundle\Form\Factory\UserFormFactory'
+            - '@Khatovar\Bundle\UserBundle\Entity\Repository\UserRepository'
             - '@event_dispatcher'
-            - '@doctrine'
             - '@session'
             - '@translator'
             - '@router'
