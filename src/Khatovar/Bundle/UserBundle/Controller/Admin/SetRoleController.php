@@ -24,11 +24,17 @@ declare(strict_types=1);
 namespace Khatovar\Bundle\UserBundle\Controller\Admin;
 
 use Khatovar\Bundle\UserBundle\Form\Factory\UserFormFactory;
-use Khatovar\Bundle\UserBundle\Manager\UserManager;
+use Khatovar\Component\User\Application\Command\SetRole;
+use Khatovar\Component\User\Application\Command\SetRoleHandler;
 use Khatovar\Component\User\Application\Query\CurrentTokenUser;
 use Khatovar\Component\User\Application\Query\GetUser;
 use Khatovar\Component\User\Application\Query\GetUserRoles;
+use Khatovar\Component\User\Domain\Event\UserEvents;
 use Khatovar\Component\User\Domain\Exception\UserDoesNotExist;
+use Khatovar\Component\User\Domain\Exception\UserRoleDoesNotExist;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\GenericEvent;
+use Symfony\Component\Form\Exception\InvalidArgumentException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -53,14 +59,17 @@ class SetRoleController
     /** @var UserFormFactory */
     private $userFormFactory;
 
-    /** @var UserManager */
-    private $userManager;
+    /** @var SetRoleHandler */
+    private $setRoleHandler;
 
     /** @var GetUserRoles */
     private $userRole;
 
     /** @var CurrentTokenUser */
     private $currentTokenUser;
+
+    /** @var EventDispatcherInterface */
+    private $eventDispatcher;
 
     /** @var Session */
     private $session;
@@ -75,22 +84,24 @@ class SetRoleController
     private $twig;
 
     /**
-     * @param GetUser             $getUser
-     * @param UserFormFactory     $userFormFactory
-     * @param UserManager         $userManager
-     * @param GetUserRoles        $userRole
-     * @param CurrentTokenUser    $currentTokenUser
-     * @param Session             $session
-     * @param TranslatorInterface $translator
-     * @param RouterInterface     $router
-     * @param Environment         $twig
+     * @param GetUser                  $getUser
+     * @param UserFormFactory          $userFormFactory
+     * @param SetRoleHandler           $setRoleHandler
+     * @param GetUserRoles             $userRole
+     * @param CurrentTokenUser         $currentTokenUser
+     * @param EventDispatcherInterface $eventDispatcher
+     * @param Session                  $session
+     * @param TranslatorInterface      $translator
+     * @param RouterInterface          $router
+     * @param Environment              $twig
      */
     public function __construct(
         GetUser $getUser,
         UserFormFactory $userFormFactory,
-        UserManager $userManager,
+        SetRoleHandler $setRoleHandler,
         GetUserRoles $userRole,
         CurrentTokenUser $currentTokenUser,
+        EventDispatcherInterface $eventDispatcher,
         Session $session,
         TranslatorInterface $translator,
         RouterInterface $router,
@@ -98,9 +109,10 @@ class SetRoleController
     ) {
         $this->getUser = $getUser;
         $this->userFormFactory = $userFormFactory;
-        $this->userManager = $userManager;
+        $this->setRoleHandler = $setRoleHandler;
         $this->userRole = $userRole;
         $this->currentTokenUser = $currentTokenUser;
+        $this->eventDispatcher = $eventDispatcher;
         $this->session = $session;
         $this->translator = $translator;
         $this->router = $router;
@@ -138,7 +150,15 @@ class SetRoleController
         if ($form->isValid()) {
             $selectedRole = $form->getData();
 
-            $this->userManager->setRole($user, $selectedRole);
+            $this->eventDispatcher->dispatch(UserEvents::PRE_SET_ROLE, new GenericEvent($user));
+
+            try {
+                $this->setRoleHandler->handle(new SetRole($user, $selectedRole['roles']));
+            } catch (UserRoleDoesNotExist $e) {
+                throw new InvalidArgumentException($e->getMessage(), 0, $e);
+            }
+
+            $this->eventDispatcher->dispatch(UserEvents::POST_SET_ROLE, new GenericEvent($user));
 
             $this->session->getFlashBag()->add('notice', $this->translator->trans('khatovar_user.notice.set_role'));
 

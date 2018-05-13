@@ -20,7 +20,7 @@ use Symfony\Component\EventDispatcher\GenericEvent;
 /**
  * @author Damien Carcel <damien.carcel@gmail.com>
  */
-class UserStatusHandler implements UserStatusHandlerInterface
+class UserStatusHandler
 {
     /** @var EventDispatcherInterface */
     protected $eventDispatcher;
@@ -39,7 +39,9 @@ class UserStatusHandler implements UserStatusHandlerInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Enables a user.
+     *
+     * @param UserInterface $user
      */
     public function enable(UserInterface $user)
     {
@@ -53,7 +55,9 @@ class UserStatusHandler implements UserStatusHandlerInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Disables a user.
+     *
+     * @param UserInterface $user
      */
     public function disable(UserInterface $user)
     {

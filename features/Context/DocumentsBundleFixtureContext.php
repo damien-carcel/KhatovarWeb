@@ -27,6 +27,7 @@ use Behat\Behat\Context\Context;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\ORM\Tools\SchemaTool;
+use Khatovar\Component\User\Application\Command\SetRole;
 use Symfony\Bridge\Doctrine\DataFixtures\ContainerAwareLoader as DataFixturesLoader;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -98,7 +99,9 @@ class DocumentsBundleFixtureContext implements Context
             ->get('Khatovar\Bundle\UserBundle\Entity\Repository\UserRepository')
             ->get($username);
 
-        $this->container->get('khatovar_user.manager.users')->setRole($user, ['roles' => $role]);
+        $this->container
+            ->get('Khatovar\Component\User\Application\Command\SetRoleHandler')
+            ->setRole(new SetRole($user, ['roles' => $role]));
     }
 
     /**

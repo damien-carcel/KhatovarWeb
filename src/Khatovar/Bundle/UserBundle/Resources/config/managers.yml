@@ -1,7 +1,0 @@
-services:
-    khatovar_user.manager.users:
-        class: Khatovar\Bundle\UserBundle\Manager\UserManager
-        arguments:
-            - '@doctrine'
-            - '@Khatovar\Component\User\Application\Query\GetUserRoles'
-            - '@event_dispatcher'

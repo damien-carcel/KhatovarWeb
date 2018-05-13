@@ -24,10 +24,11 @@ declare(strict_types=1);
 namespace Khatovar\Bundle\UserBundle\Controller\Admin;
 
 use Khatovar\Bundle\UserBundle\Form\Factory\UserFormFactory;
-use Khatovar\Bundle\UserBundle\Handler\UserStatusHandlerInterface;
+use Khatovar\Bundle\UserBundle\Handler\UserStatusHandler;
 use Khatovar\Component\User\Application\Query\CurrentTokenUser;
 use Khatovar\Component\User\Application\Query\GetUser;
 use Khatovar\Component\User\Domain\Exception\UserDoesNotExist;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -44,13 +45,15 @@ use Symfony\Component\Translation\TranslatorInterface;
  */
 class ChangeStatusController
 {
+    /** @var EventDispatcherInterface */
+    protected $eventDispatcher;
     /** @var GetUser */
     private $getUser;
 
     /** @var UserFormFactory */
     private $userFormFactory;
 
-    /** @var UserStatusHandlerInterface */
+    /** @var UserStatusHandler */
     private $userStatusHandler;
 
     /** @var CurrentTokenUser */
@@ -66,19 +69,21 @@ class ChangeStatusController
     private $router;
 
     /**
-     * @param GetUser                    $getUser
-     * @param UserFormFactory            $userFormFactory
-     * @param UserStatusHandlerInterface $userStatusHandler
-     * @param CurrentTokenUser           $currentTokenUser
-     * @param Session                    $session
-     * @param TranslatorInterface        $translator
-     * @param RouterInterface            $router
+     * @param GetUser                  $getUser
+     * @param UserFormFactory          $userFormFactory
+     * @param UserStatusHandler        $userStatusHandler
+     * @param CurrentTokenUser         $currentTokenUser
+     * @param EventDispatcherInterface $eventDispatcher
+     * @param Session                  $session
+     * @param TranslatorInterface      $translator
+     * @param RouterInterface          $router
      */
     public function __construct(
         GetUser $getUser,
         UserFormFactory $userFormFactory,
-        UserStatusHandlerInterface $userStatusHandler,
+        UserStatusHandler $userStatusHandler,
         CurrentTokenUser $currentTokenUser,
+        EventDispatcherInterface $eventDispatcher,
         Session $session,
         TranslatorInterface $translator,
         RouterInterface $router
@@ -87,6 +92,7 @@ class ChangeStatusController
         $this->userFormFactory = $userFormFactory;
         $this->userStatusHandler = $userStatusHandler;
         $this->currentTokenUser = $currentTokenUser;
+        $this->eventDispatcher = $eventDispatcher;
         $this->session = $session;
         $this->translator = $translator;
         $this->router = $router;

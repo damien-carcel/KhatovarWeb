@@ -39,13 +39,13 @@ class KhatovarUserExtension extends Extension
     public function load(array $configs, ContainerBuilder $container)
     {
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader->load('command_handlers.yml');
         $loader->load('controllers.yml');
         $loader->load('event_subscribers.yml');
         $loader->load('factories.yml');
         $loader->load('form_factories.yml');
         $loader->load('form_types.yml');
         $loader->load('handlers.yml');
-        $loader->load('managers.yml');
         $loader->load('queries.yml');
         $loader->load('repositories.yml');
         $loader->load('security_services.yml');

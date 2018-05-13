@@ -14,7 +14,6 @@ namespace spec\Khatovar\Bundle\UserBundle\Handler;
 use Khatovar\Component\User\Domain\Model\UserInterface;
 use Khatovar\Component\User\Domain\Event\UserEvents;
 use Khatovar\Bundle\UserBundle\Handler\UserStatusHandler;
-use Khatovar\Bundle\UserBundle\Handler\UserStatusHandlerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -34,7 +33,6 @@ class UserStatusHandlerSpec extends ObjectBehavior
     function it_is_a_user_status_handler()
     {
         $this->shouldHaveType(UserStatusHandler::class);
-        $this->shouldImplement(UserStatusHandlerInterface::class);
     }
 
     function it_enables_a_user(
