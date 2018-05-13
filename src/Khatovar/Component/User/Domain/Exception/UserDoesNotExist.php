@@ -21,7 +21,7 @@ declare(strict_types=1);
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Khatovar\Bundle\UserBundle\Query\Exception;
+namespace Khatovar\Component\User\Domain\Exception;
 
 /**
  * Exception thrown if the application try to get a user that does not exists.

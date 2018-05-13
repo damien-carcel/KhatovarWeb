@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "34f7b52397eaa9ee93ad0af4a2f65e8d",
+    "content-hash": "fb9f8306bc527baf17ef1d684e4f1f92",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -2804,6 +2804,61 @@
         }
     ],
     "packages-dev": [
+        {
+            "name": "akeneo/php-coupling-detector",
+            "version": "0.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/akeneo/php-coupling-detector.git",
+                "reference": "b28567fd020441fdaf7554232335da19a1c4f0d1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/akeneo/php-coupling-detector/zipball/b28567fd020441fdaf7554232335da19a1c4f0d1",
+                "reference": "b28567fd020441fdaf7554232335da19a1c4f0d1",
+                "shasum": ""
+            },
+            "require": {
+                "friendsofphp/php-cs-fixer": "^2.0",
+                "php": ">=5.3.6",
+                "symfony/console": "~2.3|~3.0",
+                "symfony/event-dispatcher": "~2.3|~3.0",
+                "symfony/filesystem": "~2.3|~3.0",
+                "symfony/finder": "~2.3|~3.0"
+            },
+            "require-dev": {
+                "phpspec/phpspec": "~2.3"
+            },
+            "bin": [
+                "bin/php-coupling-detector"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Akeneo\\CouplingDetector\\": "src/Akeneo/CouplingDetector/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Dupont <nicolas@akeneo.com>",
+                    "homepage": "http://www.akeneo.com"
+                },
+                {
+                    "name": "Julien Janvier <j.janvier@gmail.com>"
+                }
+            ],
+            "description": "PHP coupling detector",
+            "time": "2017-03-28T07:33:31+00:00"
+        },
         {
             "name": "behat-extension/doctrine-data-fixtures-extension",
             "version": "v4.0.1",

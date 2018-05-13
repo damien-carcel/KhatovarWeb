@@ -11,8 +11,8 @@
 
 namespace spec\Khatovar\Bundle\UserBundle\Manager;
 
+use Khatovar\Bundle\UserBundle\Entity\UserInterface;
 use Khatovar\Bundle\UserBundle\Manager\RolesManager;
-use FOS\UserBundle\Model\UserInterface;
 use Khatovar\Bundle\UserBundle\Security\Core\Authentication\CurrentUser;
 use PhpSpec\ObjectBehavior;
 
@@ -63,6 +63,6 @@ class RolesManagerSpec extends ObjectBehavior
     {
         $user->getRoles()->willReturn(['ROLE_USER']);
 
-        $this->getUserRole($user)->shouldReturn('ROLE_USER');
+        $this->forUser($user)->shouldReturn('ROLE_USER');
     }
 }

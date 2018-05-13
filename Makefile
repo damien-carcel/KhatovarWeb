@@ -24,6 +24,9 @@ bower :
 
 initialize : composer yarn schema assets bower
 
+coupling :
+	docker-compose exec fpm vendor/bin/php-coupling-detector detect --config-file=.php_cd.php
+
 phpcs :
 	docker-compose exec fpm vendor/bin/phpcs -p --standard=PSR2 --extensions=php src tests/acceptance tests/integration tests/system
 
@@ -48,4 +51,4 @@ system :
 legacy :
 	docker-compose exec fpm vendor/bin/behat --profile=legacy
 
-tests : phpcs php-cs-fixer-dry-run phpspec integration acceptance system legacy
+tests : coupling phpcs php-cs-fixer-dry-run phpspec integration acceptance system legacy

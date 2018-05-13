@@ -11,11 +11,11 @@
 
 namespace spec\Khatovar\Bundle\UserBundle\Handler;
 
+use Khatovar\Bundle\UserBundle\Entity\UserInterface;
 use Khatovar\Bundle\UserBundle\Event\UserEvents;
 use Khatovar\Bundle\UserBundle\Handler\UserStatusHandler;
 use Khatovar\Bundle\UserBundle\Handler\UserStatusHandlerInterface;
 use Doctrine\ORM\EntityManagerInterface;
-use FOS\UserBundle\Model\UserInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Symfony\Bridge\Doctrine\RegistryInterface;

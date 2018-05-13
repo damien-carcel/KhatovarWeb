@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of KhatovarWeb.
  *
@@ -11,7 +13,7 @@
 
 namespace Khatovar\Bundle\UserBundle\Manager;
 
-use FOS\UserBundle\Model\UserInterface;
+use Khatovar\Bundle\UserBundle\Entity\UserInterface;
 use Khatovar\Bundle\UserBundle\Security\Core\Authentication\CurrentUser;
 
 /**
@@ -44,7 +46,7 @@ class RolesManager
      *
      * @return array
      */
-    public function getChoices()
+    public function getChoices(): array
     {
         $choices = $this->getOrderedRoles();
 
@@ -66,7 +68,7 @@ class RolesManager
      *
      * @return string
      */
-    public function getUserRole(UserInterface $user)
+    public function forUser(UserInterface $user): string
     {
         $currentRole = '';
         $userRoles = $user->getRoles();
@@ -96,9 +98,9 @@ class RolesManager
      *     'ROLE_SUPER_ADMIN' => 'ROLE_SUPER_ADMIN',
      * ]
      *
-     * @return string[]
+     * @return array
      */
-    private function getOrderedRoles()
+    private function getOrderedRoles(): array
     {
         $choices = [];
 

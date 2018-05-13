@@ -28,8 +28,8 @@ use Khatovar\Bundle\UserBundle\Event\UserEvents;
 use Khatovar\Bundle\UserBundle\Form\Factory\UserFormFactory;
 use Khatovar\Bundle\UserBundle\Manager\RolesManager;
 use Khatovar\Bundle\UserBundle\Manager\UserManager;
-use Khatovar\Bundle\UserBundle\Query\Exception\UserDoesNotExist;
 use Khatovar\Bundle\UserBundle\Query\GetUserFromDatabase;
+use Khatovar\Component\User\Domain\Exception\UserDoesNotExist;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -140,7 +140,7 @@ class SetRoleController
             throw new AccessDeniedException('You do not have the permission to change the role of an administrator.');
         }
 
-        $userRole = $this->rolesManager->getUserRole($user);
+        $userRole = $this->rolesManager->forUser($user);
 
         $form = $this->userFormFactory->createSetRoleForm($userRole);
         $form->handleRequest($request);

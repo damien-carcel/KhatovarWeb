@@ -11,7 +11,7 @@
 
 namespace Khatovar\Bundle\UserBundle\Handler;
 
-use FOS\UserBundle\Model\UserInterface;
+use Khatovar\Bundle\UserBundle\Entity\UserInterface;
 
 /**
  * Handles a user status enabled/disabled.

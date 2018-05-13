@@ -24,8 +24,8 @@ declare(strict_types=1);
 namespace Khatovar\Bundle\UserBundle\Controller\Admin;
 
 use Khatovar\Bundle\UserBundle\Form\Factory\UserFormFactory;
-use Khatovar\Bundle\UserBundle\Query\Exception\UserDoesNotExist;
 use Khatovar\Bundle\UserBundle\Query\GetUserFromDatabase;
+use Khatovar\Component\User\Domain\Exception\UserDoesNotExist;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Twig\Environment;

@@ -11,7 +11,7 @@
 
 namespace Khatovar\Bundle\UserBundle\Handler;
 
-use FOS\UserBundle\Model\UserInterface;
+use Khatovar\Bundle\UserBundle\Entity\UserInterface;
 use Khatovar\Bundle\UserBundle\Event\UserEvents;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace spec\Khatovar\Bundle\UserBundle\Query;
 
-use Khatovar\Bundle\UserBundle\Query\Exception\UserDoesNotExist;
+use Khatovar\Component\User\Domain\Exception\UserDoesNotExist;
 use Khatovar\Bundle\UserBundle\Query\GetUser;
 use Khatovar\Bundle\UserBundle\Query\GetUserFromDatabase;
 use Khatovar\Bundle\UserBundle\Entity\Repository\UserRepositoryInterface;

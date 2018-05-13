@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace spec\Khatovar\Bundle\UserBundle\EventSubscriber;
 
+use Khatovar\Bundle\UserBundle\Entity\UserInterface;
 use Khatovar\Bundle\UserBundle\Event\UserEvents;
 use Khatovar\Bundle\UserBundle\Factory\SwiftMessageFactory;
-use FOS\UserBundle\Model\UserInterface;
 use PhpSpec\ObjectBehavior;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\Translation\TranslatorInterface;

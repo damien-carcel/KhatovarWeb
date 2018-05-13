@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Khatovar\Bundle\UserBundle\EventSubscriber;
 
-use FOS\UserBundle\Model\UserInterface;
+use Khatovar\Bundle\UserBundle\Entity\UserInterface;
 use Khatovar\Bundle\UserBundle\Event\UserEvents;
 use Khatovar\Bundle\UserBundle\Factory\SwiftMessageFactory;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;

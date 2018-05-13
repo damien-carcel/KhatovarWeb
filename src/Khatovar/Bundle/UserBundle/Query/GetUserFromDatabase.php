@@ -25,8 +25,8 @@ namespace Khatovar\Bundle\UserBundle\Query;
 
 use Khatovar\Bundle\UserBundle\Entity\Repository\UserRepositoryInterface;
 use Khatovar\Bundle\UserBundle\Entity\UserInterface;
-use Khatovar\Bundle\UserBundle\Query\Exception\UserDoesNotExist;
 use Khatovar\Bundle\UserBundle\Security\Core\Authentication\CurrentUser;
+use Khatovar\Component\User\Domain\Exception\UserDoesNotExist;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
