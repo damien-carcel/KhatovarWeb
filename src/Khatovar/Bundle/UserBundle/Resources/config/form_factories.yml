@@ -5,4 +5,4 @@ services:
             - '@form.factory'
             - '@router'
             - '@translator'
-            - '@khatovar_user.manager.roles'
+            - '@Khatovar\Component\User\Application\Query\UserRole'

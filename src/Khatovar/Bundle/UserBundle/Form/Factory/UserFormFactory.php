@@ -23,7 +23,7 @@ declare(strict_types=1);
 
 namespace Khatovar\Bundle\UserBundle\Form\Factory;
 
-use Khatovar\Bundle\UserBundle\Manager\RolesManager;
+use Khatovar\Component\User\Application\Query\UserRole;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -42,8 +42,8 @@ class UserFormFactory
     /** @var FormFactoryInterface */
     protected $formFactory;
 
-    /** @var RolesManager */
-    protected $rolesManager;
+    /** @var UserRole */
+    protected $userRole;
 
     /** @var RouterInterface */
     protected $router;
@@ -55,18 +55,18 @@ class UserFormFactory
      * @param FormFactoryInterface $formFactory
      * @param RouterInterface      $router
      * @param TranslatorInterface  $translator
-     * @param RolesManager         $rolesManager
+     * @param UserRole             $userRole
      */
     public function __construct(
         FormFactoryInterface $formFactory,
         RouterInterface $router,
         TranslatorInterface $translator,
-        RolesManager $rolesManager
+        UserRole $userRole
     ) {
         $this->formFactory = $formFactory;
         $this->router = $router;
         $this->translator = $translator;
-        $this->rolesManager = $rolesManager;
+        $this->userRole = $userRole;
     }
 
     /**
@@ -181,7 +181,7 @@ class UserFormFactory
                 'roles',
                 ChoiceType::class,
                 [
-                    'choices' => $this->rolesManager->getChoices(),
+                    'choices' => $this->userRole->listAvailableOnes(),
                     'label' => $this->translator->trans('khatovar_user.form.role.label'),
                     'data' => $currentRole,
                 ]

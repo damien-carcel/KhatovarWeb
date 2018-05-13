@@ -24,9 +24,9 @@ declare(strict_types=1);
 namespace Khatovar\Bundle\UserBundle\Controller\Admin;
 
 use Khatovar\Bundle\UserBundle\Form\Factory\UserFormFactory;
-use Khatovar\Bundle\UserBundle\Manager\RolesManager;
 use Khatovar\Bundle\UserBundle\Manager\UserManager;
 use Khatovar\Component\User\Application\Query\GetUser;
+use Khatovar\Component\User\Application\Query\UserRole;
 use Khatovar\Component\User\Domain\Event\UserEvents;
 use Khatovar\Component\User\Domain\Exception\UserDoesNotExist;
 use Khatovar\Component\User\Domain\Model\UserInterface;
@@ -60,8 +60,8 @@ class SetRoleController
     /** @var UserManager */
     private $userManager;
 
-    /** @var RolesManager */
-    private $rolesManager;
+    /** @var UserRole */
+    private $userRole;
 
     /** @var TokenStorageInterface */
     private $tokenStorage;
@@ -85,7 +85,7 @@ class SetRoleController
      * @param GetUser                  $getUser
      * @param UserFormFactory          $userFormFactory
      * @param UserManager              $userManager
-     * @param RolesManager             $rolesManager
+     * @param UserRole                 $userRole
      * @param TokenStorageInterface    $tokenStorage
      * @param EventDispatcherInterface $eventDispatcher
      * @param Session                  $session
@@ -97,7 +97,7 @@ class SetRoleController
         GetUser $getUser,
         UserFormFactory $userFormFactory,
         UserManager $userManager,
-        RolesManager $rolesManager,
+        UserRole $userRole,
         TokenStorageInterface $tokenStorage,
         EventDispatcherInterface $eventDispatcher,
         Session $session,
@@ -108,7 +108,7 @@ class SetRoleController
         $this->getUser = $getUser;
         $this->userFormFactory = $userFormFactory;
         $this->userManager = $userManager;
-        $this->rolesManager = $rolesManager;
+        $this->userRole = $userRole;
         $this->tokenStorage = $tokenStorage;
         $this->eventDispatcher = $eventDispatcher;
         $this->session = $session;
@@ -140,9 +140,9 @@ class SetRoleController
             throw new AccessDeniedException('You do not have the permission to change the role of an administrator.');
         }
 
-        $userRole = $this->rolesManager->forUser($user);
+        $role = $this->userRole->forUser($user);
 
-        $form = $this->userFormFactory->createSetRoleForm($userRole);
+        $form = $this->userFormFactory->createSetRoleForm($role);
         $form->handleRequest($request);
 
         if ($form->isValid()) {

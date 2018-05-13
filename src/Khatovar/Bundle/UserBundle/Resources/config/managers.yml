@@ -1,14 +1,8 @@
 services:
-    khatovar_user.manager.roles:
-        class: Khatovar\Bundle\UserBundle\Manager\RolesManager
-        arguments:
-            - '@Khatovar\Bundle\UserBundle\Security\Authentication\UserInSecurityTokenStorage'
-            - '%security.role_hierarchy.roles%'
-
     khatovar_user.manager.users:
         class: Khatovar\Bundle\UserBundle\Manager\UserManager
         arguments:
             - '@Khatovar\Bundle\UserBundle\Security\Authentication\UserInSecurityTokenStorage'
             - '@Khatovar\Bundle\UserBundle\Entity\Repository\UserRepository'
             - '@doctrine'
-            - '@khatovar_user.manager.roles'
+            - '@Khatovar\Component\User\Application\Query\UserRole'

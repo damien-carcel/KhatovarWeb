@@ -13,7 +13,7 @@ namespace spec\Khatovar\Bundle\UserBundle\Manager;
 
 use Khatovar\Component\User\Domain\Repository\UserRepositoryInterface;
 use Khatovar\Component\User\Domain\Model\UserInterface;
-use Khatovar\Bundle\UserBundle\Manager\RolesManager;
+use Khatovar\Component\User\Application\Query\UserRole;
 use Khatovar\Bundle\UserBundle\Manager\UserManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Khatovar\Component\User\Application\Query\CurrentTokenUser;
@@ -31,9 +31,9 @@ class UserManagerSpec extends ObjectBehavior
         CurrentTokenUser $currentTokenUser,
         UserRepositoryInterface $userRepository,
         RegistryInterface $doctrine,
-        RolesManager $rolesManager
+        UserRole $userRole
     ) {
-        $this->beConstructedWith($currentTokenUser, $userRepository, $doctrine, $rolesManager);
+        $this->beConstructedWith($currentTokenUser, $userRepository, $doctrine, $userRole);
     }
 
     function it_is_a_user_manager()
@@ -74,12 +74,12 @@ class UserManagerSpec extends ObjectBehavior
     }
 
     function it_sets_role_to_a_user(
-        $rolesManager,
+        $userRole,
         $doctrine,
         EntityManagerInterface $entityManager,
         UserInterface $user
     ) {
-        $rolesManager->getChoices()->willReturn(
+        $userRole->listAvailableOnes()->willReturn(
             [
                 'ROLE_USER' => 'ROLE_USER',
                 'ROLE_VIEWER' => 'ROLE_VIEWER',
@@ -95,12 +95,12 @@ class UserManagerSpec extends ObjectBehavior
     }
 
     function it_throws_an_exception_if_role_is_not_in_choices_list(
-        $rolesManager,
+        $userRole,
         $doctrine,
         EntityManagerInterface $entityManager,
         UserInterface $user
     ) {
-        $rolesManager->getChoices()->willReturn(
+        $userRole->listAvailableOnes()->willReturn(
             [
                 'ROLE_USER' => 'ROLE_USER',
                 'ROLE_VIEWER' => 'ROLE_VIEWER',

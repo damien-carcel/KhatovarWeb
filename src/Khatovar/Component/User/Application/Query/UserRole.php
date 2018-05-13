@@ -11,9 +11,8 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Khatovar\Bundle\UserBundle\Manager;
+namespace Khatovar\Component\User\Application\Query;
 
-use Khatovar\Component\User\Application\Query\CurrentTokenUser;
 use Khatovar\Component\User\Domain\Model\UserInterface;
 
 /**
@@ -21,7 +20,7 @@ use Khatovar\Component\User\Domain\Model\UserInterface;
  *
  * @author Damien Carcel <damien.carcel@gmail.com>
  */
-class RolesManager
+class UserRole
 {
     /** @var CurrentTokenUser */
     private $currentTokenUser;
@@ -46,7 +45,7 @@ class RolesManager
      *
      * @return array
      */
-    public function getChoices(): array
+    public function listAvailableOnes(): array
     {
         $choices = $this->getOrderedRoles();
 

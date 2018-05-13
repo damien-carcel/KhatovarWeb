@@ -12,6 +12,7 @@
 namespace Khatovar\Bundle\UserBundle\Manager;
 
 use Khatovar\Component\User\Application\Query\CurrentTokenUser;
+use Khatovar\Component\User\Application\Query\UserRole;
 use Khatovar\Component\User\Domain\Model\UserInterface;
 use Khatovar\Component\User\Domain\Repository\UserRepositoryInterface;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -33,25 +34,25 @@ class UserManager
     /** @var RegistryInterface */
     private $doctrine;
 
-    /** @var RolesManager */
-    private $rolesManager;
+    /** @var UserRole */
+    private $userRole;
 
     /**
      * @param CurrentTokenUser        $currentUser
      * @param UserRepositoryInterface $userRepository
      * @param RegistryInterface       $doctrine
-     * @param RolesManager            $rolesManager
+     * @param UserRole                $userRole
      */
     public function __construct(
         CurrentTokenUser $currentUser,
         UserRepositoryInterface $userRepository,
         RegistryInterface $doctrine,
-        RolesManager $rolesManager
+        UserRole $userRole
     ) {
         $this->currentTokenUser = $currentUser;
         $this->userRepository = $userRepository;
         $this->doctrine = $doctrine;
-        $this->rolesManager = $rolesManager;
+        $this->userRole = $userRole;
     }
 
     /**
@@ -85,7 +86,7 @@ class UserManager
      */
     public function setRole(UserInterface $user, array $selectedRole)
     {
-        $choices = $this->rolesManager->getChoices();
+        $choices = $this->userRole->listAvailableOnes();
 
         if (!isset($choices[$selectedRole['roles']])) {
             throw new InvalidArgumentException(
