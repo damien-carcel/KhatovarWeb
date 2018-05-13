@@ -21,6 +21,7 @@
 
 namespace Khatovar\Bundle\UserBundle\Form\Type;
 
+use Khatovar\Bundle\UserBundle\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -36,20 +37,15 @@ use Symfony\Component\Translation\TranslatorInterface;
  */
 class UserType extends AbstractType
 {
-    /** @var string */
-    protected $class;
-
     /** @var TranslatorInterface */
-    protected $translator;
+    private $translator;
 
     /**
      * @param TranslatorInterface $translator
-     * @param string              $class
      */
-    public function __construct(TranslatorInterface $translator, $class)
+    public function __construct(TranslatorInterface $translator)
     {
         $this->translator = $translator;
-        $this->class = $class;
     }
 
     /**
@@ -81,6 +77,6 @@ class UserType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(['data_class' => $this->class]);
+        $resolver->setDefaults(['data_class' => User::class]);
     }
 }

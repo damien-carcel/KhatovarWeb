@@ -48,8 +48,6 @@ use Symfony\Component\Translation\TranslatorInterface;
  */
 class ChangeStatusController
 {
-    /** @var EventDispatcherInterface */
-    protected $eventDispatcher;
     /** @var GetUser */
     private $getUser;
 
@@ -61,6 +59,9 @@ class ChangeStatusController
 
     /** @var CurrentTokenUser */
     private $currentTokenUser;
+
+    /** @var EventDispatcherInterface */
+    private $eventDispatcher;
 
     /** @var Session */
     private $session;

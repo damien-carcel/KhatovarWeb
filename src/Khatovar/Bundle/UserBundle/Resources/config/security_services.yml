@@ -5,6 +5,6 @@ services:
 
     Khatovar\Bundle\UserBundle\Security\Logout\LogoutSuccessHandler:
         arguments:
-            - '@khatovar_user.factory.redirect_response'
+            - '@Khatovar\Bundle\UserBundle\Factory\RedirectResponseFactory'
         tags:
             - { name: 'monolog_logger', channel: 'security' }

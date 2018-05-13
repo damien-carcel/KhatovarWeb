@@ -26,11 +26,11 @@ use Symfony\Component\Translation\TranslatorInterface;
 class MailerSubscriberSpec extends ObjectBehavior
 {
     function let(
+        SwiftMessageFactory $messageFactory,
         \Swift_Mailer $mailer,
-        TranslatorInterface $translator,
-        SwiftMessageFactory $messageFactory
+        TranslatorInterface $translator
     ) {
-        $this->beConstructedWith($mailer, $translator, $messageFactory, 'mailer@mail.address');
+        $this->beConstructedWith($messageFactory, $mailer, $translator, 'mailer@mail.address');
     }
 
     function it_subscribes_to_user_remove_events()

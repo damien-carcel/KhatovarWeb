@@ -1,6 +1,3 @@
 services:
-    khatovar_user.factory.swift_message:
-        class: Khatovar\Bundle\UserBundle\Factory\SwiftMessageFactory
-
-    khatovar_user.factory.redirect_response:
-        class: Khatovar\Bundle\UserBundle\Factory\RedirectResponseFactory
+    Khatovar\Bundle\UserBundle\Factory\SwiftMessageFactory:
+    Khatovar\Bundle\UserBundle\Factory\RedirectResponseFactory:

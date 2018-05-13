@@ -37,33 +37,33 @@ use Symfony\Component\Translation\TranslatorInterface;
  */
 class MailerSubscriber implements EventSubscriberInterface
 {
-    /** @var TranslatorInterface */
-    protected $translator;
+    /** @var SwiftMessageFactory */
+    private $messageFactory;
 
     /** @var \Swift_Mailer */
     private $mailer;
 
-    /** @var SwiftMessageFactory */
-    private $messageFactory;
+    /** @var TranslatorInterface */
+    private $translator;
 
     /** @var string */
     private $mailerAddress;
 
     /**
+     * @param SwiftMessageFactory $messageFactory
      * @param \Swift_Mailer       $mailer
      * @param TranslatorInterface $translator
-     * @param SwiftMessageFactory $messageFactory
      * @param string              $mailerAddress
      */
     public function __construct(
+        SwiftMessageFactory $messageFactory,
         \Swift_Mailer $mailer,
         TranslatorInterface $translator,
-        SwiftMessageFactory $messageFactory,
         $mailerAddress
     ) {
+        $this->messageFactory = $messageFactory;
         $this->mailer = $mailer;
         $this->translator = $translator;
-        $this->messageFactory = $messageFactory;
         $this->mailerAddress = $mailerAddress;
     }
 

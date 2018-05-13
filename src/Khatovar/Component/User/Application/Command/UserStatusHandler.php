@@ -21,7 +21,7 @@ use Khatovar\Component\User\Domain\Repository\UserRepositoryInterface;
 class UserStatusHandler
 {
     /** @var UserRepositoryInterface */
-    protected $userRepository;
+    private $userRepository;
 
     /**
      * @param UserRepositoryInterface $userRepository

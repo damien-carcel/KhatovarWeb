@@ -40,16 +40,16 @@ use Symfony\Component\Translation\TranslatorInterface;
 class UserFormFactory
 {
     /** @var FormFactoryInterface */
-    protected $formFactory;
+    private $formFactory;
 
     /** @var GetUserRoles */
-    protected $getUserRoles;
+    private $getUserRoles;
 
     /** @var RouterInterface */
-    protected $router;
+    private $router;
 
     /** @var TranslatorInterface */
-    protected $translator;
+    private $translator;
 
     /**
      * @param FormFactoryInterface $formFactory

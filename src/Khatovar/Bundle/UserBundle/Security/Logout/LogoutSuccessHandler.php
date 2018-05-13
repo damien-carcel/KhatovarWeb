@@ -33,7 +33,7 @@ use Symfony\Component\Security\Http\Logout\LogoutSuccessHandlerInterface;
 class LogoutSuccessHandler implements LogoutSuccessHandlerInterface
 {
     /** @var RedirectResponseFactory */
-    protected $factory;
+    private $factory;
 
     /**
      * @param RedirectResponseFactory $factory
