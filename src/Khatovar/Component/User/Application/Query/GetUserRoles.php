@@ -16,11 +16,11 @@ namespace Khatovar\Component\User\Application\Query;
 use Khatovar\Component\User\Domain\Model\UserInterface;
 
 /**
- * User roles manager.
+ * Query user roles.
  *
  * @author Damien Carcel <damien.carcel@gmail.com>
  */
-class UserRole
+class GetUserRoles
 {
     /** @var CurrentTokenUser */
     private $currentTokenUser;
@@ -45,7 +45,7 @@ class UserRole
      *
      * @return array
      */
-    public function listAvailableOnes(): array
+    public function available(): array
     {
         $choices = $this->getOrderedRoles();
 

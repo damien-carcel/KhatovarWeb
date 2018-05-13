@@ -23,59 +23,54 @@ declare(strict_types=1);
 
 namespace Khatovar\Component\User\Application\Query;
 
-use Khatovar\Component\User\Domain\Exception\UserDoesNotExist;
 use Khatovar\Component\User\Domain\Model\UserInterface;
 use Khatovar\Component\User\Domain\Repository\UserRepositoryInterface;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * @author Damien Carcel <damien.carcel@gmail.com>
  */
-class GetUser
+class GetAdministrableUsers
 {
-    /** @var UserRepositoryInterface */
-    private $userRepository;
-
     /** @var CurrentTokenUser */
     private $currentTokenUser;
 
+    /** @var UserRepositoryInterface */
+    private $userRepository;
+
     /**
+     * @param CurrentTokenUser        $currentTokenUser
      * @param UserRepositoryInterface $userRepository
-     * @param CurrentTokenUser        $currentUser
      */
-    public function __construct(
-        UserRepositoryInterface $userRepository,
-        CurrentTokenUser $currentUser
-    ) {
+    public function __construct(CurrentTokenUser $currentTokenUser, UserRepositoryInterface $userRepository)
+    {
+        $this->currentTokenUser = $currentTokenUser;
         $this->userRepository = $userRepository;
-        $this->currentTokenUser = $currentUser;
     }
 
     /**
-     * Returns a User from its username.
+     * Returns the list of user that the current user can administrate.
      *
-     * A regular administrator cannot get the super administrator, as he has no right to access its profile.
+     * Only administrators can administrate other users, and only a super
+     * administrator can administrate other super administrators.
      *
-     * @param string $username
+     * This method makes sense only of there is a use in the token storage.
      *
-     * @throws UserDoesNotExist
-     * @throws AccessDeniedException
-     *
-     * @return UserInterface
+     * @return UserInterface[]
      */
-    public function byUsername(string $username): UserInterface
+    public function forCurrentOne(): array
     {
-        $user = $this->userRepository->get($username);
-
-        if ($user->isSuperAdmin() && !$this->currentTokenUser->isSuperAdmin()) {
-            throw new AccessDeniedException(
-                sprintf(
-                    'You do not have the permission to get user "%s".',
-                    $username
-                )
-            );
+        $currentUser = $this->currentTokenUser->getFromTokenStorage();
+        if (null === $currentUser || !($currentUser->hasRole('ROLE_ADMIN') || $currentUser->isSuperAdmin())) {
+            return [];
         }
 
-        return $user;
+        $users = [$currentUser];
+
+        if (!$currentUser->isSuperAdmin()) {
+            $superAdmins = $this->userRepository->findByRole('ROLE_SUPER_ADMIN');
+            $users = array_merge($users, $superAdmins);
+        }
+
+        return $this->userRepository->findAllBut($users);
     }
 }

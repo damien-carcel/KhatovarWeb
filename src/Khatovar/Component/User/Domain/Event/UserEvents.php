@@ -27,18 +27,18 @@ namespace Khatovar\Component\User\Domain\Event;
 class UserEvents
 {
     /**
-     * This event is dispatched just before a user is updated.
+     * This event is dispatched just before a user is saved.
      *
      * @Event("Symfony\Component\EventDispatcher\GenericEvent"
      */
-    const PRE_UPDATE = 'khatovar_user.event.pre_update';
+    const PRE_SAVE = 'khatovar_user.event.pre_save';
 
     /**
-     * This event is dispatched just after a user is updated.
+     * This event is dispatched just after a user is saved.
      *
      * @Event("Symfony\Component\EventDispatcher\GenericEvent"
      */
-    const POST_UPDATE = 'khatovar_user.event.post_update';
+    const POST_SAVE = 'khatovar_user.event.post_save';
 
     /**
      * This event is dispatched just before a user is removed.

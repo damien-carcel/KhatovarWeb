@@ -29,7 +29,7 @@ class GetUserSpec extends ObjectBehavior
         $currentTokenUser,
         UserInterface $user
     ) {
-        $userRepository->findOneByUsername('username')->willReturn($user);
+        $userRepository->get('username')->willReturn($user);
         $user->isSuperAdmin()->willReturn(false);
 
         $currentTokenUser->isSuperAdmin()->shouldNotBeCalled();
@@ -42,7 +42,7 @@ class GetUserSpec extends ObjectBehavior
         $currentTokenUser,
         UserInterface $user
     ) {
-        $userRepository->findOneByUsername('username')->willReturn($user);
+        $userRepository->get('username')->willReturn($user);
         $user->isSuperAdmin()->willReturn(true);
 
         $currentTokenUser->isSuperAdmin()->willReturn(true);
@@ -52,9 +52,10 @@ class GetUserSpec extends ObjectBehavior
 
     function it_throws_an_exception_if_user_does_not_exists($userRepository)
     {
-        $userRepository->findOneByUsername('username')->willReturn(null);
-
         $exception = new UserDoesNotExist('username');
+
+        $userRepository->get('username')->willThrow($exception);
+
         $this->shouldThrow($exception)->during('byUsername', ['username']);
     }
 
@@ -63,7 +64,7 @@ class GetUserSpec extends ObjectBehavior
         $currentTokenUser,
         UserInterface $user
     ) {
-        $userRepository->findOneByUsername('username')->willReturn($user);
+        $userRepository->get('username')->willReturn($user);
         $user->isSuperAdmin()->willReturn(true);
 
         $currentTokenUser->isSuperAdmin()->willReturn(false);

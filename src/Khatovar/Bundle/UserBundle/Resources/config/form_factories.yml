@@ -1,8 +1,7 @@
 services:
-    khatovar_user.factory.user_form:
-        class: Khatovar\Bundle\UserBundle\Form\Factory\UserFormFactory
+    Khatovar\Bundle\UserBundle\Form\Factory\UserFormFactory:
         arguments:
             - '@form.factory'
             - '@router'
             - '@translator'
-            - '@Khatovar\Component\User\Application\Query\UserRole'
+            - '@Khatovar\Component\User\Application\Query\GetUserRoles'

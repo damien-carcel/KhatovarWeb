@@ -130,16 +130,13 @@ class UpdateController
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $this->eventDispatcher->dispatch(UserEvents::PRE_UPDATE, new GenericEvent($user));
+            $this->eventDispatcher->dispatch(UserEvents::PRE_SAVE, new GenericEvent($user));
 
             $this->doctrine->getManager()->flush();
 
-            $this->eventDispatcher->dispatch(UserEvents::POST_UPDATE, new GenericEvent($user));
+            $this->eventDispatcher->dispatch(UserEvents::POST_SAVE, new GenericEvent($user));
 
-            $this->session->getFlashBag()->add(
-                'notice',
-                $this->translator->trans('khatovar_user.notice.update')
-            );
+            $this->session->getFlashBag()->add('notice', $this->translator->trans('khatovar_user.notice.update'));
 
             $redirectRoute = $this->router->generate(
                 'khatovar_user_admin_index',

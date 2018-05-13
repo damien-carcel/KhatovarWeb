@@ -25,13 +25,10 @@ namespace Khatovar\Bundle\UserBundle\Controller\Admin;
 
 use Khatovar\Bundle\UserBundle\Form\Factory\UserFormFactory;
 use Khatovar\Bundle\UserBundle\Manager\UserManager;
+use Khatovar\Component\User\Application\Query\CurrentTokenUser;
 use Khatovar\Component\User\Application\Query\GetUser;
-use Khatovar\Component\User\Application\Query\UserRole;
-use Khatovar\Component\User\Domain\Event\UserEvents;
+use Khatovar\Component\User\Application\Query\GetUserRoles;
 use Khatovar\Component\User\Domain\Exception\UserDoesNotExist;
-use Khatovar\Component\User\Domain\Model\UserInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,7 +36,6 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Translation\TranslatorInterface;
 use Twig\Environment;
@@ -60,14 +56,11 @@ class SetRoleController
     /** @var UserManager */
     private $userManager;
 
-    /** @var UserRole */
+    /** @var GetUserRoles */
     private $userRole;
 
-    /** @var TokenStorageInterface */
-    private $tokenStorage;
-
-    /** @var EventDispatcherInterface */
-    private $eventDispatcher;
+    /** @var CurrentTokenUser */
+    private $currentTokenUser;
 
     /** @var Session */
     private $session;
@@ -82,24 +75,22 @@ class SetRoleController
     private $twig;
 
     /**
-     * @param GetUser                  $getUser
-     * @param UserFormFactory          $userFormFactory
-     * @param UserManager              $userManager
-     * @param UserRole                 $userRole
-     * @param TokenStorageInterface    $tokenStorage
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param Session                  $session
-     * @param TranslatorInterface      $translator
-     * @param RouterInterface          $router
-     * @param Environment              $twig
+     * @param GetUser             $getUser
+     * @param UserFormFactory     $userFormFactory
+     * @param UserManager         $userManager
+     * @param GetUserRoles        $userRole
+     * @param CurrentTokenUser    $currentTokenUser
+     * @param Session             $session
+     * @param TranslatorInterface $translator
+     * @param RouterInterface     $router
+     * @param Environment         $twig
      */
     public function __construct(
         GetUser $getUser,
         UserFormFactory $userFormFactory,
         UserManager $userManager,
-        UserRole $userRole,
-        TokenStorageInterface $tokenStorage,
-        EventDispatcherInterface $eventDispatcher,
+        GetUserRoles $userRole,
+        CurrentTokenUser $currentTokenUser,
         Session $session,
         TranslatorInterface $translator,
         RouterInterface $router,
@@ -109,8 +100,7 @@ class SetRoleController
         $this->userFormFactory = $userFormFactory;
         $this->userManager = $userManager;
         $this->userRole = $userRole;
-        $this->tokenStorage = $tokenStorage;
-        $this->eventDispatcher = $eventDispatcher;
+        $this->currentTokenUser = $currentTokenUser;
         $this->session = $session;
         $this->translator = $translator;
         $this->router = $router;
@@ -136,7 +126,7 @@ class SetRoleController
             throw new NotFoundHttpException($e->getMessage(), $e);
         }
 
-        if (!$this->getFromTokenStorage()->isSuperAdmin() && $user->hasRole('ROLE_ADMIN')) {
+        if (!$this->currentTokenUser->isSuperAdmin() && $user->hasRole('ROLE_ADMIN')) {
             throw new AccessDeniedException('You do not have the permission to change the role of an administrator.');
         }
 
@@ -148,16 +138,9 @@ class SetRoleController
         if ($form->isValid()) {
             $selectedRole = $form->getData();
 
-            $this->eventDispatcher->dispatch(UserEvents::PRE_SET_ROLE, new GenericEvent($user));
-
             $this->userManager->setRole($user, $selectedRole);
 
-            $this->eventDispatcher->dispatch(UserEvents::POST_SET_ROLE, new GenericEvent($user));
-
-            $this->session->getFlashBag()->add(
-                'notice',
-                $this->translator->trans('khatovar_user.notice.set_role')
-            );
+            $this->session->getFlashBag()->add('notice', $this->translator->trans('khatovar_user.notice.set_role'));
 
             $redirectRoute = $this->router->generate(
                 'khatovar_user_admin_index',
@@ -177,23 +160,5 @@ class SetRoleController
         );
 
         return new Response($content);
-    }
-
-    /**
-     * Gets a user from the Security Token Storage.
-     *
-     * @return UserInterface|null
-     */
-    private function getFromTokenStorage(): ?UserInterface
-    {
-        if (null === $token = $this->tokenStorage->getToken()) {
-            return null;
-        }
-
-        if (!is_object($user = $token->getUser())) {
-            return null;
-        }
-
-        return $user;
     }
 }

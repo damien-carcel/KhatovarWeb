@@ -4,7 +4,12 @@ services:
             - '@Khatovar\Bundle\UserBundle\Entity\Repository\UserRepository'
             - '@Khatovar\Bundle\UserBundle\Security\Authentication\UserInSecurityTokenStorage'
 
-    Khatovar\Component\User\Application\Query\UserRole:
+    Khatovar\Component\User\Application\Query\GetUserRoles:
         arguments:
             - '@Khatovar\Bundle\UserBundle\Security\Authentication\UserInSecurityTokenStorage'
             - '%security.role_hierarchy.roles%'
+
+    Khatovar\Component\User\Application\Query\GetAdministrableUsers:
+        arguments:
+            - '@Khatovar\Bundle\UserBundle\Security\Authentication\UserInSecurityTokenStorage'
+            - '@Khatovar\Bundle\UserBundle\Entity\Repository\UserRepository'

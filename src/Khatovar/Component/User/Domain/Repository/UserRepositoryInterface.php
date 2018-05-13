@@ -23,6 +23,7 @@ declare(strict_types=1);
 
 namespace Khatovar\Component\User\Domain\Repository;
 
+use Khatovar\Component\User\Domain\Exception\UserDoesNotExist;
 use Khatovar\Component\User\Domain\Model\UserInterface;
 
 /**
@@ -55,7 +56,9 @@ interface UserRepositoryInterface
      *
      * @param string $username
      *
+     * @throws UserDoesNotExist
+     *
      * @return UserInterface|null
      */
-    public function findOneByUsername(string $username): ?UserInterface;
+    public function get(string $username): UserInterface;
 }

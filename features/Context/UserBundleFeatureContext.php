@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of KhatovarWeb.
  *
@@ -17,7 +19,7 @@ use Behat\MinkExtension\Context\MinkContext;
 use Behat\Symfony2Extension\Context\KernelAwareContext;
 use Behat\Symfony2Extension\Driver\KernelDriver;
 use FOS\UserBundle\Model\UserManagerInterface;
-use Khatovar\Bundle\UserBundle\Manager\UserManager;
+use Khatovar\Component\User\Application\Query\GetAdministrableUsers;
 use Khatovar\Component\User\Domain\Repository\UserRepositoryInterface;
 use Symfony\Component\BrowserKit\Client;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -37,10 +39,10 @@ use Webmozart\Assert\Assert;
 class UserBundleFeatureContext extends MinkContext implements KernelAwareContext
 {
     /** @var KernelInterface */
-    protected $kernel;
+    private $kernel;
 
     /** @var SessionInterface */
-    protected $session;
+    private $session;
 
     /**
      * @param SessionInterface $session
@@ -53,7 +55,7 @@ class UserBundleFeatureContext extends MinkContext implements KernelAwareContext
     /**
      * {@inheritdoc}
      */
-    public function setKernel(KernelInterface $kernel)
+    public function setKernel(KernelInterface $kernel): void
     {
         $this->kernel = $kernel;
     }
@@ -65,7 +67,7 @@ class UserBundleFeatureContext extends MinkContext implements KernelAwareContext
      *
      * @Then /^I should be authenticated as "(?P<username>[^"]*)"$/
      */
-    public function iShouldBeAuthenticatedAs($username)
+    public function iShouldBeAuthenticatedAs($username): void
     {
         $tokenStorage = $this->getTockenStorage();
 
@@ -82,7 +84,7 @@ class UserBundleFeatureContext extends MinkContext implements KernelAwareContext
      * @Given /^I am anonymous$/
      * @Then /^I should be anonymous$/
      */
-    public function iShouldBeAnonymous()
+    public function iShouldBeAnonymous(): void
     {
         $checker = $this->getAuthorizationChecker();
 
@@ -97,12 +99,12 @@ class UserBundleFeatureContext extends MinkContext implements KernelAwareContext
      *
      * @Given /^I reset "(?P<username>[^"]*)" password$/
      */
-    public function iResetUserPassword($username)
+    public function iResetUserPassword($username): void
     {
         $user = $this->getUserProvider()->loadUserByUsername($username);
 
         $user->setPasswordRequestedAt(new \DateTime());
-        $this->getFosUserManager()->updateUser($user);
+        $this->fosUserManager()->updateUser($user);
     }
 
     /**
@@ -112,12 +114,12 @@ class UserBundleFeatureContext extends MinkContext implements KernelAwareContext
      *
      * @Then /^I should see the users? "([^"]*)"$/
      */
-    public function iShouldSeeTheFollowingUsers($list)
+    public function iShouldSeeTheFollowingUsers($list): void
     {
         $providedUserNames = $this->listToArray($list);
         sort($providedUserNames);
 
-        $storedUsers = $this->getCarcelUserManager()->getAdministrableUsers();
+        $storedUsers = $this->getAdministrableUsers()->forCurrentOne();
 
         $userNames = [];
         foreach ($storedUsers as $storedUser) {
@@ -136,7 +138,7 @@ class UserBundleFeatureContext extends MinkContext implements KernelAwareContext
      *
      * @When /^I follow "(?P<action>[^"]*)" for "(?P<username>[^"]*)" profile$/
      */
-    public function iFollowTheActionLinkForTheUserProfile($action, $username)
+    public function iFollowTheActionLinkForTheUserProfile($action, $username): void
     {
         $action = $this->fixStepArgument($action);
 
@@ -155,7 +157,7 @@ class UserBundleFeatureContext extends MinkContext implements KernelAwareContext
      *
      * @When /^I press "(?P<action>[^"]*)" for "(?P<user>[^"]*)" profile$/
      */
-    public function iPressTheActionLinkForTheUserProfile($action, $username)
+    public function iPressTheActionLinkForTheUserProfile($action, $username): void
     {
         $action = $this->fixStepArgument($action);
 
@@ -174,9 +176,9 @@ class UserBundleFeatureContext extends MinkContext implements KernelAwareContext
      *
      * @Then /^user "(?P<username>[^"]*)" should have role "(?P<role>[^"]*)"$/
      */
-    public function userShouldHaveRole($username, $role)
+    public function userShouldHaveRole($username, $role): void
     {
-        $user = $this->getUserRepository()->findOneBy(['username' => $username]);
+        $user = $this->userRepository()->get($username);
         Assert::true($user->hasRole($role));
     }
 
@@ -188,7 +190,7 @@ class UserBundleFeatureContext extends MinkContext implements KernelAwareContext
      *
      * @Then /^I should not see "(?P<text>[^"]*)" in the table line containing "(?P<line>[^"]*)"$/
      */
-    public function iShouldNotSeeTheTextInTheTableLine($line, $text)
+    public function iShouldNotSeeTheTextInTheTableLine($line, $text): void
     {
         $element = sprintf('table tr:contains("%s")', $line);
 
@@ -204,7 +206,7 @@ class UserBundleFeatureContext extends MinkContext implements KernelAwareContext
      *
      * @Then /^I should get a confirmation email with subject "(?P<subject>[^"]*)"$/
      */
-    public function iShouldGetConfirmationEmailWithSubject($subject)
+    public function iShouldGetConfirmationEmailWithSubject($subject): void
     {
         $collector = $this->getSymfonyProfile()->getCollector('swiftmailer');
 
@@ -223,7 +225,7 @@ class UserBundleFeatureContext extends MinkContext implements KernelAwareContext
      *
      * @When /^I stop following redirections$/
      */
-    public function disableFollowRedirects()
+    public function disableFollowRedirects(): void
     {
         $this->getSymfonyClient()->followRedirects(false);
     }
@@ -235,7 +237,7 @@ class UserBundleFeatureContext extends MinkContext implements KernelAwareContext
      *
      * @When /^I start following redirections$/
      */
-    public function enableFollowRedirects()
+    public function enableFollowRedirects(): void
     {
         $this->getSymfonyClient()->followRedirects(true);
     }
@@ -247,9 +249,9 @@ class UserBundleFeatureContext extends MinkContext implements KernelAwareContext
      *
      * @When /^I follow the activation link for the user "(?P<username>[^"]*)"$/
      */
-    public function iFollowTheActivationLinkForTheUser($username)
+    public function iFollowTheActivationLinkForTheUser($username): void
     {
-        $user = $this->getUserRepository()->findOneBy(['username' => $username]);
+        $user = $this->userRepository()->get($username);
         $activationToken = $user->getConfirmationToken();
 
         $this->visitPath('register/confirm/'.$activationToken);
@@ -262,7 +264,7 @@ class UserBundleFeatureContext extends MinkContext implements KernelAwareContext
      *
      * @Then /^user "(?P<username>[^"]*)" should be enabled$/
      */
-    public function userShouldBeEnabled($username)
+    public function userShouldBeEnabled($username): void
     {
         $this->assertUserStatus($username, true);
     }
@@ -274,7 +276,7 @@ class UserBundleFeatureContext extends MinkContext implements KernelAwareContext
      *
      * @Then /^user "(?P<username>[^"]*)" should be disabled$/
      */
-    public function userShouldBeDisabled($username)
+    public function userShouldBeDisabled($username): void
     {
         $this->assertUserStatus($username, false);
     }
@@ -285,9 +287,9 @@ class UserBundleFeatureContext extends MinkContext implements KernelAwareContext
      * @param string $username
      * @param bool   $status
      */
-    protected function assertUserStatus($username, $status)
+    private function assertUserStatus($username, $status): void
     {
-        $user = $this->getUserRepository()->findOneBy(['username' => $username]);
+        $user = $this->userRepository()->get($username);
 
         Assert::true($status === $user->isEnabled());
     }
@@ -300,7 +302,7 @@ class UserBundleFeatureContext extends MinkContext implements KernelAwareContext
      *
      * @return Profile
      */
-    protected function getSymfonyProfile()
+    private function getSymfonyProfile(): Profile
     {
         $profile = $this->getSymfonyClient()->getProfile();
         if (false === $profile) {
@@ -317,7 +319,7 @@ class UserBundleFeatureContext extends MinkContext implements KernelAwareContext
      *
      * @return Client
      */
-    protected function getSymfonyClient()
+    private function getSymfonyClient(): Client
     {
         $driver = $this->getSession()->getDriver();
 
@@ -338,7 +340,7 @@ class UserBundleFeatureContext extends MinkContext implements KernelAwareContext
      *
      * @return NodeElement
      */
-    protected function findUserRowByText($username)
+    private function findUserRowByText($username): NodeElement
     {
         $row = $this->getSession()->getPage()->find('css', sprintf('table tr:contains("%s")', $username));
 
@@ -348,51 +350,11 @@ class UserBundleFeatureContext extends MinkContext implements KernelAwareContext
     }
 
     /**
-     * @return TokenStorageInterface
-     */
-    protected function getTockenStorage()
-    {
-        return $this->kernel->getContainer()->get('security.token_storage');
-    }
-
-    /**
-     * @return AuthorizationCheckerInterface
-     */
-    protected function getAuthorizationChecker()
-    {
-        return $this->kernel->getContainer()->get('security.authorization_checker');
-    }
-
-    /**
-     * @return UserProviderInterface
-     */
-    protected function getUserProvider()
-    {
-        return $this->kernel->getContainer()->get('fos_user.user_provider.username');
-    }
-
-    /**
-     * @return UserManagerInterface
-     */
-    protected function getFosUserManager()
-    {
-        return $this->kernel->getContainer()->get('fos_user.user_manager');
-    }
-
-    /**
-     * @return UserManager
-     */
-    protected function getCarcelUserManager()
-    {
-        return $this->kernel->getContainer()->get('khatovar_user.manager.users');
-    }
-
-    /**
      * @param string $list
      *
      * @return string[]
      */
-    protected function listToArray($list)
+    private function listToArray($list): array
     {
         if (empty($list)) {
             return [];
@@ -402,12 +364,50 @@ class UserBundleFeatureContext extends MinkContext implements KernelAwareContext
     }
 
     /**
+     * @return TokenStorageInterface
+     */
+    private function getTockenStorage(): TokenStorageInterface
+    {
+        return $this->kernel->getContainer()->get('security.token_storage');
+    }
+
+    /**
+     * @return AuthorizationCheckerInterface
+     */
+    private function getAuthorizationChecker(): AuthorizationCheckerInterface
+    {
+        return $this->kernel->getContainer()->get('security.authorization_checker');
+    }
+
+    /**
+     * @return UserProviderInterface
+     */
+    private function getUserProvider(): UserProviderInterface
+    {
+        return $this->kernel->getContainer()->get('fos_user.user_provider.username');
+    }
+
+    /**
+     * @return UserManagerInterface
+     */
+    private function fosUserManager(): UserManagerInterface
+    {
+        return $this->kernel->getContainer()->get('fos_user.user_manager');
+    }
+
+    /**
+     * @return GetAdministrableUsers
+     */
+    private function getAdministrableUsers(): GetAdministrableUsers
+    {
+        return $this->kernel->getContainer()->get('Khatovar\Component\User\Application\Query\GetAdministrableUsers');
+    }
+
+    /**
      * @return UserRepositoryInterface
      */
-    protected function getUserRepository()
+    private function userRepository(): UserRepositoryInterface
     {
-        return $this->kernel->getContainer()
-            ->get('doctrine')
-            ->getRepository('KhatovarUserBundle:User');
+        return $this->kernel->getContainer()->get('Khatovar\Bundle\UserBundle\Entity\Repository\UserRepository');
     }
 }

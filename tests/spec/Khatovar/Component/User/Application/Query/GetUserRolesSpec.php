@@ -12,14 +12,14 @@
 namespace spec\Khatovar\Component\User\Application\Query;
 
 use Khatovar\Component\User\Domain\Model\UserInterface;
-use Khatovar\Component\User\Application\Query\UserRole;
+use Khatovar\Component\User\Application\Query\GetUserRoles;
 use Khatovar\Component\User\Application\Query\CurrentTokenUser;
 use PhpSpec\ObjectBehavior;
 
 /**
  * @author Damien Carcel <damien.carcel@gmail.com>
  */
-class UserRoleSpec extends ObjectBehavior
+class GetUserRolesSpec extends ObjectBehavior
 {
     function let(CurrentTokenUser $currentTokenUser)
     {
@@ -35,14 +35,14 @@ class UserRoleSpec extends ObjectBehavior
 
     function it_is_a_roles_manager()
     {
-        $this->shouldHaveType(UserRole::class);
+        $this->shouldHaveType(GetUserRoles::class);
     }
 
     function it_returns_the_list_of_roles_for_the_super_admin($currentTokenUser)
     {
         $currentTokenUser->isSuperAdmin()->willReturn(true);
 
-        $this->listAvailableOnes()->shouldReturn([
+        $this->available()->shouldReturn([
             'ROLE_USER'   => 'ROLE_USER',
             'ROLE_VIEWER' => 'ROLE_VIEWER',
             'ROLE_ADMIN'  => 'ROLE_ADMIN',
@@ -53,7 +53,7 @@ class UserRoleSpec extends ObjectBehavior
     {
         $currentTokenUser->isSuperAdmin()->willReturn(false);
 
-        $this->listAvailableOnes()->shouldReturn([
+        $this->available()->shouldReturn([
             'ROLE_USER'   => 'ROLE_USER',
             'ROLE_VIEWER' => 'ROLE_VIEWER',
         ]);

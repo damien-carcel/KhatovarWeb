@@ -2,7 +2,6 @@ services:
     khatovar_user.manager.users:
         class: Khatovar\Bundle\UserBundle\Manager\UserManager
         arguments:
-            - '@Khatovar\Bundle\UserBundle\Security\Authentication\UserInSecurityTokenStorage'
-            - '@Khatovar\Bundle\UserBundle\Entity\Repository\UserRepository'
             - '@doctrine'
-            - '@Khatovar\Component\User\Application\Query\UserRole'
+            - '@Khatovar\Component\User\Application\Query\GetUserRoles'
+            - '@event_dispatcher'

@@ -3,19 +3,30 @@
 /*
  * This file is part of KhatovarWeb.
  *
- * Copyright (c) 2016 Damien Carcel <damien.carcel@gmail.com>
+ * Copyright (c) 2018 Damien Carcel <damien.carcel@gmail.com>
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace Khatovar\Bundle\UserBundle\Manager;
 
-use Khatovar\Component\User\Application\Query\CurrentTokenUser;
-use Khatovar\Component\User\Application\Query\UserRole;
+use Khatovar\Component\User\Application\Query\GetUserRoles;
+use Khatovar\Component\User\Domain\Event\UserEvents;
 use Khatovar\Component\User\Domain\Model\UserInterface;
-use Khatovar\Component\User\Domain\Repository\UserRepositoryInterface;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\Validator\Exception\InvalidArgumentException;
 
 /**
@@ -25,52 +36,28 @@ use Symfony\Component\Validator\Exception\InvalidArgumentException;
  */
 class UserManager
 {
-    /** @var CurrentTokenUser */
-    private $currentTokenUser;
-
-    /** @var UserRepositoryInterface */
-    private $userRepository;
-
     /** @var RegistryInterface */
     private $doctrine;
 
-    /** @var UserRole */
-    private $userRole;
+    /** @var GetUserRoles */
+    private $getUserRoles;
+
+    /** @var EventDispatcherInterface */
+    private $eventDispatcher;
 
     /**
-     * @param CurrentTokenUser        $currentUser
-     * @param UserRepositoryInterface $userRepository
-     * @param RegistryInterface       $doctrine
-     * @param UserRole                $userRole
+     * @param RegistryInterface        $doctrine
+     * @param GetUserRoles             $getUserRoles
+     * @param EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
-        CurrentTokenUser $currentUser,
-        UserRepositoryInterface $userRepository,
         RegistryInterface $doctrine,
-        UserRole $userRole
+        GetUserRoles $getUserRoles,
+        EventDispatcherInterface $eventDispatcher
     ) {
-        $this->currentTokenUser = $currentUser;
-        $this->userRepository = $userRepository;
         $this->doctrine = $doctrine;
-        $this->userRole = $userRole;
-    }
-
-    /**
-     * @return UserInterface[]
-     */
-    public function getAdministrableUsers()
-    {
-        $users = [];
-
-        $currentUser = $this->currentTokenUser->getFromTokenStorage();
-        $users[] = $currentUser;
-
-        if (!$currentUser->isSuperAdmin()) {
-            $superAdmins = $this->userRepository->findByRole('ROLE_SUPER_ADMIN');
-            $users = array_merge($users, $superAdmins);
-        }
-
-        return $this->userRepository->findAllBut($users);
+        $this->getUserRoles = $getUserRoles;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -86,7 +73,7 @@ class UserManager
      */
     public function setRole(UserInterface $user, array $selectedRole)
     {
-        $choices = $this->userRole->listAvailableOnes();
+        $choices = $this->getUserRoles->available();
 
         if (!isset($choices[$selectedRole['roles']])) {
             throw new InvalidArgumentException(
@@ -94,8 +81,12 @@ class UserManager
             );
         }
 
+        $this->eventDispatcher->dispatch(UserEvents::PRE_SET_ROLE, new GenericEvent($user));
+
         $user->setRoles([$choices[$selectedRole['roles']]]);
 
         $this->doctrine->getManager()->flush();
+
+        $this->eventDispatcher->dispatch(UserEvents::POST_SET_ROLE, new GenericEvent($user));
     }
 }

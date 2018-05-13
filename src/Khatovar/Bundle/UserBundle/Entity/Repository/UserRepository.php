@@ -24,6 +24,7 @@ declare(strict_types=1);
 namespace Khatovar\Bundle\UserBundle\Entity\Repository;
 
 use Khatovar\Bundle\UserBundle\Entity\User;
+use Khatovar\Component\User\Domain\Exception\UserDoesNotExist;
 use Khatovar\Component\User\Domain\Model\UserInterface;
 use Khatovar\Component\User\Domain\Repository\UserRepositoryInterface;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -85,8 +86,14 @@ class UserRepository implements UserRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function findOneByUsername(string $username): UserInterface
+    public function get(string $username): UserInterface
     {
-        return $this->doctrine->getRepository(User::class)->findOneBy(['username' => $username]);
+        $user = $this->doctrine->getRepository(User::class)->findOneBy(['username' => $username]);
+
+        if (null === $user) {
+            throw new  UserDoesNotExist($username);
+        }
+
+        return $user;
     }
 }

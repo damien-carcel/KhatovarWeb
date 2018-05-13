@@ -1,26 +1,26 @@
 services:
     Khatovar\Bundle\UserBundle\Controller\Admin\IndexController:
         arguments:
-            - '@khatovar_user.manager.users'
-            - '@khatovar_user.factory.user_form'
+            - '@Khatovar\Component\User\Application\Query\GetAdministrableUsers'
+            - '@Khatovar\Bundle\UserBundle\Form\Factory\UserFormFactory'
             - '@twig'
 
     Khatovar\Bundle\UserBundle\Controller\Admin\ShowController:
         arguments:
             - '@Khatovar\Component\User\Application\Query\GetUser'
-            - '@khatovar_user.factory.user_form'
+            - '@Khatovar\Bundle\UserBundle\Form\Factory\UserFormFactory'
             - '@twig'
 
     Khatovar\Bundle\UserBundle\Controller\Admin\EditController:
         arguments:
             - '@Khatovar\Component\User\Application\Query\GetUser'
-            - '@khatovar_user.factory.user_form'
+            - '@Khatovar\Bundle\UserBundle\Form\Factory\UserFormFactory'
             - '@twig'
 
     Khatovar\Bundle\UserBundle\Controller\Admin\UpdateController:
         arguments:
             - '@Khatovar\Component\User\Application\Query\GetUser'
-            - '@khatovar_user.factory.user_form'
+            - '@Khatovar\Bundle\UserBundle\Form\Factory\UserFormFactory'
             - '@event_dispatcher'
             - '@doctrine'
             - '@session'
@@ -31,11 +31,10 @@ services:
     Khatovar\Bundle\UserBundle\Controller\Admin\SetRoleController:
         arguments:
             - '@Khatovar\Component\User\Application\Query\GetUser'
-            - '@khatovar_user.factory.user_form'
+            - '@Khatovar\Bundle\UserBundle\Form\Factory\UserFormFactory'
             - '@khatovar_user.manager.users'
-            - '@Khatovar\Component\User\Application\Query\UserRole'
-            - '@security.token_storage'
-            - '@event_dispatcher'
+            - '@Khatovar\Component\User\Application\Query\GetUserRoles'
+            - '@Khatovar\Bundle\UserBundle\Security\Authentication\UserInSecurityTokenStorage'
             - '@session'
             - '@translator'
             - '@router'
@@ -44,9 +43,9 @@ services:
     Khatovar\Bundle\UserBundle\Controller\Admin\ChangeStatusController:
         arguments:
             - '@Khatovar\Component\User\Application\Query\GetUser'
-            - '@khatovar_user.factory.user_form'
+            - '@Khatovar\Bundle\UserBundle\Form\Factory\UserFormFactory'
             - '@khatovar_user.handler.user_status'
-            - '@security.token_storage'
+            - '@Khatovar\Bundle\UserBundle\Security\Authentication\UserInSecurityTokenStorage'
             - '@session'
             - '@translator'
             - '@router'
@@ -54,7 +53,7 @@ services:
     Khatovar\Bundle\UserBundle\Controller\Admin\RemoveController:
         arguments:
             - '@Khatovar\Component\User\Application\Query\GetUser'
-            - '@khatovar_user.factory.user_form'
+            - '@Khatovar\Bundle\UserBundle\Form\Factory\UserFormFactory'
             - '@event_dispatcher'
             - '@doctrine'
             - '@session'

@@ -25,16 +25,15 @@ namespace Khatovar\Bundle\UserBundle\Controller\Admin;
 
 use Khatovar\Bundle\UserBundle\Form\Factory\UserFormFactory;
 use Khatovar\Bundle\UserBundle\Handler\UserStatusHandlerInterface;
+use Khatovar\Component\User\Application\Query\CurrentTokenUser;
 use Khatovar\Component\User\Application\Query\GetUser;
 use Khatovar\Component\User\Domain\Exception\UserDoesNotExist;
-use Khatovar\Component\User\Domain\Model\UserInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Translation\TranslatorInterface;
 
@@ -54,8 +53,8 @@ class ChangeStatusController
     /** @var UserStatusHandlerInterface */
     private $userStatusHandler;
 
-    /** @var TokenStorageInterface */
-    private $tokenStorage;
+    /** @var CurrentTokenUser */
+    private $currentTokenUser;
 
     /** @var Session */
     private $session;
@@ -70,7 +69,7 @@ class ChangeStatusController
      * @param GetUser                    $getUser
      * @param UserFormFactory            $userFormFactory
      * @param UserStatusHandlerInterface $userStatusHandler
-     * @param TokenStorageInterface      $tokenStorage
+     * @param CurrentTokenUser           $currentTokenUser
      * @param Session                    $session
      * @param TranslatorInterface        $translator
      * @param RouterInterface            $router
@@ -79,7 +78,7 @@ class ChangeStatusController
         GetUser $getUser,
         UserFormFactory $userFormFactory,
         UserStatusHandlerInterface $userStatusHandler,
-        TokenStorageInterface $tokenStorage,
+        CurrentTokenUser $currentTokenUser,
         Session $session,
         TranslatorInterface $translator,
         RouterInterface $router
@@ -87,7 +86,7 @@ class ChangeStatusController
         $this->getUser = $getUser;
         $this->userFormFactory = $userFormFactory;
         $this->userStatusHandler = $userStatusHandler;
-        $this->tokenStorage = $tokenStorage;
+        $this->currentTokenUser = $currentTokenUser;
         $this->session = $session;
         $this->translator = $translator;
         $this->router = $router;
@@ -108,8 +107,10 @@ class ChangeStatusController
             throw new NotFoundHttpException($e->getMessage(), $e);
         }
 
-        if (!$this->getFromTokenStorage()->isSuperAdmin() && $user->hasRole('ROLE_ADMIN')) {
-            throw new AccessDeniedException('You do not have the permission to change the role of an administrator.');
+        if (!$this->currentTokenUser->isSuperAdmin() && $user->hasRole('ROLE_ADMIN')) {
+            throw new AccessDeniedException(
+                'You do not have the permission to activate or deactivate an administrator.'
+            );
         }
 
         if ($user->isEnabled()) {
@@ -120,10 +121,7 @@ class ChangeStatusController
             $notice = 'khatovar_user.notice.activated';
         }
 
-        $this->session->getFlashBag()->add(
-            'notice',
-            $this->translator->trans($notice)
-        );
+        $this->session->getFlashBag()->add('notice', $this->translator->trans($notice));
 
         $redirectRoute = $this->router->generate(
             'khatovar_user_admin_index',
@@ -132,23 +130,5 @@ class ChangeStatusController
         );
 
         return new RedirectResponse($redirectRoute, 302);
-    }
-
-    /**
-     * Gets a user from the Security Token Storage.
-     *
-     * @return UserInterface|null
-     */
-    private function getFromTokenStorage(): ?UserInterface
-    {
-        if (null === $token = $this->tokenStorage->getToken()) {
-            return null;
-        }
-
-        if (!is_object($user = $token->getUser())) {
-            return null;
-        }
-
-        return $user;
     }
 }

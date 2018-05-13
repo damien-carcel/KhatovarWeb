@@ -95,17 +95,8 @@ class DocumentsBundleFixtureContext implements Context
     public function iSetRoleForUser(string $role, string $username): void
     {
         $user = $this->container
-            ->get('doctrine')
-            ->getRepository('KhatovarUserBundle:User')
-            ->findOneBy(['username' => $username]);
-
-        if (null === $user) {
-            throw new  \InvalidArgumentException(
-                sprintf('The user with the name %s does not exists', $username),
-                0,
-                static::class
-            );
-        }
+            ->get('Khatovar\Bundle\UserBundle\Entity\Repository\UserRepository')
+            ->get($username);
 
         $this->container->get('khatovar_user.manager.users')->setRole($user, ['roles' => $role]);
     }

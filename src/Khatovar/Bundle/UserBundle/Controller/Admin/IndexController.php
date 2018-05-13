@@ -24,7 +24,7 @@ declare(strict_types=1);
 namespace Khatovar\Bundle\UserBundle\Controller\Admin;
 
 use Khatovar\Bundle\UserBundle\Form\Factory\UserFormFactory;
-use Khatovar\Bundle\UserBundle\Manager\UserManager;
+use Khatovar\Component\User\Application\Query\GetAdministrableUsers;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 
@@ -35,8 +35,8 @@ use Twig\Environment;
  */
 class IndexController
 {
-    /** @var UserManager */
-    private $userManager;
+    /** @var GetAdministrableUsers */
+    private $getAdminitrableUsers;
 
     /** @var UserFormFactory */
     private $userFormFactory;
@@ -45,13 +45,16 @@ class IndexController
     private $twig;
 
     /**
-     * @param UserManager     $userManager
-     * @param UserFormFactory $userFormFactory
-     * @param Environment     $twig
+     * @param GetAdministrableUsers $getAdminitrableUsers
+     * @param UserFormFactory       $userFormFactory
+     * @param Environment           $twig
      */
-    public function __construct(UserManager $userManager, UserFormFactory $userFormFactory, Environment $twig)
-    {
-        $this->userManager = $userManager;
+    public function __construct(
+        GetAdministrableUsers $getAdminitrableUsers,
+        UserFormFactory $userFormFactory,
+        Environment $twig
+    ) {
+        $this->getAdminitrableUsers = $getAdminitrableUsers;
         $this->userFormFactory = $userFormFactory;
         $this->twig = $twig;
     }
@@ -65,7 +68,7 @@ class IndexController
      */
     public function __invoke(): Response
     {
-        $users = $this->userManager->getAdministrableUsers();
+        $users = $this->getAdminitrableUsers->forCurrentOne();
         $deleteForms = $this->userFormFactory->createDeleteFormViews($users, 'khatovar_user_admin_remove');
 
         $content = $this->twig->render(
