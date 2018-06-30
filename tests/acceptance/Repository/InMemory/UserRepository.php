@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * This file is part of KhatovarWeb.
  *
- * Copyright (c) 2016 Damien Carcel <damien.carcel@gmail.com>
+ * Copyright (c) 2018 Damien Carcel <damien.carcel@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,30 +21,27 @@ declare(strict_types=1);
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Khatovar\Bundle\UserBundle\Entity\Repository;
+namespace Khatovar\Tests\Acceptance\Repository\InMemory;
 
-use Khatovar\Bundle\UserBundle\Entity\User;
+use Doctrine\Common\Collections\ArrayCollection;
 use Khatovar\Component\User\Domain\Exception\UserDoesNotExist;
 use Khatovar\Component\User\Domain\Model\UserInterface;
 use Khatovar\Component\User\Domain\Repository\UserRepositoryInterface;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * User repository.
- *
  * @author Damien Carcel <damien.carcel@gmail.com>
  */
 class UserRepository implements UserRepositoryInterface
 {
-    /** @var RegistryInterface */
-    private $doctrine;
+    /** @var ArrayCollection */
+    public $users;
 
     /**
-     * @param RegistryInterface $doctrine
+     * @param UserInterface[] $users
      */
-    public function __construct(RegistryInterface $doctrine)
+    public function __construct(array $users)
     {
-        $this->doctrine = $doctrine;
+        $this->users = new ArrayCollection($users);
     }
 
     /**
@@ -52,20 +49,11 @@ class UserRepository implements UserRepositoryInterface
      */
     public function findAllBut(array $users): array
     {
-        $userNames = [];
+        $keptUsers = $this->users->filter(function (UserInterface $user) use ($users) {
+            return !in_array($user, $users);
+        });
 
-        foreach ($users as $user) {
-            $userNames[] = $user->getUsername();
-        }
-
-        $queryBuilder = $this->doctrine->getRepository(User::class)->createQueryBuilder('u');
-
-        $query = $queryBuilder
-            ->where($queryBuilder->expr()->notIn('u.username', $userNames))
-            ->orderBy('u.username')
-            ->getQuery();
-
-        return $query->getResult();
+        return $keptUsers->toArray();
     }
 
     /**
@@ -73,14 +61,11 @@ class UserRepository implements UserRepositoryInterface
      */
     public function findByRole($role): array
     {
-        $queryBuilder = $this->doctrine->getRepository(User::class)->createQueryBuilder('u');
+        $keptUsers = $this->users->filter(function (UserInterface $user) use ($role) {
+            return in_array($role, $user->getRoles());
+        });
 
-        $query = $queryBuilder
-            ->where('u.roles LIKE :roles')
-            ->setParameter('roles', '%"'.$role.'"%')
-            ->getQuery();
-
-        return $query->getResult();
+        return $keptUsers->toArray();
     }
 
     /**
@@ -88,13 +73,13 @@ class UserRepository implements UserRepositoryInterface
      */
     public function get(string $username): UserInterface
     {
-        $user = $this->doctrine->getRepository(User::class)->findOneBy(['username' => $username]);
-
-        if (null === $user) {
-            throw new UserDoesNotExist($username);
+        foreach ($this->users as $user) {
+            if ($username === $user->getUsername()) {
+                return $user;
+            }
         }
 
-        return $user;
+        throw new UserDoesNotExist($username);
     }
 
     /**
@@ -102,8 +87,7 @@ class UserRepository implements UserRepositoryInterface
      */
     public function save(UserInterface $user): void
     {
-        $this->doctrine->getManager()->persist($user);
-        $this->doctrine->getManager()->flush();
+        $this->users->set($user->getUsername(), $user);
     }
 
     /**
@@ -111,7 +95,6 @@ class UserRepository implements UserRepositoryInterface
      */
     public function remove(UserInterface $user): void
     {
-        $this->doctrine->getManager()->remove($user);
-        $this->doctrine->getManager()->flush();
+        $this->users->removeElement($user);
     }
 }

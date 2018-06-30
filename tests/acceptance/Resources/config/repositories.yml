@@ -1,0 +1,5 @@
+services:
+    Khatovar\Bundle\UserBundle\Entity\Repository\UserRepository:
+        class: 'Khatovar\Tests\Acceptance\Repository\InMemory\UserRepository'
+        arguments:
+            - '@doctrine'
