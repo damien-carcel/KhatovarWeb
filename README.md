@@ -13,7 +13,6 @@ This repository contain the source code of the CMS handling the web site of the 
     - gd
     - intl
     - mysql
-    - mcrypt
 - MySQL or MariaDB
 
 ## Installation
@@ -33,7 +32,7 @@ docker-compose up -d
 and install dependencies with
 
 ```bash
-docker-compose exec fpm composer install
+docker-compose exec fpm composer install --prefer-dist --optimize-autoloader
 ```
 
 Composer will ask you for your application configuration (database name, user and password).

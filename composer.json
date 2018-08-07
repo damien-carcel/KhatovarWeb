@@ -52,6 +52,9 @@
         "behat/mink-extension": "^2.2",
         "behat/symfony2-extension": "^2.1",
         "doctrine/doctrine-fixtures-bundle": "^2.3",
+        "friends-of-behat/context-service-extension": "^1.2",
+        "friends-of-behat/cross-container-extension": "^1.1",
+        "friends-of-behat/symfony-extension": "^1.2",
         "friendsofphp/php-cs-fixer": "^2.0",
         "phpmd/phpmd": "^2.4",
         "phpspec/phpspec": "^4.3",
@@ -73,7 +76,17 @@
         ],
         "post-update-cmd": [
             "@symfony-scripts"
-        ]
+        ],
+        "tests": ["@coupling", "@phpcs", "@php-cs-fixer", "@phpspec", "@acceptance", "@integration", "@system", "@legacy"],
+        "coupling": "vendor/bin/php-coupling-detector detect --config-file=.php_cd.php",
+        "phpcs": "vendor/bin/phpcs -p --standard=PSR2 --extensions=php src tests/acceptance tests/integration tests/system",
+        "php-cs-fixer": "vendor/bin/php-cs-fixer fix --dry-run -v --diff --config=.php_cs.php",
+        "php-cs-fixer-fix": "vendor/bin/php-cs-fixer fix -v --diff --config=.php_cs.php",
+        "phpspec": "vendor/bin/phpspec run",
+        "acceptance": "vendor/bin/behat --profile=acceptance",
+        "integration": "vendor/bin/behat --profile=integration",
+        "system": "vendor/bin/behat --profile=system",
+        "legacy": "vendor/bin/behat --profile=legacy"
     },
     "config": {
         "bin-dir": "vendor/bin",
