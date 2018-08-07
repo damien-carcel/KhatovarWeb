@@ -21,7 +21,7 @@ declare(strict_types=1);
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Khatovar\Bundle\UserBundle\Entity\Repository;
+namespace Khatovar\Bundle\UserBundle\Repository\Doctrine;
 
 use Khatovar\Bundle\UserBundle\Entity\User;
 use Khatovar\Component\User\Domain\Exception\UserDoesNotExist;

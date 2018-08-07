@@ -408,6 +408,6 @@ class UserBundleFeatureContext extends MinkContext implements KernelAwareContext
      */
     private function userRepository(): UserRepositoryInterface
     {
-        return $this->kernel->getContainer()->get('Khatovar\Bundle\UserBundle\Entity\Repository\UserRepository');
+        return $this->kernel->getContainer()->get('Khatovar\Bundle\UserBundle\Repository\Doctrine\UserRepository');
     }
 }

@@ -21,13 +21,13 @@ declare(strict_types=1);
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-namespace spec\Khatovar\Tests\Acceptance\Repository\InMemory;
+namespace spec\Khatovar\Bundle\UserBundle\Repository\InMemory;
 
 use Khatovar\Bundle\UserBundle\Entity\User;
+use Khatovar\Bundle\UserBundle\Repository\InMemory\UserRepository;
 use Khatovar\Component\User\Domain\Exception\UserDoesNotExist;
 use Khatovar\Component\User\Domain\Model\UserInterface;
 use Khatovar\Component\User\Domain\Repository\UserRepositoryInterface;
-use Khatovar\Tests\Acceptance\Repository\InMemory\UserRepository;
 use PhpSpec\ObjectBehavior;
 
 /**

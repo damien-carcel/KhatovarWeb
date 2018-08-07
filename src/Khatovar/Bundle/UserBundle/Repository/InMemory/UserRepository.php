@@ -21,7 +21,7 @@ declare(strict_types=1);
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Khatovar\Tests\Acceptance\Repository\InMemory;
+namespace Khatovar\Bundle\UserBundle\Repository\InMemory;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Khatovar\Component\User\Domain\Exception\UserDoesNotExist;
