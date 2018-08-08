@@ -1,45 +1,64 @@
 acceptance:
     extensions:
-        Behat\Symfony2Extension:
+        FriendsOfBehat\ContextServiceExtension:
+            imports:
+            - 'tests/acceptance/Resources/config/contexts.yml'
+        FriendsOfBehat\CrossContainerExtension: ~
+        FriendsOfBehat\SymfonyExtension:
             kernel:
-                bootstrap: 'vendor/autoload.php'
+                bootstrap: 'var/bootstrap.php.cache'
+                class: 'AppKernel'
+                debug: true
                 env: 'acceptance'
+                path: 'app/AppKernel.php'
     suites:
-        default:
+        user:
             paths:
-            - '%paths.base%/tests/features'
-            contexts:
-            - Khatovar\Tests\Acceptance\Context\FeatureContext: ~
+                - '%paths.base%/tests/features/user'
+            contexts_services:
+                - 'Khatovar\Tests\Acceptance\Context\FeatureContext'
+            filters:
+                tags: '@acceptance'
 
 integration:
     extensions:
-        Behat\Symfony2Extension:
+        FriendsOfBehat\ContextServiceExtension:
+            imports:
+            - 'tests/integration/Resources/config/contexts.yml'
+        FriendsOfBehat\CrossContainerExtension: ~
+        FriendsOfBehat\SymfonyExtension:
             kernel:
-                bootstrap: 'vendor/autoload.php'
+                bootstrap: 'var/bootstrap.php.cache'
+                class: 'AppKernel'
+                debug: true
                 env: 'test'
+                path: 'app/AppKernel.php'
     suites:
-        default:
+        user:
             paths:
-                - '%paths.base%/tests/integration/features'
-            contexts:
-                - Khatovar\Tests\Integration\Context\FeatureContext: ~
+                - '%paths.base%/tests/integration/features/user'
+            contexts_services:
+                - 'Khatovar\Tests\Integration\Context\FeatureContext'
 
 system:
     extensions:
-        Behat\MinkExtension:
-            sessions:
-                default:
-                    symfony2: ~
-        Behat\Symfony2Extension:
+        FriendsOfBehat\ContextServiceExtension:
+            imports:
+            - 'tests/system/Resources/config/contexts.yml'
+        FriendsOfBehat\CrossContainerExtension: ~
+        FriendsOfBehat\SymfonyExtension:
             kernel:
-                bootstrap: 'vendor/autoload.php'
+                bootstrap: 'var/bootstrap.php.cache'
+                class: 'AppKernel'
+                debug: true
                 env: 'test'
+                path: 'app/AppKernel.php'
     suites:
-        default:
+        user:
             paths:
-                - '%paths.base%/tests/features'
-            contexts:
-                - Khatovar\Tests\System\Context\FeatureContext: ~
+                - '%paths.base%/tests/features/user'
+            contexts_services:
+                - 'Khatovar\Tests\System\Context\FeatureContext'
             filters:
                 tags: '@system'
 
@@ -52,7 +71,7 @@ legacy:
         Behat\Symfony2Extension:
             kernel:
                 bootstrap: 'vendor/autoload.php'
-                env: test
+                env: 'test'
         BehatExtension\DoctrineDataFixturesExtension\Extension:
             lifetime: 'scenario'
             autoload: 'false'

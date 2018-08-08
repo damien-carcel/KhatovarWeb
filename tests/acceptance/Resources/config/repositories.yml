@@ -2,4 +2,4 @@ services:
     Khatovar\Bundle\UserBundle\Repository\Doctrine\UserRepository:
         class: 'Khatovar\Bundle\UserBundle\Repository\InMemory\UserRepository'
         arguments:
-            - '@doctrine'
+            - []
