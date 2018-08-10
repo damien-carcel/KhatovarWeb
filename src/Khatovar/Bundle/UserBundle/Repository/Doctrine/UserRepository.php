@@ -21,7 +21,7 @@ declare(strict_types=1);
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Khatovar\Bundle\UserBundle\Entity\Repository;
+namespace Khatovar\Bundle\UserBundle\Repository\Doctrine;
 
 use Khatovar\Bundle\UserBundle\Entity\User;
 use Khatovar\Component\User\Domain\Exception\UserDoesNotExist;
@@ -91,7 +91,7 @@ class UserRepository implements UserRepositoryInterface
         $user = $this->doctrine->getRepository(User::class)->findOneBy(['username' => $username]);
 
         if (null === $user) {
-            throw new  UserDoesNotExist($username);
+            throw new UserDoesNotExist($username);
         }
 
         return $user;

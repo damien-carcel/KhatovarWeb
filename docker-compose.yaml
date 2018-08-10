@@ -31,8 +31,6 @@ services:
       - 'fpm'
     environment:
       PHP_IDE_CONFIG: 'serverName=khatovar-web'
-    ports:
-      - '8000:80'
     volumes:
       - './:/srv/khatovar:ro'
       - './docker/nginx.conf:/etc/nginx/conf.d/default.conf:ro'

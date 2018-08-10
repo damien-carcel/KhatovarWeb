@@ -24,10 +24,21 @@ declare(strict_types=1);
 namespace Khatovar\Tests\Integration\Context;
 
 use Behat\Behat\Context\Context;
+use Khatovar\Component\User\Domain\Repository\UserRepositoryInterface;
 
 /**
  * @author Damien Carcel <damien.carcel@gmail.com>
  */
 class FeatureContext implements Context
 {
+    /** @var UserRepositoryInterface */
+    private $userRepository;
+
+    /**
+     * @param UserRepositoryInterface $userRepository
+     */
+    public function __construct(UserRepositoryInterface $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
 }

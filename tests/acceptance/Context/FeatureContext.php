@@ -23,22 +23,22 @@ declare(strict_types=1);
 
 namespace Khatovar\Tests\Acceptance\Context;
 
-use Behat\Symfony2Extension\Context\KernelAwareContext;
-use Symfony\Component\HttpKernel\KernelInterface;
+use Behat\Behat\Context\Context;
+use Khatovar\Component\User\Domain\Repository\UserRepositoryInterface;
 
 /**
  * @author Damien Carcel <damien.carcel@gmail.com>
  */
-class FeatureContext implements KernelAwareContext
+class FeatureContext implements Context
 {
-    /** @var KernelInterface */
-    private $kernel;
+    /** @var UserRepositoryInterface */
+    private $userRepository;
 
     /**
-     * {@inheritdoc}
+     * @param UserRepositoryInterface $userRepository
      */
-    public function setKernel(KernelInterface $kernel): void
+    public function __construct(UserRepositoryInterface $userRepository)
     {
-        $this->kernel = $kernel;
+        $this->userRepository = $userRepository;
     }
 }

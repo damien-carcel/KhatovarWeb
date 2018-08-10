@@ -96,7 +96,7 @@ class DocumentsBundleFixtureContext implements Context
     public function iSetRoleForUser(string $role, string $username): void
     {
         $user = $this->container
-            ->get('Khatovar\Bundle\UserBundle\Entity\Repository\UserRepository')
+            ->get('Khatovar\Bundle\UserBundle\Repository\Doctrine\UserRepository')
             ->get($username);
 
         $this->container

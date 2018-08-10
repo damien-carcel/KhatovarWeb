@@ -19,13 +19,13 @@ before_install:
 
 install:
     - cp app/config/parameters.yml.dist app/config/parameters.yml
-    - composer install --no-interaction --no-scripts
-    - npm install
+    - composer install --no-interaction --prefer-dist --optimize-autoloader
+    - yarn install
     - mysql -e 'CREATE DATABASE khatovar;'
     - mysql -e 'GRANT ALL PRIVILEGES ON khatovar.* TO khatovar@localhost IDENTIFIED BY "khatovar"'
-    - bin/console doctrine:schema:update --force --env=test > /dev/null
-    - bin/console assets:install www
-    - npm run assets
+    - bin/console --env=test doctrine:schema:update --force > /dev/null
+    - bin/console --env=test assets:install www
+    - yarn run assets
 
 script:
     - vendor/bin/php-coupling-detector detect --config-file=.php_cd.php
