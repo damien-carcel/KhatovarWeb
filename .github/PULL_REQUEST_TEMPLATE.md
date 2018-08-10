@@ -12,10 +12,11 @@
 
 | Q                 | A
 | ------------------| ---
-| Added Specs       | Todo
-| Added Behats      | Todo
-| Changelog updated | Todo
-| Migration script  | -
+| Specifications    | Todo
+| Acceptance tests  | Todo
+| Integration tests | Todo
+| System tests      | Todo
+| Changelog         | Todo
 | Documentation     | -
 | Related tickets   | #... <!-- #-prefixed issue number(s), if any -->
 
