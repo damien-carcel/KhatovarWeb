@@ -1,45 +1,45 @@
 version: '2'
 
 services:
-  node:
-    image: 'node:8'
-    environment:
-      YARN_CACHE_FOLDER: '/home/node/.yarn-cache'
-    user: 'node'
-    volumes:
-      - './:/srv/khatovar'
-      - '~/.cache/yarn:/home/node/.yarn-cache'
-    working_dir: '/srv/khatovar'
+    node:
+        image: 'node:8'
+        environment:
+            YARN_CACHE_FOLDER: '/home/node/.yarn-cache'
+        user: 'node'
+        volumes:
+        - './:/srv/khatovar'
+        - '~/.cache/yarn:/home/node/.yarn-cache'
+        working_dir: '/srv/khatovar'
 
-  fpm:
-    image: 'akeneo/fpm:php-7.1'
-    environment:
-      COMPOSER_CACHE_DIR: '/home/docker/.cache/composer'
-      COMPOSER_HOME: '/home/docker/.config/composer'
-      PHP_IDE_CONFIG: 'serverName=khatovar-cli'
-      XDEBUG_CONFIG: 'remote_host=172.17.0.1'
-    user: 'docker:docker'
-    volumes:
-      - './:/srv/khatovar'
-      - '~/.cache/composer:/home/docker/.cache/composer'
-      - '~/.config/composer:/home/docker/.config/composer'
-    working_dir: '/srv/khatovar'
+    fpm:
+        image: 'akeneo/fpm:php-7.1'
+        environment:
+            COMPOSER_CACHE_DIR: '/home/docker/.cache/composer'
+            COMPOSER_HOME: '/home/docker/.config/composer'
+            PHP_IDE_CONFIG: 'serverName=khatovar-cli'
+            XDEBUG_CONFIG: 'remote_host=172.17.0.1'
+        user: 'docker:docker'
+        volumes:
+        - './:/srv/khatovar'
+        - '~/.cache/composer:/home/docker/.cache/composer'
+        - '~/.config/composer:/home/docker/.config/composer'
+        working_dir: '/srv/khatovar'
 
-  nginx:
-    image: 'nginx'
-    depends_on:
-      - 'fpm'
-    environment:
-      PHP_IDE_CONFIG: 'serverName=khatovar-web'
-    volumes:
-      - './:/srv/khatovar:ro'
-      - './docker/nginx.conf:/etc/nginx/conf.d/default.conf:ro'
-      - './docker/upload.conf:/etc/nginx/conf.d/upload.conf:ro'
+    nginx:
+        image: 'nginx'
+        depends_on:
+        - 'fpm'
+        environment:
+            PHP_IDE_CONFIG: 'serverName=khatovar-web'
+        volumes:
+        - './:/srv/khatovar:ro'
+        - './docker/nginx.conf:/etc/nginx/conf.d/default.conf:ro'
+        - './docker/upload.conf:/etc/nginx/conf.d/upload.conf:ro'
 
-  mysql:
-    image: 'mysql:5.7'
-    environment:
-      MYSQL_ROOT_PASSWORD: 'root'
-      MYSQL_USER: 'khatovar'
-      MYSQL_PASSWORD: 'khatovar'
-      MYSQL_DATABASE: 'khatovar'
+    mysql:
+        image: 'mysql:5.7'
+        environment:
+            MYSQL_ROOT_PASSWORD: 'root'
+            MYSQL_USER: 'khatovar'
+            MYSQL_PASSWORD: 'khatovar'
+            MYSQL_DATABASE: 'khatovar'
