@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of KhatovarWeb.
  *
@@ -74,7 +76,7 @@ class Folder
     /**
      * Automatically set a new update value after a folder modification.
      */
-    public function autoUpdate()
+    public function autoUpdate(): void
     {
         $this->setUpdated(new \DateTime());
     }

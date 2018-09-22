@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of KhatovarWeb.
  *
@@ -31,68 +33,68 @@ class UserEvents
      *
      * @Event("Symfony\Component\EventDispatcher\GenericEvent"
      */
-    const PRE_SAVE = 'khatovar_user.event.pre_save';
+    public const PRE_SAVE = 'khatovar_user.event.pre_save';
 
     /**
      * This event is dispatched just after a user is saved.
      *
      * @Event("Symfony\Component\EventDispatcher\GenericEvent"
      */
-    const POST_SAVE = 'khatovar_user.event.post_save';
+    public const POST_SAVE = 'khatovar_user.event.post_save';
 
     /**
      * This event is dispatched just before a user is removed.
      *
      * @Event("Symfony\Component\EventDispatcher\GenericEvent"
      */
-    const PRE_REMOVE = 'khatovar_user.event.pre_remove';
+    public const PRE_REMOVE = 'khatovar_user.event.pre_remove';
 
     /**
      * This event is dispatched just after a user is removed.
      *
      * @Event("Symfony\Component\EventDispatcher\GenericEvent"
      */
-    const POST_REMOVE = 'khatovar_user.event.post_remove';
+    public const POST_REMOVE = 'khatovar_user.event.post_remove';
 
     /**
      * This event is dispatched just before the role of a user is changed.
      *
      * @Event("Symfony\Component\EventDispatcher\GenericEvent"
      */
-    const PRE_SET_ROLE = 'khatovar_user.event.pre_set_role';
+    public const PRE_SET_ROLE = 'khatovar_user.event.pre_set_role';
 
     /**
      * This event is dispatched just after the role of a user is changed.
      *
      * @Event("Symfony\Component\EventDispatcher\GenericEvent"
      */
-    const POST_SET_ROLE = 'khatovar_user.event.post_set_role';
+    public const POST_SET_ROLE = 'khatovar_user.event.post_set_role';
 
     /**
      * This event is dispatched just after a user is activated.
      *
      * @Event("Symfony\Component\EventDispatcher\GenericEvent"
      */
-    const PRE_ACTIVATE = 'khatovar_user.event.pre_activate';
+    public const PRE_ACTIVATE = 'khatovar_user.event.pre_activate';
 
     /**
      * This event is dispatched just after a user is activated.
      *
      * @Event("Symfony\Component\EventDispatcher\GenericEvent"
      */
-    const POST_ACTIVATE = 'khatovar_user.event.post_activate';
+    public const POST_ACTIVATE = 'khatovar_user.event.post_activate';
 
     /**
      * This event is dispatched just after a user is deactivated.
      *
      * @Event("Symfony\Component\EventDispatcher\GenericEvent"
      */
-    const PRE_DEACTIVATE = 'khatovar_user.event.pre_deactivate';
+    public const PRE_DEACTIVATE = 'khatovar_user.event.pre_deactivate';
 
     /**
      * This event is dispatched just after a user is deactivated.
      *
      * @Event("Symfony\Component\EventDispatcher\GenericEvent"
      */
-    const POST_DEACTIVATE = 'khatovar_user.event.post_deactivate';
+    public const POST_DEACTIVATE = 'khatovar_user.event.post_deactivate';
 }

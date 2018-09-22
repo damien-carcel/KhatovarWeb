@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of KhatovarWeb.
  *
@@ -83,9 +85,9 @@ class FileController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $message = $this->get('khatovar_documents.saver.file')->save($file, ['folder' => $parentId]);
+            $this->get('khatovar_documents.saver.file')->save($file, ['folder' => $parentId]);
 
-            $this->addFlash('notice', $message);
+            $this->addFlash('notice', 'khatovar_documents.notice.add.file');
 
             if ('0' !== $parentId) {
                 return $this->redirect($this->generateUrl(
@@ -209,8 +211,6 @@ class FileController extends Controller
      *
      * @param Request $request
      * @param string  $id
-     *
-     * @throws \Doctrine\ORM\OptimisticLockException
      *
      * @return Response
      *

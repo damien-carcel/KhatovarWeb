@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of KhatovarWeb.
  *
@@ -32,15 +34,15 @@ use Symfony\Component\Validator\ConstraintValidator;
 class ContainsIframeValidator extends ConstraintValidator
 {
     /** @staticvar string */
-    const IFRAME_OPENING_TAG = '<iframe src=';
+    public const IFRAME_OPENING_TAG = '<iframe src=';
 
     /** @staticvar string */
-    const IFRAME_CLOSING_TAG = '</iframe>';
+    public const IFRAME_CLOSING_TAG = '</iframe>';
 
     /**
      * {@inheritdoc}
      */
-    public function validate($iframe, Constraint $constraint)
+    public function validate($iframe, Constraint $constraint): void
     {
         if (null !== $iframe) {
             if (strlen($iframe) < strlen(static::IFRAME_OPENING_TAG.static::IFRAME_CLOSING_TAG)) {

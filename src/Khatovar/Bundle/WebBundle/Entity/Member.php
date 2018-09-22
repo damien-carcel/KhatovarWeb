@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of KhatovarWeb.
  *
@@ -374,7 +376,7 @@ class Member implements ActivableEntity
     /**
      * {@inheritdoc}
      */
-    public function activate()
+    public function activate(): void
     {
         $this->active = true;
     }
@@ -382,7 +384,7 @@ class Member implements ActivableEntity
     /**
      * {@inheritdoc}
      */
-    public function deactivate()
+    public function deactivate(): void
     {
         $this->active = false;
     }

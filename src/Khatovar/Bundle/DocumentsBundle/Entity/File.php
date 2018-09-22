@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of KhatovarWeb.
  *
@@ -103,7 +105,7 @@ class File
     /**
      * Set the attributes for the file to update/persist.
      */
-    public function preUpload()
+    public function preUpload(): void
     {
         if (null === $this->filePath) {
             return;
@@ -117,7 +119,7 @@ class File
      * Upload the file on the server.
      * If a file with the same name already exists, it will be replaced.
      */
-    public function upload()
+    public function upload(): void
     {
         if (null === $this->filePath) {
             return;
@@ -130,7 +132,7 @@ class File
      * We save the real file name on the server before its database
      * entry is removed.
      */
-    public function preRemoveUpload()
+    public function preRemoveUpload(): void
     {
         $this->tempFile = $this->getAbsoluteDir().'/'.$this->getFileName();
     }
@@ -139,7 +141,7 @@ class File
      * Remove the file from the server, and also remove folders if they
      * are empty.
      */
-    public function removeUpload()
+    public function removeUpload(): void
     {
         if (file_exists($this->tempFile)) {
             unlink($this->tempFile);
@@ -190,7 +192,7 @@ class File
     /**
      * Automatically set a new update value after a folder modification.
      */
-    public function autoUpdate()
+    public function autoUpdate(): void
     {
         $this->setUpdated(new \DateTime());
     }
@@ -311,7 +313,7 @@ class File
      *
      * @param string $file the path to the file that have been deleted
      */
-    private function removeDir($file)
+    private function removeDir($file): void
     {
         $path = substr($file, 0, -strlen(strrchr($file, '/')));
         $content = array_diff(scandir($path), ['..', '.']);

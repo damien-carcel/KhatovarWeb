@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of KhatovarWeb.
  *
@@ -49,7 +51,7 @@ class AddPhotoFieldsSubscriber implements EventSubscriberInterface
     /**
      * @param FormEvent $event
      */
-    public function preSetData(FormEvent $event)
+    public function preSetData(FormEvent $event): void
     {
         $form = $event->getForm();
         $photo = $event->getData();

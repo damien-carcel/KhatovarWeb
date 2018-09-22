@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of KhatovarWeb.
  *
@@ -106,7 +108,7 @@ class PhotoManager
      * @param string $image     The path to the original image
      * @param int    $newHeight
      */
-    public function imageResize($image, $newHeight)
+    public function imageResize($image, $newHeight): void
     {
         // We first find the dimensions of the photo and its ratio
         $original = imagecreatefromjpeg($image);

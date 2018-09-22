@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of KhatovarWeb.
  *
@@ -58,7 +60,7 @@ class MemberType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addBaseFields($builder);
         $this->addDescriptionFields($builder);
@@ -68,7 +70,7 @@ class MemberType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(['data_class' => 'Khatovar\Bundle\WebBundle\Entity\Member']);
     }
@@ -76,7 +78,7 @@ class MemberType extends AbstractType
     /**
      * @param FormBuilderInterface $builder
      */
-    protected function addBaseFields(FormBuilderInterface $builder)
+    protected function addBaseFields(FormBuilderInterface $builder): void
     {
         $builder
             ->add('name', TextType::class, ['label' => 'Nom'])
@@ -106,7 +108,7 @@ class MemberType extends AbstractType
     /**
      * @param FormBuilderInterface $builder
      */
-    protected function addDescriptionFields(FormBuilderInterface $builder)
+    protected function addDescriptionFields(FormBuilderInterface $builder): void
     {
         $builder
             ->add(
@@ -179,7 +181,7 @@ class MemberType extends AbstractType
     /**
      * @param FormBuilderInterface $builder
      */
-    protected function addEventSubscribers(FormBuilderInterface $builder)
+    protected function addEventSubscribers(FormBuilderInterface $builder): void
     {
         $builder
             ->addEventSubscriber($this->addPortraitSubscriber)

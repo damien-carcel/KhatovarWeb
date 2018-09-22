@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of KhatovarWeb.
  *
@@ -53,7 +55,7 @@ class UniqueFolderNameValidator extends ConstraintValidator
     /**
      * {@inheritdoc}
      */
-    public function validate($folder, Constraint $constraint)
+    public function validate($folder, Constraint $constraint): void
     {
         if ($folder instanceof Folder) {
             $neighbors = $this->getNeighbors($folder);

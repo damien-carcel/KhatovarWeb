@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of KhatovarWeb.
  *
@@ -48,7 +50,7 @@ class AddVisitCardSubscriber implements EventSubscriberInterface
     /**
      * @param FormEvent $event
      */
-    public function preSetData(FormEvent $event)
+    public function preSetData(FormEvent $event): void
     {
         $form = $event->getForm();
         $contact = $event->getData();

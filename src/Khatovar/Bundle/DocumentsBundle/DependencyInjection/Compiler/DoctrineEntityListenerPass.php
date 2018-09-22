@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of KhatovarWeb.
  *
@@ -32,7 +34,7 @@ class DoctrineEntityListenerPass implements CompilerPassInterface
     /**
      * {@inheritdoc}
      */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         $definition = $container->getDefinition('khatovar_documents.doctrine.entity_listener_resolver');
         $services = $container->findTaggedServiceIds('doctrine.entity_listener');

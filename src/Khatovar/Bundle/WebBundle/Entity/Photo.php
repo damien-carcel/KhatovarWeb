@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of KhatovarWeb.
  *
@@ -107,7 +109,7 @@ class Photo
      *
      * @param UploadedFile $file
      */
-    public function setFile(UploadedFile $file = null)
+    public function setFile(UploadedFile $file = null): void
     {
         $this->file = $file;
 
@@ -120,7 +122,7 @@ class Photo
     /**
      * Set the name of the file before uploading it.
      */
-    public function preUpload()
+    public function preUpload(): void
     {
         if (null !== $this->file) {
             $this->path = 'photo-'.time().'.'.$this->file->guessExtension();
@@ -136,7 +138,7 @@ class Photo
     /**
      * Upload the file on the server.
      */
-    public function upload()
+    public function upload(): void
     {
         if (null === $this->file) {
             return;
@@ -154,7 +156,7 @@ class Photo
     /**
      * Remove the file from the server.
      */
-    public function removeUpload()
+    public function removeUpload(): void
     {
         $file = $this->getAbsolutePath();
         if ($file) {

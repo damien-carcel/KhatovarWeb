@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of KhatovarWeb.
  *
@@ -34,7 +36,7 @@ class PhotosExtension extends \Twig_Extension
     /**
      * The minimum length between floating photos in a page.
      */
-    const PARAGRAPH_LENGTH = 500;
+    public const PARAGRAPH_LENGTH = 500;
 
     /**
      * Return the filters defined in this class.

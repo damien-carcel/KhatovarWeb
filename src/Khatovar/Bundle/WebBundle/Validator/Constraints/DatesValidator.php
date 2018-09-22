@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of KhatovarWeb.
  *
@@ -36,7 +38,7 @@ class DatesValidator extends ConstraintValidator
     /**
      * {@inheritdoc}
      */
-    public function validate($exaction, Constraint $constraint)
+    public function validate($exaction, Constraint $constraint): void
     {
         if ($exaction instanceof Exaction) {
             if ($exaction->getStart() > $exaction->getEnd()) {

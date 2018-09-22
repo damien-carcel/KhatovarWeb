@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of KhatovarWeb.
  *
@@ -31,14 +33,14 @@ use Symfony\Component\Validator\ConstraintValidator;
  */
 class IframeSizeValidator extends ConstraintValidator
 {
-    const IFRAME_EXPECTED_WIDTH = 300;
+    public const IFRAME_EXPECTED_WIDTH = 300;
 
-    const IFRAME_EXPECTED_HEIGHT = 300;
+    public const IFRAME_EXPECTED_HEIGHT = 300;
 
     /**
      * {@inheritdoc}
      */
-    public function validate($iframe, Constraint $constraint)
+    public function validate($iframe, Constraint $constraint): void
     {
         if (null !== $iframe) {
             $dimensions = $this->getIframeDimensions($iframe);

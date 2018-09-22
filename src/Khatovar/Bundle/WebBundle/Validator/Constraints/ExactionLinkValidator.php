@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of KhatovarWeb.
  *
@@ -34,7 +36,7 @@ class ExactionLinkValidator extends ConstraintValidator
     /**
      * {@inheritdoc}
      */
-    public function validate($links, Constraint $constraint)
+    public function validate($links, Constraint $constraint): void
     {
         foreach ($links as $link) {
             $blockNumber = count(explode('|', $link));

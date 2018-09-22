@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of KhatovarWeb.
  *
@@ -48,7 +50,7 @@ class FileListener
     /**
      * @param File $file
      */
-    public function postLoad(File $file)
+    public function postLoad(File $file): void
     {
         $file->setUploadDir($this->uploadDirectory);
     }

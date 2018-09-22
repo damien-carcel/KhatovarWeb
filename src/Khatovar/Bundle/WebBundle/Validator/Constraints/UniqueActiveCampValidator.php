@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of KhatovarWeb.
  *
@@ -47,7 +49,7 @@ class UniqueActiveCampValidator extends ConstraintValidator
     /**
      * {@inheritdoc}
      */
-    public function validate($appearance, Constraint $constraint)
+    public function validate($appearance, Constraint $constraint): void
     {
         if (AppearanceHelper::CAMP_TYPE_CODE === $appearance->getPageType() && true === $appearance->isActive()) {
             $activeCamp = $this->doctrine
