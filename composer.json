@@ -79,7 +79,7 @@
         ],
         "tests": ["@coupling", "@phpcs", "@php-cs-fixer", "@phpspec", "@acceptance", "@integration", "@system", "@legacy"],
         "coupling": "vendor/bin/php-coupling-detector detect --config-file=.php_cd.php",
-        "phpcs": "vendor/bin/phpcs -p --standard=PSR2 --extensions=php src tests/acceptance tests/integration tests/system",
+        "phpcs": "vendor/bin/phpcs",
         "php-cs-fixer": "vendor/bin/php-cs-fixer fix --dry-run -v --diff --config=.php_cs.php && vendor/bin/php-cs-fixer fix --dry-run -v --diff --config=.php_cs.phpspec.php",
         "php-cs-fixer-fix": "vendor/bin/php-cs-fixer fix -v --diff --config=.php_cs.php && vendor/bin/php-cs-fixer fix -v --diff --config=.php_cs.phpspec.php",
         "phpspec": "vendor/bin/phpspec run",
