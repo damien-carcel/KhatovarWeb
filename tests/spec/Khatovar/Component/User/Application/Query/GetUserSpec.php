@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace spec\Khatovar\Component\User\Application\Query;
 
+use Khatovar\Component\User\Application\Query\CurrentTokenUser;
 use Khatovar\Component\User\Application\Query\GetUser;
 use Khatovar\Component\User\Domain\Exception\UserDoesNotExist;
-use Khatovar\Component\User\Domain\Repository\UserRepositoryInterface;
 use Khatovar\Component\User\Domain\Model\UserInterface;
-use Khatovar\Component\User\Application\Query\CurrentTokenUser;
+use Khatovar\Component\User\Domain\Repository\UserRepositoryInterface;
 use PhpSpec\ObjectBehavior;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 

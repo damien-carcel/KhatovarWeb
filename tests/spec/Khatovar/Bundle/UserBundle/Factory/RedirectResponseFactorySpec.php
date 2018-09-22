@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace spec\Khatovar\Bundle\UserBundle\Factory;
 
 use Khatovar\Bundle\UserBundle\Factory\RedirectResponseFactory;

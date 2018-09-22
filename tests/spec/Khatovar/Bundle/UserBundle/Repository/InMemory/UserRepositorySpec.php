@@ -76,7 +76,7 @@ class UserRepositorySpec extends ObjectBehavior
     {
         $this->findAllBut([
             $this->users['admin'],
-            $this->users['lilith']
+            $this->users['lilith'],
         ])->shouldReturn([
             'aurore' => $this->users['aurore'],
             'damien' => $this->users['damien'],

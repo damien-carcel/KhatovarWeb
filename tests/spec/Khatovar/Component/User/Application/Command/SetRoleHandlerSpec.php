@@ -23,12 +23,11 @@ declare(strict_types=1);
 
 namespace spec\Khatovar\Component\User\Application\Command;
 
-use Khatovar\Bundle\UserBundle\Entity\User;
 use Khatovar\Component\User\Application\Command\SetRole;
 use Khatovar\Component\User\Application\Command\SetRoleHandler;
+use Khatovar\Component\User\Application\Query\GetUserRoles;
 use Khatovar\Component\User\Domain\Exception\UserRoleDoesNotExist;
 use Khatovar\Component\User\Domain\Model\UserInterface;
-use Khatovar\Component\User\Application\Query\GetUserRoles;
 use Khatovar\Component\User\Domain\Repository\UserRepositoryInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;

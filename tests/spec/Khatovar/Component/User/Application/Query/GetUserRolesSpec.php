@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of KhatovarWeb.
  *
@@ -11,9 +13,9 @@
 
 namespace spec\Khatovar\Component\User\Application\Query;
 
-use Khatovar\Component\User\Domain\Model\UserInterface;
-use Khatovar\Component\User\Application\Query\GetUserRoles;
 use Khatovar\Component\User\Application\Query\CurrentTokenUser;
+use Khatovar\Component\User\Application\Query\GetUserRoles;
+use Khatovar\Component\User\Domain\Model\UserInterface;
 use PhpSpec\ObjectBehavior;
 
 /**
@@ -26,8 +28,8 @@ class GetUserRolesSpec extends ObjectBehavior
         $this->beConstructedWith(
             $currentTokenUser,
             [
-                'ROLE_VIEWER'      => ['ROLE_USER'],
-                'ROLE_ADMIN'       => ['ROLE_VIEWER'],
+                'ROLE_VIEWER' => ['ROLE_USER'],
+                'ROLE_ADMIN' => ['ROLE_VIEWER'],
                 'ROLE_SUPER_ADMIN' => ['ROLE_ADMIN'],
             ]
         );
@@ -43,9 +45,9 @@ class GetUserRolesSpec extends ObjectBehavior
         $currentTokenUser->isSuperAdmin()->willReturn(true);
 
         $this->available()->shouldReturn([
-            'ROLE_USER'   => 'ROLE_USER',
+            'ROLE_USER' => 'ROLE_USER',
             'ROLE_VIEWER' => 'ROLE_VIEWER',
-            'ROLE_ADMIN'  => 'ROLE_ADMIN',
+            'ROLE_ADMIN' => 'ROLE_ADMIN',
         ]);
     }
 
@@ -54,7 +56,7 @@ class GetUserRolesSpec extends ObjectBehavior
         $currentTokenUser->isSuperAdmin()->willReturn(false);
 
         $this->available()->shouldReturn([
-            'ROLE_USER'   => 'ROLE_USER',
+            'ROLE_USER' => 'ROLE_USER',
             'ROLE_VIEWER' => 'ROLE_VIEWER',
         ]);
     }

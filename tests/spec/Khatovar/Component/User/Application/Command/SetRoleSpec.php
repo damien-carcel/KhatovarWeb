@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace spec\Khatovar\Component\User\Application\Command;
 
 use Khatovar\Component\User\Application\Command\SetRole;

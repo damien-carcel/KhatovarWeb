@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace spec\Khatovar\Bundle\UserBundle\Security\Authentication;
 
-use Khatovar\Component\User\Domain\Model\UserInterface;
-use Khatovar\Component\User\Application\Query\CurrentTokenUser;
 use Khatovar\Bundle\UserBundle\Security\Authentication\UserInSecurityTokenStorage;
+use Khatovar\Component\User\Application\Query\CurrentTokenUser;
+use Khatovar\Component\User\Domain\Model\UserInterface;
 use PhpSpec\ObjectBehavior;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
