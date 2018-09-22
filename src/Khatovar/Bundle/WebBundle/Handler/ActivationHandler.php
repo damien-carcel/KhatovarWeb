@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of KhatovarWeb.
  *
@@ -50,7 +52,7 @@ class ActivationHandler
     /**
      * @param ActivableEntity $newActiveEntity
      */
-    public function handle(ActivableEntity $newActiveEntity)
+    public function handle(ActivableEntity $newActiveEntity): void
     {
         $repository = $this->doctrine->getRepository($this->entity);
         $oldContact = $repository->findOneBy(['active' => true]);

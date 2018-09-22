@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of KhatovarWeb.
  *
@@ -33,18 +35,8 @@ class FileSaver extends BaseSaver
 {
     /**
      * {@inheritdoc}
-     *
-     * The options are:
-     *
-     *  [
-     *      'flush'  => bool,   # True to flush the object,false to only persist it.
-     *      'folder' => int,    # The ID of the folder that will contain the file,
-     *                          # only present when uploading a file.
-     *  ]
-     *
-     * @return null|string the message to display after saving
      */
-    public function save($file, array $options = [])
+    public function save($file, array $options = []): void
     {
         if (!$file instanceof $this->entityClass) {
             throw new \InvalidArgumentException(
@@ -58,15 +50,13 @@ class FileSaver extends BaseSaver
 
         $options = $this->optionsResolver->resolveSaveOptions($options);
 
-        $message = $this->replaceExistingFile($file, $options);
+        $this->replaceExistingFile($file, $options);
 
         $this->doctrine->getManager()->persist($file);
 
         if (true === $options['flush']) {
             $this->doctrine->getManager()->flush();
         }
-
-        return $message;
     }
 
     /**
@@ -75,10 +65,8 @@ class FileSaver extends BaseSaver
      *
      * @param File  $file
      * @param array $options
-     *
-     * @return string
      */
-    protected function replaceExistingFile(File $file, array $options)
+    protected function replaceExistingFile(File $file, array $options): void
     {
         if (isset($options['folder'])) {
             $fileExists = $this->doctrine->getRepository('KhatovarDocumentsBundle:File')->findOneBy(
@@ -91,13 +79,7 @@ class FileSaver extends BaseSaver
             if (null !== $fileExists) {
                 $file->setCreated($fileExists->getCreated());
                 $this->doctrine->getManager()->remove($fileExists);
-
-                return 'khatovar_documents.notice.add.file.replace';
             }
-
-            return 'khatovar_documents.notice.add.file.new';
         }
-
-        return '';
     }
 }

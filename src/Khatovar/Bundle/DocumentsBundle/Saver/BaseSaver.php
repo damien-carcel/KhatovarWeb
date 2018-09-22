@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of KhatovarWeb.
  *
@@ -60,7 +62,7 @@ class BaseSaver implements SaverInterface
     /**
      * {@inheritdoc}
      */
-    public function save($object, array $options = [])
+    public function save($object, array $options = []): void
     {
         if (!$object instanceof $this->entityClass) {
             throw new InvalidArgumentException(

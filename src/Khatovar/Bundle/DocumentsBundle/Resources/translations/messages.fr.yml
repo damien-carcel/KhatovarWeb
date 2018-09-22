@@ -35,10 +35,8 @@ khatovar_documents:
         folder.title: Déplacer un dossier
     notice:
         add:
-            file:
-                new: Le fichier a bien été ajouté
-                replace: Le fichier a bien été remplacé
-            folder: Nouveau dossier ajouté
+            file: Le fichier a bien été ajouté
+            folder: Le dossier a bien été ajouté
         delete.confirmation: Êtes-vous sûr ?
         move:
             file: Le fichier a bien été déplacé

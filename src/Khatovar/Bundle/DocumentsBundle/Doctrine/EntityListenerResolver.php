@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of KhatovarWeb.
  *
@@ -48,7 +50,7 @@ class EntityListenerResolver extends DefaultEntityListenerResolver
      * @param string $className
      * @param string $service
      */
-    public function addMapping($className, $service)
+    public function addMapping($className, $service): void
     {
         $this->mapping[$className] = $service;
     }

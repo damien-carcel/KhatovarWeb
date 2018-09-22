@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of KhatovarWeb.
  *
@@ -79,7 +81,7 @@ class ExactionController extends Controller
 
             $this->addFlash('notice', 'Exaction créée');
 
-            return $this->redirect($this->chooseRedirectionURL($exaction));
+            return $this->redirect($this->chooseRedirectionUrl($exaction));
         }
 
         return $this->render(
@@ -151,7 +153,7 @@ class ExactionController extends Controller
 
             $this->addFlash('notice', 'Exaction modifiée');
 
-            return $this->redirect($this->chooseRedirectionURL($exaction));
+            return $this->redirect($this->chooseRedirectionUrl($exaction));
         }
 
         return $this->render(
@@ -190,7 +192,7 @@ class ExactionController extends Controller
             $this->addFlash('notice', 'Exaction supprimée');
         }
 
-        return $this->redirect($this->chooseRedirectionURL($exaction));
+        return $this->redirect($this->chooseRedirectionUrl($exaction));
     }
 
     /**
@@ -271,7 +273,7 @@ class ExactionController extends Controller
      *
      * @return string
      */
-    protected function chooseRedirectionURL(Exaction $exaction)
+    protected function chooseRedirectionUrl(Exaction $exaction)
     {
         $isExactionPassed = $this->get('khatovar_exaction.manager.exaction')->isExactionPassed($exaction);
 

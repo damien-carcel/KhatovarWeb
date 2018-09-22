@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace spec\Khatovar\Component\User\Domain\Exception;
 
 use Khatovar\Component\User\Domain\Exception\UserDoesNotExist;

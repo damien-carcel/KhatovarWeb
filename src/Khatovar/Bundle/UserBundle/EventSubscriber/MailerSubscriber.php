@@ -82,7 +82,7 @@ class MailerSubscriber implements EventSubscriberInterface
      *
      * @param GenericEvent $event
      */
-    public function sendMessage(GenericEvent $event)
+    public function sendMessage(GenericEvent $event): void
     {
         $user = $event->getSubject();
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of KhatovarWeb.
  *
@@ -35,7 +37,7 @@ use Symfony\Component\Routing\RouterInterface;
 class PhotoHandler
 {
     /** @staticvar string */
-    const MAX_PHOTO_HEIGHT = 720;
+    public const MAX_PHOTO_HEIGHT = 720;
 
     /** @var RegistryInterface */
     protected $doctrine;
@@ -66,7 +68,7 @@ class PhotoHandler
      *
      * @param Photo $photo
      */
-    public function handleCreation(Photo $photo)
+    public function handleCreation(Photo $photo): void
     {
         $this->doctrine->getManager()->persist($photo);
         $this->doctrine->getManager()->flush();

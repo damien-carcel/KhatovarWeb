@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace spec\Khatovar\Component\User\Application\Query;
 
 use Khatovar\Component\User\Application\Query\CurrentTokenUser;

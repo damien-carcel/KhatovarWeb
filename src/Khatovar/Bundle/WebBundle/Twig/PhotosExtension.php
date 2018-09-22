@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of KhatovarWeb.
  *
@@ -34,7 +36,7 @@ class PhotosExtension extends \Twig_Extension
     /**
      * The minimum length between floating photos in a page.
      */
-    const PARAGRAPH_LENGTH = 500;
+    public const PARAGRAPH_LENGTH = 500;
 
     /**
      * Return the filters defined in this class.
@@ -111,8 +113,12 @@ class PhotosExtension extends \Twig_Extension
     public function linkPicture($path, $text = '', $data = '')
     {
         $link = sprintf(
-            '<a href="%s" data-lightbox="%s" '.
-            'title="Copyright &copy; %s association La Compagnie franche du Khatovar">%s</a>',
+            <<<HTML
+<a href="%s" data-lightbox="%s" title="Copyright &copy; %s association La Compagnie franche du Khatovar">
+    %s
+</a>
+HTML
+            ,
             $path,
             $data ? $data : $path,
             date('Y'),
@@ -312,13 +318,15 @@ class PhotosExtension extends \Twig_Extension
      */
     protected function addFloat(Photo $photo, $side)
     {
-        $text = '<a href="'.$photo->getWebPath().'" data-lightbox="Photos Khatovar"'
-            .' title="Copyright &copy; '.date('Y').' association La Compagnie franche du Khatovar">'
-            .'<img class="float float'.$side.' photo_rest"'
-            .' onmouseover="this.className=\'float float'.$side.' photo_over\'"'
-            .' onmouseout="this.className=\'float float'.$side.' photo_rest\'"'
-            .' src="'.$photo->getWebPath().'" alt="'.$photo->getAlt().'" />'
-            .'</a>';
+        $text = '<a href="'
+            .$photo->getWebPath()
+            .'" data-lightbox="Photos Khatovar" title="Copyright &copy; '
+            .date('Y').' association La Compagnie franche du Khatovar"><img class="float float'
+            .$side.' photo_rest" onmouseover="this.className=\'float float'
+            .$side.' photo_over\'" onmouseout="this.className=\'float float'
+            .$side.' photo_rest\'" src="'
+            .$photo->getWebPath().'" alt="'
+            .$photo->getAlt().'" /></a>';
 
         return $text."\n";
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of KhatovarWeb.
  *
@@ -34,7 +36,7 @@ class UserStatusHandler
     /**
      * @param UserStatus $userStatus
      */
-    public function handle(UserStatus $userStatus)
+    public function handle(UserStatus $userStatus): void
     {
         $user = $userStatus->user();
         $status = $userStatus->status();

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of KhatovarWeb.
  *
@@ -47,7 +49,7 @@ class AddPortraitSubscriber implements EventSubscriberInterface
     /**
      * {@inheritdoc}
      */
-    public function preSetData(FormEvent $event)
+    public function preSetData(FormEvent $event): void
     {
         $member = $event->getData();
         $form = $event->getForm();

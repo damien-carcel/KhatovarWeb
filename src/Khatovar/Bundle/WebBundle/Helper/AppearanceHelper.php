@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of KhatovarWeb.
  *
@@ -29,28 +31,28 @@ namespace Khatovar\Bundle\WebBundle\Helper;
 class AppearanceHelper
 {
     /** @staticvar string */
-    const WORKSHOP_TYPE_CODE = 'appearance';
+    public const WORKSHOP_TYPE_CODE = 'appearance';
 
     /** @staticvar string */
-    const WORKSHOP_TYPE_LABEL = 'Atelier';
+    public const WORKSHOP_TYPE_LABEL = 'Atelier';
 
     /** @staticvar string */
-    const PROGRAMME_TYPE_CODE = 'programme';
+    public const PROGRAMME_TYPE_CODE = 'programme';
 
     /** @staticvar string */
-    const PROGRAMME_TYPE_LABEL = 'Programme';
+    public const PROGRAMME_TYPE_LABEL = 'Programme';
 
     /** @staticvar string */
-    const CAMP_TYPE_CODE = 'camp';
+    public const CAMP_TYPE_CODE = 'camp';
 
     /** @staticvar string */
-    const CAMP_TYPE_LABEL = 'Description du campement';
+    public const CAMP_TYPE_LABEL = 'Description du campement';
 
     /** @staticvar string */
-    const INTRO_TYPE_CODE = 'introduction';
+    public const INTRO_TYPE_CODE = 'introduction';
 
     /** @staticvar string */
-    const INTRO_TYPE_LABEL = 'Introduction à nos activités';
+    public const INTRO_TYPE_LABEL = 'Introduction à nos activités';
 
     /**
      * @return array

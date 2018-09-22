@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of KhatovarWeb.
  *
@@ -36,7 +38,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class ExactionType extends AbstractType
 {
     /** @staticvar int */
-    const KHATOVAR_CREATION = 2008;
+    public const KHATOVAR_CREATION = 2008;
 
     /** @var EventSubscriberInterface */
     protected $addPassedFields;
@@ -52,7 +54,7 @@ class ExactionType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('name', TextType::class, ['label' => 'Nom'])
@@ -106,7 +108,7 @@ class ExactionType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(['data_class' => 'Khatovar\Bundle\WebBundle\Entity\Exaction']);
     }

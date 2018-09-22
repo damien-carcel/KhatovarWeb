@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of KhatovarWeb.
  *
@@ -47,7 +49,7 @@ class UniqueActiveIntroValidator extends ConstraintValidator
     /**
      * {@inheritdoc}
      */
-    public function validate($appearance, Constraint $constraint)
+    public function validate($appearance, Constraint $constraint): void
     {
         if (AppearanceHelper::INTRO_TYPE_CODE === $appearance->getPageType() && true === $appearance->isActive()) {
             $activeIntro = $this->doctrine

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of KhatovarWeb.
  *
@@ -79,7 +81,7 @@ class MenuBuilder
     /**
      * @param ItemInterface $menu
      */
-    private function addHome(ItemInterface $menu)
+    private function addHome(ItemInterface $menu): void
     {
         $menu->addChild(
             'home',
@@ -93,7 +95,7 @@ class MenuBuilder
     /**
      * @param ItemInterface $menu
      */
-    private function addAppearances(ItemInterface $menu)
+    private function addAppearances(ItemInterface $menu): void
     {
         $menu->addChild(
             'programmes',
@@ -139,7 +141,7 @@ class MenuBuilder
     /**
      * @param ItemInterface $menu
      */
-    private function addDates(ItemInterface $menu)
+    private function addDates(ItemInterface $menu): void
     {
         $menu->addChild(
             'dates',
@@ -181,7 +183,7 @@ class MenuBuilder
     /**
      * @param ItemInterface $menu
      */
-    private function addCamp(ItemInterface $menu)
+    private function addCamp(ItemInterface $menu): void
     {
         $menu->addChild(
             'camp',
@@ -211,7 +213,7 @@ class MenuBuilder
     /**
      * @param ItemInterface $menu
      */
-    private function addContact(ItemInterface $menu)
+    private function addContact(ItemInterface $menu): void
     {
         $menu->addChild(
             'links',

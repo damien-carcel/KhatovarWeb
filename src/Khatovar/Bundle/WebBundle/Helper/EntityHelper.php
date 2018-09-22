@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of KhatovarWeb.
  *
@@ -29,34 +31,34 @@ namespace Khatovar\Bundle\WebBundle\Helper;
 class EntityHelper
 {
     /** @staticvar string */
-    const HOMEPAGE_CODE = 'homepage';
+    public const HOMEPAGE_CODE = 'homepage';
 
     /** @staticvar string */
-    const HOMEPAGE_LABEL = 'Pages d\'accueil';
+    public const HOMEPAGE_LABEL = 'Pages d\'accueil';
 
     /** @staticvar string */
-    const APPEARANCE_CODE = 'appearance';
+    public const APPEARANCE_CODE = 'appearance';
 
     /** @staticvar string */
-    const APPEARANCE_LABEL = 'Prestations';
+    public const APPEARANCE_LABEL = 'Prestations';
 
     /** @staticvar string */
-    const EXACTION_CODE = 'exaction';
+    public const EXACTION_CODE = 'exaction';
 
     /** @staticvar string */
-    const EXACTION_LABEL = 'Exactions';
+    public const EXACTION_LABEL = 'Exactions';
 
     /** @staticvar string */
-    const MEMBER_CODE = 'member';
+    public const MEMBER_CODE = 'member';
 
     /** @staticvar string */
-    const MEMBER_LABEL = 'Membres';
+    public const MEMBER_LABEL = 'Membres';
 
     /** @staticvar string */
-    const CONTACT_CODE = 'contact';
+    public const CONTACT_CODE = 'contact';
 
     /** @staticvar string */
-    const CONTACT_LABEL = 'Pages de contact';
+    public const CONTACT_LABEL = 'Pages de contact';
 
     /**
      * Return the.
