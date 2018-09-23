@@ -40,11 +40,11 @@ integration:
             contexts_services:
                 - 'Khatovar\Tests\Integration\Context\FeatureContext'
 
-system:
+end-to-end:
     extensions:
         FriendsOfBehat\ContextServiceExtension:
             imports:
-            - 'tests/system/Resources/config/contexts.yml'
+            - 'tests/end-to-end/Resources/config/contexts.yml'
         FriendsOfBehat\CrossContainerExtension: ~
         FriendsOfBehat\SymfonyExtension:
             kernel:
@@ -58,9 +58,9 @@ system:
             paths:
                 - '%paths.base%/tests/features/user'
             contexts_services:
-                - 'Khatovar\Tests\System\Context\FeatureContext'
+                - 'Khatovar\Tests\EndToEnd\Context\FeatureContext'
             filters:
-                tags: '@system'
+                tags: '@end-to-end'
 
 legacy:
     extensions:

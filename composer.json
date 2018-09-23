@@ -23,7 +23,7 @@
             "Khatovar\\Tests\\Acceptance\\": "tests/acceptance/",
             "Khatovar\\Tests\\Fixtures\\": "tests/fixtures/",
             "Khatovar\\Tests\\Integration\\": "tests/integration/",
-            "Khatovar\\Tests\\System\\": "tests/system/"
+            "Khatovar\\Tests\\EndToEnd\\": "tests/end-to-end/"
         },
         "files": [ "vendor/symfony/symfony/src/Symfony/Component/VarDumper/Resources/functions/dump.php" ]
     },
@@ -78,7 +78,7 @@
         "post-update-cmd": [
             "@symfony-scripts"
         ],
-        "tests": ["@coupling", "@phpcs", "@php-cs-fixer", "@phpspec", "@acceptance", "@integration", "@system", "@legacy"],
+        "tests": ["@coupling", "@phpcs", "@php-cs-fixer", "@phpspec", "@acceptance", "@integration", "@end-to-end", "@legacy"],
         "coupling": "vendor/bin/php-coupling-detector detect --config-file=.php_cd.php",
         "phpcs": "vendor/bin/phpcs",
         "php-cs-fixer": "vendor/bin/php-cs-fixer fix --dry-run -v --diff --config=.php_cs.php && vendor/bin/php-cs-fixer fix --dry-run -v --diff --config=.php_cs.phpspec.php",
@@ -86,7 +86,7 @@
         "phpspec": "vendor/bin/phpspec run",
         "acceptance": "vendor/bin/behat --profile=acceptance",
         "integration": "vendor/bin/behat --profile=integration",
-        "system": "vendor/bin/behat --profile=system",
+        "end-to-end": "vendor/bin/behat --profile=end-to-end",
         "legacy": "vendor/bin/behat --profile=legacy"
     },
     "config": {

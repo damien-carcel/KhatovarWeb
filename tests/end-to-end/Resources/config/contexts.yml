@@ -1,5 +1,5 @@
 services:
-    Khatovar\Tests\System\Context\FeatureContext:
+    Khatovar\Tests\EndToEnd\Context\FeatureContext:
         arguments:
             - '@__symfony__.Khatovar\Bundle\UserBundle\Repository\Doctrine\UserRepository'
         tags:

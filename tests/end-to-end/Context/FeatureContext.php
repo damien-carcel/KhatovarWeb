@@ -21,7 +21,7 @@ declare(strict_types=1);
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Khatovar\Tests\System\Context;
+namespace Khatovar\Tests\EndToEnd\Context;
 
 use Behat\MinkExtension\Context\MinkContext;
 use Khatovar\Component\User\Domain\Repository\UserRepositoryInterface;
