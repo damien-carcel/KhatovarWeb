@@ -4,15 +4,6 @@
 
 This repository contain the source code of the CMS handling the web site of the medieval association : [“La compagnie franche du Khatovar”](http://www.compagniefranchedukhatovar.fr/)
 
-## Requirements
-
-- PHP 7.1
-- PHP Modules:
-    - apcu
-    - intl
-    - mysql
-- MySQL or MariaDB
-
 ## Installation
 
 The following part assume the use of Docker and Docker Compose. However, the same commands (without the Docker part) can be used on a local environment.
