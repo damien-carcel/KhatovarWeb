@@ -1,3 +1,4 @@
+@end-to-end
 Feature: Change users roles
   In order to administrate user accounts
   As an administrator

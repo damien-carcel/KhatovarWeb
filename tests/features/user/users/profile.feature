@@ -1,3 +1,4 @@
+@end-to-end
 Feature: Manage a user account
   In order to manage my user account
   As a user

@@ -1,3 +1,4 @@
+@end-to-end
 Feature: See user profiles
   In order to administrate user accounts
   As an administrator

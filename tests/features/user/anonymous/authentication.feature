@@ -1,3 +1,4 @@
+@end-to-end
 Feature: Authenticate users
   In order to authenticate myself
   As an anonymous user

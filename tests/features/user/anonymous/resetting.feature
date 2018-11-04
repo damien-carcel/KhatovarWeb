@@ -1,3 +1,4 @@
+@end-to-end
 Feature: Réinitialiser le mot de passe
   In order to access the application
   As an anonymous user

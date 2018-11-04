@@ -11,7 +11,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Context;
+namespace Khatovar\Tests\EndToEnd\Context\User;
 
 use Behat\Mink\Element\NodeElement;
 use Behat\Mink\Exception\DriverException;
@@ -22,7 +22,6 @@ use FOS\UserBundle\Model\UserManagerInterface;
 use Khatovar\Component\User\Application\Query\GetAdministrableUsers;
 use Khatovar\Component\User\Domain\Repository\UserRepositoryInterface;
 use Symfony\Component\BrowserKit\Client;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\HttpKernel\Profiler\Profile;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -36,21 +35,10 @@ use Webmozart\Assert\Assert;
  *
  * @author Damien Carcel <damien.carcel@gmail.com>
  */
-class UserBundleFeatureContext extends MinkContext implements KernelAwareContext
+class FeatureContext extends MinkContext implements KernelAwareContext
 {
     /** @var KernelInterface */
     private $kernel;
-
-    /** @var SessionInterface */
-    private $session;
-
-    /**
-     * @param SessionInterface $session
-     */
-    public function __construct(SessionInterface $session)
-    {
-        $this->session = $session;
-    }
 
     /**
      * {@inheritdoc}

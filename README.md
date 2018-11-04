@@ -45,7 +45,7 @@ You can now populate this database with a basic set of [doctrine fixtures](https
 
 ```bash
 $ CURRENT_IDS="$(id -u):$(id -g)" docker-compose run --rm php bin/console --env=prod doctrine:schema:update --force
-$ CURRENT_IDS="$(id -u):$(id -g)" docker-compose run --rm php bin/console doctrine:fixtures:load --fixtures=features/Context/DataFixtures/ORM/LoadUserData.php
+$ CURRENT_IDS="$(id -u):$(id -g)" docker-compose run --rm php bin/console doctrine:fixtures:load --fixtures=tests/fixtures/ORM/LoadUserData.php
 ```
 
 ### Deploy the assets

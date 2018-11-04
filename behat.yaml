@@ -13,12 +13,12 @@ acceptance:
                 path: 'app/AppKernel.php'
     suites:
         user:
-            paths:
-                - '%paths.base%/tests/features/user'
             contexts_services:
                 - 'Khatovar\Tests\Acceptance\Context\FeatureContext'
             filters:
                 tags: '@acceptance'
+            paths:
+                - '%paths.base%/tests/features/user'
 
 integration:
     extensions:
@@ -35,32 +35,35 @@ integration:
                 path: 'app/AppKernel.php'
     suites:
         user:
-            paths:
-                - '%paths.base%/tests/integration/features/user'
             contexts_services:
                 - 'Khatovar\Tests\Integration\Context\FeatureContext'
+            paths:
+                - '%paths.base%/tests/integration/features/user'
 
 end-to-end:
     extensions:
-        FriendsOfBehat\ContextServiceExtension:
-            imports:
-            - 'tests/end-to-end/Resources/config/contexts.yml'
-        FriendsOfBehat\CrossContainerExtension: ~
-        FriendsOfBehat\SymfonyExtension:
+        Behat\MinkExtension:
+            sessions:
+                default:
+                    symfony2: ~
+        Behat\Symfony2Extension:
             kernel:
-                bootstrap: 'var/bootstrap.php.cache'
-                class: 'AppKernel'
-                debug: true
+                bootstrap: 'vendor/autoload.php'
                 env: 'test'
-                path: 'app/AppKernel.php'
+        BehatExtension\DoctrineDataFixturesExtension\Extension:
+            lifetime: 'scenario'
+            autoload: 'false'
+            directories: ~
+            fixtures:
+                - 'Khatovar\Tests\Fixtures\ORM\LoadUserData'
     suites:
         user:
-            paths:
-                - '%paths.base%/tests/features/user'
-            contexts_services:
-                - 'Khatovar\Tests\EndToEnd\Context\FeatureContext'
+            contexts:
+                - Khatovar\Tests\EndToEnd\Context\User\FeatureContext: ~
             filters:
                 tags: '@end-to-end'
+            paths:
+                - '%paths.base%/tests/features/user'
 
 legacy:
     extensions:
@@ -89,9 +92,3 @@ legacy:
                     container: '@service_container'
             paths:
                 - '%paths.base%/features/documents'
-        user:
-            contexts:
-                - Context\UserBundleFeatureContext:
-                    session: '@session'
-            paths:
-                - '%paths.base%/features/user'

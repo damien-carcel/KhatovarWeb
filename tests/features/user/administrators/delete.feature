@@ -1,3 +1,4 @@
+@end-to-end
 Feature: Delete a user account
   In order to administrate user accounts
   As an administrator
