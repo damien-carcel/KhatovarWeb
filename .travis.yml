@@ -29,7 +29,6 @@ install:
 
 script:
     - vendor/bin/php-coupling-detector detect --config-file=.php_cd.php
-    - vendor/bin/phpcs -p --standard=PSR2 --extensions=php src tests/acceptance tests/integration tests/system
     - vendor/bin/php-cs-fixer fix --dry-run -v --diff --config=.php_cs.php
     - vendor/bin/phpspec run
     - vendor/bin/behat --profile=integration
