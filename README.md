@@ -23,16 +23,22 @@ The following part assume the use of Docker and Docker Compose. However, the sam
 
 Just clone the repository, the copy the file `docker-compose.yml.dist` by removing the `.dist` extension.
 
+First build the custom docker images:
+```bash
+$ docker-compose pull
+$ docker-compose build --pull
+```
+
 Up the containers by running 
 
 ```bash
-docker-compose up -d
+$ CURRENT_IDS="$(id -u):$(id -g)" docker-compose up -d
 ```
 
 and install dependencies with
 
 ```bash
-docker-compose exec fpm composer install --prefer-dist --optimize-autoloader
+$ CURRENT_IDS="$(id -u):$(id -g)" docker-compose exec fpm composer install --prefer-dist --optimize-autoloader
 ```
 
 Composer will ask you for your application configuration (database name, user and password).
@@ -40,8 +46,8 @@ Composer will ask you for your application configuration (database name, user an
 You can now populate this database with a basic set of [doctrine fixtures](https://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html) provided by the bundle (or create your own, of course):
 
 ```bash
-docker-compose exec fpm bin/console doctrine:schema:update --force
-docker-compose exec fpm bin/console doctrine:fixtures:load --fixtures=features/Context/DataFixtures/ORM/LoadUserData.php
+$ CURRENT_IDS="$(id -u):$(id -g)" docker-compose exec fpm bin/console doctrine:schema:update --force
+$ CURRENT_IDS="$(id -u):$(id -g)" docker-compose exec fpm bin/console doctrine:fixtures:load --fixtures=features/Context/DataFixtures/ORM/LoadUserData.php
 ```
 
 ### Deploy the assets
@@ -49,9 +55,9 @@ docker-compose exec fpm bin/console doctrine:fixtures:load --fixtures=features/C
 Run the following command:
 
 ```bash
-docker-compose exec fpm bin/console assets:install www --symlink --relative
-docker-compose run node yarn install
-docker-compose run node yarn run assets
+$ docker-compose exec fpm bin/console assets:install www --symlink --relative
+$ CURRENT_IDS="$(id -u):$(id -g)" docker-compose run node yarn install
+$ CURRENT_IDS="$(id -u):$(id -g)" docker-compose run node yarn run assets
 ```
 
 You should now be able to access the application and login with `localhost:8080/login`.
