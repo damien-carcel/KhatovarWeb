@@ -54,8 +54,8 @@ Run the following command:
 
 ```bash
 $ CURRENT_IDS="$(id -u):$(id -g)" docker-compose run --rm php bin/console --env=prod assets:install www --symlink --relative
-$ CURRENT_IDS="$(id -u):$(id -g)" docker-compose run node yarn install
-$ CURRENT_IDS="$(id -u):$(id -g)" docker-compose run node yarn run assets
+$ CURRENT_IDS="$(id -u):$(id -g)" docker-compose run --rm node yarn install
+$ CURRENT_IDS="$(id -u):$(id -g)" docker-compose run --rm node yarn run assets
 ```
 
 ### Serve the application
@@ -67,7 +67,7 @@ $ CURRENT_IDS="$(id -u):$(id -g)" docker-compose up -d nginx
 
 Or you can use the internal Symfony server (dev and testing purpose)
 ```bash
-$ CURRENT_IDS="$(id -u):$(id -g)" docker-compose run --rm --service-ports php bin/console server:run 0.0.0.0:8000
+$ CURRENT_IDS="$(id -u):$(id -g)" docker-compose run --rm --service-ports php bin/console -d www server:run 0.0.0.0:8000
 ```
 
 In both cases, you should be able to access the application and login with `localhost:8000/login`.
