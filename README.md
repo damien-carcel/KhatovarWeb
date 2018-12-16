@@ -6,11 +6,9 @@ This repository contain the source code of the CMS handling the web site of the 
 
 ## Requirements
 
-- PHP 7.1+
+- PHP 7.1
 - PHP Modules:
     - apcu
-    - curl
-    - gd
     - intl
     - mysql
 - MySQL or MariaDB
@@ -29,25 +27,25 @@ $ docker-compose pull
 $ docker-compose build --pull
 ```
 
-Up the containers by running 
+Up the MySQL container by running 
 
 ```bash
-$ CURRENT_IDS="$(id -u):$(id -g)" docker-compose up -d
+$ CURRENT_IDS="$(id -u):$(id -g)" docker-compose up -d mysql
 ```
 
 and install dependencies with
 
 ```bash
-$ CURRENT_IDS="$(id -u):$(id -g)" docker-compose exec fpm composer install --prefer-dist --optimize-autoloader
+$ CURRENT_IDS="$(id -u):$(id -g)" docker-compose run --rm php composer install --prefer-dist --optimize-autoloader
 ```
 
 Composer will ask you for your application configuration (database name, user and password).
 
-You can now populate this database with a basic set of [doctrine fixtures](https://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html) provided by the bundle (or create your own, of course):
+You can now populate this database with a basic set of [doctrine fixtures](https://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html) provided by the bundle (only available in dev mode):
 
 ```bash
-$ CURRENT_IDS="$(id -u):$(id -g)" docker-compose exec fpm bin/console doctrine:schema:update --force
-$ CURRENT_IDS="$(id -u):$(id -g)" docker-compose exec fpm bin/console doctrine:fixtures:load --fixtures=features/Context/DataFixtures/ORM/LoadUserData.php
+$ CURRENT_IDS="$(id -u):$(id -g)" docker-compose run --rm php bin/console --env=prod doctrine:schema:update --force
+$ CURRENT_IDS="$(id -u):$(id -g)" docker-compose run --rm php bin/console doctrine:fixtures:load --fixtures=features/Context/DataFixtures/ORM/LoadUserData.php
 ```
 
 ### Deploy the assets
@@ -55,12 +53,24 @@ $ CURRENT_IDS="$(id -u):$(id -g)" docker-compose exec fpm bin/console doctrine:f
 Run the following command:
 
 ```bash
-$ docker-compose exec fpm bin/console assets:install www --symlink --relative
+$ CURRENT_IDS="$(id -u):$(id -g)" docker-compose run --rm php bin/console --env=prod assets:install www --symlink --relative
 $ CURRENT_IDS="$(id -u):$(id -g)" docker-compose run node yarn install
 $ CURRENT_IDS="$(id -u):$(id -g)" docker-compose run node yarn run assets
 ```
 
-You should now be able to access the application and login with `localhost:8080/login`.
+### Serve the application
+
+You can either launch `nginx` and `fpm` containers (`fpm` depends on `nginx`):
+```bash
+$ CURRENT_IDS="$(id -u):$(id -g)" docker-compose up -d nginx
+```
+
+Or you can use the internal Symfony server (dev and testing purpose)
+```bash
+$ CURRENT_IDS="$(id -u):$(id -g)" docker-compose run --rm --service-ports php bin/console server:run 0.0.0.0:8000
+```
+
+In both cases, you should be able to access the application and login with `localhost:8000/login`.
 
 ## License
 

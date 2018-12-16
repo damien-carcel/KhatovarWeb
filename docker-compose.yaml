@@ -5,33 +5,41 @@ services:
         build: './docker/node/'
         image: 'khatovar/node:lts'
         environment:
-            YARN_CACHE_FOLDER: '/home/node/.yarn-cache'
-        user: '${CURENT_IDS}'
+            YARN_CACHE_FOLDER: '/home/yarn-cache'
+        user: '${CURRENT_IDS}'
         volumes:
             - './:/srv/khatovar'
-            - '~/.cache/yarn:/home/node/.yarn-cache'
+            - '~/.cache/yarn:/home/yarn-cache'
         working_dir: '/srv/khatovar'
 
     fpm:
-        image: 'akeneo/fpm:php-7.1'
+        build: './docker/fpm/'
+        image: 'khatovar/php:7.1-fpm'
+        user: 'www-data:www-data'
+        volumes:
+            - './:/srv/khatovar:ro'
+            - 'var-data:/srv/khatovar/var:rw'
+        working_dir: '/srv/khatovar'
+
+    php:
+        build: './docker/php/'
+        image: 'khatovar/php:7.1'
         environment:
-            COMPOSER_CACHE_DIR: '/home/docker/.cache/composer'
-            COMPOSER_HOME: '/home/docker/.config/composer'
+            COMPOSER_CACHE_DIR: '/home/composer/.cache/composer'
+            COMPOSER_HOME: '/home/composer/.config/composer'
             PHP_IDE_CONFIG: 'serverName=khatovar-cli'
             XDEBUG_CONFIG: 'remote_host=172.17.0.1'
-        user: '${CURENT_IDS}'
+        user: '${CURRENT_IDS}'
         volumes:
             - './:/srv/khatovar'
-            - '~/.cache/composer:/home/docker/.cache/composer'
-            - '~/.config/composer:/home/docker/.config/composer'
+            - '~/.cache/composer:/home/composer/.cache/composer'
+            - '~/.config/composer:/home/composer/.config/composer'
         working_dir: '/srv/khatovar'
 
     nginx:
         image: 'nginx:alpine'
         depends_on:
             - 'fpm'
-        environment:
-            PHP_IDE_CONFIG: 'serverName=khatovar-web'
         volumes:
             - './:/srv/khatovar:ro'
             - './docker/nginx.conf:/etc/nginx/conf.d/default.conf:ro'
@@ -44,3 +52,6 @@ services:
             MYSQL_USER: 'khatovar'
             MYSQL_PASSWORD: 'khatovar'
             MYSQL_DATABASE: 'khatovar'
+
+volumes:
+    var-data:

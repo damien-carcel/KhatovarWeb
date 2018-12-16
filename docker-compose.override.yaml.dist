@@ -1,13 +1,13 @@
 version: '3'
 
 services:
-    fpm:
-        environment:
-            PHP_XDEBUG_ENABLED: 0
-
     nginx:
         ports:
             - '8000:80'
+
+    php:
+        ports:
+            - '8000:8000'
 
     mysql:
         ports:
