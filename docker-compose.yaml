@@ -14,7 +14,7 @@ services:
 
     fpm:
         build: './docker/fpm/'
-        image: 'khatovar/php:7.1-fpm'
+        image: 'khatovar/php:7.2-fpm'
         user: 'www-data:www-data'
         volumes:
             - './:/srv/khatovar:ro'
@@ -23,7 +23,7 @@ services:
 
     php:
         build: './docker/php/'
-        image: 'khatovar/php:7.1'
+        image: 'khatovar/php:7.2'
         environment:
             COMPOSER_CACHE_DIR: '/home/composer/.cache/composer'
             COMPOSER_HOME: '/home/composer/.config/composer'
