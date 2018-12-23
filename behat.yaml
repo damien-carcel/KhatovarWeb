@@ -50,15 +50,11 @@ end-to-end:
             kernel:
                 bootstrap: 'vendor/autoload.php'
                 env: 'test'
-        BehatExtension\DoctrineDataFixturesExtension\Extension:
-            lifetime: 'scenario'
-            autoload: 'false'
-            directories: ~
-            fixtures:
-                - 'Khatovar\Tests\Fixtures\ORM\LoadUserData'
     suites:
         user:
             contexts:
+                - Khatovar\Tests\Fixtures\Context\DataFixtureContext:
+                    container: '@service_container'
                 - Khatovar\Tests\EndToEnd\Context\User\FeatureContext: ~
             filters:
                 tags: '@end-to-end'
@@ -75,16 +71,10 @@ legacy:
             kernel:
                 bootstrap: 'vendor/autoload.php'
                 env: 'test'
-        BehatExtension\DoctrineDataFixturesExtension\Extension:
-            lifetime: 'scenario'
-            autoload: 'false'
-            directories: ~
-            fixtures:
-                - 'Context\DataFixtures\ORM\LoadUserData'
     suites:
         documents:
             contexts:
-                - Context\DocumentsBundleFixtureContext:
+                - Khatovar\Tests\Fixtures\Context\DataFixtureContext:
                     container: '@service_container'
                 - Context\DocumentsBundleFeatureContext:
                     container: '@service_container'

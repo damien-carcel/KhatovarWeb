@@ -59,7 +59,7 @@ class FolderRepository extends EntityRepository
     {
         $folder = $this->find($id);
         if (null === $folder) {
-            [];
+            return [];
         }
 
         $parentFolders = [];

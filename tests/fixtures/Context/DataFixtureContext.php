@@ -2,44 +2,37 @@
 
 declare(strict_types=1);
 
-/*
+/**
  * This file is part of KhatovarWeb.
- *
- * Copyright (c) 2017 Damien Carcel (https://github.com/damien-carcel)
- *
+ * Copyright (c) 2018 Damien Carcel (https://github.com/damien-carcel)
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Context;
+namespace Khatovar\Tests\Fixtures\Context;
 
 use Behat\Behat\Context\Context;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\ORM\Tools\SchemaTool;
-use Khatovar\Component\User\Application\Command\SetRole;
 use Symfony\Bridge\Doctrine\DataFixtures\ContainerAwareLoader as DataFixturesLoader;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Defines application features from the specific context.
- *
  * @author Damien Carcel <damien.carcel@gmail.com>
  */
-class DocumentsBundleFixtureContext implements Context
+class DataFixtureContext implements Context
 {
     /** @var ContainerInterface */
-    protected $container;
+    private $container;
 
     /**
      * @param ContainerInterface $container
@@ -60,16 +53,13 @@ class DocumentsBundleFixtureContext implements Context
     }
 
     /**
-     * @BeforeScenario @fixtures-minimal
+     * @BeforeScenario @fixtures-users
      */
     public function loadFixturesWithOnlyUsers(): void
     {
-        $userFixtures = $this->container
-                ->getParameter('kernel.project_dir').'/features/Context/DataFixtures/ORM/LoadUserData.php';
+        $userFixtures = $this->container->getParameter('kernel.project_dir').'/tests/fixtures/ORM/LoadUserData.php';
 
-        $this->loadDoctrineFixtures([
-            'files' => [$userFixtures],
-        ]);
+        $this->loadDoctrineFixtures(['files' => [$userFixtures]]);
     }
 
     /**
@@ -77,31 +67,9 @@ class DocumentsBundleFixtureContext implements Context
      */
     public function loadFixturesWithFolders(): void
     {
-        $fixtures = $this->container
-                ->getParameter('kernel.project_dir').'/features/Context/DataFixtures/ORM';
+        $fixtures = $this->container->getParameter('kernel.project_dir').'/tests/fixtures/ORM';
 
-        $this->loadDoctrineFixtures([
-            'directories' => [$fixtures],
-        ]);
-    }
-
-    /**
-     * Sets a new role to a user.
-     *
-     * @param string $role
-     * @param string $username
-     *
-     * @Given /^I set role "(?P<role>[^"]*)" for user "(?P<username>[^"]*)"$/
-     */
-    public function iSetRoleForUser(string $role, string $username): void
-    {
-        $user = $this->container
-            ->get('Khatovar\Bundle\UserBundle\Repository\Doctrine\UserRepository')
-            ->get($username);
-
-        $this->container
-            ->get('Khatovar\Component\User\Application\Command\SetRoleHandler')
-            ->setRole(new SetRole($user, ['roles' => $role]));
+        $this->loadDoctrineFixtures(['directories' => [$fixtures]]);
     }
 
     /**

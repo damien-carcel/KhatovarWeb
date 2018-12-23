@@ -1,4 +1,4 @@
-@end-to-end
+@end-to-end @fixtures-users
 Feature: Create account
   In order to access the application
   As an anonymous user

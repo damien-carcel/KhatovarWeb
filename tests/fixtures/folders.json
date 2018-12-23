@@ -1,0 +1,22 @@
+[
+  {
+    "name": "A folder at root",
+    "parent": null
+  },
+  {
+    "name": "An other folder without parent",
+    "parent": null
+  },
+  {
+    "name": "A folder inside a folder",
+    "parent": "A folder at root"
+  },
+  {
+    "name": "Another folder inside a folder",
+    "parent": "A folder at root"
+  },
+  {
+    "name": "Folder inception",
+    "parent": "A folder inside a folder"
+  }
+]

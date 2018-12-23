@@ -11,7 +11,7 @@ Feature: Edit files and folders
     And I press "Connexion"
     And I am on "documents"
     And I follow "Ajouter un fichier"
-    And I attach the file "features/Context/fixtures/black_cat.jpg" to "file_filePath"
+    And I attach the file "tests/fixtures/images/black_cat.jpg" to "file_filePath"
     And I press "file_submit"
 
   Scenario: I can edit a file at root
@@ -37,7 +37,7 @@ Feature: Edit files and folders
     Given I am on "documents"
     When I follow "A folder at root"
     And I follow "Ajouter un fichier"
-    And I attach the file "features/Context/fixtures/white_cat.jpg" to "file_filePath"
+    And I attach the file "tests/fixtures/images/white_cat.jpg" to "file_filePath"
     And I press "file_submit"
     Then I should see "A folder at root" in the "nav" element
     When I click on "Renommer" in table row "white_cat.jpg"

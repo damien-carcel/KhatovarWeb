@@ -1,4 +1,4 @@
-@end-to-end
+@end-to-end @fixtures-users
 Feature: See user profiles
   In order to administrate user accounts
   As an administrator

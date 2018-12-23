@@ -1,4 +1,4 @@
-@end-to-end
+@end-to-end @fixtures-users
 Feature: Delete a user account
   In order to administrate user accounts
   As an administrator

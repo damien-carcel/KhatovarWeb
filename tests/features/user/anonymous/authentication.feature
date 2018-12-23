@@ -1,4 +1,4 @@
-@end-to-end
+@end-to-end @fixtures-users
 Feature: Authenticate users
   In order to authenticate myself
   As an anonymous user

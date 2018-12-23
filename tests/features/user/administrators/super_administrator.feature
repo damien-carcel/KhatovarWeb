@@ -1,4 +1,4 @@
-@end-to-end
+@end-to-end @fixtures-users
 Feature: Administrate administrators
   In order to administrate users including administrators
   As the super administrator

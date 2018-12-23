@@ -1,4 +1,4 @@
-@end-to-end
+@end-to-end @fixtures-users
 Feature: Manage a user account
   In order to manage my user account
   As a user

@@ -35,37 +35,17 @@ use Khatovar\Bundle\DocumentsBundle\Entity\Folder;
  */
 class LoadFolderData implements FixtureInterface
 {
-    /** @const array */
-    private const FOLDER_DATA = [
-        [
-            'name' => 'A folder at root',
-        ],
-        [
-            'name' => 'An other folder without parent',
-        ],
-        [
-            'name' => 'A folder inside a folder',
-            'parent' => 'A folder at root',
-        ],
-        [
-            'name' => 'Another folder inside a folder',
-            'parent' => 'A folder at root',
-        ],
-        [
-            'name' => 'Folder inception',
-            'parent' => 'A folder inside a folder',
-        ],
-    ];
-
     /** @var Folder[] */
-    protected $createdFolders = [];
+    private $createdFolders = [];
 
     /**
      * {@inheritdoc}
      */
     public function load(ObjectManager $manager): void
     {
-        foreach (static::FOLDER_DATA as $folderData) {
+        $foldersData = $this->getFoldersDataFromJson();
+
+        foreach ($foldersData as $folderData) {
             $this->createdFolders[$folderData['name']] = $this->createFolder($folderData);
         }
 
@@ -74,6 +54,23 @@ class LoadFolderData implements FixtureInterface
         }
 
         $manager->flush();
+    }
+
+    /**
+     * @throws \Exception
+     *
+     * @return array
+     */
+    private function getFoldersDataFromJson(): array
+    {
+        $pathToFoldersData = __DIR__.'/../folders.json';
+        if (!file_exists($pathToFoldersData)) {
+            throw new \Exception(sprintf('There is no file at path "%s"', $pathToFoldersData));
+        }
+
+        $jsonFoldersData = file_get_contents($pathToFoldersData);
+
+        return json_decode($jsonFoldersData, true);
     }
 
     /**
@@ -86,7 +83,7 @@ class LoadFolderData implements FixtureInterface
         $folder = new Folder();
 
         $folder->setName($folderData['name']);
-        if (isset($folderData['parent']) && isset($this->createdFolders[$folderData['parent']])) {
+        if (null !== $folderData['parent'] && isset($this->createdFolders[$folderData['parent']])) {
             $folder->setParent($this->createdFolders[$folderData['parent']]);
         }
 
