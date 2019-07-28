@@ -56,6 +56,8 @@ end-to-end:
                 - Khatovar\Tests\Fixtures\Context\DataFixtureContext:
                     container: '@service_container'
                 - Khatovar\Tests\EndToEnd\Context\User\FeatureContext: ~
+                - Khatovar\Tests\EndToEnd\Context\User\AuthenticationContext: ~
+                - Khatovar\Tests\EndToEnd\Context\User\ProfileContext: ~
             filters:
                 tags: '@end-to-end'
             paths:

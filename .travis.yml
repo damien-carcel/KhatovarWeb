@@ -1,17 +1,12 @@
-dist: trusty
+dist: bionic
 sudo: required
 
 language: php
-
 php:
     - 7.2
 
-addons:
-    apt:
-        sources:
-            - mysql-5.7-trusty
-        packages:
-            - mysql-server
+services:
+    - mysql
 
 env:
     - TRAVIS_NODE_VERSION='10'
