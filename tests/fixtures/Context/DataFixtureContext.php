@@ -23,6 +23,7 @@ use Behat\Behat\Context\Context;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\ORM\Tools\SchemaTool;
+use Doctrine\ORM\Tools\ToolsException;
 use Symfony\Bridge\Doctrine\DataFixtures\ContainerAwareLoader as DataFixturesLoader;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -37,7 +38,7 @@ class DataFixtureContext implements Context
     /**
      * @param ContainerInterface $container
      *
-     * @throws \Doctrine\ORM\Tools\ToolsException
+     * @throws ToolsException
      */
     public function __construct(ContainerInterface $container)
     {

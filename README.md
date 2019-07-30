@@ -58,7 +58,7 @@ $ docker-compose up -d nginx
 
 Or you can use the internal Symfony server (dev and testing purpose)
 ```bash
-$ docker-compose run --rm --service-ports php bin/console -d www server:run 0.0.0.0:8000
+$ docker-compose run --rm --service-ports php bin/console server:run -d www 0.0.0.0:8000
 ```
 
 In both cases, you should be able to access the application and login with `localhost:8000/login`.

@@ -23,36 +23,16 @@ declare(strict_types=1);
 
 namespace Khatovar\Tests\EndToEnd\Context\User;
 
-use Behat\Mink\Element\DocumentElement;
-use Behat\Mink\Exception\ElementNotFoundException;
-use Behat\MinkExtension\Context\RawMinkContext;
-
 /**
  * @author Damien Carcel <damien.carcel@gmail.com>
  */
-class AuthenticationContext extends RawMinkContext
+class AuthenticationContext extends UserRawContext
 {
     /**
-     * @param string $username
-     *
-     * @throws ElementNotFoundException
-     *
      * @Given I am logged as :username
      */
     public function iAmLoggedAs(string $username): void
     {
-        $this->visitPath('login');
-
-        $this->page()->fillField('Nom d\'utilisateur', $username);
-        $this->page()->fillField('Mot de passe', $username);
-        $this->page()->pressButton('Connexion');
-    }
-
-    /**
-     * @return DocumentElement
-     */
-    private function page(): DocumentElement
-    {
-        return $this->getSession()->getPage();
+        $this->logInAsUser($username, $username);
     }
 }
