@@ -173,7 +173,7 @@ class ProfileContext extends UserRawContext
     private function assertCanReconnectWithNewPassword(): void
     {
         $this->page()->clickLink('Déconnexion');
-        $this->logInAsUser('damien', 'pandore');
+        $this->logAsUserWithPassword('damien', 'pandore');
 
         $this->assertPath('profile/');
         $this->assertPageContainsText('Nom d\'utilisateur: damien');

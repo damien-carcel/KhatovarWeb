@@ -21,10 +21,8 @@ use Behat\MinkExtension\Context\RawMinkContext;
  */
 class UserRawContext extends RawMinkContext
 {
-    protected function logInAsUser(string $username, string $password): void
+    protected function logAsUserWithPassword(string $username, string $password): void
     {
-        $this->visitPath('login');
-
         $this->page()->fillField('Nom d\'utilisateur', $username);
         $this->page()->fillField('Mot de passe', $password);
         $this->page()->pressButton('Connexion');

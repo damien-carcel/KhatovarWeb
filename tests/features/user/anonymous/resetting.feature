@@ -5,8 +5,7 @@ Feature: Réinitialiser le mot de passe
   I need to be able to reset my password
 
   Background:
-    Given I am on "login"
-    And I am anonymous
+    Given I am anonymously on the login page
 
   Scenario: I can reset a password by username
     Given I follow "Mot de passe oublié ?"

@@ -24,9 +24,6 @@ use Khatovar\Component\User\Domain\Repository\UserRepositoryInterface;
 use Symfony\Component\BrowserKit\Client;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\HttpKernel\Profiler\Profile;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use Symfony\Component\Security\Core\Exception\TokenNotFoundException;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Webmozart\Assert\Assert;
 
@@ -46,38 +43,6 @@ class FeatureContext extends MinkContext implements KernelAwareContext
     public function setKernel(KernelInterface $kernel): void
     {
         $this->kernel = $kernel;
-    }
-
-    /**
-     * Checks that user is authenticated.
-     *
-     * @param string $username
-     *
-     * @Then /^I should be authenticated as "(?P<username>[^"]*)"$/
-     */
-    public function iShouldBeAuthenticatedAs($username): void
-    {
-        $tokenStorage = $this->getTockenStorage();
-
-        if (null === $token = $tokenStorage->getToken()) {
-            throw new TokenNotFoundException();
-        }
-
-        Assert::same($token->getUsername(), $username);
-    }
-
-    /**
-     * Checks that user is not authenticated.
-     *
-     * @Given /^I am anonymous$/
-     * @Then /^I should be anonymous$/
-     */
-    public function iShouldBeAnonymous(): void
-    {
-        $checker = $this->getAuthorizationChecker();
-
-        Assert::true($checker->isGranted('IS_AUTHENTICATED_ANONYMOUSLY'));
-        Assert::false($checker->isGranted('ROLE_USER'));
     }
 
     /**
@@ -349,22 +314,6 @@ class FeatureContext extends MinkContext implements KernelAwareContext
         }
 
         return explode(', ', str_replace(' and ', ', ', $list));
-    }
-
-    /**
-     * @return TokenStorageInterface
-     */
-    private function getTockenStorage(): TokenStorageInterface
-    {
-        return $this->kernel->getContainer()->get('security.token_storage');
-    }
-
-    /**
-     * @return AuthorizationCheckerInterface
-     */
-    private function getAuthorizationChecker(): AuthorizationCheckerInterface
-    {
-        return $this->kernel->getContainer()->get('security.authorization_checker');
     }
 
     /**

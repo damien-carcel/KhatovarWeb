@@ -5,8 +5,7 @@ Feature: Create account
   I need to be able to create a new account and reset information
 
   Background:
-    Given I am on "login"
-    And I am anonymous
+    Given I am anonymously on the login page
     And I follow "Nouvel utilisateur"
     And I should be on "register/"
 
@@ -22,7 +21,7 @@ Feature: Create account
     And I should be anonymous
     When I follow the activation link for the user "pandore"
     Then I should see "Félicitations pandore, votre compte est maintenant activé."
-    And I should be authenticated as "pandore"
+    And I should be authenticated as pandore
 
   Scenario: I can see a warning message when trying to create an account with an existing username
     Given I should be on "register/"

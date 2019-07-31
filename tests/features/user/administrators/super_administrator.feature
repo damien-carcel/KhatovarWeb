@@ -5,8 +5,7 @@ Feature: Administrate administrators
   I need to be able to administrate any kind of users
 
   Background:
-    Given I am on the homepage
-    And I am anonymous
+    Given I am anonymously on the homepage
     And I go to "login"
     And I fill in "Nom d'utilisateur" with "admin"
     And I fill in "Mot de passe" with "admin"

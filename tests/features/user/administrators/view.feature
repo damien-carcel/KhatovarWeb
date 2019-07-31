@@ -5,8 +5,7 @@ Feature: See user profiles
   I need to be able to see a user profile
 
   Background:
-    Given I am on the homepage
-    And I am anonymous
+    Given I am anonymously on the homepage
     And I go to "login"
     And I fill in "Nom d'utilisateur" with "aurore"
     And I fill in "Mot de passe" with "aurore"
