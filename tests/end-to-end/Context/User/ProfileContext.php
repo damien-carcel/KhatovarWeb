@@ -26,7 +26,7 @@ namespace Khatovar\Tests\EndToEnd\Context\User;
 /**
  * @author Damien Carcel <damien.carcel@gmail.com>
  */
-class ProfileContext extends UserRawContext
+final class ProfileContext extends UserRawContext
 {
     /**
      * @When I go to my user profile

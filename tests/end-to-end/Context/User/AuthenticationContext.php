@@ -33,7 +33,7 @@ use Webmozart\Assert\Assert;
 /**
  * @author Damien Carcel <damien.carcel@gmail.com>
  */
-class AuthenticationContext extends UserRawContext implements KernelAwareContext
+final class AuthenticationContext extends UserRawContext implements KernelAwareContext
 {
     /** @var KernelInterface */
     private $kernel;
