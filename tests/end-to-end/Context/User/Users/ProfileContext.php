@@ -97,9 +97,9 @@ final class ProfileContext extends UserRawContext
     }
 
     /**
-     * @Then I am noticed that the password is invalid
+     * @Then I am notified that the password is invalid
      */
-    public function iAmNoticedThatThePasswordIsInvalid(): void
+    public function iAmNotifiedThatThePasswordIsInvalid(): void
     {
         $this->assertPageContainsText('Le mot de passe est invalide.');
     }
@@ -140,9 +140,9 @@ final class ProfileContext extends UserRawContext
     }
 
     /**
-     * @Then I am noticed that the two passwords are different
+     * @Then I am notified that the two passwords are different
      */
-    public function iAmNoticedThatTheTwoPasswordsAreDifferent(): void
+    public function iAmNotifiedThatTheTwoPasswordsAreDifferent(): void
     {
         $this->assertPageContainsText('Les deux mots de passe ne sont pas identiques');
     }

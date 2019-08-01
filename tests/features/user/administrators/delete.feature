@@ -9,5 +9,5 @@ Feature: Delete a user account
     Given I am logged as an administrator
     And I am on the administration page
     When I remove the user damien
-    Then I should be noticed that user damien was removed
+    Then I should be notified that user damien was removed
     And I should see the users "freya, hegor, lilith and chips"

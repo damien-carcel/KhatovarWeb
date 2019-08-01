@@ -129,7 +129,7 @@ final class RegisterNewUserContext extends UserRawContext implements KernelAware
     }
 
     /**
-     * @Then I should be noticed that the username is already used
+     * @Then I should be notified that the username is already used
      */
     public function usernameIsAlreadyUsed(): void
     {
@@ -138,7 +138,7 @@ final class RegisterNewUserContext extends UserRawContext implements KernelAware
     }
 
     /**
-     * @Then I should be noticed that the email is already used
+     * @Then I should be notified that the email is already used
      */
     public function emailIsAlreadyUsed(): void
     {
@@ -147,7 +147,7 @@ final class RegisterNewUserContext extends UserRawContext implements KernelAware
     }
 
     /**
-     * @Then I should be noticed that the confirmation password is different from the original one
+     * @Then I should be notified that the confirmation password is different from the original one
      */
     public function confirmationPasswordIsDifferent(): void
     {

@@ -59,6 +59,7 @@ end-to-end:
                 - Khatovar\Tests\EndToEnd\Context\User\FeatureContext: ~
                 - Khatovar\Tests\EndToEnd\Context\User\Administrators\AdminContext: ~
                 - Khatovar\Tests\EndToEnd\Context\User\Administrators\DeleteContext: ~
+                - Khatovar\Tests\EndToEnd\Context\User\Administrators\EditContext: ~
                 - Khatovar\Tests\EndToEnd\Context\User\Anonymous\AuthenticationContext: ~
                 - Khatovar\Tests\EndToEnd\Context\User\Anonymous\RegisterNewUserContext: ~
                 - Khatovar\Tests\EndToEnd\Context\User\Anonymous\ResetPasswordContext: ~

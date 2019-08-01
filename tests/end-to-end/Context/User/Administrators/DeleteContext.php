@@ -29,7 +29,7 @@ final class DeleteContext extends UserRawContext
     }
 
     /**
-     * @Then I should be noticed that user :username was removed
+     * @Then I should be notified that user :username was removed
      */
     public function userWasRemoved(string $username): void
     {
