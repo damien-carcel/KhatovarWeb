@@ -14,7 +14,9 @@ declare(strict_types=1);
 namespace Khatovar\Tests\EndToEnd\Context\User;
 
 use Behat\Mink\Element\DocumentElement;
+use Behat\Mink\Element\NodeElement;
 use Behat\MinkExtension\Context\RawMinkContext;
+use Webmozart\Assert\Assert;
 
 /**
  * @author Damien Carcel <damien.carcel@gmail.com>
@@ -50,5 +52,32 @@ class UserRawContext extends RawMinkContext
         }
 
         $this->page()->pressButton($action);
+    }
+
+    protected function followActionLinkForUserRaw(string $action, string $username): void
+    {
+        $row = $this->findUserRowByText($username);
+        $link = $row->findLink($action);
+
+        Assert::notNull($link, 'Cannot find link in row with text '.$action);
+        $link->click();
+    }
+
+    protected function pressActionButtonForUserRow(string $action, string $username): void
+    {
+        $row = $this->findUserRowByText($username);
+        $button = $row->findButton($action);
+
+        Assert::notNull($button, 'Cannot find button in row with text '.$action);
+        $button->press();
+    }
+
+    private function findUserRowByText(string $username): NodeElement
+    {
+        $row = $this->getSession()->getPage()->find('css', sprintf('table tr:contains("%s")', $username));
+
+        Assert::notNull($row, 'Cannot find a table row with username '.$username);
+
+        return $row;
     }
 }

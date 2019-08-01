@@ -4,22 +4,10 @@ Feature: Delete a user account
   As an administrator
   I need to be able to delete a user account
 
-  Background:
-    Given I am anonymously on the homepage
-    And I go to "login"
-    And I fill in "Nom d'utilisateur" with "aurore"
-    And I fill in "Mot de passe" with "aurore"
-    And I press "Connexion"
-
+  # TODO: Use a mail catcher to check that the removed user was notified by mail about the destruction of his/her account
   Scenario: I can delete a user
-    Given I am on "admin"
-    When I press "Supprimer" for "damien" profile
-    Then I should see "L'utilisateur a bien été effacé"
+    Given I am logged as an administrator
+    And I am on the administration page
+    When I remove the user damien
+    Then I should be noticed that user damien was removed
     And I should see the users "freya, hegor, lilith and chips"
-
-  Scenario: I can delete a user
-    Given I am on "admin"
-    When I stop following redirections
-    And I press "Supprimer" for "damien" profile
-    Then I should get a confirmation email with subject "Suppression de compte"
-    And I start following redirections

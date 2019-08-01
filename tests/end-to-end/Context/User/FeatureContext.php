@@ -14,17 +14,12 @@ declare(strict_types=1);
 namespace Khatovar\Tests\EndToEnd\Context\User;
 
 use Behat\Mink\Element\NodeElement;
-use Behat\Mink\Exception\DriverException;
 use Behat\MinkExtension\Context\MinkContext;
 use Behat\Symfony2Extension\Context\KernelAwareContext;
-use Behat\Symfony2Extension\Driver\KernelDriver;
 use FOS\UserBundle\Model\UserManagerInterface;
 use Khatovar\Bundle\UserBundle\Repository\Doctrine\UserRepository;
-use Khatovar\Component\User\Application\Query\GetAdministrableUsers;
 use Khatovar\Component\User\Domain\Repository\UserRepositoryInterface;
-use Symfony\Component\BrowserKit\Client;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Component\HttpKernel\Profiler\Profile;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Webmozart\Assert\Assert;
 
@@ -59,29 +54,6 @@ class FeatureContext extends MinkContext implements KernelAwareContext
 
         $user->setPasswordRequestedAt(new \DateTime());
         $this->fosUserManager()->updateUser($user);
-    }
-
-    /**
-     * Checks what users are listed in the admin page.
-     *
-     * @param string $list
-     *
-     * @Then /^I should see the users? "([^"]*)"$/
-     */
-    public function iShouldSeeTheFollowingUsers($list): void
-    {
-        $providedUserNames = $this->listToArray($list);
-        sort($providedUserNames);
-
-        $storedUsers = $this->getAdministrableUsers()->forCurrentOne();
-
-        $userNames = [];
-        foreach ($storedUsers as $storedUser) {
-            $userNames[] = $storedUser->getUsername();
-        }
-        sort($userNames);
-
-        Assert::same($providedUserNames, $userNames);
     }
 
     /**
@@ -152,51 +124,6 @@ class FeatureContext extends MinkContext implements KernelAwareContext
     }
 
     /**
-     * Checks that a mail with a specific subject has been sent.
-     *
-     * @param string $subject
-     *
-     * @throws DriverException
-     *
-     * @Then /^I should get a confirmation email with subject "(?P<subject>[^"]*)"$/
-     */
-    public function iShouldGetConfirmationEmailWithSubject($subject): void
-    {
-        $collector = $this->getSymfonyProfile()->getCollector('swiftmailer');
-
-        Assert::same(1, $collector->getMessageCount());
-
-        $messages = $collector->getMessages();
-        $message = $messages[0];
-
-        Assert::same($subject, $message->getSubject());
-    }
-
-    /**
-     * Disables the automatic following of redirections.
-     *
-     * @throws DriverException
-     *
-     * @When /^I stop following redirections$/
-     */
-    public function disableFollowRedirects(): void
-    {
-        $this->getSymfonyClient()->followRedirects(false);
-    }
-
-    /**
-     * Enables the automatic following of redirections.
-     *
-     * @throws DriverException
-     *
-     * @When /^I start following redirections$/
-     */
-    public function enableFollowRedirects(): void
-    {
-        $this->getSymfonyClient()->followRedirects(true);
-    }
-
-    /**
      * Checks that a user is active.
      *
      * @param string $username
@@ -234,45 +161,6 @@ class FeatureContext extends MinkContext implements KernelAwareContext
     }
 
     /**
-     * Gets the current Symfony profile.
-     *
-     * @throws \RuntimeException
-     * @throws DriverException
-     *
-     * @return Profile
-     */
-    private function getSymfonyProfile(): Profile
-    {
-        $profile = $this->getSymfonyClient()->getProfile();
-        if (false === $profile) {
-            throw new \RuntimeException('No profile associated with the current client response');
-        }
-
-        return $profile;
-    }
-
-    /**
-     * Gets the current Symfony cient.
-     *
-     * @throws DriverException
-     *
-     * @return Client
-     */
-    private function getSymfonyClient(): Client
-    {
-        $driver = $this->getSession()->getDriver();
-
-        if (!$driver instanceof KernelDriver) {
-            throw new DriverException(sprintf(
-                'Expects driver to be an instance of %s',
-                KernelDriver::class
-            ));
-        }
-
-        return $driver->getClient();
-    }
-
-    /**
      * Finds a table row according to its content.
      *
      * @param $username
@@ -289,20 +177,6 @@ class FeatureContext extends MinkContext implements KernelAwareContext
     }
 
     /**
-     * @param string $list
-     *
-     * @return string[]
-     */
-    private function listToArray($list): array
-    {
-        if (empty($list)) {
-            return [];
-        }
-
-        return explode(', ', str_replace(' and ', ', ', $list));
-    }
-
-    /**
      * @return UserProviderInterface
      */
     private function getUserProvider(): UserProviderInterface
@@ -316,14 +190,6 @@ class FeatureContext extends MinkContext implements KernelAwareContext
     private function fosUserManager(): UserManagerInterface
     {
         return $this->kernel->getContainer()->get('fos_user.user_manager');
-    }
-
-    /**
-     * @return GetAdministrableUsers
-     */
-    private function getAdministrableUsers(): GetAdministrableUsers
-    {
-        return $this->kernel->getContainer()->get(GetAdministrableUsers::class);
     }
 
     /**
