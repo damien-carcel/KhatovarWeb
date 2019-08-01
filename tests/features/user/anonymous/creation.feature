@@ -4,58 +4,28 @@ Feature: Create account
   As an anonymous user
   I need to be able to create a new account and reset information
 
-  Background:
-    Given I am anonymously on the login page
-    And I follow "Nouvel utilisateur"
-    And I should be on "register/"
-
   Scenario: I can create new account
-    Given I fill in the following:
-      | Nom d'utilisateur       | pandore             |
-      | Adresse e-mail          | pandore@khatovar.fr |
-      | Mot de passe            | pandore             |
-      | Répéter le mot de passe | pandore             |
-    When I press "Créer un compte"
-    Then I should see "L'utilisateur a été créé avec succès"
-    And I should see "Un e-mail a été envoyé à l'adresse pandore@khatovar.fr. Il contient un lien d'activation sur lequel il vous faudra cliquer afin d'activer votre compte."
-    And I should be anonymous
-    When I follow the activation link for the user "pandore"
-    Then I should see "Félicitations pandore, votre compte est maintenant activé."
-    And I should be authenticated as pandore
+    Given I want to register a new account
+    When I create a new account as pandore
+    Then a new user "pandore" is created
+    And pandore account can be activated
 
   Scenario: I can see a warning message when trying to create an account with an existing username
-    Given I should be on "register/"
-    When I fill in the following:
-      | Nom d'utilisateur       | damien              |
-      | Adresse e-mail          | pandore@khatovar.fr |
-      | Mot de passe            | pandore             |
-      | Répéter le mot de passe | pandore             |
-    When I press "Créer un compte"
-    Then I should see "Le nom d'utilisateur est déjà utilisé"
-    And I should be anonymous
+    Given I want to register a new account
+    When I try to create a new account as pandore with an already existing username
+    Then I should be noticed that the username is already used
 
   Scenario: I can see a warning message when trying to create an account with an existing email
-    Given I should be on "register/"
-    When I fill in the following:
-      | Nom d'utilisateur       | pandore            |
-      | Adresse e-mail          | damien@khatovar.fr |
-      | Mot de passe            | pandore            |
-      | Répéter le mot de passe | pandore            |
-    When I press "Créer un compte"
-    Then I should see "L'adresse e-mail est déjà utilisée"
-    And I should be anonymous
+    Given I want to register a new account
+    When I try to create a new account as pandore with an already existing email
+    Then I should be noticed that the email is already used
 
   Scenario: I can see a warning message when creating an account with wrong confirmation password
-    Given I should be on "register/"
-    When I fill in the following:
-      | Nom d'utilisateur       | pandore             |
-      | Adresse e-mail          | pandore@khatovar.fr |
-      | Mot de passe            | pandore             |
-      | Répéter le mot de passe | pendora             |
-    When I press "Créer un compte"
-    Then I should see "Les deux mots de passe ne sont pas identiques"
-    And I should be anonymous
+    Given I want to register a new account
+    When I try to create a new account as pandore without confirming my password
+    Then I should be noticed that the confirmation password is different from the original one
 
   Scenario: I can get back on login page from register page
-    Given I follow "Retour"
-    Then I should be on "login"
+    Given I want to register a new account
+    When I get back to the previous page
+    Then I should be on the login page

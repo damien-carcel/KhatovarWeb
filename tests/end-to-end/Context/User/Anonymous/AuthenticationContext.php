@@ -21,9 +21,10 @@ declare(strict_types=1);
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Khatovar\Tests\EndToEnd\Context\User;
+namespace Khatovar\Tests\EndToEnd\Context\User\Anonymous;
 
 use Behat\Symfony2Extension\Context\KernelAwareContext;
+use Khatovar\Tests\EndToEnd\Context\User\UserRawContext;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;

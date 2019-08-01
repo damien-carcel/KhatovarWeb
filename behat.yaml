@@ -55,10 +55,12 @@ end-to-end:
             contexts:
                 - Khatovar\Tests\Fixtures\Context\DataFixtureContext:
                       container: '@service_container'
+                - Khatovar\Tests\EndToEnd\Context\User\CommonContext: ~
                 - Khatovar\Tests\EndToEnd\Context\User\FeatureContext: ~
-                - Khatovar\Tests\EndToEnd\Context\User\AuthenticationContext: ~
-                - Khatovar\Tests\EndToEnd\Context\User\ProfileContext: ~
-                - Khatovar\Tests\EndToEnd\Context\User\ResetPasswordContext: ~
+                - Khatovar\Tests\EndToEnd\Context\User\Anonymous\AuthenticationContext: ~
+                - Khatovar\Tests\EndToEnd\Context\User\Anonymous\RegisterNewUserContext: ~
+                - Khatovar\Tests\EndToEnd\Context\User\Anonymous\ResetPasswordContext: ~
+                - Khatovar\Tests\EndToEnd\Context\User\Users\ProfileContext: ~
             filters:
                 tags: '@end-to-end'
             paths:

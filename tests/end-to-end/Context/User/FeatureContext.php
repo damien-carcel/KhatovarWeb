@@ -19,6 +19,7 @@ use Behat\MinkExtension\Context\MinkContext;
 use Behat\Symfony2Extension\Context\KernelAwareContext;
 use Behat\Symfony2Extension\Driver\KernelDriver;
 use FOS\UserBundle\Model\UserManagerInterface;
+use Khatovar\Bundle\UserBundle\Repository\Doctrine\UserRepository;
 use Khatovar\Component\User\Application\Query\GetAdministrableUsers;
 use Khatovar\Component\User\Domain\Repository\UserRepositoryInterface;
 use Symfony\Component\BrowserKit\Client;
@@ -196,21 +197,6 @@ class FeatureContext extends MinkContext implements KernelAwareContext
     }
 
     /**
-     * Activates a user thanks to its activation token.
-     *
-     * @param string $username
-     *
-     * @When /^I follow the activation link for the user "(?P<username>[^"]*)"$/
-     */
-    public function iFollowTheActivationLinkForTheUser($username): void
-    {
-        $user = $this->userRepository()->get($username);
-        $activationToken = $user->getConfirmationToken();
-
-        $this->visitPath('register/confirm/'.$activationToken);
-    }
-
-    /**
      * Checks that a user is active.
      *
      * @param string $username
@@ -337,7 +323,7 @@ class FeatureContext extends MinkContext implements KernelAwareContext
      */
     private function getAdministrableUsers(): GetAdministrableUsers
     {
-        return $this->kernel->getContainer()->get('Khatovar\Component\User\Application\Query\GetAdministrableUsers');
+        return $this->kernel->getContainer()->get(GetAdministrableUsers::class);
     }
 
     /**
@@ -345,6 +331,6 @@ class FeatureContext extends MinkContext implements KernelAwareContext
      */
     private function userRepository(): UserRepositoryInterface
     {
-        return $this->kernel->getContainer()->get('Khatovar\Bundle\UserBundle\Repository\Doctrine\UserRepository');
+        return $this->kernel->getContainer()->get(UserRepository::class);
     }
 }

@@ -13,3 +13,9 @@ Feature: Réinitialiser le mot de passe
     Given I am anonymously on the login page
     When I reset a password using the user email
     Then the password should be reset
+
+  Scenario: I can get back on login page from reset page
+    Given I am anonymously on the login page
+    And I try to reset my password
+    When I get back to the previous page
+    Then I should be on the login page

@@ -21,7 +21,9 @@ declare(strict_types=1);
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Khatovar\Tests\EndToEnd\Context\User;
+namespace Khatovar\Tests\EndToEnd\Context\User\Users;
+
+use Khatovar\Tests\EndToEnd\Context\User\UserRawContext;
 
 /**
  * @author Damien Carcel <damien.carcel@gmail.com>
@@ -52,7 +54,7 @@ final class ProfileContext extends UserRawContext
     public function iChangeMyUsernameAndEmail(): void
     {
         $this->editProfile();
-        $this->fillFormFields([
+        $this->fillFormFieldsAndValidateWithAction([
             'Nom d\'utilisateur' => 'pandore',
             'Adresse e-mail' => 'pandore@khatovar.fr',
             'Mot de passe actuel' => 'damien',
@@ -75,7 +77,7 @@ final class ProfileContext extends UserRawContext
     public function iTryToEditMyProfileWithoutProvidingMyPassword(): void
     {
         $this->editProfile();
-        $this->fillFormFields([
+        $this->fillFormFieldsAndValidateWithAction([
             'Nom d\'utilisateur' => 'pandore',
             'Mot de passe actuel' => 'pandore',
         ], 'Mettre à jour');
@@ -87,7 +89,7 @@ final class ProfileContext extends UserRawContext
     public function iTryToChangeMyPasswordWithoutKnowingIt(): void
     {
         $this->editPassword();
-        $this->fillFormFields([
+        $this->fillFormFieldsAndValidateWithAction([
             'Mot de passe actuel' => 'wrongpassword',
             'Nouveau mot de passe' => 'pandore',
             'Répéter le nouveau mot de passe' => 'pandore',
@@ -108,7 +110,7 @@ final class ProfileContext extends UserRawContext
     public function iChangeMyPassword(): void
     {
         $this->editPassword();
-        $this->fillFormFields([
+        $this->fillFormFieldsAndValidateWithAction([
             'Mot de passe actuel' => 'damien',
             'Nouveau mot de passe' => 'pandore',
             'Répéter le nouveau mot de passe' => 'pandore',
@@ -130,7 +132,7 @@ final class ProfileContext extends UserRawContext
     public function iChangeMyPasswordWithoutConfirmingIt(): void
     {
         $this->editPassword();
-        $this->fillFormFields([
+        $this->fillFormFieldsAndValidateWithAction([
             'Mot de passe actuel' => 'damien',
             'Nouveau mot de passe' => 'pandore',
             'Répéter le nouveau mot de passe' => 'pandora',
@@ -159,15 +161,6 @@ final class ProfileContext extends UserRawContext
         $this->page()->clickLink('Changer le mot de passe');
 
         $this->assertPath('profile/change-password');
-    }
-
-    private function fillFormFields(array $userInformation, string $action): void
-    {
-        foreach ($userInformation as $field => $value) {
-            $this->page()->fillField($field, $value);
-        }
-
-        $this->page()->pressButton($action);
     }
 
     private function assertCanReconnectWithNewPassword(): void

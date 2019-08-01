@@ -42,4 +42,13 @@ class UserRawContext extends RawMinkContext
     {
         $this->assertSession()->addressEquals($this->locatePath($path));
     }
+
+    protected function fillFormFieldsAndValidateWithAction(array $formFieldsAndValues, string $action): void
+    {
+        foreach ($formFieldsAndValues as $field => $value) {
+            $this->page()->fillField($field, $value);
+        }
+
+        $this->page()->pressButton($action);
+    }
 }

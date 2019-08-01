@@ -17,7 +17,6 @@ $configuration = PhpCsFixer\Config::create()
             '@PHP71Migration' => true,
             '@PHP71Migration:risky' => true,
             'array_syntax' => ['syntax' => 'short'],
-            'concat_space' => ['spacing' => 'none'],
             'linebreak_after_opening_tag' => true,
             'no_unreachable_default_argument_value' => true,
             'no_useless_else' => true,

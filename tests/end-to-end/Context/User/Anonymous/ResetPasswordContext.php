@@ -11,7 +11,9 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Khatovar\Tests\EndToEnd\Context\User;
+namespace Khatovar\Tests\EndToEnd\Context\User\Anonymous;
+
+use Khatovar\Tests\EndToEnd\Context\User\UserRawContext;
 
 /**
  * @author Damien Carcel <damien.carcel@gmail.com>
@@ -22,6 +24,15 @@ final class ResetPasswordContext extends UserRawContext
     private const USERNAME = 'damien';
 
     private $resetWith;
+
+    /**
+     * @Given I try to reset my password
+     */
+    public function tryToResetPassword(): void
+    {
+        $this->page()->clickLink('Mot de passe oublié ?');
+        $this->assertPath('resetting/request');
+    }
 
     /**
      * @When I reset a password using the user username
