@@ -14,12 +14,20 @@ declare(strict_types=1);
 namespace Khatovar\Tests\EndToEnd\Context\User\Administrators;
 
 use Khatovar\Tests\EndToEnd\Context\User\UserRawContext;
+use Khatovar\Tests\EndToEnd\Service\Assert\AssertUsersAreAdministrableOnes;
 
 /**
  * @author Damien Carcel <damien.carcel@gmail.com>
  */
 final class EditContext extends UserRawContext
 {
+    private $assertUsersAreAdministrableOnes;
+
+    public function __construct(AssertUsersAreAdministrableOnes $assertUsersAreAdministrableOnes)
+    {
+        $this->assertUsersAreAdministrableOnes = $assertUsersAreAdministrableOnes;
+    }
+
     /**
      * @When I rename the user :originalUsername as :newUsername
      */
@@ -29,8 +37,8 @@ final class EditContext extends UserRawContext
         $this->assertPageContainsText('Édition du profil de l\'utilisateur damien');
 
         $this->fillFormFieldsAndValidateWithAction([
-            'Nom d\'utilisateur' => 'pandore',
-            'Adresse e-mail' => 'pandore@gmail.com',
+            'Nom d\'utilisateur' => $newUsername,
+            'Adresse e-mail' => $newUsername.'@gmail.com',
         ], 'Mettre à jour');
     }
 
@@ -48,13 +56,13 @@ final class EditContext extends UserRawContext
     public function userWasUpdated(): void
     {
         $this->assertPageContainsText('Le profil utilisateur a été mis à jour');
-    }
 
-    /**
-     * @Then I am forbidden to access the page
-     */
-    public function forbiddenToAccess(): void
-    {
-        $this->assertPageContainsText('403 Forbidden');
+        ($this->assertUsersAreAdministrableOnes)([
+            'chips',
+            'freya',
+            'hegor',
+            'lilith',
+            'pandore',
+        ]);
     }
 }

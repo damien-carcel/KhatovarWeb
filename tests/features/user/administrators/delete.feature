@@ -10,4 +10,3 @@ Feature: Delete a user account
     And I am on the administration page
     When I remove the user damien
     Then I should be notified that user damien was removed
-    And I should see the users "freya, hegor, lilith and chips"

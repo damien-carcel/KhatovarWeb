@@ -54,12 +54,16 @@ end-to-end:
         user:
             contexts:
                 - Khatovar\Tests\Fixtures\Context\DataFixtureContext:
-                      container: '@service_container'
+                      - '@service_container'
                 - Khatovar\Tests\EndToEnd\Context\User\CommonContext: ~
                 - Khatovar\Tests\EndToEnd\Context\User\FeatureContext: ~
                 - Khatovar\Tests\EndToEnd\Context\User\Administrators\AdminContext: ~
-                - Khatovar\Tests\EndToEnd\Context\User\Administrators\DeleteContext: ~
-                - Khatovar\Tests\EndToEnd\Context\User\Administrators\EditContext: ~
+                - Khatovar\Tests\EndToEnd\Context\User\Administrators\DeleteContext:
+                      - '@Khatovar\Tests\EndToEnd\Service\Assert\AssertUsersAreAdministrableOnes'
+                - Khatovar\Tests\EndToEnd\Context\User\Administrators\EditContext:
+                      - '@Khatovar\Tests\EndToEnd\Service\Assert\AssertUsersAreAdministrableOnes'
+                - Khatovar\Tests\EndToEnd\Context\User\Administrators\ListContext:
+                      - '@Khatovar\Tests\EndToEnd\Service\Assert\AssertUsersAreAdministrableOnes'
                 - Khatovar\Tests\EndToEnd\Context\User\Anonymous\AuthenticationContext: ~
                 - Khatovar\Tests\EndToEnd\Context\User\Anonymous\RegisterNewUserContext: ~
                 - Khatovar\Tests\EndToEnd\Context\User\Anonymous\ResetPasswordContext: ~

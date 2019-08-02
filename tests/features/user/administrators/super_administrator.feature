@@ -14,8 +14,7 @@ Feature: Administrate administrators
   Scenario: I can list all users but me
     Given I am on "profile/"
     When I follow "Page d'administration"
-    Then I should see "Administration des utilisateurs"
-    And I should see the users "aurore, damien, freya, hegor, lilith and chips"
+    Then I should see all the regular users
 
   Scenario: I can promote a user as administrator
     Given I am on "admin"

@@ -1,0 +1,4 @@
+services:
+    Khatovar\Tests\EndToEnd\Service\Assert\AssertUsersAreAdministrableOnes:
+        arguments:
+            - '@kernel'

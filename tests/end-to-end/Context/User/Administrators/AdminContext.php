@@ -35,9 +35,18 @@ final class AdminContext extends UserRawContext
 
     /**
      * @Given I am on the administration page
+     * @Given I try to access the administration page
      */
     public function iAmOnTheAdminPage(): void
     {
         $this->visitPath('admin');
+    }
+
+    /**
+     * @Then I am forbidden to access the page
+     */
+    public function forbiddenToAccess(): void
+    {
+        $this->assertPageContainsText('403 Forbidden');
     }
 }

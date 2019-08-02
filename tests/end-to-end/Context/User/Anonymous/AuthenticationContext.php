@@ -48,12 +48,12 @@ final class AuthenticationContext extends UserRawContext implements KernelAwareC
     }
 
     /**
-     * @Given I am logged as :username
+     * @Given I am logged as a regular user
      */
-    public function iAmLoggedAs(string $username): void
+    public function iAmLoggedAs(): void
     {
         $this->visitPath('login');
-        $this->logAsUserWithPassword($username, $username);
+        $this->logAsUserWithPassword('damien', 'damien');
     }
 
     /**

@@ -19,7 +19,7 @@ use Khatovar\Tests\EndToEnd\Service\Assert\AssertUsersAreAdministrableOnes;
 /**
  * @author Damien Carcel <damien.carcel@gmail.com>
  */
-final class DeleteContext extends UserRawContext
+final class ListContext extends UserRawContext
 {
     private $assertUsersAreAdministrableOnes;
 
@@ -29,22 +29,39 @@ final class DeleteContext extends UserRawContext
     }
 
     /**
-     * @When I remove the user :username
+     * @When I go on the administration page
      */
-    public function iRemoveTheUser(string $username): void
+    public function goToTheAdministrationPage(): void
     {
-        $this->pressActionButtonForUserRow('Supprimer', $username);
+        $this->visitPath('profile/');
+        $this->page()->clickLink('Page d\'administration');
     }
 
     /**
-     * @Then I should be notified that user :username was removed
+     * @Then I should see the list of all the other users except the super admin
      */
-    public function userWasRemoved(string $username): void
+    public function seeAllUsersButMyselfAndTheSuperAdmin(): void
     {
-        $this->assertPageContainsText('L\'utilisateur a bien été effacé');
-
+        $this->assertPageContainsText('Administration des utilisateurs');
         ($this->assertUsersAreAdministrableOnes)([
             'chips',
+            'damien',
+            'freya',
+            'hegor',
+            'lilith',
+        ]);
+    }
+
+    /**
+     * @Then I should see all the regular users
+     */
+    public function seeAllUsersButSuperAdmin(): void
+    {
+        $this->assertPageContainsText('Administration des utilisateurs');
+        ($this->assertUsersAreAdministrableOnes)([
+            'aurore',
+            'chips',
+            'damien',
             'freya',
             'hegor',
             'lilith',
