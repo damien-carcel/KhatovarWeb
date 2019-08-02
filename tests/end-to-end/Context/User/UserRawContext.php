@@ -40,6 +40,16 @@ class UserRawContext extends RawMinkContext
         $this->assertSession()->pageTextContains($text);
     }
 
+    protected function assertElementContainsText($element, $text): void
+    {
+        $this->assertSession()->elementTextContains('css', $element, $text);
+    }
+
+    protected function assertElementNotContainsText($element, $text): void
+    {
+        $this->assertSession()->elementTextNotContains('css', $element, $text);
+    }
+
     protected function assertPath(string $path): void
     {
         $this->assertSession()->addressEquals($this->locatePath($path));

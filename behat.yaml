@@ -64,6 +64,8 @@ end-to-end:
                       - '@Khatovar\Tests\EndToEnd\Service\Assert\AssertUsersAreAdministrableOnes'
                 - Khatovar\Tests\EndToEnd\Context\User\Administrators\ListContext:
                       - '@Khatovar\Tests\EndToEnd\Service\Assert\AssertUsersAreAdministrableOnes'
+                - Khatovar\Tests\EndToEnd\Context\User\Administrators\RoleContext:
+                      - '@Khatovar\Bundle\UserBundle\Repository\Doctrine\UserRepository'
                 - Khatovar\Tests\EndToEnd\Context\User\Anonymous\AuthenticationContext:
                       - '@Khatovar\Tests\EndToEnd\Service\Assert\AssertAuthenticatedAsUser'
                       - '@Khatovar\Tests\EndToEnd\Service\Assert\AssertUserIsAnonymous'
