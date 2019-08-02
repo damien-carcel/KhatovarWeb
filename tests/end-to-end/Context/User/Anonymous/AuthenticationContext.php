@@ -23,28 +23,24 @@ declare(strict_types=1);
 
 namespace Khatovar\Tests\EndToEnd\Context\User\Anonymous;
 
-use Behat\Symfony2Extension\Context\KernelAwareContext;
 use Khatovar\Tests\EndToEnd\Context\User\UserRawContext;
-use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use Symfony\Component\Security\Core\Exception\TokenNotFoundException;
-use Webmozart\Assert\Assert;
+use Khatovar\Tests\EndToEnd\Service\Assert\AssertAuthenticatedAsUser;
+use Khatovar\Tests\EndToEnd\Service\Assert\AssertUserIsAnonymous;
 
 /**
  * @author Damien Carcel <damien.carcel@gmail.com>
  */
-final class AuthenticationContext extends UserRawContext implements KernelAwareContext
+final class AuthenticationContext extends UserRawContext
 {
-    /** @var KernelInterface */
-    private $kernel;
+    private $assertAuthenticatedAsUser;
+    private $assertUserIsAnonymous;
 
-    /**
-     * {@inheritdoc}
-     */
-    public function setKernel(KernelInterface $kernel): void
-    {
-        $this->kernel = $kernel;
+    public function __construct(
+        AssertAuthenticatedAsUser $assertAuthenticatedAsUser,
+        AssertUserIsAnonymous $assertUserIsAnonymous
+    ) {
+        $this->assertAuthenticatedAsUser = $assertAuthenticatedAsUser;
+        $this->assertUserIsAnonymous = $assertUserIsAnonymous;
     }
 
     /**
@@ -63,7 +59,7 @@ final class AuthenticationContext extends UserRawContext implements KernelAwareC
     {
         $this->visitPath('/');
 
-        $this->assertUserIsAnonymous();
+        ($this->assertUserIsAnonymous)();
     }
 
     /**
@@ -73,7 +69,7 @@ final class AuthenticationContext extends UserRawContext implements KernelAwareC
     {
         $this->visitPath('login');
 
-        $this->assertUserIsAnonymous();
+        ($this->assertUserIsAnonymous)();
     }
 
     /**
@@ -110,7 +106,7 @@ final class AuthenticationContext extends UserRawContext implements KernelAwareC
      */
     public function iShouldBeAnonymous(): void
     {
-        $this->assertUserIsAnonymous();
+        ($this->assertUserIsAnonymous)();
     }
 
     /**
@@ -118,11 +114,7 @@ final class AuthenticationContext extends UserRawContext implements KernelAwareC
      */
     public function iShouldBeAuthenticatedAs(string $username): void
     {
-        if (null === $token = $this->tokenStorage()->getToken()) {
-            throw new TokenNotFoundException();
-        }
-
-        Assert::same($token->getUsername(), $username);
+        ($this->assertAuthenticatedAsUser)($username);
     }
 
     /**
@@ -133,21 +125,5 @@ final class AuthenticationContext extends UserRawContext implements KernelAwareC
         $this->assertPath('profile/');
         $this->assertSession()->elementContains('css', 'div', 'class="login-wall panel panel-default"');
         $this->assertPageContainsText('Se souvenir de moi');
-    }
-
-    private function assertUserIsAnonymous(): void
-    {
-        Assert::true($this->authorizationChecker()->isGranted('IS_AUTHENTICATED_ANONYMOUSLY'));
-        Assert::false($this->authorizationChecker()->isGranted('ROLE_USER'));
-    }
-
-    private function tokenStorage(): TokenStorageInterface
-    {
-        return $this->kernel->getContainer()->get('security.token_storage');
-    }
-
-    private function authorizationChecker(): AuthorizationCheckerInterface
-    {
-        return $this->kernel->getContainer()->get('security.authorization_checker');
     }
 }

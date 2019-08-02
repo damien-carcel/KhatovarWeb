@@ -64,8 +64,13 @@ end-to-end:
                       - '@Khatovar\Tests\EndToEnd\Service\Assert\AssertUsersAreAdministrableOnes'
                 - Khatovar\Tests\EndToEnd\Context\User\Administrators\ListContext:
                       - '@Khatovar\Tests\EndToEnd\Service\Assert\AssertUsersAreAdministrableOnes'
-                - Khatovar\Tests\EndToEnd\Context\User\Anonymous\AuthenticationContext: ~
-                - Khatovar\Tests\EndToEnd\Context\User\Anonymous\RegisterNewUserContext: ~
+                - Khatovar\Tests\EndToEnd\Context\User\Anonymous\AuthenticationContext:
+                      - '@Khatovar\Tests\EndToEnd\Service\Assert\AssertAuthenticatedAsUser'
+                      - '@Khatovar\Tests\EndToEnd\Service\Assert\AssertUserIsAnonymous'
+                - Khatovar\Tests\EndToEnd\Context\User\Anonymous\RegisterNewUserContext:
+                      - '@Khatovar\Tests\EndToEnd\Service\Assert\AssertAuthenticatedAsUser'
+                      - '@Khatovar\Tests\EndToEnd\Service\Assert\AssertUserIsAnonymous'
+                      - '@Khatovar\Bundle\UserBundle\Repository\Doctrine\UserRepository'
                 - Khatovar\Tests\EndToEnd\Context\User\Anonymous\ResetPasswordContext: ~
                 - Khatovar\Tests\EndToEnd\Context\User\Users\ProfileContext: ~
             filters:

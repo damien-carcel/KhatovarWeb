@@ -13,30 +13,28 @@ declare(strict_types=1);
 
 namespace Khatovar\Tests\EndToEnd\Context\User\Anonymous;
 
-use Behat\Symfony2Extension\Context\KernelAwareContext;
-use Khatovar\Bundle\UserBundle\Repository\Doctrine\UserRepository;
 use Khatovar\Component\User\Domain\Repository\UserRepositoryInterface;
 use Khatovar\Tests\EndToEnd\Context\User\UserRawContext;
-use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use Symfony\Component\Security\Core\Exception\TokenNotFoundException;
-use Webmozart\Assert\Assert;
+use Khatovar\Tests\EndToEnd\Service\Assert\AssertAuthenticatedAsUser;
+use Khatovar\Tests\EndToEnd\Service\Assert\AssertUserIsAnonymous;
 
 /**
  * @author Damien Carcel <damien.carcel@gmail.com>
  */
-final class RegisterNewUserContext extends UserRawContext implements KernelAwareContext
+final class RegisterNewUserContext extends UserRawContext
 {
-    /** @var KernelInterface */
-    private $kernel;
+    private $assertAuthenticatedAsUser;
+    private $assertUserIsAnonymous;
+    private $userRepository;
 
-    /**
-     * {@inheritdoc}
-     */
-    public function setKernel(KernelInterface $kernel): void
-    {
-        $this->kernel = $kernel;
+    public function __construct(
+        AssertAuthenticatedAsUser $assertAuthenticatedAsUser,
+        AssertUserIsAnonymous $assertUserIsAnonymous,
+        UserRepositoryInterface $userRepository
+    ) {
+        $this->assertAuthenticatedAsUser = $assertAuthenticatedAsUser;
+        $this->assertUserIsAnonymous = $assertUserIsAnonymous;
+        $this->userRepository = $userRepository;
     }
 
     /**
@@ -111,7 +109,7 @@ final class RegisterNewUserContext extends UserRawContext implements KernelAware
             'Un e-mail a été envoyé à l\'adresse '.$username.'@khatovar.fr. Il contient un lien d\'activation sur lequel il vous faudra cliquer afin d\'activer votre compte.'
         );
 
-        $this->assertUserIsAnonymous();
+        ($this->assertUserIsAnonymous)();
     }
 
     /**
@@ -119,13 +117,13 @@ final class RegisterNewUserContext extends UserRawContext implements KernelAware
      */
     public function userAccountCanBeActivated(string $username): void
     {
-        $user = $this->userRepository()->get($username);
+        $user = $this->userRepository->get($username);
         $activationToken = $user->getConfirmationToken();
 
         $this->visitPath('register/confirm/'.$activationToken);
 
         $this->assertPageContainsText('Félicitations '.$username.', votre compte est maintenant activé.');
-        $this->assertAuthenticatedAsUser($username);
+        ($this->assertAuthenticatedAsUser)($username);
     }
 
     /**
@@ -134,7 +132,7 @@ final class RegisterNewUserContext extends UserRawContext implements KernelAware
     public function usernameIsAlreadyUsed(): void
     {
         $this->assertPageContainsText('Le nom d\'utilisateur est déjà utilisé');
-        $this->assertUserIsAnonymous();
+        ($this->assertUserIsAnonymous)();
     }
 
     /**
@@ -143,7 +141,7 @@ final class RegisterNewUserContext extends UserRawContext implements KernelAware
     public function emailIsAlreadyUsed(): void
     {
         $this->assertPageContainsText('L\'adresse e-mail est déjà utilisée');
-        $this->assertUserIsAnonymous();
+        ($this->assertUserIsAnonymous)();
     }
 
     /**
@@ -152,36 +150,6 @@ final class RegisterNewUserContext extends UserRawContext implements KernelAware
     public function confirmationPasswordIsDifferent(): void
     {
         $this->assertPageContainsText('Les deux mots de passe ne sont pas identiques');
-        $this->assertUserIsAnonymous();
-    }
-
-    private function assertUserIsAnonymous(): void
-    {
-        Assert::true($this->authorizationChecker()->isGranted('IS_AUTHENTICATED_ANONYMOUSLY'));
-        Assert::false($this->authorizationChecker()->isGranted('ROLE_USER'));
-    }
-
-    private function assertAuthenticatedAsUser(string $username): void
-    {
-        if (null === $token = $this->tokenStorage()->getToken()) {
-            throw new TokenNotFoundException();
-        }
-
-        Assert::same($token->getUsername(), $username);
-    }
-
-    private function tokenStorage(): TokenStorageInterface
-    {
-        return $this->kernel->getContainer()->get('security.token_storage');
-    }
-
-    private function authorizationChecker(): AuthorizationCheckerInterface
-    {
-        return $this->kernel->getContainer()->get('security.authorization_checker');
-    }
-
-    private function userRepository(): UserRepositoryInterface
-    {
-        return $this->kernel->getContainer()->get(UserRepository::class);
+        ($this->assertUserIsAnonymous)();
     }
 }
