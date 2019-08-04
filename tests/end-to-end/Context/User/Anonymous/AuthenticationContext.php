@@ -126,4 +126,12 @@ final class AuthenticationContext extends UserRawContext
         $this->assertSession()->elementContains('css', 'div', 'class="login-wall panel panel-default"');
         $this->assertPageContainsText('Se souvenir de moi');
     }
+
+    /**
+     * @Then I should be noticed that the credentials are invalid
+     */
+    public function credentialsAreInvalid(): void
+    {
+        $this->assertPageContainsText('Invalid credentials.');
+    }
 }

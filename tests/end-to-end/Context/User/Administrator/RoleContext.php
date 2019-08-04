@@ -50,7 +50,15 @@ final class RoleContext extends UserRawContext
     }
 
     /**
-     * @Then the user :username should be a :role
+     * @Then the user :username should be regular user
+     */
+    public function userShouldBeRegularUser(string $username): void
+    {
+        $this->userShouldHaveRole($username, 'user');
+    }
+
+    /**
+     * @Then /^the user (?P<username>[^"]*) should be an? (?P<role>[^"]*)$/
      */
     public function userShouldHaveRole(string $username, string $role): void
     {

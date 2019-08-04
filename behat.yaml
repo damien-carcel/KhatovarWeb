@@ -56,7 +56,6 @@ end-to-end:
                 - Khatovar\Tests\Fixtures\Context\DataFixtureContext:
                       - '@service_container'
                 - Khatovar\Tests\EndToEnd\Context\User\CommonContext: ~
-                - Khatovar\Tests\EndToEnd\Context\User\FeatureContext: ~
                 - Khatovar\Tests\EndToEnd\Context\User\Administrator\AdminContext: ~
                 - Khatovar\Tests\EndToEnd\Context\User\Administrator\DeleteContext:
                       - '@Khatovar\Tests\EndToEnd\Service\Assert\AssertUsersAreAdministrableOnes'
@@ -68,6 +67,7 @@ end-to-end:
                       - '@Khatovar\Bundle\UserBundle\Repository\Doctrine\UserRepository'
                 - Khatovar\Tests\EndToEnd\Context\User\Administrator\StatusContext:
                       - '@Khatovar\Bundle\UserBundle\Repository\Doctrine\UserRepository'
+                - Khatovar\Tests\EndToEnd\Context\User\Administrator\SuperAdminContext: ~
                 - Khatovar\Tests\EndToEnd\Context\User\Administrator\ViewContext: ~
                 - Khatovar\Tests\EndToEnd\Context\User\Anonymous\AuthenticationContext:
                       - '@Khatovar\Tests\EndToEnd\Service\Assert\AssertAuthenticatedAsUser'

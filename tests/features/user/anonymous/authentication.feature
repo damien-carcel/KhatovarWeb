@@ -17,7 +17,7 @@ Feature: Authenticate users
   Scenario: I can see an error message when I use wrong credentials
     Given I am anonymously on the homepage
     When I log in as foobar
-    Then I should see "Invalid credentials."
+    Then I should be noticed that the credentials are invalid
 
   Scenario: I am redirected to login page when anonymously authenticated
     Given I am anonymously on the homepage
