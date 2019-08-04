@@ -12,4 +12,4 @@ Feature: Manage user accounts
   Scenario: A regular user should not be able to access the admin page
     Given I am logged as a regular user
     When I try to access the administration page
-    And I am forbidden to access the page
+    Then I am forbidden to access it

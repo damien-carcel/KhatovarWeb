@@ -68,6 +68,7 @@ end-to-end:
                       - '@Khatovar\Bundle\UserBundle\Repository\Doctrine\UserRepository'
                 - Khatovar\Tests\EndToEnd\Context\User\Administrator\StatusContext:
                       - '@Khatovar\Bundle\UserBundle\Repository\Doctrine\UserRepository'
+                - Khatovar\Tests\EndToEnd\Context\User\Administrator\ViewContext: ~
                 - Khatovar\Tests\EndToEnd\Context\User\Anonymous\AuthenticationContext:
                       - '@Khatovar\Tests\EndToEnd\Service\Assert\AssertAuthenticatedAsUser'
                       - '@Khatovar\Tests\EndToEnd\Service\Assert\AssertUserIsAnonymous'

@@ -43,7 +43,7 @@ final class AdminContext extends UserRawContext
     }
 
     /**
-     * @Then I am forbidden to access the page
+     * @Then I am forbidden to access it
      */
     public function forbiddenToAccess(): void
     {

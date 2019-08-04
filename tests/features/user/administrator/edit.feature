@@ -12,4 +12,4 @@ Feature: Edit user profiles
   Scenario: I cannot edit the profile of the super admin
     Given I am logged as an administrator
     When I try to edit the super administrator profile
-    Then I am forbidden to access the page
+    Then I am forbidden to access it

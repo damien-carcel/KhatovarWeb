@@ -6,13 +6,10 @@ Feature: See user profiles
 
   Scenario: I can see a user profile
     Given I am logged as an administrator
-    When I am on the administration page
-    And I follow "Visualiser" for "damien" profile
-    Then I should see "Profil de l'utilisateur damien"
-    And I should see "Nom d'utilisateur: damien"
-    And I should see "Adresse e-mail: damien@khatovar.fr"
+    When I try to access damien profile
+    Then I can see the profile of damien
 
   Scenario: I cannot see the profile of the super admin
     Given I am logged as an administrator
-    When I am on "admin/admin/show"
-    Then I should see "403 Forbidden"
+    When I try to access the profile of the super administrator
+    Then I am forbidden to access it
