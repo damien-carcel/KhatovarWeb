@@ -124,43 +124,6 @@ class FeatureContext extends MinkContext implements KernelAwareContext
     }
 
     /**
-     * Checks that a user is active.
-     *
-     * @param string $username
-     *
-     * @Then /^user "(?P<username>[^"]*)" should be enabled$/
-     */
-    public function userShouldBeEnabled($username): void
-    {
-        $this->assertUserStatus($username, true);
-    }
-
-    /**
-     * Checks that a user is unactive.
-     *
-     * @param string $username
-     *
-     * @Then /^user "(?P<username>[^"]*)" should be disabled$/
-     */
-    public function userShouldBeDisabled($username): void
-    {
-        $this->assertUserStatus($username, false);
-    }
-
-    /**
-     * Asserts a user status.
-     *
-     * @param string $username
-     * @param bool   $status
-     */
-    private function assertUserStatus($username, $status): void
-    {
-        $user = $this->userRepository()->get($username);
-
-        Assert::true($status === $user->isEnabled());
-    }
-
-    /**
      * Finds a table row according to its content.
      *
      * @param $username

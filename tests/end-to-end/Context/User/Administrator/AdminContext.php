@@ -11,7 +11,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Khatovar\Tests\EndToEnd\Context\User\Administrators;
+namespace Khatovar\Tests\EndToEnd\Context\User\Administrator;
 
 use Khatovar\Tests\EndToEnd\Context\User\UserRawContext;
 

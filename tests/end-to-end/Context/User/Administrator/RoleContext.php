@@ -11,7 +11,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Khatovar\Tests\EndToEnd\Context\User\Administrators;
+namespace Khatovar\Tests\EndToEnd\Context\User\Administrator;
 
 use Khatovar\Component\User\Domain\Repository\UserRepositoryInterface;
 use Khatovar\Tests\EndToEnd\Context\User\UserRawContext;
@@ -34,6 +34,7 @@ final class RoleContext extends UserRawContext
      */
     public function changeTheUserRole(string $username, string $role): void
     {
+        $this->visitPath('admin');
         $this->followActionLinkForUserRaw('Changer le rôle', $username);
         $this->page()->selectFieldOption('Rôles', $role);
         $this->page()->pressButton('Modifier');
@@ -44,6 +45,7 @@ final class RoleContext extends UserRawContext
      */
     public function tryToChangeUserRole(string $username): void
     {
+        $this->visitPath('admin');
         $this->followActionLinkForUserRaw('Changer le rôle', $username);
     }
 
@@ -70,8 +72,8 @@ final class RoleContext extends UserRawContext
     {
         $this->assertElementContainsText('select', 'Utilisateur basique');
         $this->assertElementContainsText('select', 'Lecture seule');
-        $this->assertElementNotContainsText('select', 'Administrateur');
-        $this->assertElementNotContainsText('select', 'Super Administrateur');
+        $this->assertElementDoesNotContainText('select', 'Administrateur');
+        $this->assertElementDoesNotContainText('select', 'Super Administrateur');
     }
 
     /**
@@ -79,13 +81,8 @@ final class RoleContext extends UserRawContext
      */
     public function cannotDemoteAnotherAdmin(): void
     {
-        $this->assertElementNotContainsText(
-            sprintf(
-                'table tr:contains("%s")',
-                'hegor'
-            ),
-            'Changer le rôle'
-        );
+        $this->visitPath('admin');
+        $this->assertTableLineDoesNotContainText('hegor', 'Changer le rôle');
 
         $this->visitPath('admin/hegor/role');
         $this->assertPageContainsText('403 Forbidden');

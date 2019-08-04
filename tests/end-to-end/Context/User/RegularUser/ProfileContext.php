@@ -21,7 +21,7 @@ declare(strict_types=1);
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Khatovar\Tests\EndToEnd\Context\User\Users;
+namespace Khatovar\Tests\EndToEnd\Context\User\RegularUser;
 
 use Khatovar\Tests\EndToEnd\Context\User\UserRawContext;
 

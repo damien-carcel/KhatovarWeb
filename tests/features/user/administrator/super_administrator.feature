@@ -17,7 +17,7 @@ Feature: Administrate administrators
     Then I should see all the regular users
 
   Scenario: I can promote a user as administrator
-    Given I am on "admin"
+    Given I am on the administration page
     When I follow "Changer le rôle" for "damien" profile
     And I select "Administrateur" from "Rôles"
     And I press "Modifier"
@@ -25,7 +25,7 @@ Feature: Administrate administrators
     And user "damien" should have role "ROLE_ADMIN"
 
   Scenario: I can demote a user from administrator
-    Given I am on "admin"
+    Given I am on the administration page
     When I follow "Changer le rôle" for "aurore" profile
     And I select "Utilisateur basique" from "Rôles"
     And I press "Modifier"
@@ -33,10 +33,6 @@ Feature: Administrate administrators
     And user "aurore" should have role "ROLE_USER"
 
   Scenario: I can change the status of an administrator
-    Given I am on "admin"
-    When I follow "Désactiver" for "aurore" profile
-    Then I should see "L'utilisateur a été désactivé"
-    And user "aurore" should be disabled
-    When I follow "Activer" for "aurore" profile
-    Then I should see "L'utilisateur a été activé"
-    And user "aurore" should be enabled
+    Given I am on the administration page
+    When I deactivate the user aurore
+    Then the user aurore should be deactivated

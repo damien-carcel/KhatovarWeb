@@ -7,6 +7,5 @@ Feature: Delete a user account
   # TODO: Use a mail catcher to check that the removed user was notified by mail about the destruction of his/her account
   Scenario: I can delete a user
     Given I am logged as an administrator
-    And I am on the administration page
     When I remove the user damien
     Then I should be notified that user damien was removed

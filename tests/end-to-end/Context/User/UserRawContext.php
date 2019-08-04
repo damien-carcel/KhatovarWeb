@@ -40,12 +40,24 @@ class UserRawContext extends RawMinkContext
         $this->assertSession()->pageTextContains($text);
     }
 
+    protected function assertTableLineContainsText($lineName, $text): void
+    {
+        $element = sprintf('table tr:contains("%s")', $lineName);
+        $this->assertElementContainsText($element, $text);
+    }
+
     protected function assertElementContainsText($element, $text): void
     {
         $this->assertSession()->elementTextContains('css', $element, $text);
     }
 
-    protected function assertElementNotContainsText($element, $text): void
+    protected function assertTableLineDoesNotContainText($lineName, $text): void
+    {
+        $element = sprintf('table tr:contains("%s")', $lineName);
+        $this->assertElementDoesNotContainText($element, $text);
+    }
+
+    protected function assertElementDoesNotContainText($element, $text): void
     {
         $this->assertSession()->elementTextNotContains('css', $element, $text);
     }

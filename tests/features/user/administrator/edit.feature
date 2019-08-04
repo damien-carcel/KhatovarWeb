@@ -6,7 +6,6 @@ Feature: Edit user profiles
 
   Scenario: I can edit a user profile
     Given I am logged as an administrator
-    And I am on the administration page
     When I rename the user damien as pandore
     Then I should be notified that the user profile was updated
 

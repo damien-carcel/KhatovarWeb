@@ -57,14 +57,16 @@ end-to-end:
                       - '@service_container'
                 - Khatovar\Tests\EndToEnd\Context\User\CommonContext: ~
                 - Khatovar\Tests\EndToEnd\Context\User\FeatureContext: ~
-                - Khatovar\Tests\EndToEnd\Context\User\Administrators\AdminContext: ~
-                - Khatovar\Tests\EndToEnd\Context\User\Administrators\DeleteContext:
+                - Khatovar\Tests\EndToEnd\Context\User\Administrator\AdminContext: ~
+                - Khatovar\Tests\EndToEnd\Context\User\Administrator\DeleteContext:
                       - '@Khatovar\Tests\EndToEnd\Service\Assert\AssertUsersAreAdministrableOnes'
-                - Khatovar\Tests\EndToEnd\Context\User\Administrators\EditContext:
+                - Khatovar\Tests\EndToEnd\Context\User\Administrator\EditContext:
                       - '@Khatovar\Tests\EndToEnd\Service\Assert\AssertUsersAreAdministrableOnes'
-                - Khatovar\Tests\EndToEnd\Context\User\Administrators\ListContext:
+                - Khatovar\Tests\EndToEnd\Context\User\Administrator\ListContext:
                       - '@Khatovar\Tests\EndToEnd\Service\Assert\AssertUsersAreAdministrableOnes'
-                - Khatovar\Tests\EndToEnd\Context\User\Administrators\RoleContext:
+                - Khatovar\Tests\EndToEnd\Context\User\Administrator\RoleContext:
+                      - '@Khatovar\Bundle\UserBundle\Repository\Doctrine\UserRepository'
+                - Khatovar\Tests\EndToEnd\Context\User\Administrator\StatusContext:
                       - '@Khatovar\Bundle\UserBundle\Repository\Doctrine\UserRepository'
                 - Khatovar\Tests\EndToEnd\Context\User\Anonymous\AuthenticationContext:
                       - '@Khatovar\Tests\EndToEnd\Service\Assert\AssertAuthenticatedAsUser'
@@ -74,7 +76,7 @@ end-to-end:
                       - '@Khatovar\Tests\EndToEnd\Service\Assert\AssertUserIsAnonymous'
                       - '@Khatovar\Bundle\UserBundle\Repository\Doctrine\UserRepository'
                 - Khatovar\Tests\EndToEnd\Context\User\Anonymous\ResetPasswordContext: ~
-                - Khatovar\Tests\EndToEnd\Context\User\Users\ProfileContext: ~
+                - Khatovar\Tests\EndToEnd\Context\User\RegularUser\ProfileContext: ~
             filters:
                 tags: '@end-to-end'
             paths:

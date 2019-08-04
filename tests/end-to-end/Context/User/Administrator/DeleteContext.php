@@ -11,7 +11,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Khatovar\Tests\EndToEnd\Context\User\Administrators;
+namespace Khatovar\Tests\EndToEnd\Context\User\Administrator;
 
 use Khatovar\Tests\EndToEnd\Context\User\UserRawContext;
 use Khatovar\Tests\EndToEnd\Service\Assert\AssertUsersAreAdministrableOnes;
@@ -33,6 +33,7 @@ final class DeleteContext extends UserRawContext
      */
     public function iRemoveTheUser(string $username): void
     {
+        $this->visitPath('admin');
         $this->pressActionButtonForUserRow('Supprimer', $username);
     }
 
