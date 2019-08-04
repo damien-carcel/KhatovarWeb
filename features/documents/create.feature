@@ -10,15 +10,15 @@ Feature: Create files and folders
     And I press "Connexion"
     And I am on "documents"
 
-  @fixtures-minimal
+  @fixtures-users
   Scenario: I can create a file at root
     Given I follow "Ajouter un fichier"
-    And I attach the file "features/Context/fixtures/black_cat.jpg" to "file_filePath"
+    And I attach the file "tests/fixtures/images/black_cat.jpg" to "file_filePath"
     When I press "file_submit"
     Then I should be on "documents/"
     And I should see "black_cat.jpg" in the ".file_black_cat_jpg .file_name" element
 
-  @fixtures-minimal
+  @fixtures-users
   Scenario: I can create a folder at root
     Given I follow "Ajouter un dossier"
     When I fill in "Nom" with "A newly created folder"
@@ -30,7 +30,7 @@ Feature: Create files and folders
   Scenario: I can create a file inside an existing folder
     Given I follow "A folder at root"
     When I follow "Ajouter un fichier"
-    And I attach the file "features/Context/fixtures/black_cat.jpg" to "file_filePath"
+    And I attach the file "tests/fixtures/images/black_cat.jpg" to "file_filePath"
     And I press "file_submit"
     Then I should see "A folder at root" in the "nav" element
     And I should see "black_cat.jpg" in the ".file_black_cat_jpg .file_name" element

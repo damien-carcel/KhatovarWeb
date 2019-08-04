@@ -1,13 +1,21 @@
-language: php
+dist: bionic
+sudo: required
 
+language: php
 php:
-    - '7.1'
-    - '7.2'
+    - 7.2
+
+services:
+    - mysql
+
+env:
+    - TRAVIS_NODE_VERSION='10'
 
 git:
     depth: 10
 
 cache:
+    yarn: true
     directories:
         - $HOME/.composer/cache
 
@@ -16,23 +24,25 @@ before_install:
     - phpenv config-rm xdebug.ini
     - echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
     - composer self-update --no-interaction
+    - sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('root') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
+    - sudo mysql_upgrade -u root -proot
+    - sudo service mysql restart
 
 install:
+    - mysql -uroot -proot -e 'CREATE DATABASE khatovar;'
+    - mysql -uroot -proot -e 'GRANT ALL PRIVILEGES ON khatovar.* TO khatovar@localhost IDENTIFIED BY "khatovar"'
     - cp app/config/parameters.yml.dist app/config/parameters.yml
     - composer install --no-interaction --prefer-dist --optimize-autoloader
     - yarn install
-    - mysql -e 'CREATE DATABASE khatovar;'
-    - mysql -e 'GRANT ALL PRIVILEGES ON khatovar.* TO khatovar@localhost IDENTIFIED BY "khatovar"'
     - bin/console --env=test doctrine:schema:update --force > /dev/null
     - bin/console --env=test assets:install www
     - yarn run assets
 
 script:
     - vendor/bin/php-coupling-detector detect --config-file=.php_cd.php
-    - vendor/bin/phpcs -p --standard=PSR2 --extensions=php src tests/acceptance tests/integration tests/system
     - vendor/bin/php-cs-fixer fix --dry-run -v --diff --config=.php_cs.php
     - vendor/bin/phpspec run
     - vendor/bin/behat --profile=integration
     - vendor/bin/behat --profile=acceptance
-    - vendor/bin/behat --profile=system
+    - vendor/bin/behat --profile=end-to-end
     - vendor/bin/behat --profile=legacy

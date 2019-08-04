@@ -25,6 +25,7 @@ namespace Context;
 
 use Behat\Mink\Element\NodeElement;
 use Behat\MinkExtension\Context\MinkContext;
+use Khatovar\Component\User\Application\Command\SetRole;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Webmozart\Assert\Assert;
 
@@ -36,7 +37,7 @@ use Webmozart\Assert\Assert;
 class DocumentsBundleFeatureContext extends MinkContext
 {
     /** @var ContainerInterface */
-    protected $container;
+    private $container;
 
     /**
      * @param ContainerInterface $container
@@ -44,6 +45,25 @@ class DocumentsBundleFeatureContext extends MinkContext
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
+    }
+
+    /**
+     * Sets a new role to a user.
+     *
+     * @param string $role
+     * @param string $username
+     *
+     * @Given /^I set role "(?P<role>[^"]*)" for user "(?P<username>[^"]*)"$/
+     */
+    public function iSetRoleForUser(string $role, string $username): void
+    {
+        $user = $this->container
+            ->get('Khatovar\Bundle\UserBundle\Repository\Doctrine\UserRepository')
+            ->get($username);
+
+        $this->container
+            ->get('Khatovar\Component\User\Application\Command\SetRoleHandler')
+            ->setRole(new SetRole($user, $role));
     }
 
     /**

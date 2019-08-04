@@ -11,7 +11,7 @@ Feature: Manipulate files and folders when it is allowed
     And I press "Connexion"
     And I am on "documents"
     And I follow "Ajouter un fichier"
-    And I attach the file "features/Context/fixtures/black_cat.jpg" to "file_filePath"
+    And I attach the file "tests/fixtures/images/black_cat.jpg" to "file_filePath"
     And I press "file_submit"
     And I follow "Déconnexion"
 

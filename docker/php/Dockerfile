@@ -1,4 +1,4 @@
-FROM php:7.1-alpine
+FROM php:7.2-alpine
 MAINTAINER Damien Carcel <damien.carcel@gmail.com>
 
 # Install needed PHP extensions and related libraries

@@ -13,12 +13,12 @@ acceptance:
                 path: 'app/AppKernel.php'
     suites:
         user:
-            paths:
-                - '%paths.base%/tests/features/user'
             contexts_services:
                 - 'Khatovar\Tests\Acceptance\Context\FeatureContext'
             filters:
                 tags: '@acceptance'
+            paths:
+                - '%paths.base%/tests/features/user'
 
 integration:
     extensions:
@@ -35,32 +35,53 @@ integration:
                 path: 'app/AppKernel.php'
     suites:
         user:
-            paths:
-                - '%paths.base%/tests/integration/features/user'
             contexts_services:
                 - 'Khatovar\Tests\Integration\Context\FeatureContext'
+            paths:
+                - '%paths.base%/tests/integration/features/user'
 
-system:
+end-to-end:
     extensions:
-        FriendsOfBehat\ContextServiceExtension:
-            imports:
-            - 'tests/system/Resources/config/contexts.yml'
-        FriendsOfBehat\CrossContainerExtension: ~
-        FriendsOfBehat\SymfonyExtension:
+        Behat\MinkExtension:
+            sessions:
+                default:
+                    symfony2: ~
+        Behat\Symfony2Extension:
             kernel:
-                bootstrap: 'var/bootstrap.php.cache'
-                class: 'AppKernel'
-                debug: true
+                bootstrap: 'vendor/autoload.php'
                 env: 'test'
-                path: 'app/AppKernel.php'
     suites:
         user:
+            contexts:
+                - Khatovar\Tests\Fixtures\Context\DataFixtureContext:
+                      - '@service_container'
+                - Khatovar\Tests\EndToEnd\Context\User\CommonContext: ~
+                - Khatovar\Tests\EndToEnd\Context\User\Administrator\AdminContext: ~
+                - Khatovar\Tests\EndToEnd\Context\User\Administrator\DeleteContext:
+                      - '@Khatovar\Tests\EndToEnd\Service\Assert\AssertUsersAreAdministrableOnes'
+                - Khatovar\Tests\EndToEnd\Context\User\Administrator\EditContext:
+                      - '@Khatovar\Tests\EndToEnd\Service\Assert\AssertUsersAreAdministrableOnes'
+                - Khatovar\Tests\EndToEnd\Context\User\Administrator\ListContext:
+                      - '@Khatovar\Tests\EndToEnd\Service\Assert\AssertUsersAreAdministrableOnes'
+                - Khatovar\Tests\EndToEnd\Context\User\Administrator\RoleContext:
+                      - '@Khatovar\Bundle\UserBundle\Repository\Doctrine\UserRepository'
+                - Khatovar\Tests\EndToEnd\Context\User\Administrator\StatusContext:
+                      - '@Khatovar\Bundle\UserBundle\Repository\Doctrine\UserRepository'
+                - Khatovar\Tests\EndToEnd\Context\User\Administrator\SuperAdminContext: ~
+                - Khatovar\Tests\EndToEnd\Context\User\Administrator\ViewContext: ~
+                - Khatovar\Tests\EndToEnd\Context\User\Anonymous\AuthenticationContext:
+                      - '@Khatovar\Tests\EndToEnd\Service\Assert\AssertAuthenticatedAsUser'
+                      - '@Khatovar\Tests\EndToEnd\Service\Assert\AssertUserIsAnonymous'
+                - Khatovar\Tests\EndToEnd\Context\User\Anonymous\RegisterNewUserContext:
+                      - '@Khatovar\Tests\EndToEnd\Service\Assert\AssertAuthenticatedAsUser'
+                      - '@Khatovar\Tests\EndToEnd\Service\Assert\AssertUserIsAnonymous'
+                      - '@Khatovar\Bundle\UserBundle\Repository\Doctrine\UserRepository'
+                - Khatovar\Tests\EndToEnd\Context\User\Anonymous\ResetPasswordContext: ~
+                - Khatovar\Tests\EndToEnd\Context\User\RegularUser\ProfileContext: ~
+            filters:
+                tags: '@end-to-end'
             paths:
                 - '%paths.base%/tests/features/user'
-            contexts_services:
-                - 'Khatovar\Tests\System\Context\FeatureContext'
-            filters:
-                tags: '@system'
 
 legacy:
     extensions:
@@ -72,16 +93,10 @@ legacy:
             kernel:
                 bootstrap: 'vendor/autoload.php'
                 env: 'test'
-        BehatExtension\DoctrineDataFixturesExtension\Extension:
-            lifetime: 'scenario'
-            autoload: 'false'
-            directories: ~
-            fixtures:
-                - 'Context\DataFixtures\ORM\LoadUserData'
     suites:
         documents:
             contexts:
-                - Context\DocumentsBundleFixtureContext:
+                - Khatovar\Tests\Fixtures\Context\DataFixtureContext:
                     container: '@service_container'
                 - Context\DocumentsBundleFeatureContext:
                     container: '@service_container'
@@ -89,9 +104,3 @@ legacy:
                     container: '@service_container'
             paths:
                 - '%paths.base%/features/documents'
-        user:
-            contexts:
-                - Context\UserBundleFeatureContext:
-                    session: '@session'
-            paths:
-                - '%paths.base%/features/user'

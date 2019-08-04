@@ -1,0 +1,12 @@
+services:
+    Khatovar\Tests\EndToEnd\Service\Assert\AssertAuthenticatedAsUser:
+        arguments:
+            - '@kernel'
+
+    Khatovar\Tests\EndToEnd\Service\Assert\AssertUserIsAnonymous:
+        arguments:
+            - '@kernel'
+
+    Khatovar\Tests\EndToEnd\Service\Assert\AssertUsersAreAdministrableOnes:
+        arguments:
+            - '@kernel'

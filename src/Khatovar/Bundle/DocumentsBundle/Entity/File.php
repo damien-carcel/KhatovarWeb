@@ -286,7 +286,7 @@ class File
     }
 
     /**
-     * @param null|Folder $folder
+     * @param Folder|null $folder
      *
      * @return File
      */
@@ -300,7 +300,7 @@ class File
     /**
      * Get folder.
      *
-     * @return null|Folder
+     * @return Folder|null
      */
     public function getFolder()
     {

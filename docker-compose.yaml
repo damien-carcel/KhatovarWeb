@@ -6,44 +6,61 @@ services:
         image: 'khatovar/node:lts'
         environment:
             YARN_CACHE_FOLDER: '/home/yarn-cache'
-        user: '${CURRENT_IDS}'
+        user: '${CURRENT_IDS:-1000:1000}'
         volumes:
             - './:/srv/khatovar'
             - '~/.cache/yarn:/home/yarn-cache'
         working_dir: '/srv/khatovar'
+        networks:
+            - khatovar
 
     fpm:
         build: './docker/fpm/'
-        image: 'khatovar/php:7.1-fpm'
+        image: 'khatovar/php:7.2-fpm'
         user: 'www-data:www-data'
         volumes:
             - './:/srv/khatovar:ro'
             - 'var-data:/srv/khatovar/var:rw'
         working_dir: '/srv/khatovar'
+        networks:
+            - khatovar
 
     php:
         build: './docker/php/'
-        image: 'khatovar/php:7.1'
+        image: 'khatovar/php:7.2'
         environment:
             COMPOSER_CACHE_DIR: '/home/composer/.cache/composer'
             COMPOSER_HOME: '/home/composer/.config/composer'
             PHP_IDE_CONFIG: 'serverName=khatovar-cli'
             XDEBUG_CONFIG: 'remote_host=172.17.0.1'
-        user: '${CURRENT_IDS}'
+        ports:
+            - '${PHP_OUTPUT:-8000}:8000'
+        user: '${CURRENT_IDS:-1000:1000}'
         volumes:
             - './:/srv/khatovar'
             - '~/.cache/composer:/home/composer/.cache/composer'
             - '~/.config/composer:/home/composer/.config/composer'
         working_dir: '/srv/khatovar'
+        networks:
+            - khatovar
 
     nginx:
         image: 'nginx:alpine'
         depends_on:
             - 'fpm'
+        labels:
+            - 'traefik.docker.network=proxy'
+            - 'traefik.frontend.rule=Host:khatovar.docker.local'
+            - 'traefik.enable=true'
+        ports:
+            - '${NGINX_OUTPUT:-8000}:80'
         volumes:
             - './:/srv/khatovar:ro'
             - './docker/nginx.conf:/etc/nginx/conf.d/default.conf:ro'
             - './docker/upload.conf:/etc/nginx/conf.d/upload.conf:ro'
+        networks:
+            - khatovar
+            - proxy
 
     mysql:
         image: 'mysql:5.7'
@@ -52,6 +69,15 @@ services:
             MYSQL_USER: 'khatovar'
             MYSQL_PASSWORD: 'khatovar'
             MYSQL_DATABASE: 'khatovar'
+        ports:
+            - '${MYSQL_OUTPUT:-33006}:3306'
+        networks:
+            - khatovar
 
 volumes:
     var-data:
+
+networks:
+    khatovar:
+    proxy:
+        external: true

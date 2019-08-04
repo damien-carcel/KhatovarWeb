@@ -1,0 +1,44 @@
+{
+  "admin": {
+    "password": "admin",
+    "email": "admin@khatovar.fr",
+    "role": "ROLE_SUPER_ADMIN",
+    "enabled": true
+  },
+  "aurore": {
+    "password": "aurore",
+    "email": "aurore@khatovar.fr",
+    "role": "ROLE_ADMIN",
+    "enabled": true
+  },
+  "hegor": {
+    "password": "hegor",
+    "email": "hegor@khatovar.fr",
+    "role": "ROLE_ADMIN",
+    "enabled": true
+  },
+  "freya": {
+    "password": "freya",
+    "email": "freya@khatovar.fr",
+    "role": "ROLE_UPLOADER",
+    "enabled": true
+  },
+  "lilith": {
+    "password": "lilith",
+    "email": "lilith@khatovar.fr",
+    "role": "ROLE_VIEWER",
+    "enabled": true
+  },
+  "damien": {
+    "password": "damien",
+    "email": "damien@khatovar.fr",
+    "role": "",
+    "enabled": true
+  },
+  "chips": {
+    "password": "chips",
+    "email": "chips@khatovar.fr",
+    "role": "",
+    "enabled": false
+  }
+}

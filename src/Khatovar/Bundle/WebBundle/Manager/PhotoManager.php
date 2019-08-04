@@ -226,7 +226,7 @@ class PhotoManager
      * @param string $action
      * @param $slugOrId
      *
-     * @return null|object
+     * @return object|null
      */
     protected function getCurrentlyRendered($controller, $action, $slugOrId)
     {

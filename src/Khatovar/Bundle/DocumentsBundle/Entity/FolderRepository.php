@@ -59,7 +59,7 @@ class FolderRepository extends EntityRepository
     {
         $folder = $this->find($id);
         if (null === $folder) {
-            [];
+            return [];
         }
 
         $parentFolders = [];
@@ -81,7 +81,7 @@ class FolderRepository extends EntityRepository
      *
      * @throws \Doctrine\ORM\NonUniqueResultException
      *
-     * @return null|Folder
+     * @return Folder|null
      */
     public function findOneWithOrderedFiles($id)
     {
