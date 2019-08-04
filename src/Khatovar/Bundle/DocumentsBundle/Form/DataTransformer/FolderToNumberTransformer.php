@@ -50,7 +50,7 @@ class FolderToNumberTransformer implements DataTransformerInterface
     /**
      * @param int $id
      *
-     * @return null|Folder
+     * @return Folder|null
      */
     public function reverseTransform($id): ?Folder
     {

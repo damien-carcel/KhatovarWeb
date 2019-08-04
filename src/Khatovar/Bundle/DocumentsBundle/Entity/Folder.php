@@ -214,7 +214,7 @@ class Folder
     }
 
     /**
-     * @param null|Folder $parent
+     * @param Folder|null $parent
      *
      * @return Folder
      */
@@ -226,7 +226,7 @@ class Folder
     }
 
     /**
-     * @return null|Folder
+     * @return Folder|null
      */
     public function getParent()
     {

@@ -76,7 +76,7 @@ class MemberRepository extends EntityRepository
      *
      * @param int $id
      *
-     * @return null|Member
+     * @return Member|null
      */
     public function getLoggedMember($id)
     {

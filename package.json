@@ -2,30 +2,33 @@
     "name": "khatovar-web",
     "version": "1.0.0",
     "description": "Repository for the web site of the french association \"La compagnie franche du Khatovar\"",
-    "main": "index.js",
-    "scripts": {
-        "assets": "node_modules/.bin/bower update"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/damien-carcel/khatovar-web.git"
-    },
     "keywords": [
-        "document management"
+        "khatovar",
+        "user management",
+        "document management",
+        "website"
     ],
     "author": {
         "name": "Damien Carcel",
         "email": "damien.carcel@gmail.com"
     },
-    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/damien-carcel/khatovar-web.git"
+    },
     "bugs": {
         "url": "https://github.com/damien-carcel/khatovar-web/issues"
     },
     "homepage": "https://github.com/damien-carcel/khatovar-web#readme",
+    "license": "MIT",
+    "main": "index.js",
+    "scripts": {
+        "assets": "node_modules/.bin/bower update"
+    },
     "dependencies": {
         "bower": "^1.8.0"
     },
     "devDependencies": {
-        "eslint": "^4.8.0"
+        "eslint": "^6.1.0"
     }
 }

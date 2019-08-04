@@ -167,7 +167,7 @@ class Photo
     /**
      * Return the absolute path to the file.
      *
-     * @return null|string
+     * @return string|null
      */
     public function getAbsolutePath()
     {
@@ -177,7 +177,7 @@ class Photo
     /**
      * Return a relative path to the file.
      *
-     * @return null|string
+     * @return string|null
      */
     public function getWebPath()
     {
