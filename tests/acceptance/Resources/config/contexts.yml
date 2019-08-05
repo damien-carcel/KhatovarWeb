@@ -1,4 +1,4 @@
 services:
     Khatovar\Tests\Acceptance\Context\FeatureContext:
         arguments:
-            - '@Khatovar\Bundle\UserBundle\Repository\Doctrine\UserRepository'
+            - '@Khatovar\Component\User\Domain\Repository\UserRepositoryInterface'

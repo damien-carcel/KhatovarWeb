@@ -1,7 +1,7 @@
 services:
     Khatovar\Component\User\Application\Query\GetUser:
         arguments:
-            - '@Khatovar\Bundle\UserBundle\Repository\Doctrine\UserRepository'
+            - '@Khatovar\Component\User\Domain\Repository\UserRepositoryInterface'
             - '@Khatovar\Bundle\UserBundle\Security\Authentication\UserInSecurityTokenStorage'
 
     Khatovar\Component\User\Application\Query\GetUserRoles:
@@ -12,4 +12,4 @@ services:
     Khatovar\Component\User\Application\Query\GetAdministrableUsers:
         arguments:
             - '@Khatovar\Bundle\UserBundle\Security\Authentication\UserInSecurityTokenStorage'
-            - '@Khatovar\Bundle\UserBundle\Repository\Doctrine\UserRepository'
+            - '@Khatovar\Component\User\Domain\Repository\UserRepositoryInterface'

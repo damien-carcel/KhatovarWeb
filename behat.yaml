@@ -56,9 +56,9 @@ end-to-end:
                 - Khatovar\Tests\EndToEnd\Context\User\Administrator\ListContext:
                       - '@Khatovar\Tests\EndToEnd\Service\Assert\AssertUsersAreAdministrableOnes'
                 - Khatovar\Tests\EndToEnd\Context\User\Administrator\RoleContext:
-                      - '@Khatovar\Bundle\UserBundle\Repository\Doctrine\UserRepository'
+                      - '@Khatovar\Component\User\Domain\Repository\UserRepositoryInterface'
                 - Khatovar\Tests\EndToEnd\Context\User\Administrator\StatusContext:
-                      - '@Khatovar\Bundle\UserBundle\Repository\Doctrine\UserRepository'
+                      - '@Khatovar\Component\User\Domain\Repository\UserRepositoryInterface'
                 - Khatovar\Tests\EndToEnd\Context\User\Administrator\SuperAdminContext: ~
                 - Khatovar\Tests\EndToEnd\Context\User\Administrator\ViewContext: ~
                 - Khatovar\Tests\EndToEnd\Context\User\Anonymous\AuthenticationContext:
@@ -67,7 +67,7 @@ end-to-end:
                 - Khatovar\Tests\EndToEnd\Context\User\Anonymous\RegisterNewUserContext:
                       - '@Khatovar\Tests\EndToEnd\Service\Assert\AssertAuthenticatedAsUser'
                       - '@Khatovar\Tests\EndToEnd\Service\Assert\AssertUserIsAnonymous'
-                      - '@Khatovar\Bundle\UserBundle\Repository\Doctrine\UserRepository'
+                      - '@Khatovar\Component\User\Domain\Repository\UserRepositoryInterface'
                 - Khatovar\Tests\EndToEnd\Context\User\Anonymous\ResetPasswordContext: ~
                 - Khatovar\Tests\EndToEnd\Context\User\RegularUser\ProfileContext: ~
             filters:
