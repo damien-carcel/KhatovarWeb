@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace Khatovar\Tests\EndToEnd\Context\User\Anonymous;
 
 use Khatovar\Component\User\Domain\Repository\UserRepositoryInterface;
+use Khatovar\Tests\EndToEnd\Assertion\AssertAuthenticatedAsUser;
+use Khatovar\Tests\EndToEnd\Assertion\AssertUserIsAnonymous;
 use Khatovar\Tests\EndToEnd\Context\User\UserRawContext;
-use Khatovar\Tests\EndToEnd\Service\Assert\AssertAuthenticatedAsUser;
-use Khatovar\Tests\EndToEnd\Service\Assert\AssertUserIsAnonymous;
 
 /**
  * @author Damien Carcel <damien.carcel@gmail.com>

@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace Khatovar\Tests\EndToEnd\Context\User\Administrator;
 
+use Khatovar\Tests\EndToEnd\Assertion\AssertUsersAreAdministrableOnes;
 use Khatovar\Tests\EndToEnd\Context\User\UserRawContext;
-use Khatovar\Tests\EndToEnd\Service\Assert\AssertUsersAreAdministrableOnes;
 
 /**
  * @author Damien Carcel <damien.carcel@gmail.com>
@@ -38,9 +38,9 @@ final class DeleteContext extends UserRawContext
     }
 
     /**
-     * @Then I should be notified that user :username was removed
+     * @Then I should be notified that it was removed
      */
-    public function userWasRemoved(string $username): void
+    public function userWasRemoved(): void
     {
         $this->assertPageContainsText('L\'utilisateur a bien été effacé');
 

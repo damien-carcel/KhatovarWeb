@@ -2,8 +2,7 @@
 
 ## Technical improvements
 
-- **Issue 34**: Reintegrate DocumentsBundle in the application, keep only UserBundle (vO.3) as a dependency.
-                Merge all "Khatovar" bundles in `KhatovarWebBundle`.
+- **Issue 34**: Reintegrate DocumentsBundle in the application, merge all "Khatovar" bundles in `KhatovarWebBundle`.
 - **Issue 46**: Remove the need for a root folder in database with ID "0".
 - **Issue 78**: Bring back the UserBundle inside the application.
 - Migrate on Symfony 3
