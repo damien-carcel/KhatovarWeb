@@ -1,5 +1,5 @@
 services:
-    Khatovar\Bundle\UserBundle\Repository\Doctrine\UserRepository:
+    Khatovar\Component\User\Domain\Repository\UserRepositoryInterface:
         class: 'Khatovar\Bundle\UserBundle\Repository\InMemory\UserRepository'
         arguments:
             - []

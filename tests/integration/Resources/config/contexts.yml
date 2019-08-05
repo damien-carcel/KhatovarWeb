@@ -1,6 +1,4 @@
 services:
     Khatovar\Tests\Integration\Context\FeatureContext:
         arguments:
-            - '@__symfony__.Khatovar\Bundle\UserBundle\Repository\Doctrine\UserRepository'
-        tags:
-            - { name: 'fob.context_service' }
+            - '@Khatovar\Component\User\Domain\Repository\UserRepositoryInterface'

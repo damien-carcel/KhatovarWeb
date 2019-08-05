@@ -26,6 +26,7 @@ namespace Context;
 use Behat\Mink\Element\NodeElement;
 use Behat\MinkExtension\Context\MinkContext;
 use Khatovar\Component\User\Application\Command\SetRole;
+use Khatovar\Component\User\Domain\Repository\UserRepositoryInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Webmozart\Assert\Assert;
 
@@ -58,7 +59,7 @@ class DocumentsBundleFeatureContext extends MinkContext
     public function iSetRoleForUser(string $role, string $username): void
     {
         $user = $this->container
-            ->get('Khatovar\Bundle\UserBundle\Repository\Doctrine\UserRepository')
+            ->get(UserRepositoryInterface::class)
             ->get($username);
 
         $this->container
