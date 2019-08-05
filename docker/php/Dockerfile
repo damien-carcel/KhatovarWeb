@@ -19,7 +19,7 @@ RUN apk add --no-cache \
     && pecl install apcu xdebug && docker-php-ext-enable apcu xdebug \
     && apk del .build-deps
 
-# Configure PHPH
+# Configure PHP
 RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 COPY files/khatovar.ini $PHP_INI_DIR/conf.d/
 COPY files/xdebug.ini $PHP_INI_DIR/conf.d/
@@ -27,6 +27,10 @@ COPY files/xdebug.ini $PHP_INI_DIR/conf.d/
 # Install composer
 RUN curl -sSL https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN chmod +x /usr/local/bin/composer
+
+# Make XDEBUG activable at container start
+COPY files/docker-php-entrypoint /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-php-entrypoint && chmod 666 /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
 # Expose port for PHP internal server
 EXPOSE 8000

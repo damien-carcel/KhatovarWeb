@@ -8,4 +8,4 @@ Feature: Delete a user account
   Scenario: I can delete a user
     Given I am logged as an administrator
     When I remove the user damien
-    Then I should be notified that user damien was removed
+    Then I should be notified that it was removed

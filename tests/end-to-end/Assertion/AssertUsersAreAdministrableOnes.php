@@ -11,7 +11,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Khatovar\Tests\EndToEnd\Service\Assert;
+namespace Khatovar\Tests\EndToEnd\Assertion;
 
 use Khatovar\Component\User\Application\Query\GetAdministrableUsers;
 use Symfony\Component\HttpKernel\KernelInterface;

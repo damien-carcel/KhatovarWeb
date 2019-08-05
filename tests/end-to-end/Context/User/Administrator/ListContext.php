@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace Khatovar\Tests\EndToEnd\Context\User\Administrator;
 
+use Khatovar\Tests\EndToEnd\Assertion\AssertUsersAreAdministrableOnes;
 use Khatovar\Tests\EndToEnd\Context\User\UserRawContext;
-use Khatovar\Tests\EndToEnd\Service\Assert\AssertUsersAreAdministrableOnes;
 
 /**
  * @author Damien Carcel <damien.carcel@gmail.com>
