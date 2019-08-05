@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6c72601d7c401d78027a793ea0337f36",
+    "content-hash": "02419e60be1ed93660dc4419d78219c1",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -3561,65 +3561,6 @@
             "time": "2017-03-28T07:33:31+00:00"
         },
         {
-            "name": "behat-extension/doctrine-data-fixtures-extension",
-            "version": "v4.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/BehatExtension/DoctrineDataFixturesExtension.git",
-                "reference": "bd8de54f5329ccb88a752649ba928afa6ec067d7"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/BehatExtension/DoctrineDataFixturesExtension/zipball/bd8de54f5329ccb88a752649ba928afa6ec067d7",
-                "reference": "bd8de54f5329ccb88a752649ba928afa6ec067d7",
-                "shasum": ""
-            },
-            "require": {
-                "behat/behat": "^3.0",
-                "behat/symfony2-extension": "^2.0",
-                "doctrine/data-fixtures": "^1.0",
-                "php": ">=5.3.6"
-            },
-            "suggest": {
-                "doctrine/migrations": "Uses DBAL to load versioned database schema and migration classes"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "BehatExtension\\DoctrineDataFixturesExtension\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Florent Morselli",
-                    "role": "developer"
-                },
-                {
-                    "name": "Anthon Pang",
-                    "email": "apang@softwaredevelopment.ca",
-                    "role": "original developer"
-                }
-            ],
-            "description": "Doctrine data fixtures extension for Behat",
-            "homepage": "http://github.com/BehatExtension/",
-            "keywords": [
-                "BDD",
-                "Behat",
-                "Data fixtures",
-                "doctrine"
-            ],
-            "time": "2017-09-28T10:03:21+00:00"
-        },
-        {
             "name": "behat/behat",
             "version": "v3.5.0",
             "source": {
@@ -4340,6 +4281,7 @@
                 }
             ],
             "description": "Makes possible to inject services and parameters from other containers.",
+            "abandoned": "friends-of-behat/symfony-extension",
             "time": "2018-02-13T17:55:39+00:00"
         },
         {
