@@ -1,19 +1,15 @@
 acceptance:
     extensions:
-        FriendsOfBehat\ContextServiceExtension:
-            imports:
-            - 'tests/acceptance/Resources/config/contexts.yml'
-        FriendsOfBehat\CrossContainerExtension: ~
         FriendsOfBehat\SymfonyExtension:
+            bootstrap: 'vendor/autoload.php'
             kernel:
-                bootstrap: 'var/bootstrap.php.cache'
                 class: 'AppKernel'
                 debug: true
-                env: 'acceptance'
+                environment: 'acceptance'
                 path: 'app/AppKernel.php'
     suites:
         user:
-            contexts_services:
+            contexts:
                 - 'Khatovar\Tests\Acceptance\Context\FeatureContext'
             filters:
                 tags: '@acceptance'
@@ -22,20 +18,16 @@ acceptance:
 
 integration:
     extensions:
-        FriendsOfBehat\ContextServiceExtension:
-            imports:
-            - 'tests/integration/Resources/config/contexts.yml'
-        FriendsOfBehat\CrossContainerExtension: ~
         FriendsOfBehat\SymfonyExtension:
+            bootstrap: 'vendor/autoload.php'
             kernel:
-                bootstrap: 'var/bootstrap.php.cache'
                 class: 'AppKernel'
                 debug: true
-                env: 'test'
+                environment: 'integration'
                 path: 'app/AppKernel.php'
     suites:
         user:
-            contexts_services:
+            contexts:
                 - 'Khatovar\Tests\Integration\Context\FeatureContext'
             paths:
                 - '%paths.base%/tests/integration/features/user'
@@ -49,7 +41,7 @@ end-to-end:
         Behat\Symfony2Extension:
             kernel:
                 bootstrap: 'vendor/autoload.php'
-                env: 'test'
+                env: 'e2e'
     suites:
         user:
             contexts:
