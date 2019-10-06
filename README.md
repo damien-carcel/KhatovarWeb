@@ -1,4 +1,4 @@
-# What is KhatovarWeb?
+# What is khatovar-web?
 
 [![Build Status](https://travis-ci.org/damien-carcel/khatovar-web.svg?branch=master)](https://travis-ci.org/damien-carcel/khatovar-web)
 
@@ -49,19 +49,27 @@ $ docker-compose run --rm node yarn install
 $ docker-compose run --rm node yarn run assets
 ```
 
-### Serve the application
+## Serve the application
 
-You can either launch `nginx` and `fpm` containers (`fpm` depends on `nginx`):
-```bash
-$ docker-compose up -d nginx
-```
+### Development server
 
-Or you can use the internal Symfony server (dev and testing purpose)
+You can use the internal Symfony server (dev and testing purpose only)
 ```bash
 $ docker-compose run --rm --service-ports php bin/console server:run -d www 0.0.0.0:8000
 ```
 
-In both cases, you should be able to access the application and login with `localhost:8000/login`.
+You should be able to access the application through [localhost:8000](http://localhost:8000).
+
+### Production like server
+
+First install Traefik as a reverse proxy by following [these instructions](https://github.com/damien-carcel/traefik-as-local-reverse-proxy).
+
+Then launch `nginx` and `fpm` containers (`fpm` depends on `nginx` in the compose file):
+```bash
+$ docker-compose up -d nginx
+```
+
+Then access the application through [khatovar.docker.localhost](http://khatovar.docker.localhost).
 
 ## License
 
