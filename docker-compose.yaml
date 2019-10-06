@@ -51,11 +51,9 @@ services:
   nginx:
     depends_on:
       - 'fpm'
-    environment:
-      PHP_IDE_CONFIG: 'serverName=khatovar-web'
     image: 'nginx:alpine'
     labels:
-      - 'traefik.frontend.rule=Host:khatovar.docker.local'
+      - 'traefik.http.routers.khatovar.rule=Host(`khatovar.docker.localhost`)'
     ports:
       - '${NGINX_OUTPUT:-8080}:80'
     volumes:
