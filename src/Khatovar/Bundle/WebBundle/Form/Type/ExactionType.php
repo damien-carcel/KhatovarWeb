@@ -43,9 +43,6 @@ class ExactionType extends AbstractType
     /** @var EventSubscriberInterface */
     protected $addPassedFields;
 
-    /**
-     * @param EventSubscriberInterface $addPassedFields
-     */
     public function __construct(EventSubscriberInterface $addPassedFields)
     {
         $this->addPassedFields = $addPassedFields;

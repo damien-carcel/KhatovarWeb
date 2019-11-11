@@ -94,8 +94,6 @@ class PhotoController extends Controller
      * regular users can only add photos to their own member page (if
      * they have one).
      *
-     * @param Request $request
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
      * @Security("has_role('ROLE_VIEWER')")
@@ -160,8 +158,7 @@ class PhotoController extends Controller
     /**
      * Updates a photo.
      *
-     * @param Request $request
-     * @param int     $id
+     * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
@@ -199,8 +196,7 @@ class PhotoController extends Controller
     /**
      * Deletes a photo.
      *
-     * @param Request $request
-     * @param int     $id
+     * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
@@ -231,8 +227,6 @@ class PhotoController extends Controller
     /**
      * Creates a form to create a Photo entity.
      *
-     * @param Photo $photo
-     *
      * @return \Symfony\Component\Form\FormInterface
      */
     protected function createCreateForm(Photo $photo)
@@ -253,8 +247,6 @@ class PhotoController extends Controller
 
     /**
      * Creates a form to edit a Photo entity.
-     *
-     * @param Photo $photo
      *
      * @return \Symfony\Component\Form\Form
      */

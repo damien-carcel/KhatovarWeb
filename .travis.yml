@@ -39,10 +39,10 @@ install:
     - yarn run assets
 
 script:
-    - vendor/bin/php-coupling-detector detect --config-file=.php_cd.php
     - vendor/bin/php-cs-fixer fix --dry-run -v --diff --config=.php_cs.php
+    - vendor/bin/php-coupling-detector detect --config-file=.php_cd.php
     - vendor/bin/phpspec run
-    - vendor/bin/behat --profile=integration
     - vendor/bin/behat --profile=acceptance
+    - vendor/bin/behat --profile=integration
     - vendor/bin/behat --profile=end-to-end
     - vendor/bin/behat --profile=legacy

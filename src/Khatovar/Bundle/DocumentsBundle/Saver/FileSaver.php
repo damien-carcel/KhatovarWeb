@@ -62,9 +62,6 @@ class FileSaver extends BaseSaver
     /**
      * If a file is uploaded at the same place than an existing one
      * with the same name, it will replace it.
-     *
-     * @param File  $file
-     * @param array $options
      */
     protected function replaceExistingFile(File $file, array $options): void
     {

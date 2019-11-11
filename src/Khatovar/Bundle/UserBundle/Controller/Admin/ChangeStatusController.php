@@ -72,16 +72,6 @@ class ChangeStatusController
     /** @var RouterInterface */
     private $router;
 
-    /**
-     * @param GetUser                  $getUser
-     * @param UserFormFactory          $userFormFactory
-     * @param UserStatusHandler        $userStatusHandler
-     * @param CurrentTokenUser         $currentTokenUser
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param Session                  $session
-     * @param TranslatorInterface      $translator
-     * @param RouterInterface          $router
-     */
     public function __construct(
         GetUser $getUser,
         UserFormFactory $userFormFactory,
@@ -103,11 +93,7 @@ class ChangeStatusController
     }
 
     /**
-     * @param string $username
-     *
      * @throws NotFoundHttpException When there is no user names "$username"
-     *
-     * @return Response
      */
     public function __invoke(string $username): Response
     {

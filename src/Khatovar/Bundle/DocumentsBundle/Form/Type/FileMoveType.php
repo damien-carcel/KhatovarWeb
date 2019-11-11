@@ -51,11 +51,6 @@ class FileMoveType extends AbstractType
     /** @var TranslatorInterface */
     private $translator;
 
-    /**
-     * @param TranslatorInterface       $translator
-     * @param FolderRepository          $repository
-     * @param FolderToNumberTransformer $folderToNumberTransformer
-     */
     public function __construct(
         TranslatorInterface $translator,
         FolderRepository $repository,
@@ -107,13 +102,6 @@ class FileMoveType extends AbstractType
         return $list;
     }
 
-    /**
-     * @param Folder $folder
-     * @param array  $list
-     * @param int    $level
-     *
-     * @return array
-     */
     private function addFolderChildrenToList(Folder $folder, array $list, int $level): array
     {
         $folders = $this->repository->findChildrenOrderedByName($folder->getId());

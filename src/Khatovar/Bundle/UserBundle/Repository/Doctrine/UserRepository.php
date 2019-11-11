@@ -39,9 +39,6 @@ class UserRepository implements UserRepositoryInterface
     /** @var RegistryInterface */
     private $doctrine;
 
-    /**
-     * @param RegistryInterface $doctrine
-     */
     public function __construct(RegistryInterface $doctrine)
     {
         $this->doctrine = $doctrine;

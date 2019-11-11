@@ -40,8 +40,7 @@ class ActivationHandler
     protected $entity;
 
     /**
-     * @param RegistryInterface $doctrine
-     * @param string            $entity
+     * @param string $entity
      */
     public function __construct(RegistryInterface $doctrine, $entity)
     {
@@ -49,9 +48,6 @@ class ActivationHandler
         $this->entity = $entity;
     }
 
-    /**
-     * @param ActivableEntity $newActiveEntity
-     */
     public function handle(ActivableEntity $newActiveEntity): void
     {
         $repository = $this->doctrine->getRepository($this->entity);

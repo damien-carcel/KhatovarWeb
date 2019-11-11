@@ -39,8 +39,6 @@ interface SavingOptionsResolverInterface
      *      'flush' => bool,   # True to flush the object,false to only persist it
      *  ]
      *
-     * @param array $options
-     *
      * @return array
      */
     public function resolveSaveOptions(array $options);

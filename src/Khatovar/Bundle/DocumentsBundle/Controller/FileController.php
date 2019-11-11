@@ -66,8 +66,7 @@ class FileController extends Controller
      * If a file with the same name, in the same folder, already exists,
      * it will be deleted first.
      *
-     * @param Request $request
-     * @param int     $parentId
+     * @param int $parentId
      *
      * @return Response
      *
@@ -111,8 +110,7 @@ class FileController extends Controller
     /**
      * Moves a file into a new folder.
      *
-     * @param Request $request
-     * @param string  $id
+     * @param string $id
      *
      * @return Response
      *
@@ -160,8 +158,7 @@ class FileController extends Controller
     /**
      * Renames an existing file.
      *
-     * @param Request $request
-     * @param string  $id
+     * @param string $id
      *
      * @return Response
      *
@@ -209,8 +206,7 @@ class FileController extends Controller
     /**
      * Deletes a file on the server and its entry in database.
      *
-     * @param Request $request
-     * @param string  $id
+     * @param string $id
      *
      * @return Response
      *

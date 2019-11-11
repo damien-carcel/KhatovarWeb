@@ -34,9 +34,6 @@ class FeatureContext implements Context
     /** @var UserRepositoryInterface */
     private $userRepository;
 
-    /**
-     * @param UserRepositoryInterface $userRepository
-     */
     public function __construct(UserRepositoryInterface $userRepository)
     {
         $this->userRepository = $userRepository;

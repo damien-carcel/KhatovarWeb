@@ -34,9 +34,6 @@ class ExactionManager
     /** @var RegistryInterface */
     protected $doctrine;
 
-    /**
-     * @param RegistryInterface $doctrine
-     */
     public function __construct(RegistryInterface $doctrine)
     {
         $this->doctrine = $doctrine;
@@ -72,8 +69,6 @@ class ExactionManager
 
     /**
      * Checks if the exaction is already passed or still to come.
-     *
-     * @param Exaction $exaction
      *
      * @return bool return true if exaction is passed, false if not
      */

@@ -37,9 +37,6 @@ class RemoveOwnerSubscriber implements EventSubscriberInterface
 {
     protected $tokenStorage;
 
-    /**
-     * @param TokenStorageInterface $tokenStorage
-     */
     public function __construct(TokenStorageInterface $tokenStorage)
     {
         $this->tokenStorage = $tokenStorage;

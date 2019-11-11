@@ -48,9 +48,6 @@ class AddPhotoFieldsSubscriber implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param FormEvent $event
-     */
     public function preSetData(FormEvent $event): void
     {
         $form = $event->getForm();

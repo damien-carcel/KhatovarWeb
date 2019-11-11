@@ -36,9 +36,6 @@ class FolderFactory
     /** @var ObjectRepository */
     protected $repository;
 
-    /**
-     * @param ObjectRepository $repository
-     */
     public function __construct(ObjectRepository $repository)
     {
         $this->repository = $repository;

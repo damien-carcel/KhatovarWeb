@@ -45,11 +45,6 @@ class PhotoManager
     /** @var TokenStorageInterface */
     protected $tokenStorage;
 
-    /**
-     * @param RegistryInterface             $doctrine
-     * @param AuthorizationCheckerInterface $authorizationChecker
-     * @param TokenStorageInterface         $tokenStorage
-     */
     public function __construct(
         RegistryInterface $doctrine,
         AuthorizationCheckerInterface $authorizationChecker,
@@ -160,8 +155,6 @@ class PhotoManager
 
     /**
      * Get a member's photos.
-     *
-     * @param User $currentUser
      *
      * @return Photo[]
      */

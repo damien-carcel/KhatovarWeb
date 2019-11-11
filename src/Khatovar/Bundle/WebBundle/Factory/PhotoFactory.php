@@ -43,11 +43,6 @@ class PhotoFactory
     /** @var TokenStorageInterface */
     protected $tokenStorage;
 
-    /**
-     * @param AuthorizationCheckerInterface $authorizationChecker
-     * @param TokenStorageInterface         $tokenStorage
-     * @param RegistryInterface             $doctrine
-     */
     public function __construct(
         AuthorizationCheckerInterface $authorizationChecker,
         TokenStorageInterface $tokenStorage,

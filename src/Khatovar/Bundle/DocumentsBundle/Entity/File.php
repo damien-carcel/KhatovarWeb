@@ -91,8 +91,6 @@ class File
     }
 
     /**
-     * @param UploadedFile $filePath
-     *
      * @return File
      */
     public function setFilePath(UploadedFile $filePath)
@@ -286,8 +284,6 @@ class File
     }
 
     /**
-     * @param Folder|null $folder
-     *
      * @return File
      */
     public function setFolder(?Folder $folder)

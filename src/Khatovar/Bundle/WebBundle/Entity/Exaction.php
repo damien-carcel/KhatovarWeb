@@ -355,8 +355,6 @@ class Exaction
     /**
      * Add photo.
      *
-     * @param Photo $photo
-     *
      * @return Exaction
      */
     public function addPhoto(Photo $photo)
@@ -368,8 +366,6 @@ class Exaction
 
     /**
      * Remove photo.
-     *
-     * @param Photo $photo
      *
      * @return Exaction
      */

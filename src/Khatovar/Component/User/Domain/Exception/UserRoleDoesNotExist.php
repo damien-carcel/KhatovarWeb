@@ -30,9 +30,6 @@ namespace Khatovar\Component\User\Domain\Exception;
  */
 class UserRoleDoesNotExist extends \InvalidArgumentException
 {
-    /**
-     * @param string $role
-     */
     public function __construct(string $role)
     {
         $message = sprintf(

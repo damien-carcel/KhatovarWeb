@@ -34,8 +34,6 @@ interface CurrentTokenUser
 {
     /**
      * Gets a user from the Security Token Storage.
-     *
-     * @return UserInterface|null
      */
     public function getFromTokenStorage(): ?UserInterface;
 

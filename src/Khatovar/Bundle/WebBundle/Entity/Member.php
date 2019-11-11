@@ -450,8 +450,6 @@ class Member implements ActivableEntity
     /**
      * Add photos.
      *
-     * @param Photo $photos
-     *
      * @return Member
      */
     public function addPhoto(Photo $photos)
@@ -463,8 +461,6 @@ class Member implements ActivableEntity
 
     /**
      * Remove photos.
-     *
-     * @param Photo $photos
      *
      * @return Member
      */

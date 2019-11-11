@@ -59,8 +59,6 @@ class ExactionController extends Controller
     /**
      * Creates a new exaction.
      *
-     * @param Request $request
-     *
      * @return \Symfony\Component\HttpFoundation\Response
      *
      * @Security("has_role('ROLE_EDITOR')")
@@ -127,8 +125,7 @@ class ExactionController extends Controller
     /**
      * Updates an exaction.
      *
-     * @param Request $request
-     * @param int     $id
+     * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\Response
      *
@@ -168,8 +165,7 @@ class ExactionController extends Controller
     /**
      * Deletes an exaction.
      *
-     * @param Request $request
-     * @param int     $id
+     * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\Response
      *
@@ -198,8 +194,6 @@ class ExactionController extends Controller
     /**
      * Creates a form to create a Exaction entity.
      *
-     * @param Exaction $exaction
-     *
      * @return \Symfony\Component\Form\FormInterface
      */
     protected function createCreateForm(Exaction $exaction)
@@ -220,8 +214,6 @@ class ExactionController extends Controller
 
     /**
      * Creates a form to edit a Exaction entity.
-     *
-     * @param Exaction $exaction
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -268,8 +260,6 @@ class ExactionController extends Controller
     /**
      * Generate the correct URL for redirection according to exaction
      * date (past or to come).
-     *
-     * @param Exaction $exaction
      *
      * @return string
      */

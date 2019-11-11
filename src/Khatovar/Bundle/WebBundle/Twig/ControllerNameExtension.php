@@ -38,9 +38,6 @@ class ControllerNameExtension extends \Twig_Extension
     /** @var Request */
     protected $request;
 
-    /**
-     * @param RequestStack $requestStack
-     */
     public function __construct(RequestStack $requestStack)
     {
         $this->request = $requestStack->getCurrentRequest();

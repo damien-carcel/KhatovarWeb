@@ -38,9 +38,6 @@ class ContactType extends AbstractType
     /** @var EventSubscriberInterface */
     protected $addVisitCard;
 
-    /**
-     * @param EventSubscriberInterface $addVisitCard
-     */
     public function __construct(EventSubscriberInterface $addVisitCard)
     {
         $this->addVisitCard = $addVisitCard;

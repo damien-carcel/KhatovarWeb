@@ -171,8 +171,6 @@ class Contact implements ActivableEntity
     /**
      * Add photo.
      *
-     * @param Photo $photo
-     *
      * @return Contact
      */
     public function addPhoto(Photo $photo)
@@ -184,8 +182,6 @@ class Contact implements ActivableEntity
 
     /**
      * Remove photo.
-     *
-     * @param Photo $photo
      *
      * @return Contact
      */

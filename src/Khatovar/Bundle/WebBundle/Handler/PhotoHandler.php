@@ -48,11 +48,6 @@ class PhotoHandler
     /** @var RouterInterface */
     protected $router;
 
-    /**
-     * @param RegistryInterface $doctrine
-     * @param PhotoManager      $photoManager
-     * @param RouterInterface   $router
-     */
     public function __construct(
         RegistryInterface $doctrine,
         PhotoManager $photoManager,
@@ -65,8 +60,6 @@ class PhotoHandler
 
     /**
      * Saves a new Photo entity and resizes the corresponding image file.
-     *
-     * @param Photo $photo
      */
     public function handleCreation(Photo $photo): void
     {
@@ -86,7 +79,6 @@ class PhotoHandler
      * edit the photo again, allowing to change the attached page. If
      * not, it returns to the photo main page.
      *
-     * @param Photo  $photo
      * @param string $entity
      *
      * @return string

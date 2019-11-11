@@ -30,14 +30,6 @@ namespace Khatovar\Bundle\UserBundle\Factory;
  */
 class SwiftMessageFactory
 {
-    /**
-     * @param string $fromAddress
-     * @param string $toAddress
-     * @param string $subject
-     * @param string $body
-     *
-     * @return \Swift_Message
-     */
     public function create(string $fromAddress, string $toAddress, string $subject, string $body): \Swift_Message
     {
         $message = new \Swift_Message();

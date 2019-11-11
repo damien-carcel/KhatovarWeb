@@ -39,10 +39,6 @@ class GetUser
     /** @var CurrentTokenUser */
     private $currentTokenUser;
 
-    /**
-     * @param UserRepositoryInterface $userRepository
-     * @param CurrentTokenUser        $currentUser
-     */
     public function __construct(
         UserRepositoryInterface $userRepository,
         CurrentTokenUser $currentUser
@@ -56,12 +52,8 @@ class GetUser
      *
      * A regular administrator cannot get the super administrator, as he has no right to access its profile.
      *
-     * @param string $username
-     *
      * @throws UserDoesNotExist
      * @throws AccessDeniedException
-     *
-     * @return UserInterface
      */
     public function byUsername(string $username): UserInterface
     {

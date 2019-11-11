@@ -47,9 +47,6 @@ class FileListener
         $this->uploadDirectory = $uploadDirectory;
     }
 
-    /**
-     * @param File $file
-     */
     public function postLoad(File $file): void
     {
         $file->setUploadDir($this->uploadDirectory);

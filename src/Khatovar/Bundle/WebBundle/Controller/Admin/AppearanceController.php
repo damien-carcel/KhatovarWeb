@@ -85,8 +85,6 @@ class AppearanceController extends Controller
     /**
      * Creates a new appearance.
      *
-     * @param Request $request
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
      * @Security("has_role('ROLE_EDITOR')")
@@ -165,8 +163,7 @@ class AppearanceController extends Controller
     /**
      * Edits an existing Appearance entity.
      *
-     * @param Request $request
-     * @param int     $id
+     * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\Response
      *
@@ -207,8 +204,7 @@ class AppearanceController extends Controller
     /**
      * Deletes a Appearance entity.
      *
-     * @param Request $request
-     * @param int     $id
+     * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      *
@@ -237,8 +233,6 @@ class AppearanceController extends Controller
     /**
      * Creates a form to create a Appearance entity.
      *
-     * @param Appearance $entity
-     *
      * @return \Symfony\Component\Form\FormInterface
      */
     protected function createCreateForm(Appearance $entity)
@@ -259,8 +253,6 @@ class AppearanceController extends Controller
 
     /**
      * Creates a form to edit a Appearance entity.
-     *
-     * @param Appearance $entity
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -323,8 +315,6 @@ class AppearanceController extends Controller
 
     /**
      * Get active workshops if given appearance is a programme.
-     *
-     * @param Appearance $appearance
      *
      * @return \Khatovar\Bundle\WebBundle\Entity\Appearance[]
      */

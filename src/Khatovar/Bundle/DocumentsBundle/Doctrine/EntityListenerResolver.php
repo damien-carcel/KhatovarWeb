@@ -37,9 +37,6 @@ class EntityListenerResolver extends DefaultEntityListenerResolver
     /** @var array */
     protected $mapping;
 
-    /**
-     * @param ContainerInterface $container
-     */
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
