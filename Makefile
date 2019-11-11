@@ -60,11 +60,11 @@ assets:
 	docker-compose run --rm node yarn run assets
 
 .PHONY: server-run
-server-run: install-dependencies assets mysql fixtures
+server-run: install-dependencies assets mysql
 	docker-compose run --rm --service-ports php bin/console server:run -d www 0.0.0.0:8000
 
 .PHONY: install
-install: install-dependencies assets mysql fixtures
+install: install-dependencies assets mysql
 	docker-compose up -d nginx
 
 # Clean the containers
@@ -72,3 +72,40 @@ install: install-dependencies assets mysql fixtures
 .PHONY: down
 down:
 	docker-compose down -v
+
+# Run the tests
+
+.PHONY: check-style
+check-style:
+	docker-compose run --rm php vendor/bin/php-cs-fixer fix --dry-run -v --diff --config=.php_cs.php
+
+.PHONY: fix-style
+fix-style:
+	docker-compose run --rm php vendor/bin/php-cs-fixer fix -v --diff --config=.php_cs.php
+
+.PHONY: coupling
+coupling:
+	docker-compose run --rm php vendor/bin/php-coupling-detector detect --config-file=.php_cd.php
+
+.PHONY: unit
+unit:
+	docker-compose run --rm php vendor/bin/phpspec run
+
+.PHONY: acceptance
+acceptance:
+	docker-compose run --rm php vendor/bin/behat --profile=acceptance -o std --colors -f pretty -f junit -o tests/results/acceptance
+
+.PHONY: integration
+integration: mysql
+	docker-compose run --rm php vendor/bin/behat --profile=integration -o std --colors -f pretty -f junit -o tests/results/integration
+
+.PHONY: end-to-end
+end-to-end: mysql
+	docker-compose run --rm php vendor/bin/behat --profile=end-to-end -o std --colors -f pretty -f junit -o tests/results/e2e
+
+.PHONY: legacy
+legacy: mysql
+	docker-compose run --rm php vendor/bin/behat --profile=legacy -o std --colors -f pretty -f junit -o tests/results/legacy
+
+.PHONY: tests
+tests: check-style coupling unit acceptance integration end-to-end legacy

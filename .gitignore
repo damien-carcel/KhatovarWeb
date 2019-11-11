@@ -1,5 +1,7 @@
 /app/config/parameters.yml
 /node_modules
+/tests/results
+!/tests/results/.gitkeep
 /var
 !/var/SymfonyRequirements.php
 /vendor

@@ -30,6 +30,12 @@ $ make install
 
 You can now access the it through [khatovar.docker.localhost](http://khatovar.docker.localhost).
 
+## Running the tests
+
+```bash
+$ make tests
+```
+
 ## License
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
