@@ -1,4 +1,9 @@
-FROM debian:buster-slim
+#######################################################
+# Image for managing back-end dependencies and tests. #
+# To be used with nginx or httpd to serve the app.    #
+#######################################################
+
+FROM debian:buster-slim as fpm
 
 ENV DEBIAN_FRONTEND=noninteractive \
     XDEBUG_ENABLED=0
@@ -47,14 +52,14 @@ RUN echo 'APT::Install-Recommends "0" ; APT::Install-Suggests "0" ;' > /etc/apt/
     ln -s /etc/php/7.2/mods-available/xdebug.ini /etc/php/7.2/enable-xdebug/xdebug.ini
 
 # Configure PHP
-COPY files/khatovar.ini /etc/php/7.2/cli/conf.d/99-khatovar.ini
-COPY files/khatovar.ini /etc/php/7.2/fpm/conf.d/99-khatovar.ini
-COPY files/fpm.conf /etc/php/7.2/fpm/pool.d/zzz-khatovar.conf
+COPY docker/php/khatovar.ini /etc/php/7.2/cli/conf.d/99-khatovar.ini
+COPY docker/php/khatovar.ini /etc/php/7.2/fpm/conf.d/99-khatovar.ini
+COPY docker/fpm/fpm.conf /etc/php/7.2/fpm/pool.d/zzz-khatovar.conf
 
 # Configure XDEBUG and make XDEBUG activable at container start
-COPY files/xdebug.ini /etc/php/7.2/cli/conf.d/99-xdebug.ini
-COPY files/xdebug.ini /etc/php/7.2/fpm/conf.d/99-xdebug.ini
-COPY files/docker-php-entrypoint /usr/local/bin/
+COPY docker/php/xdebug.ini /etc/php/7.2/cli/conf.d/99-xdebug.ini
+COPY docker/php/xdebug.ini /etc/php/7.2/fpm/conf.d/99-xdebug.ini
+COPY docker/php/docker-php-entrypoint /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-php-entrypoint
 
 # Install composer
@@ -72,3 +77,26 @@ VOLUME /srv/khatovar
 EXPOSE 8000
 
 ENTRYPOINT ["/usr/local/bin/docker-php-entrypoint"]
+
+########################################################
+# Image for managing front-end dependencies and tests. #
+########################################################
+
+FROM node:slim as node
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN echo 'APT::Install-Recommends "0" ; APT::Install-Suggests "0" ;' > /etc/apt/apt.conf.d/01-no-recommended && \
+    echo 'path-exclude=/usr/share/doc/*' > /etc/dpkg/dpkg.cfg.d/path_exclusions && \
+    echo 'path-exclude=/usr/share/groff/*' >> /etc/dpkg/dpkg.cfg.d/path_exclusions && \
+    echo 'path-exclude=/usr/share/info/*' >> /etc/dpkg/dpkg.cfg.d/path_exclusions && \
+    echo 'path-exclude=/usr/share/linda/*' >> /etc/dpkg/dpkg.cfg.d/path_exclusions && \
+    echo 'path-exclude=/usr/share/lintian/*' >> /etc/dpkg/dpkg.cfg.d/path_exclusions && \
+    echo 'path-exclude=/usr/share/locale/*' >> /etc/dpkg/dpkg.cfg.d/path_exclusions && \
+    echo 'path-exclude=/usr/share/man/*' >> /etc/dpkg/dpkg.cfg.d/path_exclusions && \
+    apt-get update && \
+    apt-get --no-install-recommends --no-install-suggests --yes --quiet install \
+        git && \
+    apt-get clean && \
+    apt-get --yes autoremove --purge && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

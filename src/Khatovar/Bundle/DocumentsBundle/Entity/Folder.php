@@ -24,6 +24,7 @@ declare(strict_types=1);
 namespace Khatovar\Bundle\DocumentsBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * Folder entity.
@@ -41,7 +42,7 @@ class Folder
     /** @var Folder */
     protected $parent;
 
-    /** @var \Doctrine\Common\Collections\Collection */
+    /** @var Collection */
     protected $children;
 
     /** @var \DateTime */
@@ -50,7 +51,7 @@ class Folder
     /** @var \DateTime */
     protected $updated;
 
-    /** @var \Doctrine\Common\Collections\Collection */
+    /** @var Collection */
     protected $files;
 
     /**
@@ -174,7 +175,7 @@ class Folder
     }
 
     /**
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getFiles()
     {
@@ -206,7 +207,7 @@ class Folder
     }
 
     /**
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getChildren()
     {
