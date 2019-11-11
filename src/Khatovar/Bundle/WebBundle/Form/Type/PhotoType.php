@@ -46,11 +46,6 @@ class PhotoType extends AbstractType
     /** @var AuthorizationCheckerInterface */
     protected $authorizationChecker;
 
-    /**
-     * @param AuthorizationCheckerInterface $authorizationChecker
-     * @param EventSubscriberInterface      $addFieldsSubscriber
-     * @param EventSubscriberInterface      $addAuthorizedSubscriber
-     */
     public function __construct(
         AuthorizationCheckerInterface $authorizationChecker,
         EventSubscriberInterface $addFieldsSubscriber,

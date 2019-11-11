@@ -33,7 +33,7 @@ install-dependencies: install-back-dependencies install-front-dependencies
 
 .PHONY: update-back-dependencies
 update-back-dependencies: build-fpm
-	docker-compose run --rm php composer update --prefer-dist --optimize-autoloader --no-interaction --no-scripts
+	docker-compose run --rm php php -d memory_limit=4G /usr/local/bin/composer update --prefer-dist --optimize-autoloader --no-interaction --no-scripts
 
 .PHONY: update-front-dependencies
 update-front-dependencies: build-node

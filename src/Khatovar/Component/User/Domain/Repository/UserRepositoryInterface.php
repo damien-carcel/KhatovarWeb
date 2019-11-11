@@ -54,8 +54,6 @@ interface UserRepositoryInterface
     /**
      * Returns a user from its username.
      *
-     * @param string $username
-     *
      * @throws UserDoesNotExist
      *
      * @return UserInterface|null
@@ -64,15 +62,11 @@ interface UserRepositoryInterface
 
     /**
      * Saves a user.
-     *
-     * @param UserInterface $user
      */
     public function save(UserInterface $user): void;
 
     /**
      * Removes a user.
-     *
-     * @param UserInterface $user
      */
     public function remove(UserInterface $user): void;
 }

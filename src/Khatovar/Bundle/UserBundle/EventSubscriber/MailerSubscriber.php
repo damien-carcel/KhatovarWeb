@@ -50,10 +50,7 @@ class MailerSubscriber implements EventSubscriberInterface
     private $mailerAddress;
 
     /**
-     * @param SwiftMessageFactory $messageFactory
-     * @param \Swift_Mailer       $mailer
-     * @param TranslatorInterface $translator
-     * @param string              $mailerAddress
+     * @param string $mailerAddress
      */
     public function __construct(
         SwiftMessageFactory $messageFactory,
@@ -79,8 +76,6 @@ class MailerSubscriber implements EventSubscriberInterface
 
     /**
      * Sends an email to the removed user.
-     *
-     * @param GenericEvent $event
      */
     public function sendMessage(GenericEvent $event): void
     {

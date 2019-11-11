@@ -50,8 +50,6 @@ class LoadUserData implements FixtureInterface
 
     /**
      * @throws \Exception
-     *
-     * @return array
      */
     private function getUsersDataFromJson(): array
     {
@@ -65,12 +63,6 @@ class LoadUserData implements FixtureInterface
         return json_decode($jsonUsersData, true);
     }
 
-    /**
-     * @param string $username
-     * @param array  $userData
-     *
-     * @return UserInterface
-     */
     private function createUser(string $username, array $userData): UserInterface
     {
         $user = new User();

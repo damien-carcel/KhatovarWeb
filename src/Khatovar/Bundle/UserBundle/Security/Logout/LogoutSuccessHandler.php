@@ -37,9 +37,6 @@ class LogoutSuccessHandler implements LogoutSuccessHandlerInterface
     /** @var RedirectResponseFactory */
     private $factory;
 
-    /**
-     * @param RedirectResponseFactory $factory
-     */
     public function __construct(RedirectResponseFactory $factory)
     {
         $this->factory = $factory;

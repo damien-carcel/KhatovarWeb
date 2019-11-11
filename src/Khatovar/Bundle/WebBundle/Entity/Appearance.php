@@ -183,8 +183,6 @@ class Appearance implements ActivableEntity
     /**
      * Add photos.
      *
-     * @param Photo $photos
-     *
      * @return Appearance
      */
     public function addPhoto(Photo $photos)
@@ -196,8 +194,6 @@ class Appearance implements ActivableEntity
 
     /**
      * Remove photos.
-     *
-     * @param Photo $photos
      *
      * @return Appearance
      */

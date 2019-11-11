@@ -25,9 +25,6 @@ class FolderToNumberTransformer implements DataTransformerInterface
     /** @var ObjectRepository */
     private $folderRepository;
 
-    /**
-     * @param ObjectRepository $folderRepository
-     */
     public function __construct(ObjectRepository $folderRepository)
     {
         $this->folderRepository = $folderRepository;
@@ -35,8 +32,6 @@ class FolderToNumberTransformer implements DataTransformerInterface
 
     /**
      * @param Folder $folder
-     *
-     * @return int|null
      */
     public function transform($folder): ?int
     {
@@ -49,8 +44,6 @@ class FolderToNumberTransformer implements DataTransformerInterface
 
     /**
      * @param int $id
-     *
-     * @return Folder|null
      */
     public function reverseTransform($id): ?Folder
     {

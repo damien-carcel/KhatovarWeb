@@ -28,10 +28,6 @@ class GetUserRoles
     /** @var array */
     private $roles;
 
-    /**
-     * @param CurrentTokenUser $currentUser
-     * @param array            $roles
-     */
     public function __construct(
         CurrentTokenUser $currentUser,
         array $roles
@@ -42,8 +38,6 @@ class GetUserRoles
 
     /**
      * Returns a list of choice for user's roles.
-     *
-     * @return array
      */
     public function available(): array
     {
@@ -62,10 +56,6 @@ class GetUserRoles
 
     /**
      * Gets the current role of a user.
-     *
-     * @param UserInterface $user
-     *
-     * @return string
      */
     public function forUser(UserInterface $user): string
     {
@@ -96,8 +86,6 @@ class GetUserRoles
      *     'ROLE_ADMIN'       => 'ROLE_ADMIN',
      *     'ROLE_SUPER_ADMIN' => 'ROLE_SUPER_ADMIN',
      * ]
-     *
-     * @return array
      */
     private function getOrderedRoles(): array
     {

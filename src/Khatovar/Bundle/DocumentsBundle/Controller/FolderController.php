@@ -126,8 +126,7 @@ class FolderController extends Controller
     /**
      * Adds a new folder.
      *
-     * @param Request $request
-     * @param string  $parentId
+     * @param string $parentId
      *
      * @return Response
      *
@@ -175,8 +174,7 @@ class FolderController extends Controller
     /**
      * Moves a folder into a new one.
      *
-     * @param Request $request
-     * @param string  $id
+     * @param string $id
      *
      * @return Response
      *
@@ -224,8 +222,7 @@ class FolderController extends Controller
     /**
      * Renames an existing folder.
      *
-     * @param Request $request
-     * @param string  $id
+     * @param string $id
      *
      * @return Response
      *
@@ -273,13 +270,11 @@ class FolderController extends Controller
     /**
      * Deletes a folder and all its content.
      *
-     * @param Request $request
-     * @param string  $id
+     * @param string $id
      *
      * @throws \Doctrine\ORM\OptimisticLockException
      *
      * @return Response
-     *
      *
      * @Security("has_role('ROLE_ADMIN')")
      */

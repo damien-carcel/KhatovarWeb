@@ -45,9 +45,7 @@ class BaseSaver implements SaverInterface
     protected $entityClass;
 
     /**
-     * @param RegistryInterface              $doctrine
-     * @param SavingOptionsResolverInterface $optionsResolver
-     * @param string                         $entityClass
+     * @param string $entityClass
      */
     public function __construct(
         RegistryInterface $doctrine,

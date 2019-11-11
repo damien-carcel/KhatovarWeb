@@ -51,12 +51,6 @@ class UserFormFactory
     /** @var TranslatorInterface */
     private $translator;
 
-    /**
-     * @param FormFactoryInterface $formFactory
-     * @param RouterInterface      $router
-     * @param TranslatorInterface  $translator
-     * @param GetUserRoles         $getUserRoles
-     */
     public function __construct(
         FormFactoryInterface $formFactory,
         RouterInterface $router,
@@ -75,8 +69,6 @@ class UserFormFactory
      * @param UserInterface $item the entity to create
      * @param string        $type The form type to use with the entity
      * @param string        $url  The route used to create the entity
-     *
-     * @return FormInterface
      */
     public function createCreateForm(UserInterface $item, string $type, string $url): FormInterface
     {
@@ -98,8 +90,6 @@ class UserFormFactory
      * @param UserInterface $item the entity to edit
      * @param string        $type The form type to use with the entity
      * @param string        $url  The route used to edit the entity
-     *
-     * @return FormInterface
      */
     public function createEditForm(UserInterface $item, string $type, string $url): FormInterface
     {
@@ -120,8 +110,6 @@ class UserFormFactory
      *
      * @param string $username The ID of the entity to delete
      * @param string $url      The route used to delete the entity
-     *
-     * @return FormInterface
      */
     public function createDeleteForm(string $username, string $url): FormInterface
     {
@@ -168,10 +156,6 @@ class UserFormFactory
 
     /**
      * Creates a form to set user's roles.
-     *
-     * @param string $currentRole
-     *
-     * @return FormInterface
      */
     public function createSetRoleForm(string $currentRole): FormInterface
     {

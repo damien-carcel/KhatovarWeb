@@ -38,27 +38,17 @@ class UserStatus
     /** @var bool */
     private $status;
 
-    /**
-     * @param UserInterface $user
-     * @param bool          $status
-     */
     public function __construct(UserInterface $user, bool $status)
     {
         $this->user = $user;
         $this->status = $status;
     }
 
-    /**
-     * @return UserInterface
-     */
     public function user(): UserInterface
     {
         return $this->user;
     }
 
-    /**
-     * @return bool
-     */
     public function status(): bool
     {
         return $this->status;

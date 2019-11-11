@@ -44,11 +44,6 @@ class MenuBuilder
     /** @var AppearanceRepository */
     private $appearanceRepository;
 
-    /**
-     * @param FactoryInterface     $menuFactory
-     * @param AppearanceRepository $appearanceRepository
-     * @param ExactionManager      $exactionManager
-     */
     public function __construct(
         FactoryInterface $menuFactory,
         AppearanceRepository $appearanceRepository,
@@ -78,9 +73,6 @@ class MenuBuilder
         return $menu;
     }
 
-    /**
-     * @param ItemInterface $menu
-     */
     private function addHome(ItemInterface $menu): void
     {
         $menu->addChild(
@@ -92,9 +84,6 @@ class MenuBuilder
         );
     }
 
-    /**
-     * @param ItemInterface $menu
-     */
     private function addAppearances(ItemInterface $menu): void
     {
         $menu->addChild(
@@ -138,9 +127,6 @@ class MenuBuilder
         }
     }
 
-    /**
-     * @param ItemInterface $menu
-     */
     private function addDates(ItemInterface $menu): void
     {
         $menu->addChild(
@@ -180,9 +166,6 @@ class MenuBuilder
         }
     }
 
-    /**
-     * @param ItemInterface $menu
-     */
     private function addCamp(ItemInterface $menu): void
     {
         $menu->addChild(
@@ -210,9 +193,6 @@ class MenuBuilder
         );
     }
 
-    /**
-     * @param ItemInterface $menu
-     */
     private function addContact(ItemInterface $menu): void
     {
         $menu->addChild(

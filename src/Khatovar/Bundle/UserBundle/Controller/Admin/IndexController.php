@@ -44,11 +44,6 @@ class IndexController
     /** @var Environment */
     private $twig;
 
-    /**
-     * @param GetAdministrableUsers $getAdminitrableUsers
-     * @param UserFormFactory       $userFormFactory
-     * @param Environment           $twig
-     */
     public function __construct(
         GetAdministrableUsers $getAdminitrableUsers,
         UserFormFactory $userFormFactory,
@@ -63,8 +58,6 @@ class IndexController
      * @throws \Twig_Error_Loader  When the template cannot be found
      * @throws \Twig_Error_Syntax  When an error occurred during compilation
      * @throws \Twig_Error_Runtime When an error occurred during rendering
-     *
-     * @return Response
      */
     public function __invoke(): Response
     {

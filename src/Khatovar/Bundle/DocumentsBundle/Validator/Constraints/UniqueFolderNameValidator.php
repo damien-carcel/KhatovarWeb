@@ -43,9 +43,6 @@ class UniqueFolderNameValidator extends ConstraintValidator
     /** @var TranslatorInterface */
     protected $translator;
 
-    /**
-     * @param TranslatorInterface $translator
-     */
     public function __construct(TranslatorInterface $translator, FolderRepository $repository)
     {
         $this->translator = $translator;
@@ -71,8 +68,6 @@ class UniqueFolderNameValidator extends ConstraintValidator
     }
 
     /**
-     * @param Folder $folder
-     *
      * @return Folder[]
      */
     protected function getNeighbors(Folder $folder)

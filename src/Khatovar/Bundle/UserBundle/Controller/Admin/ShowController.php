@@ -46,11 +46,6 @@ class ShowController
     /** @var Environment */
     private $twig;
 
-    /**
-     * @param GetUser         $getUser
-     * @param UserFormFactory $userFormFactory
-     * @param Environment     $twig
-     */
     public function __construct(GetUser $getUser, UserFormFactory $userFormFactory, Environment $twig)
     {
         $this->getUser = $getUser;
@@ -59,14 +54,10 @@ class ShowController
     }
 
     /**
-     * @param string $username
-     *
      * @throws NotFoundHttpException When there is no user names "$username"
      * @throws \Twig_Error_Loader    When the template cannot be found
      * @throws \Twig_Error_Syntax    When an error occurred during compilation
      * @throws \Twig_Error_Runtime   When an error occurred during rendering
-     *
-     * @return Response
      */
     public function __invoke(string $username): Response
     {

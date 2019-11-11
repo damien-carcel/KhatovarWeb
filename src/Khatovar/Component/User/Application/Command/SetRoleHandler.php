@@ -38,10 +38,6 @@ class SetRoleHandler
     /** @var GetUserRoles */
     private $getUserRoles;
 
-    /**
-     * @param UserRepositoryInterface $userRepository
-     * @param GetUserRoles            $getUserRoles
-     */
     public function __construct(
         UserRepositoryInterface $userRepository,
         GetUserRoles $getUserRoles
@@ -51,8 +47,6 @@ class SetRoleHandler
     }
 
     /**
-     * @param SetRole $setRole
-     *
      * @throws \InvalidArgumentException
      */
     public function handle(SetRole $setRole): void

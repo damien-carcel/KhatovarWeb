@@ -37,10 +37,6 @@ class GetAdministrableUsers
     /** @var UserRepositoryInterface */
     private $userRepository;
 
-    /**
-     * @param CurrentTokenUser        $currentTokenUser
-     * @param UserRepositoryInterface $userRepository
-     */
     public function __construct(CurrentTokenUser $currentTokenUser, UserRepositoryInterface $userRepository)
     {
         $this->currentTokenUser = $currentTokenUser;

@@ -65,15 +65,6 @@ class RemoveController
     /** @var RouterInterface */
     private $router;
 
-    /**
-     * @param GetUser                  $getUser
-     * @param UserFormFactory          $userFormFactory
-     * @param UserRepositoryInterface  $userRepository
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param Session                  $session
-     * @param TranslatorInterface      $translator
-     * @param RouterInterface          $router
-     */
     public function __construct(
         GetUser $getUser,
         UserFormFactory $userFormFactory,
@@ -93,12 +84,7 @@ class RemoveController
     }
 
     /**
-     * @param Request $request
-     * @param string  $username
-     *
      * @throws NotFoundHttpException When there is no user names "$username"
-     *
-     * @return Response
      */
     public function __invoke(Request $request, string $username): Response
     {

@@ -30,9 +30,6 @@ namespace Khatovar\Component\User\Domain\Exception;
  */
 class UserDoesNotExist extends \InvalidArgumentException
 {
-    /**
-     * @param string $username
-     */
     public function __construct(string $username)
     {
         $message = sprintf(

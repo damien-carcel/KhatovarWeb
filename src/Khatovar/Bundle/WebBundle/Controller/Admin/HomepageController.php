@@ -39,8 +39,6 @@ class HomepageController extends Controller
     /**
      * List of all homepages, and allows to activate one of them.
      *
-     * @param Request $request
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
      * @Security("has_role('ROLE_EDITOR')")
@@ -94,8 +92,6 @@ class HomepageController extends Controller
 
     /**
      * Create a new homepage.
-     *
-     * @param Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
@@ -155,8 +151,7 @@ class HomepageController extends Controller
     /**
      * Edits an existing homepage.
      *
-     * @param Request $request
-     * @param int     $id
+     * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
@@ -193,8 +188,7 @@ class HomepageController extends Controller
     /**
      * Deletes a homepage.
      *
-     * @param Request $request
-     * @param int     $id
+     * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      *
@@ -246,8 +240,6 @@ class HomepageController extends Controller
     /**
      * Creates a form to create a Homepage entity.
      *
-     * @param Homepage $homepage
-     *
      * @return \Symfony\Component\Form\FormInterface
      */
     protected function createCreateForm(Homepage $homepage)
@@ -268,8 +260,6 @@ class HomepageController extends Controller
 
     /**
      * Creates a form to edit a Homepage entity.
-     *
-     * @param Homepage $homepage
      *
      * @return \Symfony\Component\Form\FormInterface
      */

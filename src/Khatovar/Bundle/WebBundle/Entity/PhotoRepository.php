@@ -73,8 +73,6 @@ class PhotoRepository extends EntityRepository
     /**
      * Return a list of all the photos of a member, except its portrait.
      *
-     * @param Member $member
-     *
      * @return Photo[]
      */
     public function getAllButPortrait(Member $member)

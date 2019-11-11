@@ -50,11 +50,6 @@ class FolderMoveType extends AbstractType
     /** @var TranslatorInterface */
     private $translator;
 
-    /**
-     * @param TranslatorInterface       $translator
-     * @param FolderRepository          $repository
-     * @param FolderToNumberTransformer $folderToNumberTransformer
-     */
     public function __construct(
         TranslatorInterface $translator,
         FolderRepository $repository,
@@ -91,8 +86,6 @@ class FolderMoveType extends AbstractType
     /**
      * Returns a hierarchic, formatted list of all folders.
      *
-     * @param Folder $folderToMove
-     *
      * @return Folder[]
      */
     private function getMoveList(Folder $folderToMove): array
@@ -117,11 +110,6 @@ class FolderMoveType extends AbstractType
     /**
      * Creates a hierarchic, well formatted list of all folders present in
      * database, minus the folder we want to move and its children.
-     *
-     * @param Folder $folder
-     * @param Folder $folderToMove
-     * @param array  $list
-     * @param int    $level
      *
      * @return Folder[]
      */

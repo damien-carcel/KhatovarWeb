@@ -151,8 +151,6 @@ class Folder
     }
 
     /**
-     * @param File $files
-     *
      * @return Folder
      */
     public function addFile(File $files)
@@ -163,8 +161,6 @@ class Folder
     }
 
     /**
-     * @param File $files
-     *
      * @return Folder
      */
     public function removeFile(File $files)

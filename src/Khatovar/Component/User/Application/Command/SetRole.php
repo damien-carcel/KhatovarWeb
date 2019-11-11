@@ -43,27 +43,17 @@ class SetRole
     /** @var string */
     private $role;
 
-    /**
-     * @param UserInterface $user
-     * @param string        $role
-     */
     public function __construct(UserInterface $user, string $role)
     {
         $this->user = $user;
         $this->role = $role;
     }
 
-    /**
-     * @return UserInterface
-     */
     public function user(): UserInterface
     {
         return $this->user;
     }
 
-    /**
-     * @return string
-     */
     public function role(): string
     {
         return $this->role;

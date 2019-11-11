@@ -60,9 +60,6 @@ class DateNormalizer extends \Twig_Extension
     /**
      * Return the formatted date of the exaction.
      *
-     * @param \DateTime $start
-     * @param \DateTime $end
-     *
      * @return string
      */
     public function normalize(\DateTime $start, \DateTime $end)
@@ -101,9 +98,6 @@ class DateNormalizer extends \Twig_Extension
     /**
      * Return the formatted date of the exaction with the year.
      *
-     * @param \DateTime $start
-     * @param \DateTime $end
-     *
      * @return string
      */
     public function normalizeWithYear(\DateTime $start, \DateTime $end)
@@ -118,8 +112,6 @@ class DateNormalizer extends \Twig_Extension
     /**
      * Return a formatted DateTime day.
      *
-     * @param \DateTime $date
-     *
      * @return string
      */
     protected function getDay(\DateTime $date)
@@ -133,8 +125,6 @@ class DateNormalizer extends \Twig_Extension
 
     /**
      * Return the french translation of a DateTime month.
-     *
-     * @param \DateTime $date
      *
      * @return string
      */

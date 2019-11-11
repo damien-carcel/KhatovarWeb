@@ -58,8 +58,6 @@ class LoadFolderData implements FixtureInterface
 
     /**
      * @throws \Exception
-     *
-     * @return array
      */
     private function getFoldersDataFromJson(): array
     {
@@ -73,11 +71,6 @@ class LoadFolderData implements FixtureInterface
         return json_decode($jsonFoldersData, true);
     }
 
-    /**
-     * @param array $folderData
-     *
-     * @return Folder
-     */
     private function createFolder(array $folderData): Folder
     {
         $folder = new Folder();

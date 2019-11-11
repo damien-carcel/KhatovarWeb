@@ -48,11 +48,6 @@ class DocumentsFormCreator implements DocumentsFormCreatorInterface
     /** @var TranslatorInterface */
     protected $translator;
 
-    /**
-     * @param FormFactoryInterface $formFactory
-     * @param RouterInterface      $router
-     * @param TranslatorInterface  $translator
-     */
     public function __construct(
         FormFactoryInterface $formFactory,
         RouterInterface $router,

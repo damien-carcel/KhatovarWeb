@@ -39,8 +39,6 @@ class ContactController extends Controller
     /**
      * Lists all contact pages, and allows to activate one of them.
      *
-     * @param Request $request
-     *
      * @return \Symfony\Component\HttpFoundation\Response
      *
      * @Security("has_role('ROLE_EDITOR')")
@@ -95,8 +93,6 @@ class ContactController extends Controller
 
     /**
      * Creates a new contact page.
-     *
-     * @param Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
@@ -156,8 +152,7 @@ class ContactController extends Controller
     /**
      * Updates a contact page.
      *
-     * @param Request $request
-     * @param int     $id
+     * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
@@ -194,8 +189,7 @@ class ContactController extends Controller
     /**
      * Deletes a contact page.
      *
-     * @param Request $request
-     * @param int     $id
+     * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      *
@@ -228,8 +222,6 @@ class ContactController extends Controller
     /**
      * Creates a form to create a Contact entity.
      *
-     * @param Contact $contact
-     *
      * @return \Symfony\Component\Form\FormInterface
      */
     protected function createCreateForm(Contact $contact)
@@ -250,8 +242,6 @@ class ContactController extends Controller
 
     /**
      * Creates a form to edit a Contact entity.
-     *
-     * @param Contact $contact
      *
      * @return \Symfony\Component\Form\FormInterface
      */

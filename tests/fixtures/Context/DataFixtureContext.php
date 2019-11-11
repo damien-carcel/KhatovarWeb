@@ -36,8 +36,6 @@ class DataFixtureContext implements Context
     private $container;
 
     /**
-     * @param ContainerInterface $container
-     *
      * @throws ToolsException
      */
     public function __construct(ContainerInterface $container)
@@ -75,8 +73,6 @@ class DataFixtureContext implements Context
 
     /**
      * Removes all files and folders from a given directory.
-     *
-     * @param string|null $directory
      */
     private function removeUploadedFiles(string $directory = null): void
     {
@@ -106,8 +102,6 @@ class DataFixtureContext implements Context
 
     /**
      * Loads Doctrine data fixtures, from directories and/or files.
-     *
-     * @param array $fixturePaths
      */
     private function loadDoctrineFixtures(array $fixturePaths): void
     {

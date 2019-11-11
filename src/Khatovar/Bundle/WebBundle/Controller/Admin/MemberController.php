@@ -60,8 +60,6 @@ class MemberController extends Controller
     /**
      * Creates a new member page.
      *
-     * @param Request $request
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
      * @Security("has_role('ROLE_EDITOR')")
@@ -132,8 +130,7 @@ class MemberController extends Controller
     /**
      * Updates a member page.
      *
-     * @param Request $request
-     * @param int     $id
+     * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
@@ -173,8 +170,7 @@ class MemberController extends Controller
     /**
      * Delete a member page.
      *
-     * @param Request $request
-     * @param int     $id
+     * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      *
@@ -203,8 +199,6 @@ class MemberController extends Controller
     /**
      * Creates a form to create a Member entity.
      *
-     * @param Member $member
-     *
      * @return \Symfony\Component\Form\FormInterface
      */
     protected function createCreateForm(Member $member)
@@ -225,8 +219,6 @@ class MemberController extends Controller
 
     /**
      * Creates a form to edit a Member entity.
-     *
-     * @param Member $member
      *
      * @return \Symfony\Component\Form\FormInterface
      */

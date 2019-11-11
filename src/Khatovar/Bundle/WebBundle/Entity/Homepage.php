@@ -128,8 +128,6 @@ class Homepage implements ActivableEntity
     /**
      * Add photos.
      *
-     * @param Photo $photos
-     *
      * @return Homepage
      */
     public function addPhoto(Photo $photos)
@@ -141,8 +139,6 @@ class Homepage implements ActivableEntity
 
     /**
      * Remove photos.
-     *
-     * @param Photo $photos
      *
      * @return Homepage
      */

@@ -45,10 +45,6 @@ class MemberType extends AbstractType
     /** @var EventSubscriberInterface */
     protected $removeOwnerSubscriber;
 
-    /**
-     * @param EventSubscriberInterface $addPortraitSubscriber
-     * @param EventSubscriberInterface $removeOwnerSubscriber
-     */
     public function __construct(
         EventSubscriberInterface $addPortraitSubscriber,
         EventSubscriberInterface $removeOwnerSubscriber
@@ -75,9 +71,6 @@ class MemberType extends AbstractType
         $resolver->setDefaults(['data_class' => 'Khatovar\Bundle\WebBundle\Entity\Member']);
     }
 
-    /**
-     * @param FormBuilderInterface $builder
-     */
     protected function addBaseFields(FormBuilderInterface $builder): void
     {
         $builder
@@ -105,9 +98,6 @@ class MemberType extends AbstractType
             );
     }
 
-    /**
-     * @param FormBuilderInterface $builder
-     */
     protected function addDescriptionFields(FormBuilderInterface $builder): void
     {
         $builder
@@ -178,9 +168,6 @@ class MemberType extends AbstractType
             ->add('story', TextareaType::class, ['label' => 'Histoire personnelle']);
     }
 
-    /**
-     * @param FormBuilderInterface $builder
-     */
     protected function addEventSubscribers(FormBuilderInterface $builder): void
     {
         $builder

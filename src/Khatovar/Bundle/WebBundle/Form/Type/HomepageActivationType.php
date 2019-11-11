@@ -38,9 +38,6 @@ class HomepageActivationType extends AbstractType
     /** @var RegistryInterface */
     protected $doctrine;
 
-    /**
-     * @param RegistryInterface $doctrine
-     */
     public function __construct(RegistryInterface $doctrine)
     {
         $this->doctrine = $doctrine;

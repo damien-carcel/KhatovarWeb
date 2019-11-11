@@ -36,9 +36,6 @@ class SidePanelExtension extends \Twig_Extension
     /** @var PhotoManager */
     protected $photoManager;
 
-    /**
-     * @param PhotoManager $photoManager
-     */
     public function __construct(PhotoManager $photoManager)
     {
         $this->photoManager = $photoManager;
