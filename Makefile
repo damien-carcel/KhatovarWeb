@@ -60,11 +60,11 @@ assets:
 	docker-compose run --rm node yarn run assets
 
 .PHONY: server-run
-server-run: install-dependencies assets mysql
+server-run: install-dependencies mysql assets
 	docker-compose run --rm --service-ports php bin/console server:run -d www 0.0.0.0:8000
 
 .PHONY: install
-install: install-dependencies assets mysql
+install: install-dependencies mysql assets
 	docker-compose up -d nginx
 
 # Clean the containers
