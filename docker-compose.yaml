@@ -50,7 +50,13 @@ services:
       - 'fpm'
     image: 'nginx:alpine'
     labels:
+      - 'traefik.http.middlewares.redirect-khatovar-http-to-https.redirectScheme.scheme=https'
+      - 'traefik.http.routers.khatovar.entrypoints=web'
+      - 'traefik.http.routers.khatovar.middlewares=redirect-khatovar-http-to-https'
       - 'traefik.http.routers.khatovar.rule=Host(`khatovar.docker.localhost`)'
+      - 'traefik.http.routers.khatovar-with-https.entrypoints=websecure'
+      - 'traefik.http.routers.khatovar-with-https.rule=Host(`khatovar.docker.localhost`)'
+      - 'traefik.http.routers.khatovar-with-https.tls=true'
     volumes:
       - './:/srv/khatovar:ro'
       - './docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro'
